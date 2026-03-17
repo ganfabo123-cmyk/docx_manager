@@ -12,7 +12,9 @@ from .references_renderer import _render_references
 from .citation import insert_citation
 from .section_break import _insert_section_break
 from .constants import W
+from docx.oxml.ns import qn
 from ..models.models import StyleTemplate
+from docx.oxml import OxmlElement
 
 
 def generate(data: dict, st: StyleTemplate, output_path: str, footer_config: list[dict] | None = None) -> Document:
@@ -54,7 +56,17 @@ def generate(data: dict, st: StyleTemplate, output_path: str, footer_config: lis
             _apply_pPr(p._p, st.body_pPr)
             run = p.add_run(item["value"])
             if st.body_rPr is not None:
-                run._r.insert(0, copy.deepcopy(st.body_rPr))
+                # 复制 rPr 并确保字体颜色为黑色
+                rPr_copy = copy.deepcopy(st.body_rPr)
+                # 移除现有的颜色设置
+                color_elem = rPr_copy.find(f"{{{W}}}color")
+                if color_elem is not None:
+                    rPr_copy.remove(color_elem)
+                # 添加黑色字体设置
+                color_elem = OxmlElement("w:color")
+                color_elem.set(qn("w:val"), "000000")  # 黑色
+                rPr_copy.append(color_elem)
+                run._r.insert(0, rPr_copy)
 
         elif t == "table":
             _render_table(doc, item, st)

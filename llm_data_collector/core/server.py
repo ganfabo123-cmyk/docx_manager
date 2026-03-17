@@ -1,6 +1,10 @@
 from flask import Flask, request, jsonify
 from typing import Dict, Any, List
+import os
+import tempfile
+import requests
 from ..models.models import UserData, PageFooterConfig, TocEntry, Reference, Citation
+from ..utils.parse_full_docx import parse_full_docx
 
 
 class DataCollector:
@@ -241,6 +245,52 @@ def create_app():
             return jsonify({"status": "success", "message": "data reset"}), 200
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)}), 400
+
+    @app.route('/docx_send', methods=['POST'])
+    def receive_docx():
+        """
+        接收远程发送的 docx 文件 URL，下载并解析。
+        请求体格式: {"url": "文件下载URL"}
+        文件会被下载到临时目录，然后调用 parse_full_docx 进行解析。
+        返回解析后的 JSON 数据。
+        """
+        try:
+            data = request.get_json()
+            if not data or 'url' not in data:
+                return jsonify({"status": "error", "message": "Missing required field: url"}), 400
+
+            file_url = data['url']
+
+            # 下载文件到临时目录
+            response = requests.get(file_url, timeout=30)
+            response.raise_for_status()
+
+            # 创建临时文件
+            temp_dir = tempfile.gettempdir()
+            temp_path = os.path.join(temp_dir, "temp_docx_file.docx")
+
+            with open(temp_path, 'wb') as f:
+                f.write(response.content)
+
+            # 解析 docx 文件
+            parsed_result = parse_full_docx(temp_path)
+
+            # 清理临时文件
+            try:
+                os.remove(temp_path)
+            except Exception:
+                pass
+
+            return jsonify({
+                "status": "success",
+                "message": "File downloaded and parsed successfully",
+                "data": parsed_result
+            }), 200
+
+        except requests.exceptions.RequestException as e:
+            return jsonify({"status": "error", "message": f"Failed to download file: {str(e)}"}), 400
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)}), 500
 
     @app.route('/health', methods=['GET'])
     def health():

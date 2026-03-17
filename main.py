@@ -88,15 +88,16 @@ auto 模式下提取结果用于向 Word 样式表写入 TOC 1/2/3（如果不�
 """
 
 import sys
-from docx_manager.api import process
+from docx_fixer.api import process
 
 
 def main():
     if len(sys.argv) < 4:
-        print("用法: python main.py <模板.docx> <数据.json> <输出.docx> [api_key]")
-        sys.exit(1)
+        print("用法: python main.py <模板.docx> <数据.json> <输出.docx> [api_key],使用默认参数")
+        sys.argv.extend(["data\\full_template_v6.docx","data\\full_user_data.json","data\\output.docx"])
+    
 
-    template_path = sys.argv[1]
+    template_path = sys.argv[1] 
     data_path = sys.argv[2]
     output_path = sys.argv[3]
     api_key = sys.argv[4] if len(sys.argv) > 4 else None

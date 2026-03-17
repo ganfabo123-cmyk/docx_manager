@@ -213,13 +213,19 @@ def _add_heading_with_exclude(doc: Document, text: str, style_key: str, exclude:
     hs = (st.heading_styles.get(style_key) if st else None)
 
     if hs is not None and (hs.pPr is not None or hs.rPr is not None):
-        # 完整替换 pPr（去掉 Normal/Heading 样式继承，格式完全由模板决定）
+        # 完整替换 pPr（格式由模板决定）
         if hs.pPr is not None:
             p.remove(pPr)
             new_pPr = copy.deepcopy(hs.pPr)
+            # 保留或添加 pStyle，确保标题样式正确
+            builtin_id = TAG_TO_STYLE_ID.get(TYPE_TO_TAG.get(style_key, ""), "Heading1")
             pStyle = new_pPr.find(f"{{{W}}}pStyle")
-            if pStyle is not None:
-                new_pPr.remove(pStyle)
+            if pStyle is None:
+                pStyle = OxmlElement("w:pStyle")
+                pStyle.set(qn("w:val"), builtin_id)
+                new_pPr.insert(0, pStyle)
+            else:
+                pStyle.set(qn("w:val"), builtin_id)
             p.insert(0, new_pPr)
             pPr = new_pPr
     else:
@@ -233,11 +239,31 @@ def _add_heading_with_exclude(doc: Document, text: str, style_key: str, exclude:
         ol = OxmlElement("w:outlineLvl")
         ol.set(qn("w:val"), "9")
         pPr.append(ol)
+    else:
+        # 确保设置正确的大纲级别
+        level = int(style_key[-1]) if style_key.startswith("heading") else 1
+        ol = pPr.find(f"{{{W}}}outlineLvl")
+        if ol is None:
+            ol = OxmlElement("w:outlineLvl")
+            ol.set(qn("w:val"), str(level - 1))  # 0-based
+            pPr.append(ol)
+        else:
+            ol.set(qn("w:val"), str(level - 1))  # 0-based
 
     # run
     run = para.add_run(text)
     if hs is not None and hs.rPr is not None:
-        run._r.insert(0, copy.deepcopy(hs.rPr))
+        # 复制 rPr 并确保字体颜色为黑色
+        rPr_copy = copy.deepcopy(hs.rPr)
+        # 移除现有的颜色设置
+        color_elem = rPr_copy.find(f"{{{W}}}color")
+        if color_elem is not None:
+            rPr_copy.remove(color_elem)
+        # 添加黑色字体设置
+        color_elem = OxmlElement("w:color")
+        color_elem.set(qn("w:val"), "000000")  # 黑色
+        rPr_copy.append(color_elem)
+        run._r.insert(0, rPr_copy)
 
 
 def _apply_pPr(p_elem, pPr_proto) -> None:

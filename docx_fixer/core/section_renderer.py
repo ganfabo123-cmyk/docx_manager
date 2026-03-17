@@ -20,7 +20,8 @@ def _render_section(doc: Document, item: dict, st: StyleTemplate) -> None:
     title_para = doc.add_paragraph()
     title_pPr  = ss.get("title_pPr")
     if title_pPr is not None:
-        _apply_pPr(title_para._p, title_pPr)
+        # 应用章节标题样式，并添加适当的标题样式
+        _apply_pPr_with_style(title_para._p, title_pPr, "Heading1")
         if exclude:
             pPr = title_para._p.find(f"{{{W}}}pPr")
             if pPr is not None:
@@ -30,7 +31,17 @@ def _render_section(doc: Document, item: dict, st: StyleTemplate) -> None:
         r = title_para.add_run(title)
         title_rPr = ss.get("title_rPr")
         if title_rPr is not None:
-            r._r.insert(0, copy.deepcopy(title_rPr))
+            # 复制 rPr 并确保字体颜色为黑色
+            rPr_copy = copy.deepcopy(title_rPr)
+            # 移除现有的颜色设置
+            color_elem = rPr_copy.find(f"{{{W}}}color")
+            if color_elem is not None:
+                rPr_copy.remove(color_elem)
+            # 添加黑色字体设置
+            color_elem = OxmlElement("w:color")
+            color_elem.set(qn("w:val"), "000000")  # 黑色
+            rPr_copy.append(color_elem)
+            r._r.insert(0, rPr_copy)
     else:
         # 无独立章节标题样式 → 复用模板 [[一级标题]] 样式
         _add_heading_with_exclude(doc, title, "heading1", exclude=exclude, st=st)
@@ -44,7 +55,41 @@ def _render_section(doc: Document, item: dict, st: StyleTemplate) -> None:
         _apply_pPr(p._p, body_pPr)
         run = p.add_run(para_text)
         if body_rPr is not None:
-            run._r.insert(0, copy.deepcopy(body_rPr))
+            # 复制 rPr 并确保字体颜色为黑色
+            rPr_copy = copy.deepcopy(body_rPr)
+            # 移除现有的颜色设置
+            color_elem = rPr_copy.find(f"{{{W}}}color")
+            if color_elem is not None:
+                rPr_copy.remove(color_elem)
+            # 添加黑色字体设置
+            color_elem = OxmlElement("w:color")
+            color_elem.set(qn("w:val"), "000000")  # 黑色
+            rPr_copy.append(color_elem)
+            run._r.insert(0, rPr_copy)
+
+
+def _apply_pPr_with_style(p_elem, pPr_proto, style_id) -> None:
+    """应用段落样式，同时保留指定的样式ID。"""
+    if pPr_proto is None:
+        return
+    existing = p_elem.find(f"{{{W}}}pPr")
+    # 保留 sectPr（分节符），其他全部替换
+    saved_sectPr = None
+    if existing is not None:
+        saved_sectPr = existing.find(f"{{{W}}}sectPr")
+        p_elem.remove(existing)
+    new_pPr = copy.deepcopy(pPr_proto)
+    # 确保添加 pStyle
+    pStyle = new_pPr.find(f"{{{W}}}pStyle")
+    if pStyle is None:
+        pStyle = OxmlElement("w:pStyle")
+        pStyle.set(qn("w:val"), style_id)
+        new_pPr.insert(0, pStyle)
+    else:
+        pStyle.set(qn("w:val"), style_id)
+    if saved_sectPr is not None:
+        new_pPr.append(copy.deepcopy(saved_sectPr))
+    p_elem.insert(0, new_pPr)
 
 
 def _split_paragraphs(text: str) -> list[str]:
