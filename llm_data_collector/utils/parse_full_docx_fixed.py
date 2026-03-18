@@ -65,16 +65,6 @@ def parse_heading(paragraph: Paragraph) -> Optional[Dict[str, Any]]:
             "value": get_paragraph_text(paragraph)
         }
 
-    if "标题" in style_name:
-        import re
-        match = re.search(r'标题\s*(\d+)', style_name)
-        if match:
-            level = int(match.group(1))
-            return {
-                "type": f"heading{level}",
-                "value": get_paragraph_text(paragraph)
-            }
-
     style_lower = style_name.lower()
     text = get_paragraph_text(paragraph)
 
@@ -298,6 +288,7 @@ def parse_full_docx(doc_path: str) -> list:
     docx_infos = []
     ref_started = False
 
+    # 遍历所有元素，收集所有内容
     elements = []
     for element in doc.element.body:
         if element.tag == f"{{{W}}}p":
@@ -305,8 +296,6 @@ def parse_full_docx(doc_path: str) -> list:
             heading_result = parse_heading(paragraph)
             if heading_result:
                 elements.append(heading_result)
-                if ref_started:
-                    ref_started = False
                 continue
 
             formula_result = parse_formula(paragraph, doc)
@@ -326,16 +315,8 @@ def parse_full_docx(doc_path: str) -> list:
 
             if ref_started:
                 refs = parse_references(paragraph, ref_started)
-                if refs:
-                    elements.extend(refs)
-                    continue
-                else:
-                    if text:
-                        elements.append({
-                            "type": "body",
-                            "value": text
-                        })
-                    continue
+                elements.extend(refs)
+                continue
 
             if text:
                 elements.append({
