@@ -297,9 +297,24 @@ def create_app():
                 if os.path.exists(p):
                     os.remove(p)
 
+            # [DEBUG] 在发送前打印一下
+            print(f"[DEBUG] 解析函数返回类型: {type(parsed_result)}")
+            
+            # 将结果转为字符串，方便计算长度和截取预览
+            result_str = str(parsed_result)
+            print(f"[DEBUG] 准备发送的数据总长度: {len(result_str)} 字符")
+            print(f"[DEBUG] 数据预览 (前100字): {result_str[:100]}")
+
+            # ---------------------------------------------------------
+            # 测试 A: 如果你想确认平台能不能收到东西，可以先取消下面这行的注释，注释掉正常的返回
+            # return jsonify({"status": "test", "msg": "if you see this, network is OK"}), 200
+            # ---------------------------------------------------------
+
+            # 正常返回
             return jsonify({
                 "status": "success",
-                "data": parsed_result
+                "message": "File downloaded and parsed successfully",
+                "data": parsed_result  # 确保这个 data 是纯字典或列表
             }), 200
 
         except Exception as e:
