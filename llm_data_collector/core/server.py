@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from typing import Dict, Any, List
 import os
+import sys
+import traceback
 import tempfile
 import requests
 from ..models.models import UserData, PageFooterConfig, TocEntry, Reference, Citation
@@ -248,49 +250,81 @@ def create_app():
 
     @app.route('/docx_send', methods=['POST'])
     def receive_docx():
-        """
-        接收远程发送的 docx 文件 URL，下载并解析。
-        请求体格式: {"url": "文件下载URL"}
-        文件会被下载到临时目录，然后调用 parse_full_docx 进行解析。
-        返回解析后的 JSON 数据。
-        """
+        print("\n" + "="*30 + " 收到请求 " + "="*30)
+        
         try:
+            # 1. 解析请求数据
             data = request.get_json()
+            print(f"[DEBUG 1/4] 请求 JSON 数据: {data}")
+
             if not data or 'url' not in data:
+                print("[DEBUG ERROR] 缺少 url 字段")
                 return jsonify({"status": "error", "message": "Missing required field: url"}), 400
 
             file_url = data['url']
+            print(f"[DEBUG 2/4] 准备下载 URL: {file_url}")
 
-            # 下载文件到临时目录
-            response = requests.get(file_url, timeout=30)
-            response.raise_for_status()
+            # 2. 下载文件
+            try:
+                # 加入 verify=False 如果是学校内部 HTTPS 证书有问题可以尝试，但先保持原样
+                response = requests.get(file_url, timeout=30)
+                response.raise_for_status()
+                print(f"[DEBUG 2/4] 下载成功，文件大小: {len(response.content)} 字节")
+            except requests.exceptions.RequestException as re:
+                print(f"[DEBUG ERROR] 下载过程中出错: {str(re)}")
+                return jsonify({"status": "error", "message": f"Download failed: {str(re)}"}), 400
 
-            # 创建临时文件
+            # 3. 写入临时文件
             temp_dir = tempfile.gettempdir()
-            temp_path = os.path.join(temp_dir, "temp_docx_file.docx")
+            # 建议加个唯一标识，防止并发冲突
+            temp_path = os.path.join(temp_dir, f"debug_{os.getpid()}.docx")
+            print(f"[DEBUG 3/4] 正在写入临时文件: {temp_path}")
 
             with open(temp_path, 'wb') as f:
                 f.write(response.content)
+            print("[DEBUG 3/4] 临时文件写入完毕")
 
-            # 解析 docx 文件
-            parsed_result = parse_full_docx(temp_path)
-
-            # 清理临时文件
+            # 4. 调用解析函数 (这里最容易报 500)
+            print("[DEBUG 4/4] 开始进入 parse_full_docx 函数...")
             try:
-                os.remove(temp_path)
-            except Exception:
-                pass
+                parsed_result = parse_full_docx(temp_path)
+                print("[DEBUG 4/4] 解析函数执行成功")
+            except Exception as parse_err:
+                print("[DEBUG ERROR] parse_full_docx 内部崩溃了！")
+                # 这一步非常重要，会让外层的 except 捕获到它
+                raise parse_err
 
+            # 5. 清理文件
+            try:
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+                    print("[DEBUG] 临时文件已清理")
+            except Exception as e:
+                print(f"[DEBUG WARNING] 清理文件失败: {str(e)}")
+
+            print("="*30 + " 处理完成 " + "="*30 + "\n")
             return jsonify({
                 "status": "success",
                 "message": "File downloaded and parsed successfully",
                 "data": parsed_result
             }), 200
 
-        except requests.exceptions.RequestException as e:
-            return jsonify({"status": "error", "message": f"Failed to download file: {str(e)}"}), 400
         except Exception as e:
-            return jsonify({"status": "error", "message": str(e)}), 500
+            # 【核心调试代码】获取完整的报错堆栈
+            error_type, error_value, error_trace = sys.exc_info()
+            full_error = traceback.format_exc()
+            
+            print("\n" + "!"*20 + " 发生 500 错误 " + "!"*20)
+            print(full_error)  # 在服务器黑窗口里打印完整错误
+            print("!"*54 + "\n")
+
+            # 返回给 HiAgent，让你在网页上就能看到错误详情
+            return jsonify({
+                "status": "error",
+                "message": str(e),
+                "error_type": str(error_type),
+                "debug_trace": full_error  # 把这个字段发回给平台，一目了然
+            }), 500
 
     @app.route('/health', methods=['GET'])
     def health():
