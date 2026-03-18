@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from typing import Dict, Any, List
+import subprocess
 import os
 import sys
 import traceback
@@ -248,84 +249,62 @@ def create_app():
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)}), 400
 
+
     @app.route('/docx_send', methods=['POST'])
     def receive_docx():
-        print("\n" + "="*30 + " 收到请求 " + "="*30)
-        
         try:
-            # 1. 解析请求数据
             data = request.get_json()
-            print(f"[DEBUG 1/4] 请求 JSON 数据: {data}")
-
-            if not data or 'url' not in data:
-                print("[DEBUG ERROR] 缺少 url 字段")
-                return jsonify({"status": "error", "message": "Missing required field: url"}), 400
-
-            file_url = data['url']
-            print(f"[DEBUG 2/4] 准备下载 URL: {file_url}")
-
-            # 2. 下载文件
-            try:
-                # 加入 verify=False 如果是学校内部 HTTPS 证书有问题可以尝试，但先保持原样
-                response = requests.get(file_url, timeout=30)
-                response.raise_for_status()
-                print(f"[DEBUG 2/4] 下载成功，文件大小: {len(response.content)} 字节")
-            except requests.exceptions.RequestException as re:
-                print(f"[DEBUG ERROR] 下载过程中出错: {str(re)}")
-                return jsonify({"status": "error", "message": f"Download failed: {str(re)}"}), 400
-
-            # 3. 写入临时文件
+            file_url = data.get('url', '')
+            
+            # 1. 下载文件
+            response = requests.get(file_url, timeout=30)
             temp_dir = tempfile.gettempdir()
-            # 建议加个唯一标识，防止并发冲突
-            temp_path = os.path.join(temp_dir, f"debug_{os.getpid()}.docx")
-            print(f"[DEBUG 3/4] 正在写入临时文件: {temp_path}")
-
-            with open(temp_path, 'wb') as f:
+            # 初始下载的文件名（可能是 .doc）
+            raw_path = os.path.join(temp_dir, f"input_{os.getpid()}.doc")
+            
+            with open(raw_path, 'wb') as f:
                 f.write(response.content)
-            print("[DEBUG 3/4] 临时文件写入完毕")
+            print(f"[DEBUG] 文件已下载到: {raw_path}")
 
-            # 4. 调用解析函数 (这里最容易报 500)
-            print("[DEBUG 4/4] 开始进入 parse_full_docx 函数...")
+            # 2. 核心步骤：自动转换 .doc 为 .docx
+            # 使用 libreoffice 进行转换
             try:
-                parsed_result = parse_full_docx(temp_path)
-                print("[DEBUG 4/4] 解析函数执行成功")
-            except Exception as parse_err:
-                print("[DEBUG ERROR] parse_full_docx 内部崩溃了！")
-                # 这一步非常重要，会让外层的 except 捕获到它
-                raise parse_err
-
-            # 5. 清理文件
-            try:
-                if os.path.exists(temp_path):
-                    os.remove(temp_path)
-                    print("[DEBUG] 临时文件已清理")
+                print("[DEBUG] 正在尝试将 .doc 转换为 .docx...")
+                # 命令解释：--headless 不启动界面，--convert-to 转换格式，--outdir 输出目录
+                subprocess.run([
+                    'libreoffice', '--headless', 
+                    '--convert-to', 'docx', 
+                    raw_path, 
+                    '--outdir', temp_dir
+                ], check=True, timeout=60)
+                
+                # 转换后的文件名会自动变成 .docx
+                docx_path = raw_path.replace('.doc', '.docx')
+                
+                if not os.path.exists(docx_path):
+                    raise Exception("LibreOffice 转换成功但未找到输出文件")
+                    
+                print(f"[DEBUG] 转换成功，新文件路径: {docx_path}")
             except Exception as e:
-                print(f"[DEBUG WARNING] 清理文件失败: {str(e)}")
+                print(f"[DEBUG ERROR] 转换失败: {str(e)}")
+                return jsonify({"status": "error", "message": f"Conversion failed: {str(e)}"}), 500
 
-            print("="*30 + " 处理完成 " + "="*30 + "\n")
+            # 3. 解析转换后的 .docx
+            parsed_result = parse_full_docx(docx_path)
+
+            # 4. 清理所有临时文件
+            for p in [raw_path, docx_path]:
+                if os.path.exists(p):
+                    os.remove(p)
+
             return jsonify({
                 "status": "success",
-                "message": "File downloaded and parsed successfully",
                 "data": parsed_result
             }), 200
 
         except Exception as e:
-            # 【核心调试代码】获取完整的报错堆栈
-            error_type, error_value, error_trace = sys.exc_info()
-            full_error = traceback.format_exc()
-            
-            print("\n" + "!"*20 + " 发生 500 错误 " + "!"*20)
-            print(full_error)  # 在服务器黑窗口里打印完整错误
-            print("!"*54 + "\n")
-
-            # 返回给 HiAgent，让你在网页上就能看到错误详情
-            return jsonify({
-                "status": "error",
-                "message": str(e),
-                "error_type": str(error_type),
-                "debug_trace": full_error  # 把这个字段发回给平台，一目了然
-            }), 500
-
+            # 保留你之前的 traceback 调试代码...
+            return jsonify({"status": "error", "message": str(e)}), 500
     @app.route('/health', methods=['GET'])
     def health():
         return jsonify({"status": "healthy"}), 200
