@@ -8,7 +8,7 @@ import tempfile
 import requests
 from ..models.models import UserData, PageFooterConfig, TocEntry, Reference, Citation
 from ..utils.parse_full_docx import parse_full_docx
-
+import json
 
 class DataCollector:
     def __init__(self):
@@ -295,28 +295,30 @@ def create_app():
             # 4. 清理所有临时文件
             for p in [raw_path, docx_path]:
                 if os.path.exists(p):
-                    os.remove(p)
-
-            # [DEBUG] 在发送前打印一下
-            print(f"[DEBUG] 解析函数返回类型: {type(parsed_result)}")
-            
-            # 将结果转为字符串，方便计算长度和截取预览
+                        os.remove(p)
+            # [DEBUG] 打印转换和预览 (你已经看到了，说明到这里都没问题)
             result_str = str(parsed_result)
             print(f"[DEBUG] 准备发送的数据总长度: {len(result_str)} 字符")
-            print(f"[DEBUG] 数据预览 (前100字): {result_str[:100]}")
 
-            # ---------------------------------------------------------
-            # 测试 A: 如果你想确认平台能不能收到东西，可以先取消下面这行的注释，注释掉正常的返回
-            # return jsonify({"status": "test", "msg": "if you see this, network is OK"}), 200
-            # ---------------------------------------------------------
+            # --- 暴力修改开始 ---
+            try:
+                # 使用 json.dumps 手动转成字符串，确保没有编码问题
+                # ensure_ascii=False 保证中文不乱码
+                json_body = json.dumps({
+                    "status": "success",
+                    "message": "File downloaded and parsed successfully",
+                    "data": parsed_result
+                }, ensure_ascii=False)
+                
+                print(f"[DEBUG] 最终 JSON 字节长度: {len(json_body.encode('utf-8'))}")
 
-            # 正常返回
-            return jsonify({
-                "status": "success",
-                "message": "File downloaded and parsed successfully",
-                "data": parsed_result  # 确保这个 data 是纯字典或列表
-            }), 200
+                # 直接返回 Flask Response 对象，不经过 jsonify 
+                from flask import Response
+                return Response(json_body, content_type='application/json; charset=utf-8'), 200
 
+            except Exception as json_err:
+                print(f"[DEBUG ERROR] JSON 序列化失败: {str(json_err)}")
+                return jsonify({"status": "error", "message": f"Serialization error: {str(json_err)}"}), 500
         except Exception as e:
             # 保留你之前的 traceback 调试代码...
             return jsonify({"status": "error", "message": str(e)}), 500
