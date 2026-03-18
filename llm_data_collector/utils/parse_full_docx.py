@@ -194,11 +194,10 @@ def parse_image(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any]]
 
                                 return {
                                     "type": "image",
-                                    "base64": base64_str,
-                                    "ext": ext,
-                                    "caption": caption if caption and not caption.startswith("图") else None,
-                                    "width": width_inches,
-                                    "align": align
+                                    "value": {
+                                        "base": base64_str,
+                                        "caption": caption if caption and not caption.startswith("图") else None
+                                    }
                                 }
                         except Exception:
                             pass
