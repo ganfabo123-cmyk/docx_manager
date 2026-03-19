@@ -597,9 +597,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             for p in [raw_path, docx_path]:
                 if os.path.exists(p):
                         os.remove(p)
-            # [DEBUG] 打印转换和预览 (你已经看到了，说明到这里都没问题)
-            result_str = str(parsed_result)
-            print(f"[DEBUG] 准备发送的数据总长度: {len(result_str)} 字符")
+
 
             # 处理解析结果：
             # 1. 找到 '参考文献' heading1 之后的 body 元素作为 references
@@ -631,6 +629,10 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 'references': references,
                 'body': bodies
             }
+
+            # [DEBUG] 打印转换和预览 (你已经看到了，说明到这里都没问题)
+            result_str = str(result_data)
+            print(f"[DEBUG] 准备发送的数据总长度: {len(result_str)} 字符")
 
             # --- 暴力修改开始 ---
             try:
