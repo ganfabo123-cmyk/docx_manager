@@ -13,6 +13,15 @@ import json
 class DataCollector:
     def __init__(self):
         self.user_data = UserData()
+        self.toc_title = "目  录"
+        self.image_defaults = {
+            "width": 3.5,
+            "align": "center",
+            "ext": "png"
+        }
+        self.formula_defaults = {
+            "label_prefix": "式"
+        }
 
     def set_doc(self, doc: str):
         self.user_data._doc = doc
@@ -30,6 +39,9 @@ class DataCollector:
     def set_toc_mode(self, mode: str):
         self.user_data.toc_mode = mode
 
+    def set_toc_title(self, title: str):
+        self.toc_title = title
+
     def set_toc_entries(self, entries: List[Dict[str, Any]]):
         self.user_data.toc_entries = [
             TocEntry(
@@ -39,6 +51,12 @@ class DataCollector:
             )
             for entry in entries
         ]
+
+    def set_image_defaults(self, defaults: Dict[str, Any]):
+        self.image_defaults = defaults
+
+    def set_formula_defaults(self, defaults: Dict[str, Any]):
+        self.formula_defaults = defaults
 
     def add_content(self, content_item: Dict[str, Any]):
         self.user_data.content.append(content_item)
@@ -63,10 +81,23 @@ class DataCollector:
         ]
 
     def get_user_data(self) -> Dict[str, Any]:
-        return self.user_data.to_dict()
+        data = self.user_data.to_dict()
+        data['toc_title'] = self.toc_title
+        data['image_defaults'] = self.image_defaults
+        data['formula_defaults'] = self.formula_defaults
+        return data
 
     def reset(self):
         self.user_data = UserData()
+        self.toc_title = "目  录"
+        self.image_defaults = {
+            "width": 3.5,
+            "align": "center",
+            "ext": "png"
+        }
+        self.formula_defaults = {
+            "label_prefix": "式"
+        }
 
 
 collector = DataCollector()
@@ -74,6 +105,13 @@ collector = DataCollector()
 
 def create_app():
     app = Flask(__name__)
+    
+    # 页脚样式白名单
+    VALID_FOOTER_STYLES = {
+        'roman_lower_center', 'roman_upper_center',
+        'arabic_center', 'arabic_dash',
+        'arabic_page_x', 'arabic_slash', 'none'
+    }
 
     @app.route('/_doc', methods=['POST'])
     def receive_doc():
@@ -90,8 +128,44 @@ def create_app():
         try:
             data = request.get_json()
             if 'value' in data and isinstance(data['value'], list):
+                # 验证页脚样式
+                for config in data['value']:
+                    if 'style' in config:
+                        style = config['style']
+                        if style not in VALID_FOOTER_STYLES:
+                            return jsonify({"status": "error", "message": f"Invalid footer style: {style}. Valid styles are: {', '.join(VALID_FOOTER_STYLES)}"}), 400
                 collector.set_page_footer_config(data['value'])
             return jsonify({"status": "success", "message": "page_footer_config received"}), 200
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)}), 400
+
+    @app.route('/toc_title', methods=['POST'])
+    def receive_toc_title():
+        try:
+            data = request.get_json()
+            if 'value' in data:
+                collector.set_toc_title(data['value'])
+            return jsonify({"status": "success", "message": "toc_title received"}), 200
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)}), 400
+
+    @app.route('/image_defaults', methods=['POST'])
+    def receive_image_defaults():
+        try:
+            data = request.get_json()
+            if 'value' in data and isinstance(data['value'], dict):
+                collector.set_image_defaults(data['value'])
+            return jsonify({"status": "success", "message": "image_defaults received"}), 200
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)}), 400
+
+    @app.route('/formula_defaults', methods=['POST'])
+    def receive_formula_defaults():
+        try:
+            data = request.get_json()
+            if 'value' in data and isinstance(data['value'], dict):
+                collector.set_formula_defaults(data['value'])
+            return jsonify({"status": "success", "message": "formula_defaults received"}), 200
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)}), 400
 
