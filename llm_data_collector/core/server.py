@@ -9,7 +9,7 @@ import requests
 from ..models.models import UserData, PageFooterConfig, TocEntry, Reference, Citation
 from ..utils.parse_full_docx import parse_full_docx
 import json
-
+from pathlib import Path
 class DataCollector:
     def __init__(self):
         self.user_data = UserData()
@@ -103,7 +103,7 @@ class DataCollector:
 collector = DataCollector()
 
 
-def create_app():
+def create_app(default_output_path=None): # 1. 允许传入默认输出路径
     app = Flask(__name__)
     
     # 页脚样式白名单
@@ -112,6 +112,33 @@ def create_app():
         'arabic_center', 'arabic_dash',
         'arabic_page_x', 'arabic_slash', 'none'
     }
+
+    @app.route('/save', methods=['POST'])
+    def save_to_disk():
+        try:
+            # 尝试从 POST 请求体中获取文件名，如果没有则使用启动时的默认路径，再没有就存为默认名
+            req_data = request.get_json(silent=True) or {}
+            target_path = req_data.get('filename') or default_output_path or "collected_data.json"
+            
+            # 获取当前内存中的所有数据
+            current_data = collector.get_user_data()
+            
+            # 确保目录存在
+            output_path = Path(target_path)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            # 写入文件
+            with open(output_path, 'w', encoding='utf-8') as f:
+                json.dump(current_data, f, ensure_ascii=False, indent=2)
+                
+            return jsonify({
+                "status": "success", 
+                "message": f"Data saved successfully to {target_path}",
+                "path": str(output_path.absolute())
+            }), 200
+        except Exception as e:
+            return jsonify({"status": "error", "message": f"Save failed: {str(e)}"}), 500
+
 
     @app.route('/_doc', methods=['POST'])
     def receive_doc():

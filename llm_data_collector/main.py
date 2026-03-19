@@ -4,15 +4,16 @@ from pathlib import Path
 from llm_data_collector.core.server import create_app
 
 def main():
-    parser = argparse.ArgumentParser(description="LLM数据收集器 - 从LLM平台接收POST请求并组装用户数据")
-    parser.add_argument('--host', type=str, default='0.0.0.0', help='服务器监听地址')
-    parser.add_argument('--port', type=int, default=5001, help='服务器监听端口')
-    parser.add_argument('--debug', action='store_true', help='启用调试模式')
-    parser.add_argument('--output', type=str, help='输出JSON文件路径（可选）')
+    parser = argparse.ArgumentParser(description="LLM数据收集器")
+    parser.add_argument('--host', type=str, default='0.0.0.0')
+    parser.add_argument('--port', type=int, default=5001)
+    parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--output', type=str, help='输出JSON文件路径')
 
     args = parser.parse_args()
 
-    app = create_app()
+    # 2. 将 args.output 传给 create_app
+    app = create_app(default_output_path=args.output)
 
     print(f"LLM数据收集器启动中...")
     print(f"监听地址: {args.host}:{args.port}")
