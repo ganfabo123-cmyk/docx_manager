@@ -1,1 +1,4 @@
-*.__pycache__
+# 写入忽略规则
+echo "__pycache__/" >> .gitignore
+echo "*.pyc" >> .gitignore
+echo "*.pyo" >> .gitignore
