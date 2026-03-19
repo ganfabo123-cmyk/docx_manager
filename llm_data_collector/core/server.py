@@ -520,6 +520,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 3. 解析转换后的 .docx
             parsed_result = parse_full_docx(docx_path)
 
+
             # 4. 清理所有临时文件
             for p in [raw_path, docx_path]:
                 if os.path.exists(p):
@@ -606,7 +607,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             bodies = []
             found_references = False
             
-            for item in parsed_result:
+            for item in parsed_result.get("docx_infos"):
                 item_type = item.get('type', '')
                 item_value = item.get('value', '')
                 
@@ -627,11 +628,12 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 构建返回数据
             result_data = {
                 'references': references,
-                'body': bodies
+                'body': bodies,
+                'citations': parsed_result.get("citations")
             }
 
             # [DEBUG] 打印转换和预览 (你已经看到了，说明到这里都没问题)
-            result_str = str(result_data)
+            result_str = str(parsed_result)
             print(f"[DEBUG] 准备发送的数据总长度: {len(result_str)} 字符")
 
             # --- 暴力修改开始 ---

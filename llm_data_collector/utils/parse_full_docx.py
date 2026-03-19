@@ -252,6 +252,38 @@ def parse_references(paragraph: Paragraph, ref_start: bool) -> List[Dict[str, An
 
     return references
 
+
+def extract_citations_from_body(docx_infos: list) -> List[Dict[str, Any]]:
+    """
+    从body元素中提取引用及其上下文
+    返回格式: [{"ref_id": 1, "before": "...", "after": "..."}]
+    """
+    import re
+    citations = []
+    ref_pattern = re.compile(r'\[(\d+)\]')
+    
+    for i, item in enumerate(docx_infos):
+        if item['type'] != 'body':
+            continue
+        
+        text = item['value']
+        matches = ref_pattern.finditer(text)
+        
+        for match in matches:
+            ref_id = int(match.group(1))
+            ref_pos = match.start()
+            
+            before_text = text[:ref_pos].strip()
+            after_text = text[match.end():].strip()
+            
+            citations.append({
+                "ref_id": ref_id,
+                "before": before_text,
+                "after": after_text
+            })
+    
+    return citations
+
 def parse_toc(docx_info: list) -> list:
     """
     生成的docx info把目录中的标题(toc1,toc2,toc3)归到了正文类,这个函数需要:
@@ -369,12 +401,18 @@ def parse_full_docx(doc_path: str) -> list:
 
         docx_infos.append(element)
 
-    return parse_toc(docx_infos)
+    docx_infos = parse_toc(docx_infos)
+    
+    citations = extract_citations_from_body(docx_infos)
+    
+    return {
+        "docx_infos": docx_infos,
+        "citations": citations
+    }
     
 
-def parse_full_docx_simple(doc_path: str) -> List[Dict[str, Any]]:
-    result = parse_full_docx(doc_path)
-    return result["docx_infos"]
+def parse_full_docx_simple(doc_path: str) -> Dict[str, Any]:
+    return parse_full_docx(doc_path)
 
 
 if __name__ == "__main__":

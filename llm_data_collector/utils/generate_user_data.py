@@ -318,7 +318,7 @@ def generate_user_data_from_file(docx_path: str, config_path: Optional[str] = No
     
     config = load_config(str(config_path))
     
-    return generate_user_data(docx_info, config)
+    return generate_user_data(docx_info.get("docx_infos"), config)
 
 
 def save_user_data(data: Dict[str, Any], output_path: str):
