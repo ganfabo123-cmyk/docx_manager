@@ -190,7 +190,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 写入文件
             with open(output_path, 'w', encoding='utf-8') as f:
                 json.dump(current_data, f, ensure_ascii=False, indent=2)
-            print('Data saved successfully to {target_path}')
+            print(f'Data saved successfully to {target_path}')
             return jsonify({
                 "status": "success", 
                 "message": f"Data saved successfully to {target_path}",
