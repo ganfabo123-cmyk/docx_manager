@@ -204,10 +204,10 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
         try:
             # 尝试从 POST 请求体中获取文件名，如果没有则使用启动时的默认路径，再没有就存为默认名
             req_data = request.get_json(silent=True) or {}
-            target_path = req_data.get('filename') or default_output_path or "collected_data.json"
+            target_path = req_data.get('filename') or default_output_path or "llm_data_collector\\utils\\user_config.json"
             
             # 获取当前内存中的所有数据
-            current_data = collector.get_user_data()
+            current_data = collector.get_full_config()
             
             # 确保目录存在
             output_path = Path(target_path)
