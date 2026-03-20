@@ -147,7 +147,14 @@ class DataCollector:
                 "references": True
             }),
             "heading_toc_exclude_default": base_config.get("heading_toc_exclude_default", False),
-            "citations": self.user_data.citations or []
+            "citations": [
+                {
+                    "ref_id": cit.ref_id,
+                    "before": cit.before,
+                    "after": cit.after
+                }
+                for cit in self.user_data.citations
+            ] if self.user_data.citations else []
         }
         
         return config
@@ -227,6 +234,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 "path": str(output_path.absolute())
             }), 200
         except Exception as e:
+            print(f"[DEBUG] Current data to save: {current_data}")
             print(f"[ERROR] Save failed: {str(e)}")
             print(traceback.format_exc())
             return jsonify({"status": "error", "message": f"Save failed: {str(e)}"}), 500
