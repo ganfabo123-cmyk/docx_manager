@@ -377,7 +377,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 调用 generate_user_data 函数
             from llm_data_collector.utils.generate_user_data import generate_user_data_from_file, save_user_data
             
-            print(collector.docx_infos)
+            #print(collector.docx_infos)
             result = generate_user_data_from_file(docx_infos=collector.docx_infos)
             
             # 保存用户数据 JSON
