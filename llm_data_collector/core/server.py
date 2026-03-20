@@ -115,7 +115,7 @@ class DataCollector:
         if config_path.exists():
             with open(config_path, 'r', encoding='utf-8') as f:
                 base_config = json.load(f)
-        
+        #print(base_config)
         # 合并用户设置的配置
         config = {
             "_doc": base_config.get("_doc", "用户配置文件 - 用于补全转换过程中缺失的信息"),

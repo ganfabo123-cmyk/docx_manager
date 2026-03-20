@@ -38,21 +38,5 @@
     "references": true
   },
   "heading_toc_exclude_default": false,
-  "citations": [
-    {
-      "ref_id": 1,
-      "before": "LaTeX 是国外学术界广泛使用的排版系统",
-      "after": ""
-    },
-    {
-      "ref_id": 2,
-      "before": "python-docx 开源社区提供了优秀的 Word XML 操作接口",
-      "after": ""
-    },
-    {
-      "ref_id": 3,
-      "before": "Office Open XML（OOXML）是 Microsoft Word 使用的文件格式标准",
-      "after": ""
-    }
-  ]
+  "citations": []
 }
