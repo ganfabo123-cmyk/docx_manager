@@ -427,11 +427,24 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 return jsonify({"status": "error", "message": f"File not found: {filename}"}), 404
             
             print(f"[DEBUG] 开始发送文件: {file_path}")
-            return send_file(
+            
+            # 方案：强制指定 MIME 类型，确保浏览器识别为 Word 文档
+            mime_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            
+            # 使用 send_file，并确保参数传递完整
+            response = send_file(
                 str(file_path), 
                 as_attachment=True, 
-                download_name=filename
+                download_name=filename,
+                mimetype=mime_type
             )
+            
+            # 额外添加强缓存控制，防止浏览器加载不完整
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+            
+            return response
         except Exception as e:
             print(f"[ERROR] Download file failed: {str(e)}")
             print(traceback.format_exc())
