@@ -11,8 +11,10 @@ from ..utils.parse_full_docx import parse_full_docx
 import json
 from pathlib import Path
 
-TEMPLATE_DOCX_PATH = "data\\full_template_v6.docx"
-OUTPUT_DOCX_PATH = "download\\formatted_output.docx"
+# 使用 Path 构建跨平台路径
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+TEMPLATE_DOCX_PATH = str(PROJECT_ROOT / "data" / "full_template_v6.docx")
+OUTPUT_DOCX_PATH = str(PROJECT_ROOT / "download" / "formatted_output.docx")
 
 class DataCollector:
     def __init__(self):
