@@ -416,19 +416,22 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
     @app.route('/download/<filename>')
     def download_file(filename):
         try:
-            from pathlib import Path
+            # 使用项目根目录构建绝对路径
+            file_path = PROJECT_ROOT / "download" / filename
             
-            # 从当前工作目录的 data 文件夹中查找文件
-            file_path = Path('data') / filename
-            
-            if not file_path.exists():
-                # 如果不在 data 文件夹，尝试在 docx_path 的父目录中查找
-                file_path = Path.cwd() / filename
+            print(f"[DEBUG] 尝试下载文件: {file_path}")
+            print(f"[DEBUG] 文件是否存在: {file_path.exists()}")
             
             if not file_path.exists():
-                return jsonify({"status": "error", "message": "File not found"}), 404
+                print(f"[ERROR] 文件不存在: {file_path}")
+                return jsonify({"status": "error", "message": f"File not found: {filename}"}), 404
             
-            return send_file(str(file_path), as_attachment=True, download_name=filename)
+            print(f"[DEBUG] 开始发送文件: {file_path}")
+            return send_file(
+                str(file_path), 
+                as_attachment=True, 
+                download_name=filename
+            )
         except Exception as e:
             print(f"[ERROR] Download file failed: {str(e)}")
             print(traceback.format_exc())

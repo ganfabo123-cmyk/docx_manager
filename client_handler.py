@@ -30,6 +30,14 @@ def handler(params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         
         if result.get("status") != "success":
             ret["success"] = False
+        else:
+            # 如果成功，添加完整下载链接
+            if "download_url" in result:
+                ret["download_url"] = f"{BASE_URL}{result['download_url']}"
+            if "output_path" in result:
+                ret["output_path"] = result["output_path"]
+            if "user_data_path" in result:
+                ret["user_data_path"] = result["user_data_path"]
             
     except Exception as error:
         ret["success"] = False
@@ -37,5 +45,7 @@ def handler(params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
 
     return ret
 
+
 if __name__ == "__main__":
-    handler()
+    result = handler()
+    print(result)
