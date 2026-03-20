@@ -308,17 +308,21 @@ def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any]) 
     return result
 
 
-def generate_user_data_from_file(docx_path: str, config_path: Optional[str] = None) -> Dict[str, Any]:
-    from llm_data_collector.utils.parse_full_docx import parse_full_docx
+def generate_user_data_from_file(docx_path: str=None, config_path: Optional[str] = None,docx_infos:list=None) -> Dict[str, Any]:
+    if not docx_infos:
+        from llm_data_collector.utils.parse_full_docx import parse_full_docx
+        
+        docx_info = parse_full_docx(docx_path)
+        
+        docx_infos = docx_info.get("docx_infos")
+    else:
+        if config_path is None:
+            config_path = Path(__file__).parent / 'user_config.json'
+        
+        config = load_config(str(config_path))
+        
+        return generate_user_data(docx_infos, config)
     
-    docx_info = parse_full_docx(docx_path)
-    
-    if config_path is None:
-        config_path = Path(__file__).parent / 'user_config.json'
-    
-    config = load_config(str(config_path))
-    
-    return generate_user_data(docx_info.get("docx_infos"), config)
 
 
 def save_user_data(data: Dict[str, Any], output_path: str):

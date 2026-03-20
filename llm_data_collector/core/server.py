@@ -39,6 +39,7 @@ class DataCollector:
         self.formula_defaults = {
             "label_prefix": "式"
         }
+        self.docx_infos = []
 
     def set_doc(self, doc: str):
         self.user_data._doc = doc
@@ -305,7 +306,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             references = []
             bodies = []
             found_references = False
-            
+            collector.docx_infos = parsed_result.get("docx_infos")
             for item in parsed_result.get("docx_infos"):
                 item_type = item.get('type', '')
                 item_value = item.get('value', '')
@@ -371,7 +372,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             
             # 读取 DOCX 路径
             data = request.get_json()
-            docx_path = data.get('docx_path')
+            docx_path = data.get('docx_apth')
             if not docx_path:
                 return jsonify({"status": "error", "message": "docx_path is required"}), 400
             
@@ -379,7 +380,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             from llm_data_collector.utils.generate_user_data import generate_user_data_from_file, save_user_data
             from pathlib import Path
             
-            result = generate_user_data_from_file(docx_path)
+            result = generate_user_data_from_file(collector.docx_infos)
             
             # 保存用户数据 JSON
             output_path = data.get('output_path', str(Path(docx_path).parent / 'generated_user_data.json'))

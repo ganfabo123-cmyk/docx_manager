@@ -13,11 +13,14 @@ def handler(params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     try:
         request_body = {}
         
-        if params and "filename" in params:
-            request_body["filename"] = params["filename"]
+        if params:
+            if "docx_path" in params:
+                request_body["docx_path"] = params["docx_path"]
+            if "output_path" in params:
+                request_body["output_path"] = params["output_path"]
 
         response = requests.post(
-            f"{BASE_URL}/save",
+            f"{BASE_URL}/generate_user_data",
             json=request_body,
             headers={"Content-Type": "application/json"}
         )
