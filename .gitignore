@@ -2,4 +2,3 @@
 echo "__pycache__/" >> .gitignore
 echo "*.pyc" >> .gitignore
 echo "*.pyo" >> .gitignore
-llm_data_collector/utils/user_config.json
