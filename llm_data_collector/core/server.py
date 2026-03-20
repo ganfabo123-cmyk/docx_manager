@@ -381,7 +381,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             result = generate_user_data_from_file(docx_infos=collector.docx_infos)
             
             # 保存用户数据 JSON
-            output_path = str('data' / 'generated_user_data.json')
+            output_path = str(Path(__file__).parent.parent.parent / 'data' / 'generated_user_data.json')
             save_user_data(result, output_path)
             
             # 调用 process 函数生成格式化的 DOCX
