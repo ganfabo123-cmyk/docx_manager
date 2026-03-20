@@ -372,18 +372,15 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             
             # 读取 DOCX 路径
             data = request.get_json()
-            docx_path = data.get('docx_apth')
-            if not docx_path:
-                return jsonify({"status": "error", "message": "docx_path is required"}), 400
+
             
             # 调用 generate_user_data 函数
             from llm_data_collector.utils.generate_user_data import generate_user_data_from_file, save_user_data
-            from pathlib import Path
             
             result = generate_user_data_from_file(collector.docx_infos)
             
             # 保存用户数据 JSON
-            output_path = data.get('output_path', str(Path(docx_path).parent / 'generated_user_data.json'))
+            output_path = str(data / 'generated_user_data.json')
             save_user_data(result, output_path)
             
             # 调用 process 函数生成格式化的 DOCX
