@@ -215,7 +215,8 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 确保目录存在
             output_path = Path(target_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            
+            #save之前在控制台把current data数据打印出来
+            print(f"[DEBUG] Current data to save: {json.dumps(current_data, ensure_ascii=False, indent=2)}")
             # 写入文件
             with open(output_path, 'w', encoding='utf-8') as f:
                 json.dump(current_data, f, ensure_ascii=False, indent=2)
