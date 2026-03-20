@@ -227,6 +227,8 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 "path": str(output_path.absolute())
             }), 200
         except Exception as e:
+            print(f"[ERROR] Save failed: {str(e)}")
+            print(traceback.format_exc())
             return jsonify({"status": "error", "message": f"Save failed: {str(e)}"}), 500
 
     @app.route('/citations', methods=['POST'])
@@ -237,6 +239,8 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 collector.set_citations(data['value'])
             return jsonify({"status": "success", "message": "citations received"}), 200
         except Exception as e:
+            print(f"[ERROR] Citations receive failed: {str(e)}")
+            print(traceback.format_exc())
             return jsonify({"status": "error", "message": str(e)}), 400
 
     @app.route('/recieve_right_style_docx', methods=['POST'])
@@ -342,9 +346,12 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
 
             except Exception as json_err:
                 print(f"[DEBUG ERROR] JSON 序列化失败: {str(json_err)}")
+                print(traceback.format_exc())
                 return jsonify({"status": "error", "message": f"Serialization error: {str(json_err)}"}), 500
         except Exception as e:
             # 保留你之前的 traceback 调试代码...
+            print(f"[ERROR] Recieve right style docx failed: {str(e)}")
+            print(traceback.format_exc())
             return jsonify({"status": "error", "message": str(e)}), 500
 
     @app.route('/generate_user_data', methods=['POST'])
@@ -393,6 +400,8 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 "user_data_path": output_path
             }), 200
         except Exception as e:
+            print(f"[ERROR] Generate user data failed: {str(e)}")
+            print(traceback.format_exc())
             return jsonify({"status": "error", "message": str(e)}), 400
 
     @app.route('/download/<filename>')
@@ -412,6 +421,8 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             
             return send_file(str(file_path), as_attachment=True, download_name=filename)
         except Exception as e:
+            print(f"[ERROR] Download file failed: {str(e)}")
+            print(traceback.format_exc())
             return jsonify({"status": "error", "message": str(e)}), 500
 
     @app.route('/health', methods=['GET'])
