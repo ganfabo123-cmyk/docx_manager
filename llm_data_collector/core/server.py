@@ -210,7 +210,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             target_path = req_data.get('filename') or default_output_path or str(default_path)
             
             # 获取当前内存中的所有数据
-            current_data = collector.get_user_data()
+            current_data = collector.get_full_config()
             
             # 确保目录存在
             output_path = Path(target_path)
