@@ -1,0 +1,42 @@
+{
+  "_doc": "用户配置文件 - 用于补全转换过程中缺失的信息",
+  "_tips": {
+    "page_footer_config": "页脚配置，section 可选: frontmatter, mainmatter",
+    "style_options": "frontmatter: roman_lower_center(小写罗马居中), roman_upper_right(大写罗马右对齐); mainmatter: arabic_center(阿拉伯数字居中), arabic_dash(阿拉伯数字带横线)",
+    "toc_mode": "manual(手动目录) 或 auto(自动目录)",
+    "image_defaults": "图片默认配置，当源数据缺失时使用",
+    "formula_defaults": "公式默认配置"
+  },
+  "page_footer_config": [
+    {
+      "section": "frontmatter",
+      "style": "roman_lower_center",
+      "start": 1
+    },
+    {
+      "section": "mainmatter",
+      "style": "arabic_dash",
+      "start": 1
+    }
+  ],
+  "toc_mode": "manual",
+  "toc_title": "目  录",
+  "toc_title_exclude": true,
+  "image_defaults": {
+    "width": 3.5,
+    "align": "center",
+    "ext": "png"
+  },
+  "formula_defaults": {
+    "label_prefix": "式"
+  },
+  "section_toc_exclude": {
+    "abstract": true,
+    "abstract_en": true,
+    "conclusion": true,
+    "acknowledgement": true,
+    "references": true
+  },
+  "heading_toc_exclude_default": false,
+  "citations": []
+}

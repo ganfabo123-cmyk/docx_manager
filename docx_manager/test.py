@@ -1,0 +1,11 @@
+from unicodedata import name
+from full_style_docx_fixer.utils.parse_full_docx import parse_full_docx, parse_full_docx_simple
+
+def parse_docx():
+    # 返回完整结构（包含 headings 和 content）
+    result = parse_full_docx("data\output.docx")
+    print(result)
+
+
+if __name__ == "__main__":
+    parse_docx()
