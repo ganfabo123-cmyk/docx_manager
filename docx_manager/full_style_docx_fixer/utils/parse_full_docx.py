@@ -276,11 +276,12 @@ def extract_citations_from_body(docx_infos: list) -> List[Dict[str, Any]]:
             before_text = text[:ref_pos].strip()
             after_text = text[match.end():].strip()
             
-            citations.append({
-                "ref_id": ref_id,
-                "before": before_text,
-                "after": after_text
-            })
+            if before_text:
+                citations.append({
+                    "ref_id": ref_id,
+                    "before": before_text,
+                    "after": after_text
+                })
     
     return citations
 
