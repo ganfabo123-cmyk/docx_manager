@@ -251,7 +251,7 @@ def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any]) 
                             ref_id = int(match.group(1))
                             ref_text = match.group(2).strip()
                             references.append({"id": ref_id, "text": ref_text})
-                        
+                            
                 else:
                     section_item = {
                         'type': 'section',
