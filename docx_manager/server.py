@@ -306,6 +306,8 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             bodies = []
             found_references = False
             collector.parsed_data = parsed_result
+            import pdb
+            pdb.set_trace()
             for item in parsed_result.get("docx_infos"):
                 item_type = item.get('type', '')
                 item_value = item.get('value', '')
