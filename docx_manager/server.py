@@ -275,7 +275,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 base_name = os.path.splitext(os.path.basename(raw_path))[0]
                 docx_path = os.path.join(temp_dir, f"{base_name}.docx")
                 
-                # 2. 创建 OnlyOffice 所需的转换脚本 (.docbuilder)
+                # 2. 创建 OnlyOffice 所需的转换脚本 (.documentbuilder)
                 # 注意：路径在脚本中需要使用双斜杠或正确转义，这里使用 Python 的 repr 确保安全
                 builder_script_content = f"""
                 builder.OpenFile({repr(raw_path)});
@@ -284,15 +284,15 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 """
                 
                 # 创建临时脚本文件
-                with tempfile.NamedTemporaryFile(mode='w', suffix='.docbuilder', delete=False) as tf:
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.documentbuilder', delete=False) as tf:
                     tf.write(builder_script_content)
                     script_path = tf.name
 
                 try:
-                    # 3. 运行 docbuilder
+                    # 3. 运行 documentbuilder
                     # OnlyOffice 默认就是 headless 的
                     subprocess.run([
-                        'docbuilder', script_path
+                        'documentbuilder', script_path
                     ], check=True, timeout=60, capture_output=True)
                     
                     if not os.path.exists(docx_path):
