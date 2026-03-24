@@ -298,7 +298,8 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 4. 清理所有临时文件
             for p in [raw_path, docx_path]:
                 if os.path.exists(p):
-                        os.remove(p)
+                    pass    
+                        #os.remove(p)
 
 
             # 处理解析结果：
