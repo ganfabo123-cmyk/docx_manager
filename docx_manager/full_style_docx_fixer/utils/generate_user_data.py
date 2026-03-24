@@ -168,6 +168,7 @@ def convert_reference(item: Dict[str, Any]) -> Dict[str, Any]:
 def load_config(config_path: str) -> Dict[str, Any]:
     path = Path(config_path)
     if path.exists():
+        print("配置文件存在!")
         with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
     else:
