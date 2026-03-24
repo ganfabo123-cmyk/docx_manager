@@ -289,8 +289,10 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 return jsonify({"status": "error", "message": f"Conversion failed: {str(e)}"}), 500
 
             # 3. 解析转换后的 .docx
-            parsed_result = parse_full_docx(docx_path)
 
+            parsed_result = parse_full_docx(docx_path)
+            import pdb
+            pdb.set_trace()
             collector.update_from_parsed_result(parsed_result)
 
             # 4. 清理所有临时文件
