@@ -170,6 +170,8 @@ def load_config(config_path: str) -> Dict[str, Any]:
     if path.exists():
         with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
+    else:
+        print("配置文件不存在")
     return {}
 
 
