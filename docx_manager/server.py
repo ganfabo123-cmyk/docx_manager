@@ -268,50 +268,63 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 2. 核心步骤：自动转换 .doc 为 .docx
             # 使用 libreoffice 进行转换
             try:
-                print("[DEBUG] 正在尝试使用 OnlyOffice 将 .doc 转换为 .docx...")
+                print(f"[DEBUG] 正在转换: {raw_path}")
                 
-                # 1. 定义输出路径
-                # 建议使用更加健壮的路径处理
+                docbuilder_bin = '/usr/bin/documentbuilder'
                 base_name = os.path.splitext(os.path.basename(raw_path))[0]
                 docx_path = os.path.join(temp_dir, f"{base_name}.docx")
                 
-                # 2. 创建 OnlyOffice 所需的转换脚本 (.documentbuilder)
-                # 注意：路径在脚本中需要使用双斜杠或正确转义，这里使用 Python 的 repr 确保安全
+                # 确保路径是绝对路径
+                abs_raw_path = os.path.abspath(raw_path)
+                abs_docx_path = os.path.abspath(docx_path)
+
+                # 编写脚本：增加错误捕获逻辑
+                # 使用 json.dumps 确保路径中的转义字符（如 \）被正确处理
+                import json
                 builder_script_content = f"""
-                builder.OpenFile({repr(raw_path)});
-                builder.SaveFile("docx", {repr(docx_path)});
-                builder.CloseFile();
+                var sFileIn = {json.dumps(abs_raw_path)};
+                var sFileOut = {json.dumps(abs_docx_path)};
+                
+                if (builder.OpenFile(sFileIn)) {{
+                    builder.SaveFile("docx", sFileOut);
+                    builder.CloseFile();
+                }} else {{
+                    // 如果打开失败，由于 builder 环境限制，我们只能通过 stdout 间接观察
+                }}
                 """
                 
-                # 创建临时脚本文件
-                with tempfile.NamedTemporaryFile(mode='w', suffix='.documentbuilder', delete=False) as tf:
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.docbuilder', delete=False) as tf:
                     tf.write(builder_script_content)
                     script_path = tf.name
 
                 try:
-                    # 3. 运行 documentbuilder
-                    # OnlyOffice 默认就是 headless 的
-                    subprocess.run([
-                        'documentbuilder', script_path
-                    ], check=True, timeout=60, capture_output=True)
+                    # 运行并捕获所有输出
+                    env = os.environ.copy()
+                    # 关键：手动指定 OnlyOffice 的库路径，防止某些动态库加载失败
+                    env["LD_LIBRARY_PATH"] = "/opt/onlyoffice/documentbuilder:" + env.get("LD_LIBRARY_PATH", "")
+
+                    result = subprocess.run([
+                        docbuilder_bin, script_path
+                    ], capture_output=True, text=True, env=env, timeout=60)
                     
-                    if not os.path.exists(docx_path):
-                        raise Exception("OnlyOffice 转换结束但未找到输出文件")
+                    # 打印 OnlyOffice 的内部日志，非常重要！
+                    print(f"[DEBUG] OnlyOffice Stdout: {result.stdout}")
+                    print(f"[DEBUG] OnlyOffice Stderr: {result.stderr}")
+
+                    if not os.path.exists(abs_docx_path):
+                        # 如果没生成文件，可能是 OpenFile 失败
+                        print(f"[DEBUG ERROR] 文件未生成。请检查输入文件是否损坏或格式不支持。")
+                        raise Exception("OnlyOffice 引擎未能生成 docx 文件，请检查原始 doc 格式")
                         
-                    print(f"[DEBUG] 转换成功，新文件路径: {docx_path}")
+                    print(f"[DEBUG] 转换成功: {abs_docx_path}")
                 
                 finally:
-                    # 4. 无论成功失败，删除临时脚本文件
                     if os.path.exists(script_path):
                         os.remove(script_path)
 
-            except subprocess.CalledProcessError as e:
-                error_msg = e.stderr.decode() if e.stderr else str(e)
-                print(f"[DEBUG ERROR] OnlyOffice 运行出错: {error_msg}")
-                return jsonify({"status": "error", "message": f"OnlyOffice error: {error_msg}"}), 500
             except Exception as e:
                 print(f"[DEBUG ERROR] 转换失败: {str(e)}")
-                return jsonify({"status": "error", "message": f"Conversion failed: {str(e)}"}), 500
+                return jsonify({"status": "error", "message": str(e)}), 500
             # 3. 解析转换后的 .docx
 
             parsed_result = parse_full_docx(docx_path)
