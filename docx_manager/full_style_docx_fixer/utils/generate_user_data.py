@@ -187,6 +187,8 @@ def is_special_section_title(title: str) -> Optional[str]:
     # 摘要
     if '摘要' in title_no_spaces:
         return 'abstract'
+    if '目录' in title_no_spaces:
+        return 'toc'
     # Abstract
     elif title_lower == 'abstract':
         return 'abstract_en'
@@ -211,93 +213,113 @@ def is_special_section_title(title: str) -> Optional[str]:
 def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any], extracted_citations: List[Dict[str, Any]] = None) -> Dict[str, Any]:
     content = []
     toc_entries = []
-    references =[]
+    references = []
     
-    i = 0
-    while i < len(docx_info):
+    # 记录哪些索引已经被合并处理过了，避免重复处理
+    processed_indices = set()
+    
+    for i in range(len(docx_info)):
+        # --- 这里可以放你的调试代码，现在它能捕捉到每一个 i 了 ---
+        if i == 44:
+            # 现在 i=44 一定会进入这里
+            print(f"Debug: Processing index {i}, type: {docx_info[i].get('type')}")
+            
+        if i in processed_indices:
+            continue
+            
         item = docx_info[i]
         item_type = item.get('type', '')
         
+        # 1. 处理 TOC
         if item_type.startswith('toc'):
             toc_entry = extract_toc_entry(item)
             if toc_entry:
                 toc_entries.append(toc_entry)
-            i += 1
             continue
         
+        # 2. 处理 Section 类型
         if is_section_type(item_type):
             content.append(convert_section(item, config))
-            i += 1
-        elif item_type.startswith('heading'):
+            continue
+            
+        # 3. 处理 Heading 及其合并逻辑
+        if item_type.startswith('heading'):
             heading_title = item.get('value', '')
             section_type = is_special_section_title(heading_title)
             
             if section_type:
+                # 发现特殊章节，开始向后寻找属于该章节的 body
                 section_content = []
                 j = i + 1
                 while j < len(docx_info):
                     next_item = docx_info[j]
                     next_type = next_item.get('type', '')
+                    
+                    # 遇到下一个标题就停止合并
                     if next_type.startswith('heading'):
                         break
+                    
                     if next_type == 'body':
                         section_content.append(next_item.get('value', ''))
+                        processed_indices.add(j) # 标记此 body 已被合并
                     j += 1
                 
                 combined_content = '\n\n'.join(section_content)
                 
+                # 分发逻辑
                 if section_type == 'references':
-                    ref_pattern = re.compile(r'\［(\d+)\］(.+)')#针对哈工大或者国标参考文献做特殊处理
+                    ref_pattern = re.compile(r'\［(\d+)\］(.+)')
                     for body_text in section_content:
                         match = ref_pattern.match(body_text.strip())
                         if match:
                             ref_id = int(match.group(1))
                             ref_text = match.group(2).strip()
                             references.append({"id": ref_id, "text": ref_text})
-                            
+                elif section_type == 'toc':
+                    content.append({
+                        'type': 'toc',
+                        'toc_title_exclude': True,
+                        'title': "目  录"
+                    })
                 else:
                     section_item = {
                         'type': 'section',
                         'section_type': section_type,
-                        'toc_exclude': True if section_type in ['abstract', 'abstract_en', 'custom'] else False,
+                        'toc_exclude': section_type in ['abstract', 'abstract_en', 'custom'],
                         'value': combined_content
                     }
                     if section_type == 'custom':
                         section_item['title'] = heading_title
                     content.append(section_item)
-                
-                i = j
+                continue
             else:
+                # 普通标题
                 content.append(convert_heading(item, config))
-                i += 1
-        elif item_type == 'body':
+                continue
+                
+        # 4. 处理其他原子类型
+        if item_type == 'body':
             content.append(convert_body(item))
-            i += 1
         elif item_type == 'table':
             content.append(convert_table(item))
-            i += 1
         elif item_type == 'image':
             content.append(convert_image(item, config))
-            i += 1
         elif item_type == 'formula':
             content.append(convert_formula(item, config))
-            i += 1
         elif item_type == 'reference':
             content.append(convert_reference(item))
-            i += 1
-        else:
-            i += 1
-    
+            
+    # 组装结果 (保持原样)
     result = {
         '_doc': '由 parse_full_docx 生成的数据转换而来',
         '_tips': {
             '图片_path模式': '"path": "/absolute/path/to/image.png"',
             '图片_base64模式': '"base64": "<base64字符串>", "ext": "png"',
-            'toc_exclude': 'true → 标题不进 TOC 域（但可手动写入 toc_entries）',
-            '公式_omml': '直接嵌入 Office Open Math XML，零依赖',
-            '公式_latex': '需要 pip install latex2mathml，否则退化为纯文本'
+            'toc_exclude': 'true → 标题不进 TOC 域',
+            '公式_omml': '直接嵌入 Office Open Math XML',
+            '公式_latex': '需要 pip install latex2mathml'
         },
-        'page_footer_config': config.get('page_footer_config',[]),
+        'page_footer_config': config.get('page_footer_config', []),
         'toc_mode': config.get('toc_mode', 'manual'),
         'toc_entries': toc_entries,
         'content': content
@@ -305,13 +327,11 @@ def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any], 
     
     if references:
         result['references'] = references
-    
-    # 【修复】优先使用从文档中解析出的 citations
     if extracted_citations:
         result['citations'] = extracted_citations
     elif 'citations' in config:
         result['citations'] = config['citations']
-    
+        
     return result
 
 def generate_user_data_from_file(docx_path: str = None, config_path: Optional[str] = None, parsed_data: dict = None) -> Dict[str, Any]:
