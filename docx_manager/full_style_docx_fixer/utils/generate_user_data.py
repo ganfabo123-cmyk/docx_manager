@@ -231,6 +231,8 @@ def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any], 
         
         # 1. 处理 TOC
         if item_type.startswith('toc'):
+            import pdb
+            pdb.set_trace()
             toc_entry = extract_toc_entry(item)
             if toc_entry:
                 toc_entries.append(toc_entry)

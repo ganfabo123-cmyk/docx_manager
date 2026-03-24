@@ -268,26 +268,50 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 2. 核心步骤：自动转换 .doc 为 .docx
             # 使用 libreoffice 进行转换
             try:
-                print("[DEBUG] 正在尝试将 .doc 转换为 .docx...")
-                # 命令解释：--headless 不启动界面，--convert-to 转换格式，--outdir 输出目录
-                subprocess.run([
-                    'libreoffice', '--headless', 
-                    '--convert-to', 'docx', 
-                    raw_path, 
-                    '--outdir', temp_dir
-                ], check=True, timeout=60)
+                print("[DEBUG] 正在尝试使用 OnlyOffice 将 .doc 转换为 .docx...")
                 
-                # 转换后的文件名会自动变成 .docx
-                docx_path = raw_path.replace('.doc', '.docx')
+                # 1. 定义输出路径
+                # 建议使用更加健壮的路径处理
+                base_name = os.path.splitext(os.path.basename(raw_path))[0]
+                docx_path = os.path.join(temp_dir, f"{base_name}.docx")
                 
-                if not os.path.exists(docx_path):
-                    raise Exception("LibreOffice 转换成功但未找到输出文件")
+                # 2. 创建 OnlyOffice 所需的转换脚本 (.docbuilder)
+                # 注意：路径在脚本中需要使用双斜杠或正确转义，这里使用 Python 的 repr 确保安全
+                builder_script_content = f"""
+                builder.OpenFile({repr(raw_path)});
+                builder.SaveFile("docx", {repr(docx_path)});
+                builder.CloseFile();
+                """
+                
+                # 创建临时脚本文件
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.docbuilder', delete=False) as tf:
+                    tf.write(builder_script_content)
+                    script_path = tf.name
+
+                try:
+                    # 3. 运行 docbuilder
+                    # OnlyOffice 默认就是 headless 的
+                    subprocess.run([
+                        'docbuilder', script_path
+                    ], check=True, timeout=60, capture_output=True)
                     
-                print(f"[DEBUG] 转换成功，新文件路径: {docx_path}")
+                    if not os.path.exists(docx_path):
+                        raise Exception("OnlyOffice 转换结束但未找到输出文件")
+                        
+                    print(f"[DEBUG] 转换成功，新文件路径: {docx_path}")
+                
+                finally:
+                    # 4. 无论成功失败，删除临时脚本文件
+                    if os.path.exists(script_path):
+                        os.remove(script_path)
+
+            except subprocess.CalledProcessError as e:
+                error_msg = e.stderr.decode() if e.stderr else str(e)
+                print(f"[DEBUG ERROR] OnlyOffice 运行出错: {error_msg}")
+                return jsonify({"status": "error", "message": f"OnlyOffice error: {error_msg}"}), 500
             except Exception as e:
                 print(f"[DEBUG ERROR] 转换失败: {str(e)}")
                 return jsonify({"status": "error", "message": f"Conversion failed: {str(e)}"}), 500
-
             # 3. 解析转换后的 .docx
 
             parsed_result = parse_full_docx(docx_path)

@@ -1,0 +1,481 @@
+
+[
+  {
+    "type": "body",
+    "value": "本科综合设计（论文）书写范例",
+    "chunk_id": "body_2",
+    "between": [
+      "body_1",
+      "body_3"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（理工类）",
+    "chunk_id": "body_3",
+    "between": [
+      "body_2",
+      "body_4"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "说明：",
+    "chunk_id": "body_4",
+    "between": [
+      "body_3",
+      "body_5"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "规范中所引用的示例，只作为本科综合设计（论文）书写格式的示范，并不代表本科综合设计（论文）研究内容的示范。",
+    "chunk_id": "body_5",
+    "between": [
+      "body_4",
+      "body_6"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "本科综合设计（论文）",
+    "chunk_id": "body_6",
+    "between": [
+      "body_5",
+      "body_7"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "↑",
+    "chunk_id": "body_7",
+    "between": [
+      "body_6",
+      "body_8"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（宋体小1号字加粗）",
+    "chunk_id": "body_8",
+    "between": [
+      "body_7",
+      "body_9"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "局部多孔质气体静压轴承关键技术的研究",
+    "chunk_id": "body_9",
+    "between": [
+      "body_8",
+      "body_10"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "↑",
+    "chunk_id": "body_10",
+    "between": [
+      "body_9",
+      "body_11"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（黑体2号字）",
+    "chunk_id": "body_11",
+    "between": [
+      "body_10",
+      "body_12"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "RESEARCH ON KEY TECHNOLOGIES OF PARTIAL POROUS EXTERNALLY PRESSURIZED GAS BEARING",
+    "chunk_id": "body_12",
+    "between": [
+      "body_11",
+      "body_13"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "↑",
+    "chunk_id": "body_13",
+    "between": [
+      "body_12",
+      "body_14"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（Times New Roman 2号字加粗，题目太长时可用小2号字）",
+    "chunk_id": "body_14",
+    "between": [
+      "body_13",
+      "body_15"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "□□□",
+    "chunk_id": "body_15",
+    "between": [
+      "body_14",
+      "body_16"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "↑",
+    "chunk_id": "body_16",
+    "between": [
+      "body_15",
+      "body_17"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（宋体小2号字加粗）",
+    "chunk_id": "body_17",
+    "between": [
+      "body_16",
+      "body_18"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "哈尔滨工业大学←（楷体小2号字加粗）",
+    "chunk_id": "body_18",
+    "between": [
+      "body_17",
+      "body_19"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "2022年6月←（年、月用阿拉伯数字，",
+    "chunk_id": "body_19",
+    "between": [
+      "body_18",
+      "body_20"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "宋体、Times New Roman小2号字加粗）",
+    "chunk_id": "body_20",
+    "between": [
+      "body_19",
+      "body_21"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "毕业论文  毕业设计          （宋体小4号字）          密级：公开",
+    "chunk_id": "body_21",
+    "between": [
+      "body_20",
+      "body_22"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "本科综合设计（论文）",
+    "chunk_id": "body_22",
+    "between": [
+      "body_21",
+      "body_23"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "↑",
+    "chunk_id": "body_23",
+    "between": [
+      "body_22",
+      "body_24"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（宋体小2号字加粗）",
+    "chunk_id": "body_24",
+    "between": [
+      "body_23",
+      "body_25"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "局部多孔质气体静压轴承关键技术的研究",
+    "chunk_id": "body_25",
+    "between": [
+      "body_24",
+      "body_26"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "↑",
+    "chunk_id": "body_26",
+    "between": [
+      "body_25",
+      "body_27"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（黑体2号字）",
+    "chunk_id": "body_27",
+    "between": [
+      "body_26",
+      "table_28"
+    ]
+  },
+  {
+    "type": "table",
+    "caption": null,
+    "data": [
+      [
+        "本科生",
+        "：",
+        "□□□"
+      ],
+      [
+        "学号",
+        "：",
+        "□□□□□□□□□□"
+      ],
+      [
+        "指导教师",
+        "：",
+        "□□□教授"
+      ],
+      [
+        "专业",
+        "：",
+        "机械制造及其自动化"
+      ],
+      [
+        "学院",
+        "：",
+        "机电工程学院"
+      ],
+      [
+        "答 辩 日 期",
+        "：",
+        "2022年6月"
+      ],
+      [
+        "学校",
+        "：",
+        "哈尔滨工业大学"
+      ]
+    ],
+    "chunk_id": "table_28",
+    "between": [
+      "body_27",
+      "heading1_29"
+    ]
+  },
+  {
+    "type": "heading1",
+    "value": "摘  要",
+    "chunk_id": "heading1_29",
+    "between": [
+      "table_28",
+      "body_30"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "气体静压轴承由于具有运动精度高、摩擦损耗小、发热变形小、寿命长、无污染等特点，在航空航天工业、半导体工业、纺织工业和测量仪器中得到广泛应用。本文在分析国内外气体静压轴承的基础上，以改善气体静压轴承的静态特性和稳定性为目的，通过理论分析、仿真计算和实验研究对局部多孔质气体静压止推轴承进行了研究，同时分析轴承的结构参数和工作参数对局部多孔质气体静压止推轴承工作特性的影响，为局部多孔质气体静压轴承的设计和工程应用奠定理论基础。",
+    "chunk_id": "body_30",
+    "between": [
+      "heading1_29",
+      "body_31"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "建立基于分形几何理论的多孔质石墨渗透率与分形维数之间关系的数学模型，该模型可预测多孔质石墨的渗透率，并可直观描述孔隙的大小对渗透率的影响。",
+    "chunk_id": "body_31",
+    "between": [
+      "body_30",
+      "body_32"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "本文在理论分析的基础上，建立局部多孔质气体静压止推轴承静态特性的数学模型，在此基础上，通过工程方法和有限元方法对所建立的模型进行求解。在采用有限元方法时，首先通过加权余量法，将二阶偏微分方程降为一阶，从而，降低了对插值函数连续度的要求，同时，方便采用有限元方法进行求解。",
+    "chunk_id": "body_32",
+    "between": [
+      "body_31",
+      "body_33"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "……",
+    "chunk_id": "body_33",
+    "between": [
+      "body_32",
+      "body_34"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "关键词:多孔质石墨；……；稳定性",
+    "chunk_id": "body_34",
+    "between": [
+      "body_33",
+      "body_35"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（内容及关键词用小4号字）",
+    "chunk_id": "body_35",
+    "between": [
+      "body_34",
+      "heading1_36"
+    ]
+  },
+  {
+    "type": "heading1",
+    "value": "Abstract",
+    "chunk_id": "heading1_36",
+    "between": [
+      "body_35",
+      "body_37"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "Externally pressurized gas bearing has been widely used in the field of aviation, semiconductor, weave, and measurement apparatus because of its advantage of high accuracy, little friction, low heat distortion, long life-span, and no pollution. In this thesis, based on the domestic and overseas researching development about externally pressurized gas bearing, the author investigated the partial porous externally pressurized gas thrust bearing by theoretical analysis, computer simulation, and experiments to improve its static charaterictics and stability. The effects of structure and operating parameters on partial porous externally pressurized gas bearing has been studied. Therefore, a theoretical foundation for the designing and application for the partial porous externally pressurized gas bearing has been presented.",
+    "chunk_id": "body_37",
+    "between": [
+      "heading1_36",
+      "body_38"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "Based on the fractal theory, a model was established to demonstrate the relationship between the porous graphite permeability and the fractal dimension. It can predict the permeability of porous graphite and show the effects of the pore size on the permeability.",
+    "chunk_id": "body_38",
+    "between": [
+      "body_37",
+      "body_39"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "In this thesis, the author established a model about the static characteristics of partial porous externally pressurized gas thrust bearing, and it was analyzed by engineering solution and Finite Element Method (FEM). While using FEM, the second-order partial differential equation was reduced to one-order by adopting Galerkin weighted residual method, for decreasing the continuity degree requirement of the interpolation function and facilitating to the calculation.",
+    "chunk_id": "body_39",
+    "between": [
+      "body_38",
+      "body_40"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "…",
+    "chunk_id": "body_40",
+    "between": [
+      "body_39",
+      "body_41"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "Keywords：porous graphite, …, Stability",
+    "chunk_id": "body_41",
+    "between": [
+      "body_40",
+      "body_42"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "英文摘要与中文摘要的内容应一致，在语法、用词上应准确无误。关键词间用逗号相连。",
+    "chunk_id": "body_42",
+    "between": [
+      "body_41",
+      "body_43"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "（内容及关键词用Times New Roman 字体小4号字）",
+    "chunk_id": "body_43",
+    "between": [
+      "body_42",
+      "heading1_44"
+    ]
+  },
+  {
+    "type": "heading1",
+    "value": "目  录",
+    "chunk_id": "heading1_44",
+    "between": [
+      "body_43",
+      "body_45"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "摘  要\tI",
+    "chunk_id": "body_45",
+    "between": [
+      "heading1_44",
+      "body_46"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "Abstract\tII",
+    "chunk_id": "body_46",
+    "between": [
+      "body_45",
+      "body_47"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "第1章  绪  论\t1",
+    "chunk_id": "body_47",
+    "between": [
+      "body_46",
+      "body_48"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "1.1  课题背景及研究的目的和意义\t1",
+    "chunk_id": "body_48",
+    "between": [
+      "body_47",
+      "body_49"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "1.2  气体润滑轴承及其相关理论的发展概况\t1",
+    "chunk_id": "body_49",
+    "between": [
+      "body_48",
+      "body_50"
+    ]
+  },
+  {
+    "type": "body",
+    "value": "1.2.1  气体润滑轴承的发展\t1",
+    "chunk_id": "body_50",
+    "between": [
+      "body_49",
+      "body_51"
+    ]
+  }
+]
