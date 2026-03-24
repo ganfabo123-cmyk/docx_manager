@@ -205,10 +205,10 @@ def is_special_section_title(title: str) -> Optional[str]:
     
     return None
 
-def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any]) -> Dict[str, Any]:
+def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any], extracted_citations: List[Dict[str, Any]] = None) -> Dict[str, Any]:
     content = []
     toc_entries = []
-    references = []
+    references =[]
     
     i = 0
     while i < len(docx_info):
@@ -294,7 +294,7 @@ def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any]) 
             '公式_omml': '直接嵌入 Office Open Math XML，零依赖',
             '公式_latex': '需要 pip install latex2mathml，否则退化为纯文本'
         },
-        'page_footer_config': config.get('page_footer_config', []),
+        'page_footer_config': config.get('page_footer_config',[]),
         'toc_mode': config.get('toc_mode', 'manual'),
         'toc_entries': toc_entries,
         'content': content
@@ -303,26 +303,31 @@ def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any]) 
     if references:
         result['references'] = references
     
-    if 'citations' in config:
+    # 【修复】优先使用从文档中解析出的 citations
+    if extracted_citations:
+        result['citations'] = extracted_citations
+    elif 'citations' in config:
         result['citations'] = config['citations']
     
     return result
 
-
-def generate_user_data_from_file(docx_path: str=None, config_path: Optional[str] = None,docx_infos:list=None) -> Dict[str, Any]:
-    if not docx_infos:
+def generate_user_data_from_file(docx_path: str = None, config_path: Optional[str] = None, parsed_data: dict = None) -> Dict[str, Any]:
+    # 统一加载 config
+    if config_path is None:
+        config_path = Path(__file__).parent / 'user_config.json'
+    config = load_config(str(config_path))
+    
+    # 如果没有传入已解析的数据，则调用 parse_full_docx 进行解析
+    if not parsed_data:
         from full_style_docx_fixer.utils.parse_full_docx import parse_full_docx
-        
-        docx_info = parse_full_docx(docx_path)
-        
-        docx_infos = docx_info.get("docx_infos")
-    else:
-        if config_path is None:
-            config_path = Path(__file__).parent / 'user_config.json'
-        
-        config = load_config(str(config_path))
-        
-        return generate_user_data(docx_infos, config)
+        parsed_data = parse_full_docx(docx_path)
+    
+    # 从字典中安全地取出这两部分数据
+    docx_infos = parsed_data.get("docx_infos", [])
+    citations = parsed_data.get("citations",[])
+    
+    # 【修复】调用生成函数时，把 citations 也传进去，并且记得 return！
+    return generate_user_data(docx_infos, config, extracted_citations=citations)
     
 
 

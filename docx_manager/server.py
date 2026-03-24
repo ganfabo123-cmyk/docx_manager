@@ -41,7 +41,7 @@ class DataCollector:
         self.formula_defaults = {
             "label_prefix": "式"
         }
-        self.docx_infos = []
+        self.parsed_data = {"docx_infos": [], "citations": []} 
 
     def set_doc(self, doc: str):
         self.user_data._doc = doc
@@ -99,6 +99,13 @@ class DataCollector:
             )
             for cit in citations
         ]
+
+    def update_from_parsed_result(self, parsed_result: Dict[str, Any]):
+        """新增方法：直接从解析结果同步数据到 collector"""
+        self.parsed_data = parsed_result
+        if "citations" in parsed_result:
+            # 自动同步解析到的引用到 user_data 中，这样 save_config 就能存入 json
+            self.set_citations(parsed_result["citations"])
 
     def get_user_data(self) -> Dict[str, Any]:
         data = self.user_data.to_dict()
@@ -242,18 +249,6 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             print(traceback.format_exc())
             return jsonify({"status": "error", "message": f"Save failed: {str(e)}"}), 500
 
-    @app.route('/citations', methods=['POST'])
-    def receive_citations():
-        try:
-            data = request.get_json()
-            if 'value' in data and isinstance(data['value'], list):
-                collector.set_citations(data['value'])
-            return jsonify({"status": "success", "message": "citations received"}), 200
-        except Exception as e:
-            print(f"[ERROR] Citations receive failed: {str(e)}")
-            print(traceback.format_exc())
-            return jsonify({"status": "error", "message": str(e)}), 400
-
     @app.route('/recieve_right_style_docx', methods=['POST'])
     def receive_need_docx():
         try:
@@ -296,6 +291,8 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 3. 解析转换后的 .docx
             parsed_result = parse_full_docx(docx_path)
 
+            collector.update_from_parsed_result(parsed_result)
+
             # 4. 清理所有临时文件
             for p in [raw_path, docx_path]:
                 if os.path.exists(p):
@@ -308,7 +305,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             references = []
             bodies = []
             found_references = False
-            collector.docx_infos = parsed_result.get("docx_infos")
+            collector.parsed_data = parsed_result
             for item in parsed_result.get("docx_infos"):
                 item_type = item.get('type', '')
                 item_value = item.get('value', '')
@@ -368,20 +365,14 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
     @app.route('/generate_user_data', methods=['POST'])
     def generate_user_data():
         try:
-            # 保存配置到文件
             if not collector.save_config():
                 return jsonify({"status": "error", "message": "Failed to save config"}), 500
             
-            # 读取 DOCX 路径
-            data = request.get_json()
-
-            
-            # 调用 generate_user_data 函数
+            # 2. 调用生成逻辑
             from full_style_docx_fixer.utils.generate_user_data import generate_user_data_from_file, save_user_data
             
-            #print(collector.docx_infos)
-            result = generate_user_data_from_file(docx_infos=collector.docx_infos)
-            
+            # 传入整个字典，里面包含 docx_infos 和 citations
+            result = generate_user_data_from_file(parsed_data=collector.parsed_data)
             # 保存用户数据 JSON
             output_path = str(Path(__file__).parent / 'data' / 'generated_user_data.json')
             save_user_data(result, output_path)

@@ -5,6 +5,7 @@ from docx.text.paragraph import Paragraph
 from docx.table import Table
 import base64
 import io
+import re
 from typing import List, Dict, Any, Optional
 import xml.etree.ElementTree as ET
 
@@ -285,6 +286,46 @@ def extract_citations_from_body(docx_infos: list) -> List[Dict[str, Any]]:
     
     return citations
 
+def extract_superscript_citations(paragraph: Paragraph) -> List[Dict[str, Any]]:
+    """
+    提取段落中格式为上标的文献引用 [x]
+    """
+    citations =[]
+    
+    # 1. 字符级映射：记录段落中每个字符以及它是否为上标
+    char_formats =[]
+    for run in paragraph.runs:
+        # run.font.superscript 可能是 True, False 或 None(继承默认)
+        is_super = (run.font.superscript is True) 
+        
+        for char in run.text:
+            char_formats.append((char, is_super))
+            
+    if not char_formats:
+        return citations
+        
+    # 2. 还原完整的纯文本，用于正则匹配
+    full_text = "".join([c[0] for c in char_formats])
+    
+    # 3. 正则寻找 [数字] 格式
+    # 提示: 如果你的文档有 [1-3] 或[1,2] 格式，可以把正则改为 r'\[([\d,\-]+)\]'
+    for match in re.finditer(r'\[(\d+)\]', full_text):
+        match_start, match_end = match.span()
+        num_start, num_end = match.span(1) # 仅仅是数字部分的索引
+        
+        # 4. 判断该数字部分是否为上标
+        # 只要数字部分中有任何一个字符被标记为上标，我们就认为它是一个真正的 Citation
+        is_superscript = any(char_formats[i][1] for i in range(num_start, num_end))
+        
+        if is_superscript:
+            citations.append({
+                "ref_id": int(match.group(1)),
+                "before": full_text[:match_start].strip(),
+                "after": full_text[match_end:].strip()
+            })
+            
+    return citations
+
 def parse_toc(docx_info: list) -> list:
     """
     生成的docx info把目录中的标题(toc1,toc2,toc3)归到了正文类,这个函数需要:
@@ -328,6 +369,7 @@ def parse_toc(docx_info: list) -> list:
 def parse_full_docx(doc_path: str) -> list:
     doc = Document(doc_path)
     docx_infos = []
+    citations_global = []
     ref_started = False
 
     elements = []
@@ -374,7 +416,16 @@ def parse_full_docx(doc_path: str) -> list:
                     "type": "body",
                     "value": text
                 })
-
+                    # 当这是一个正文段落时：
+            if text:
+                elements.append({
+                    "type": "body",
+                    "value": text
+                })
+                # 🔥 在这里直接调用我们的上标检测函数 🔥
+                true_citations = extract_superscript_citations(paragraph)
+                if true_citations:
+                    citations_global.extend(true_citations)
         elif element.tag == f"{{{W}}}tbl":
             table = Table(element, doc.element.body)
             table_result = parse_table(table)
@@ -404,7 +455,7 @@ def parse_full_docx(doc_path: str) -> list:
 
     docx_infos = parse_toc(docx_infos)
     
-    citations = extract_citations_from_body(docx_infos)
+    citations = citations_global# extract_citations_from_body(docx_infos)
     
     return {
         "docx_infos": docx_infos,
