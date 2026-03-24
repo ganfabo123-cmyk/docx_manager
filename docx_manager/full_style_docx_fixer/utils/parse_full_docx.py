@@ -410,12 +410,6 @@ def parse_full_docx(doc_path: str) -> list:
                             "value": text
                         })
                     continue
-
-            if text:
-                elements.append({
-                    "type": "body",
-                    "value": text
-                })
                     # 当这是一个正文段落时：
             if text:
                 elements.append({

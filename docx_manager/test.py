@@ -4,7 +4,7 @@ from full_style_docx_fixer.utils.generate_user_data import generate_user_data_fr
 def parse_docx():
     # 返回完整结构（包含 headings 和 content）
     result = parse_full_docx("docx_manager\data\\template.docx")
-    parse_data = generate_user_data_from_file(docx_infos=result.get("docx_infos"))
+    parse_data = generate_user_data_from_file(parsed_data=result)
     print(parse_data)
 
 
