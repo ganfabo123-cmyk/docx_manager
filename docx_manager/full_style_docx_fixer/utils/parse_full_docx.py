@@ -345,7 +345,8 @@ def parse_toc(docx_info: list) -> list:
     # 然后处理body元素，判断是否为目录项
     import re
     toc_pattern = re.compile(r'^(.+?)\s*\t.*$')  # 匹配目录项，去除后面的页码
-    
+    import pdb
+    pdb.set_trace()
     for item in docx_info:
         if item['type'] == 'body':
             # 尝试匹配目录项格式
