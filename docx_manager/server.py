@@ -374,7 +374,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 传入整个字典，里面包含 docx_infos 和 citations
             result = generate_user_data_from_file(parsed_data=collector.parsed_data)
             # 保存用户数据 JSON
-            pdb.set_trace()
+            # pdb.set_trace()
             output_path = str(Path(__file__).parent / 'data' / 'generated_user_data.json')
             save_user_data(result, output_path)
             

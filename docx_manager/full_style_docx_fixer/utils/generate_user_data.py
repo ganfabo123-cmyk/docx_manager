@@ -221,9 +221,7 @@ def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any], 
     
     for i in range(len(docx_info)):
         # --- 这里可以放你的调试代码，现在它能捕捉到每一个 i 了 ---
-        if i == 44:
-            # 现在 i=44 一定会进入这里
-            print(f"Debug: Processing index {i}, type: {docx_info[i].get('type')}")
+        print(f"Debug: Processing index {i}, type: {docx_info[i].get('type')}")
             
         if i in processed_indices:
             continue
