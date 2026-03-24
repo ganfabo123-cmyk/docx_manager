@@ -10,7 +10,7 @@ from full_style_docx_fixer.models.models import UserData, PageFooterConfig, TocE
 from full_style_docx_fixer.utils.parse_full_docx import parse_full_docx
 import json
 from pathlib import Path
-
+import pdb
 # 使用 Path 构建跨平台路径
 PROJECT_ROOT = Path(__file__).parent
 TEMPLATE_DOCX_PATH = str(PROJECT_ROOT / "data" / "full_template_v6.docx")
@@ -374,6 +374,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 传入整个字典，里面包含 docx_infos 和 citations
             result = generate_user_data_from_file(parsed_data=collector.parsed_data)
             # 保存用户数据 JSON
+            pdb.set_trace()
             output_path = str(Path(__file__).parent / 'data' / 'generated_user_data.json')
             save_user_data(result, output_path)
             
