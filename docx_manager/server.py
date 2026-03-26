@@ -11,6 +11,9 @@ from full_style_docx_fixer.utils.parse_full_docx import parse_full_docx
 import json
 from pathlib import Path
 import pdb
+import win32com.client as win32
+import pythoncom  # 必须导入，处理多线程调用
+
 # 使用 Path 构建跨平台路径
 PROJECT_ROOT = Path(__file__).parent
 TEMPLATE_DOCX_PATH = str(PROJECT_ROOT / "data" / "full_template_v6.docx")
@@ -268,68 +271,56 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             # 2. 核心步骤：自动转换 .doc 为 .docx
             # 使用 libreoffice 进行转换
             try:
-                print(f"[DEBUG] 正在转换: {raw_path}")
+                print(f"[DEBUG] 正在 Windows 环境下调用原生 Word 转换: {raw_path}")
                 
-                docbuilder_bin = '/usr/bin/documentbuilder'
-                base_name = os.path.splitext(os.path.basename(raw_path))[0]
-                docx_path = os.path.join(temp_dir, f"{base_name}.docx")
-                
-                # 确保路径是绝对路径
+                # 1. 准备路径（Word 必须使用绝对路径，且 Windows 路径需标准化）
                 abs_raw_path = os.path.abspath(raw_path)
+                base_name = os.path.splitext(os.path.basename(abs_raw_path))[0]
+                docx_path = os.path.join(temp_dir, f"{base_name}.docx")
                 abs_docx_path = os.path.abspath(docx_path)
 
-                # 编写脚本：增加错误捕获逻辑
-                # 使用 json.dumps 确保路径中的转义字符（如 \）被正确处理
-                import json
-                builder_script_content = f"""
-                var sFileIn = {json.dumps(abs_raw_path)};
-                var sFileOut = {json.dumps(abs_docx_path)};
-                
-                if (builder.OpenFile(sFileIn)) {{
-                    builder.SaveFile("docx", sFileOut);
-                    builder.CloseFile();
-                }} else {{
-                    // 如果打开失败，由于 builder 环境限制，我们只能通过 stdout 间接观察
-                }}
-                """
-                
-                with tempfile.NamedTemporaryFile(mode='w', suffix='.docbuilder', delete=False) as tf:
-                    tf.write(builder_script_content)
-                    script_path = tf.name
+                # 2. 初始化 COM 接口（如果在 Flask/FastAPI 等异步框架中运行，这是必须的）
+                pythoncom.CoInitialize()
 
+                word = None
+                doc = None
                 try:
-                    # 运行并捕获所有输出
-                    env = os.environ.copy()
-                    # 关键：手动指定 OnlyOffice 的库路径，防止某些动态库加载失败
-                    env["LD_LIBRARY_PATH"] = "/opt/onlyoffice/documentbuilder:" + env.get("LD_LIBRARY_PATH", "")
+                    # 3. 启动 Word 进程
+                    # EnsureDispatch 会自动生成缓存，效率更高
+                    word = win32.gencache.EnsureDispatch('Word.Application')
+                    word.Visible = False  # 不显示 Word 界面
+                    word.DisplayAlerts = False  # 不弹窗确认
 
-                    result = subprocess.run([
-                        docbuilder_bin, script_path
-                    ], capture_output=True, text=True, env=env, timeout=60)
+                    # 4. 打开文档
+                    doc = word.Documents.Open(abs_raw_path)
+
+                    # 5. 另存为 docx
+                    # FileFormat=16 代表 wdFormatXMLDocument (即 docx)
+                    doc.SaveAs2(abs_docx_path, FileFormat=16)
                     
-                    # 打印 OnlyOffice 的内部日志，非常重要！
-                    print(f"[DEBUG] OnlyOffice Stdout: {result.stdout}")
-                    print(f"[DEBUG] OnlyOffice Stderr: {result.stderr}")
+                    print(f"[DEBUG] 原生 Word 转换成功: {abs_docx_path}")
 
-                    if not os.path.exists(abs_docx_path):
-                        # 如果没生成文件，可能是 OpenFile 失败
-                        print(f"[DEBUG ERROR] 文件未生成。请检查输入文件是否损坏或格式不支持。")
-                        raise Exception("OnlyOffice 引擎未能生成 docx 文件，请检查原始 doc 格式")
-                        
-                    print(f"[DEBUG] 转换成功: {abs_docx_path}")
-                
                 finally:
-                    if os.path.exists(script_path):
-                        os.remove(script_path)
+                    # 6. 无论成功失败，必须关闭文档并退出，否则后台会堆积一大堆 winword.exe
+                    if doc:
+                        doc.Close(False)
+                    # 如果你并发量大，建议把 word 对象写成全局单例，不要每次都 Quit
+                    # 但如果是脚本运行，建议 Quit
+                    if word:
+                        word.Quit()
+                    # 释放 COM 资源
+                    pythoncom.CoUninitialize()
+
+                if not os.path.exists(abs_docx_path):
+                    raise Exception("Word 运行结束但未生成 docx 文件")
 
             except Exception as e:
-                print(f"[DEBUG ERROR] 转换失败: {str(e)}")
-                return jsonify({"status": "error", "message": str(e)}), 500
-            # 3. 解析转换后的 .docx
+                print(f"[DEBUG ERROR] Windows 原生转换失败: {str(e)}")
+                # 这里可以加一个兜底，如果 Word 挂了，尝试直接改名（如果是伪 doc 的话）
+                return jsonify({"status": "error", "message": f"Windows Word conversion failed: {str(e)}"}), 500
 
             parsed_result = parse_full_docx(docx_path)
-            import pdb
-            pdb.set_trace()
+
             collector.update_from_parsed_result(parsed_result)
 
             # 4. 清理所有临时文件
@@ -345,9 +336,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
             references = []
             bodies = []
             found_references = False
-            collector.parsed_data = parsed_result
-            import pdb
-            pdb.set_trace()
+
             for item in parsed_result.get("docx_infos"):
                 item_type = item.get('type', '')
                 item_value = item.get('value', '')

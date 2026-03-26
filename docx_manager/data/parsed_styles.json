@@ -1,1727 +1,572 @@
 [
   {
-    "block_id": 1,
-    "type": "paragraph",
-    "text": "哈 尔 滨 工 业 大 学",
-    "style_name": "Plain Text",
-    "alignment": "center",
-    "spacing": {
-      "before": "240"
-    }
-  },
-  {
-    "block_id": 2,
-    "type": "paragraph",
-    "text": "本科综合设计（论文）书写范例",
-    "style_name": "Plain Text",
-    "alignment": "center",
-    "spacing": {
-      "before": "240"
-    }
-  },
-  {
-    "block_id": 3,
-    "type": "paragraph",
-    "text": "（理工类）",
-    "style_name": "Plain Text",
-    "alignment": "center",
-    "spacing": {
-      "before": "240"
-    }
-  },
-  {
-    "block_id": 15,
-    "type": "paragraph",
-    "text": "说明：",
-    "style_name": "Normal"
-  },
-  {
-    "block_id": 17,
-    "type": "paragraph",
-    "text": "规范中所引用的示例，只作为本科综合设计（论文）书写格式的示范，并不代表本科综合设计（论文）研究内容的...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    }
-  },
-  {
-    "block_id": 23,
-    "type": "paragraph",
-    "text": "本科综合设计（论文）",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 24,
-    "type": "paragraph",
-    "text": "↑",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 25,
-    "type": "paragraph",
-    "text": "（宋体小1号字加粗）",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 26,
-    "type": "paragraph",
-    "text": "局部多孔质气体静压轴承关键技术的研究",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "before": "240"
-    }
-  },
-  {
-    "block_id": 27,
-    "type": "paragraph",
-    "text": "↑",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 28,
-    "type": "paragraph",
-    "text": "（黑体2号字）",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 29,
-    "type": "paragraph",
-    "text": "RESEARCH ON KEY TECHNOLOGIES OF PARTIAL POROUS EXT...",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "line": "300",
-      "before": "240"
-    }
-  },
-  {
-    "block_id": 30,
-    "type": "paragraph",
-    "text": "↑",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 31,
-    "type": "paragraph",
-    "text": "（Times New Roman 2号字加粗，题目太长时可用小2号字）",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 33,
-    "type": "paragraph",
-    "text": "□□□",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 34,
-    "type": "paragraph",
-    "text": "↑",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 35,
-    "type": "paragraph",
-    "text": "（宋体小2号字加粗）",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 43,
-    "type": "paragraph",
-    "text": "哈尔滨工业大学←（楷体小2号字加粗）",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "line": "324"
-    }
-  },
-  {
-    "block_id": 44,
-    "type": "paragraph",
-    "text": "2022年6月←（年、月用阿拉伯数字，",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 45,
-    "type": "paragraph",
-    "text": "宋体、Times New Roman小2号字加粗）",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 46,
-    "type": "paragraph",
-    "text": "毕业论文  毕业设计          （宋体小4号字）          密级：公开",
-    "style_name": "Normal"
-  },
-  {
-    "block_id": 50,
-    "type": "paragraph",
-    "text": "本科综合设计（论文）",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 51,
-    "type": "paragraph",
-    "text": "↑",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 52,
-    "type": "paragraph",
-    "text": "（宋体小2号字加粗）",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "line": "300"
-    }
-  },
-  {
-    "block_id": 53,
-    "type": "paragraph",
-    "text": "局部多孔质气体静压轴承关键技术的研究",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 54,
-    "type": "paragraph",
-    "text": "↑",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 55,
-    "type": "paragraph",
-    "text": "（黑体2号字）",
-    "style_name": "Normal",
-    "alignment": "center"
-  },
-  {
-    "block_id": 59,
-    "type": "table",
-    "rows": 7,
-    "cols": 3,
-    "caption": "",
-    "table_style": {
-      "width": "0",
-      "width_type": "auto"
-    }
-  },
-  {
-    "block_id": 64,
-    "type": "paragraph",
-    "text": "摘  要",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "391",
-      "after": "312"
-    }
-  },
-  {
-    "block_id": 65,
-    "type": "paragraph",
-    "text": "气体静压轴承由于具有运动精度高、摩擦损耗小、发热变形小、寿命长、无污染等特点，在航空航天工业、半导体...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
-  },
-  {
-    "block_id": 66,
-    "type": "paragraph",
-    "text": "建立基于分形几何理论的多孔质石墨渗透率与分形维数之间关系的数学模型，该模型可预测多孔质石墨的渗透率，...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
-  },
-  {
-    "block_id": 67,
-    "type": "paragraph",
-    "text": "本文在理论分析的基础上，建立局部多孔质气体静压止推轴承静态特性的数学模型，在此基础上，通过工程方法和...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
-  },
-  {
-    "block_id": 68,
-    "type": "paragraph",
-    "text": "……",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
-  },
-  {
-    "block_id": 69,
-    "type": "paragraph",
-    "text": "关键词:多孔质石墨；……；稳定性",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    }
-  },
-  {
-    "block_id": 73,
-    "type": "paragraph",
-    "text": "（内容及关键词用小4号字）",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "line": "300"
-    }
-  },
-  {
-    "block_id": 77,
-    "type": "paragraph",
-    "text": "Abstract",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "391",
-      "after": "312"
-    }
-  },
-  {
-    "block_id": 78,
-    "type": "paragraph",
-    "text": "Externally pressurized gas bearing has been widely...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
-  },
-  {
-    "block_id": 79,
-    "type": "paragraph",
-    "text": "Based on the fractal theory, a model was establish...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
-  },
-  {
-    "block_id": 80,
-    "type": "paragraph",
-    "text": "In this thesis, the author established a model abo...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
-  },
-  {
-    "block_id": 81,
-    "type": "paragraph",
-    "text": "…",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
-  },
-  {
-    "block_id": 82,
-    "type": "paragraph",
-    "text": "Keywords：porous graphite, …, Stability",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    }
-  },
-  {
-    "block_id": 86,
-    "type": "paragraph",
-    "text": "英文摘要与中文摘要的内容应一致，在语法、用词上应准确无误。关键词间用逗号相连。",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "487"
-    }
-  },
-  {
-    "block_id": 87,
-    "type": "paragraph",
-    "text": "（内容及关键词用Times New Roman 字体小4号字）",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "line": "300"
-    }
-  },
-  {
-    "block_id": 89,
-    "type": "paragraph",
-    "text": "目  录",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "391",
-      "after": "312"
-    }
-  },
-  {
-    "block_id": 90,
-    "type": "paragraph",
-    "text": "摘  要\tI",
-    "style_name": "toc 1"
-  },
-  {
-    "block_id": 91,
-    "type": "paragraph",
-    "text": "Abstract\tII",
-    "style_name": "toc 1"
-  },
-  {
-    "block_id": 92,
-    "type": "paragraph",
-    "text": "第1章  绪  论\t1",
-    "style_name": "toc 1"
+    "id": 1,
+    "type": "h1",
+    "content": "哈 尔 滨 工 业 大 学"
   },
   {
-    "block_id": 93,
-    "type": "paragraph",
-    "text": "1.1  课题背景及研究的目的和意义\t1",
-    "style_name": "toc 2",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 2,
+    "type": "h1",
+    "content": "本科综合设计（论文）书写范例"
   },
   {
-    "block_id": 94,
+    "id": 3,
     "type": "paragraph",
-    "text": "1.2  气体润滑轴承及其相关理论的发展概况\t1",
-    "style_name": "toc 2",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "（理工类）"
   },
   {
-    "block_id": 95,
-    "type": "paragraph",
-    "text": "1.2.1  气体润滑轴承的发展\t1",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 15,
+    "type": "h2",
+    "content": "说明："
   },
   {
-    "block_id": 96,
-    "type": "paragraph",
-    "text": "1.2.2  气体润滑轴承的分类\t1",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 23,
+    "type": "h1",
+    "content": "本科综合设计（论文）"
   },
   {
-    "block_id": 97,
+    "id": 24,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "↑"
   },
   {
-    "block_id": 98,
+    "id": 25,
     "type": "paragraph",
-    "text": "1.2.5  多孔质气体静压轴承的研究\t3",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "（宋体小1号字加粗）"
   },
   {
-    "block_id": 99,
-    "type": "paragraph",
-    "text": "……",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 26,
+    "type": "h1",
+    "content": "局部多孔质气体静压轴承关键技术的研究"
   },
   {
-    "block_id": 100,
+    "id": 27,
     "type": "paragraph",
-    "text": "1.4  本文的主要研究内容\t3",
-    "style_name": "toc 2",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "↑"
   },
   {
-    "block_id": 101,
+    "id": 28,
     "type": "paragraph",
-    "text": "第4章  基于FLUENT软件的轴承静态特性研究\t4",
-    "style_name": "toc 1"
+    "content": "（黑体2号字）"
   },
   {
-    "block_id": 102,
+    "id": 30,
     "type": "paragraph",
-    "text": "4.1  引言\t4",
-    "style_name": "toc 2",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "↑"
   },
   {
-    "block_id": 103,
+    "id": 33,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "□□□"
   },
   {
-    "block_id": 104,
+    "id": 34,
     "type": "paragraph",
-    "text": "4.2.3  边界条件的设定\t4",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "↑"
   },
   {
-    "block_id": 105,
+    "id": 35,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "（宋体小2号字加粗）"
   },
   {
-    "block_id": 106,
+    "id": 43,
     "type": "paragraph",
-    "text": "4.4  本章小结\t5",
-    "style_name": "toc 2",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "哈尔滨工业大学←（楷体小2号字加粗）"
   },
   {
-    "block_id": 107,
+    "id": 44,
     "type": "paragraph",
-    "text": "第6章  局部多孔质静压轴承的试验研究\t5",
-    "style_name": "toc 1"
+    "content": "2022年6月←（年、月用阿拉伯数字，"
   },
   {
-    "block_id": 108,
+    "id": 45,
     "type": "paragraph",
-    "text": "6.1  引言\t5",
-    "style_name": "toc 2",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "宋体、Times New Roman小2号字加粗）"
   },
   {
-    "block_id": 109,
-    "type": "paragraph",
-    "text": "6.2  多孔质石墨渗透率测试试验\t5",
-    "style_name": "toc 2",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 50,
+    "type": "h1",
+    "content": "本科综合设计（论文）"
   },
   {
-    "block_id": 110,
+    "id": 51,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "toc 3",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "243",
-      "left": "0"
-    }
+    "content": "↑"
   },
   {
-    "block_id": 111,
+    "id": 52,
     "type": "paragraph",
-    "text": "6.5  本章小结\t7",
-    "style_name": "toc 2",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "（宋体小2号字加粗）"
   },
   {
-    "block_id": 112,
-    "type": "paragraph",
-    "text": "结  论\t8",
-    "style_name": "toc 1"
+    "id": 53,
+    "type": "h1",
+    "content": "局部多孔质气体静压轴承关键技术的研究"
   },
   {
-    "block_id": 113,
+    "id": 54,
     "type": "paragraph",
-    "text": "参考文献\t9",
-    "style_name": "toc 1"
+    "content": "↑"
   },
   {
-    "block_id": 114,
+    "id": 55,
     "type": "paragraph",
-    "text": "攻读学士学位期间取得创新性成果\t10",
-    "style_name": "toc 1"
+    "content": "（黑体2号字）"
   },
   {
-    "block_id": 115,
-    "type": "paragraph",
-    "text": "哈尔滨工业大学本科综合设计（论文）原创性声明和使用权限\t11",
-    "style_name": "toc 1"
+    "id": 63,
+    "type": "h2",
+    "content": "摘  要"
   },
   {
-    "block_id": 116,
+    "id": 67,
     "type": "paragraph",
-    "text": "致  谢\t12",
-    "style_name": "toc 1"
+    "content": "……"
   },
   {
-    "block_id": 119,
+    "id": 68,
     "type": "paragraph",
-    "text": "第1章  绪  论",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "391",
-      "after": "312"
-    }
+    "content": "关键词:多孔质石墨；……；稳定性"
   },
   {
-    "block_id": 120,
+    "id": 72,
     "type": "paragraph",
-    "text": "1.1  课题背景及研究的目的和意义",
-    "style_name": "Heading 2",
-    "spacing": {
-      "before": "195",
-      "after": "195"
-    }
+    "content": "（内容及关键词用小4号字）"
   },
   {
-    "block_id": 121,
-    "type": "paragraph",
-    "text": "发展国防工业、微电子工业等尖端技术需要精密和超精密的仪器设备，精密仪器设备要求高速、……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "id": 76,
+    "type": "h2",
+    "content": "Abstract"
   },
   {
-    "block_id": 122,
+    "id": 80,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "content": "..."
   },
   {
-    "block_id": 123,
-    "type": "paragraph",
-    "text": "1.2  气体润滑轴承及其相关理论的发展概况",
-    "style_name": "Heading 2",
-    "spacing": {
-      "before": "195",
-      "after": "195"
-    }
+    "id": 88,
+    "type": "h2",
+    "content": "目  录"
   },
   {
-    "block_id": 124,
-    "type": "paragraph",
-    "text": "气体轴承是利用气膜支撑负荷或减少摩擦的机械构件。……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "id": 89,
+    "type": "toc1",
+    "content": "摘  要\tI"
   },
   {
-    "block_id": 125,
-    "type": "paragraph",
-    "text": "……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "id": 90,
+    "type": "toc1",
+    "content": "Abstract\tII"
   },
   {
-    "block_id": 126,
-    "type": "paragraph",
-    "text": "1.2.1  气体润滑轴承的发展",
-    "style_name": "Heading 3",
-    "spacing": {
-      "line": "300",
-      "before": "195",
-      "after": "195"
-    }
+    "id": 91,
+    "type": "toc1",
+    "content": "第1章  绪  论\t1"
   },
   {
-    "block_id": 127,
-    "type": "paragraph",
-    "text": "1828年，R.R.Willis[3]发表了一篇关于小孔节流平板中压力分布的文章，这是有记载的研究气...",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "id": 92,
+    "type": "toc2",
+    "content": "1.1  课题背景及研究的目的和意义\t1"
   },
   {
-    "block_id": 128,
-    "type": "paragraph",
-    "text": "根据间隙内气膜压力的产生原理，气体轴承可以分为四种基本形式：",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "id": 93,
+    "type": "toc2",
+    "content": "1.2  气体润滑轴承及其相关理论的发展概况\t1"
   },
   {
-    "block_id": 129,
-    "type": "paragraph",
-    "text": "（1）气体静压轴承  加压气体经过节流器进入间隙，在间隙内产生压力气膜使物体浮起的气体轴承，……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "id": 94,
+    "type": "toc3",
+    "content": "1.2.1  气体润滑轴承的发展\t1"
   },
   {
-    "block_id": 130,
-    "type": "paragraph",
-    "text": "1.2.2  气体润滑轴承的分类",
-    "style_name": "Heading 3",
-    "spacing": {
-      "line": "300",
-      "before": "195",
-      "after": "195"
-    }
+    "id": 95,
+    "type": "toc3",
+    "content": "1.2.2  气体润滑轴承的分类\t1"
   },
   {
-    "block_id": 131,
+    "id": 96,
     "type": "paragraph",
-    "text": "根据间隙内气膜压力的产生原理，气体轴承可以分为四种基本形式，其结构如图1-1所示。",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "content": "……"
   },
   {
-    "block_id": 132,
-    "type": "paragraph",
-    "text": "（1）气体静压轴承  加压气体经过节流器进入间隙，在间隙内产生压力气膜使物体浮起的气体轴承，结构如图...",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "id": 97,
+    "type": "toc3",
+    "content": "1.2.5  多孔质气体静压轴承的研究\t3"
   },
   {
-    "block_id": 133,
+    "id": 98,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "507"
-    }
+    "content": "……"
   },
   {
-    "block_id": 146,
-    "type": "paragraph",
-    "text": "图1-1  气体润滑轴承的分类",
-    "style_name": "Normal",
-    "alignment": "center"
+    "id": 99,
+    "type": "toc2",
+    "content": "1.4  本文的主要研究内容\t3"
   },
   {
-    "block_id": 147,
-    "type": "paragraph",
-    "text": "(a) 气体静压轴承; (b) 气体动压轴承; (c) 气体动静压轴承; (d) 气体压膜轴承",
-    "style_name": "Normal",
-    "alignment": "center"
+    "id": 100,
+    "type": "toc1",
+    "content": "第4章  基于FLUENT软件的轴承静态特性研究\t4"
   },
   {
-    "block_id": 149,
-    "type": "paragraph",
-    "text": "（也可以按照下图范例书写）",
-    "style_name": "Normal"
+    "id": 101,
+    "type": "toc2",
+    "content": "4.1  引言\t4"
   },
   {
-    "block_id": 151,
+    "id": 102,
     "type": "paragraph",
-    "text": "(a) 气体静压轴承                          (b) 气体动压轴承",
-    "style_name": "Normal",
-    "alignment": "left",
-    "indentation": {
-      "firstLine": "371"
-    }
+    "content": "……"
   },
   {
-    "block_id": 152,
-    "type": "paragraph",
-    "text": "图1-1  气体润滑轴承的分类",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "line": "280"
-    }
+    "id": 103,
+    "type": "toc3",
+    "content": "4.2.3  边界条件的设定\t4"
   },
   {
-    "block_id": 153,
+    "id": 104,
     "type": "paragraph",
-    "text": "1.2.5  多孔质气体静压轴承的研究",
-    "style_name": "Heading 3",
-    "spacing": {
-      "line": "300",
-      "before": "195",
-      "after": "195"
-    }
+    "content": "……"
   },
   {
-    "block_id": 154,
-    "type": "paragraph",
-    "text": "由于气体的压力低和可压缩性，……。",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "506"
-    }
+    "id": 105,
+    "type": "toc2",
+    "content": "4.4  本章小结\t5"
   },
   {
-    "block_id": 155,
-    "type": "paragraph",
-    "text": "1.2.5.1  多孔质静压轴承的分类",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 106,
+    "type": "toc1",
+    "content": "第6章  局部多孔质静压轴承的试验研究\t5"
   },
   {
-    "block_id": 156,
-    "type": "paragraph",
-    "text": "轴承工作面的整体或……。",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "506"
-    }
+    "id": 107,
+    "type": "toc2",
+    "content": "6.1  引言\t5"
   },
   {
-    "block_id": 157,
-    "type": "paragraph",
-    "text": "1.2.5.2  多孔质材料特性的研究",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 108,
+    "type": "toc2",
+    "content": "6.2  多孔质石墨渗透率测试试验\t5"
   },
   {
-    "block_id": 158,
+    "id": 109,
     "type": "paragraph",
-    "text": "材料的主要特点是具有一定的……。",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "506"
-    }
+    "content": "……"
   },
   {
-    "block_id": 159,
-    "type": "paragraph",
-    "text": "（1）孔隙特性  多孔质材料是由……。",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "506"
-    }
+    "id": 110,
+    "type": "toc2",
+    "content": "6.5  本章小结\t7"
   },
   {
-    "block_id": 160,
-    "type": "paragraph",
-    "text": "……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "0"
-    }
+    "id": 111,
+    "type": "toc1",
+    "content": "结  论\t8"
   },
   {
-    "block_id": 161,
-    "type": "paragraph",
-    "text": "1.4  本文的主要研究内容",
-    "style_name": "Heading 2",
-    "spacing": {
-      "before": "195",
-      "after": "195"
-    }
+    "id": 112,
+    "type": "toc1",
+    "content": "参考文献\t9"
   },
   {
-    "block_id": 162,
-    "type": "paragraph",
-    "text": "本课题的研究内容主要是针对局部多孔质止推轴承的多孔质材料的渗透",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 113,
+    "type": "toc1",
+    "content": "攻读学士学位期间取得创新性成果\t10"
   },
   {
-    "block_id": 163,
-    "type": "paragraph",
-    "text": "率、静压轴承的静态特性、稳定性及其影响因素进行展开，……。",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "5"
-    }
+    "id": 115,
+    "type": "toc1",
+    "content": "致  谢\t12"
   },
   {
-    "block_id": 171,
-    "type": "paragraph",
-    "text": "第4章  基于FLUENT软件的轴承静态特性研究",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "383",
-      "after": "306"
-    }
+    "id": 118,
+    "type": "h2",
+    "content": "第1章  绪  论"
   },
   {
-    "block_id": 172,
-    "type": "paragraph",
-    "text": "4.1  引言",
-    "style_name": "Heading 2",
-    "spacing": {
-      "before": "191",
-      "after": "191"
-    }
+    "id": 119,
+    "type": "h2",
+    "content": "1.1  课题背景及研究的目的和意义"
   },
   {
-    "block_id": 173,
+    "id": 121,
     "type": "paragraph",
-    "text": "利用现成的商用软件来研究流场，可以免去对N-S方程求解程序的……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "……"
   },
   {
-    "block_id": 174,
-    "type": "paragraph",
-    "text": "4.2.3  边界条件的设定",
-    "style_name": "Heading 3",
-    "spacing": {
-      "line": "300",
-      "before": "191",
-      "after": "191"
-    }
+    "id": 122,
+    "type": "h2",
+    "content": "1.2  气体润滑轴承及其相关理论的发展概况"
   },
   {
-    "block_id": 175,
+    "id": 123,
     "type": "paragraph",
-    "text": "本文采用……，则每一个方向上的……由公式（4-1）、（4-2）求得：",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "content": "气体轴承是利用气膜支撑负荷或减少摩擦的机械构件。……"
   },
   {
-    "block_id": 176,
+    "id": 124,
     "type": "paragraph",
-    "text": "(4-1)",
-    "style_name": "Normal",
-    "alignment": "right",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "……"
   },
   {
-    "block_id": 177,
-    "type": "paragraph",
-    "text": "(4-2)",
-    "style_name": "Normal",
-    "alignment": "right",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 125,
+    "type": "h3",
+    "content": "1.2.1  气体润滑轴承的发展"
   },
   {
-    "block_id": 178,
-    "type": "paragraph",
-    "text": "式中 ——多孔质材料的平均粒子直径（m）；",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 129,
+    "type": "h3",
+    "content": "1.2.2  气体润滑轴承的分类"
   },
   {
-    "block_id": 179,
+    "id": 132,
     "type": "paragraph",
-    "text": "——孔隙度（孔隙体积占总体积的百分比）；",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "697"
-    }
+    "content": "……"
   },
   {
-    "block_id": 180,
+    "id": 145,
     "type": "paragraph",
-    "text": "——特征渗透性或固有渗透性（m2）。",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "726"
-    }
+    "content": "图1-1  气体润滑轴承的分类"
   },
   {
-    "block_id": 181,
+    "id": 148,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "content": "（也可以按照下图范例书写）"
   },
   {
-    "block_id": 182,
+    "id": 151,
     "type": "paragraph",
-    "text": "4.4  本章小结",
-    "style_name": "Heading 2",
-    "spacing": {
-      "before": "191",
-      "after": "191"
-    }
+    "content": "图1-1  气体润滑轴承的分类"
   },
   {
-    "block_id": 183,
-    "type": "paragraph",
-    "text": "……",
-    "style_name": "Body Text First Indent",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "487"
-    }
+    "id": 152,
+    "type": "h3",
+    "content": "1.2.5  多孔质气体静压轴承的研究"
   },
   {
-    "block_id": 184,
+    "id": 153,
     "type": "paragraph",
-    "text": "第6章  局部多孔质静压轴承的试验研究",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "383",
-      "after": "306"
-    }
+    "content": "由于气体的压力低和可压缩性，……。"
   },
   {
-    "block_id": 185,
-    "type": "paragraph",
-    "text": "6.1  引言",
-    "style_name": "Heading 2",
-    "spacing": {
-      "before": "191",
-      "after": "191"
-    }
+    "id": 154,
+    "type": "h3",
+    "content": "1.2.5.1  多孔质静压轴承的分类"
   },
   {
-    "block_id": 186,
+    "id": 155,
     "type": "paragraph",
-    "text": "在前面几章中，分别对局部多孔质材料的渗透率……",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "content": "轴承工作面的整体或……。"
   },
   {
-    "block_id": 187,
-    "type": "paragraph",
-    "text": "6.2  多孔质石墨渗透率测试试验",
-    "style_name": "Heading 2",
-    "spacing": {
-      "before": "191",
-      "after": "191"
-    }
+    "id": 156,
+    "type": "h3",
+    "content": "1.2.5.2  多孔质材料特性的研究"
   },
   {
-    "block_id": 188,
+    "id": 157,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "Body Text Indent",
-    "spacing": {
-      "line": "300",
-      "after": "0"
-    },
-    "indentation": {
-      "firstLine": "498",
-      "left": "0"
-    }
+    "content": "材料的主要特点是具有一定的……。"
   },
   {
-    "block_id": 189,
+    "id": 158,
     "type": "paragraph",
-    "text": "1号试样的试验数据见表6-1。",
-    "style_name": "Body Text Indent",
-    "spacing": {
-      "line": "300",
-      "after": "0"
-    },
-    "indentation": {
-      "firstLine": "498",
-      "left": "0"
-    }
+    "content": "（1）孔隙特性  多孔质材料是由……。"
   },
   {
-    "block_id": 190,
+    "id": 159,
     "type": "paragraph",
-    "text": "表6-1  1号试样渗透率测试数据(温度：T=16 ℃  高度：H=5.31 mm)",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "line": "288",
-      "before": "76"
-    }
+    "content": "……"
   },
   {
-    "block_id": 191,
-    "type": "table",
-    "rows": 8,
-    "cols": 6,
-    "caption": "表6-1  1号试样渗透率测试数据(温度：T=16 ℃  高度：H=5.31 mm)",
-    "table_style": {
-      "width": "0",
-      "width_type": "auto",
-      "borders": {
-        "top": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "left": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "bottom": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "right": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "insideH": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "insideV": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        }
-      }
-    }
+    "id": 160,
+    "type": "h2",
+    "content": "1.4  本文的主要研究内容"
   },
   {
-    "block_id": 204,
+    "id": 162,
     "type": "paragraph",
-    "text": "……如果表格超过一页时，可采用续表的形式移入下一页：",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "率、静压轴承的静态特性、稳定性及其影响因素进行展开，……。"
   },
   {
-    "block_id": 206,
-    "type": "paragraph",
-    "text": "表6-2  试样渗透率测试数据",
-    "style_name": "Normal",
-    "alignment": "center",
-    "spacing": {
-      "line": "300",
-      "before": "76"
-    }
-  },
-  {
-    "block_id": 207,
-    "type": "table",
-    "rows": 5,
-    "cols": 6,
-    "caption": "表6-2  试样渗透率测试数据",
-    "table_style": {
-      "width": "0",
-      "width_type": "auto",
-      "borders": {
-        "top": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "left": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "bottom": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "right": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "insideH": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "insideV": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        }
-      }
-    }
-  },
-  {
-    "block_id": 215,
-    "type": "paragraph",
-    "text": "表6-1（续表）",
-    "style_name": "Normal",
-    "alignment": "right",
-    "indentation": {
-      "firstLine": "3942"
-    }
+    "id": 170,
+    "type": "h2",
+    "content": "第4章  基于FLUENT软件的轴承静态特性研究"
   },
   {
-    "block_id": 216,
-    "type": "table",
-    "rows": 4,
-    "cols": 6,
-    "caption": "表6-1（续表）",
-    "table_style": {
-      "width": "0",
-      "width_type": "auto",
-      "borders": {
-        "top": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "left": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "bottom": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "right": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "insideH": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        },
-        "insideV": {
-          "val": "single",
-          "sz": "4",
-          "color": "auto"
-        }
-      }
-    }
+    "id": 171,
+    "type": "h2",
+    "content": "4.1  引言"
   },
   {
-    "block_id": 219,
-    "type": "paragraph",
-    "text": "6.5  本章小结",
-    "style_name": "Heading 2",
-    "spacing": {
-      "before": "191",
-      "after": "191"
-    }
+    "id": 173,
+    "type": "h3",
+    "content": "4.2.3  边界条件的设定"
   },
   {
-    "block_id": 220,
+    "id": 175,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "493"
-    }
+    "content": "(4-1)"
   },
   {
-    "block_id": 224,
+    "id": 176,
     "type": "paragraph",
-    "text": "结  论",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "391",
-      "after": "312"
-    }
+    "content": "(4-2)"
   },
   {
-    "block_id": 225,
+    "id": 177,
     "type": "paragraph",
-    "text": "本文对局部多孔质气体静压止推轴承的静态特性和稳定性进行了理论研究，对于局部多孔质气体静压径向轴承、圆...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "content": "式中 ——多孔质材料的平均粒子直径（m）；"
   },
   {
-    "block_id": 226,
+    "id": 178,
     "type": "paragraph",
-    "text": "本论文的主要创造性工作归纳如下：",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "content": "——孔隙度（孔隙体积占总体积的百分比）；"
   },
   {
-    "block_id": 227,
+    "id": 179,
     "type": "paragraph",
-    "text": "1. 建立了基于分形几何理论的多孔质石墨渗透率与分形维数之间关系的数学模型，该模型可预测多孔质石墨的...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "content": "——特征渗透性或固有渗透性（m2）。"
   },
   {
-    "block_id": 228,
+    "id": 180,
     "type": "paragraph",
-    "text": "2. 分别建立了基于气体连续性方程、Navier-Stokes 方程、Darcy 定律以及气体状态方...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "content": "……"
   },
   {
-    "block_id": 229,
-    "type": "paragraph",
-    "text": "……",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "id": 181,
+    "type": "h2",
+    "content": "4.4  本章小结"
   },
   {
-    "block_id": 230,
+    "id": 182,
     "type": "paragraph",
-    "text": "今后还应在以下几个方面继续深入研究：",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "content": "……"
   },
   {
-    "block_id": 231,
-    "type": "paragraph",
-    "text": "1. 本文仅是采用了局部多孔质圆柱塞这种节流方式，在以后的研究中，可以通过改变局部多孔质材料的形状来...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "id": 183,
+    "type": "h2",
+    "content": "第6章  局部多孔质静压轴承的试验研究"
   },
   {
-    "block_id": 232,
-    "type": "paragraph",
-    "text": "……",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "firstLine": "498"
-    }
+    "id": 184,
+    "type": "h2",
+    "content": "6.1  引言"
   },
   {
-    "block_id": 236,
+    "id": 185,
     "type": "paragraph",
-    "text": "参考文献",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "391",
-      "after": "312"
-    }
+    "content": "在前面几章中，分别对局部多孔质材料的渗透率……"
   },
   {
-    "block_id": 237,
-    "type": "paragraph",
-    "text": "［1］林来兴. 空间控制技术［M］. 北京：中国宇航出版社，1992：25-42.",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "543"
-    }
+    "id": 186,
+    "type": "h2",
+    "content": "6.2  多孔质石墨渗透率测试试验"
   },
   {
-    "block_id": 238,
+    "id": 187,
     "type": "paragraph",
-    "text": "［2］辛希孟. 信息技术与信息服务国际研讨会论文集：A集［C］. 北京：中",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "690"
-    }
+    "content": "……"
   },
   {
-    "block_id": 239,
+    "id": 188,
     "type": "paragraph",
-    "text": "国科学出版社，1999：45-49.",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "688"
-    }
+    "content": "1号试样的试验数据见表6-1。"
   },
   {
-    "block_id": 240,
+    "id": 202,
     "type": "paragraph",
-    "text": "［3］赵耀东. 新时代的工业工程师［M/OL］. 台北：天下文化出版社，1998 ［1998-09-...",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "543"
-    }
+    "content": "……如果表格超过一页时，可采用续表的形式移入下一页："
   },
   {
-    "block_id": 248,
+    "id": 204,
     "type": "paragraph",
-    "text": "攻读学士学位期间取得创新性成果",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "391",
-      "after": "312"
-    }
+    "content": "表6-2  试样渗透率测试数据"
   },
   {
-    "block_id": 249,
+    "id": 212,
     "type": "paragraph",
-    "text": "一、发表的学术论文",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300",
-      "before": "100",
-      "after": "100"
-    }
+    "content": "表6-1（续表）"
   },
   {
-    "block_id": 250,
-    "type": "paragraph",
-    "text": "［1］  ×××，×××. Static Oxidation Model of Al-Mg/C Di...",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "552"
-    }
+    "id": 215,
+    "type": "h2",
+    "content": "6.5  本章小结"
   },
   {
-    "block_id": 251,
+    "id": 216,
     "type": "paragraph",
-    "text": "［2］  ×××，×××. 精密超声振动切削单晶铜的计算机仿真研究［J］. 系统仿真学报，2007，...",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "552"
-    }
+    "content": "……"
   },
   {
-    "block_id": 252,
-    "type": "paragraph",
-    "text": "［3］  ×××，×××. 局部多孔质气体静压轴向轴承静态特性的数值求解［J］. 摩擦学学报，200...",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "552"
-    }
+    "id": 220,
+    "type": "h2",
+    "content": "结  论"
   },
   {
-    "block_id": 253,
+    "id": 222,
     "type": "paragraph",
-    "text": "［4］  ×××，×××. 硬脆光学晶体材料超精密切削理论研究综述［J］. 机械工程学报，2003，...",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "552"
-    }
+    "content": "本论文的主要创造性工作归纳如下："
   },
   {
-    "block_id": 254,
+    "id": 225,
     "type": "paragraph",
-    "text": "［5］  ×××，×××. 基于遗传算法的超精密切削加工表面粗糙度预测模型的参数辨识以及切削参数优化...",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "552"
-    }
+    "content": "……"
   },
   {
-    "block_id": 255,
+    "id": 226,
     "type": "paragraph",
-    "text": "［6］  ×××，×××. Discrete Sliding Mode Cintrok with F...",
-    "style_name": "Plain Text",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "552"
-    }
+    "content": "今后还应在以下几个方面继续深入研究："
   },
   {
-    "block_id": 256,
+    "id": 228,
     "type": "paragraph",
-    "text": "二、申请及已获得的专利（无专利时此项不必列出）",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300",
-      "before": "100",
-      "after": "100"
-    }
+    "content": "……"
   },
   {
-    "block_id": 257,
-    "type": "paragraph",
-    "text": "［1］  ×××，×××. 一种温热外敷药制备方案：中国，88105607.3［P］. 1989-0...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "552"
-    }
+    "id": 232,
+    "type": "h2",
+    "content": "参考文献"
   },
   {
-    "block_id": 258,
+    "id": 235,
     "type": "paragraph",
-    "text": "三、参与的科研项目及获奖情况",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "555"
-    }
+    "content": "国科学出版社，1999：45-49."
   },
   {
-    "block_id": 259,
-    "type": "paragraph",
-    "text": "［1］  ×××，×××. ××气体静压轴承技术研究, ××省自然科学基金项目.课题编号：××××.",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "546"
-    }
+    "id": 244,
+    "type": "h2",
+    "content": "攻读学士学位期间取得创新性成果"
   },
   {
-    "block_id": 260,
-    "type": "paragraph",
-    "text": "［2］ ×××，×××. ××静载下预应力混凝土房屋结构设计统一理论. 黑江省科学技术二等奖, 20...",
-    "style_name": "Normal",
-    "spacing": {
-      "line": "300"
-    },
-    "indentation": {
-      "left": "499"
-    }
+    "id": 245,
+    "type": "h3",
+    "content": "一、发表的学术论文"
   },
   {
-    "block_id": 262,
-    "type": "paragraph",
-    "text": "致  谢",
-    "style_name": "Heading 1",
-    "spacing": {
-      "line": "300",
-      "before": "391",
-      "after": "312"
-    }
+    "id": 252,
+    "type": "h3",
+    "content": "二、申请及已获得的专利（无专利时此项不必列出）"
   },
   {
-    "block_id": 263,
-    "type": "paragraph",
-    "text": "衷心感谢导师×××教授对本人的精心指导。他的言传身教将使我终身受益。",
-    "style_name": "Body Text Indent",
-    "spacing": {
-      "line": "300",
-      "after": "0"
-    },
-    "indentation": {
-      "firstLine": "494",
-      "left": "0"
-    }
+    "id": 254,
+    "type": "h3",
+    "content": "三、参与的科研项目及获奖情况"
   },
   {
-    "block_id": 264,
-    "type": "paragraph",
-    "text": "感谢×××教授，以及实验室全体老师和同窗们的热情帮助和支持！",
-    "style_name": "Normal Indent",
-    "spacing": {
-      "line": "300"
-    }
+    "id": 258,
+    "type": "h2",
+    "content": "致  谢"
   },
   {
-    "block_id": 265,
+    "id": 261,
     "type": "paragraph",
-    "text": "本课题承蒙××××基金资助，特此致谢。",
-    "style_name": "Normal Indent",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "本课题承蒙××××基金资助，特此致谢。"
   },
   {
-    "block_id": 266,
+    "id": 262,
     "type": "paragraph",
-    "text": "……",
-    "style_name": "Normal Indent",
-    "spacing": {
-      "line": "300"
-    }
+    "content": "……"
   }
 ]
