@@ -1,4 +1,6 @@
 from flask import request, jsonify
+from flask import request, jsonify, send_from_directory
+import time  # 顺便引入 time，用来生成防重名的文件名
 import traceback
 import os
 import tempfile
@@ -301,7 +303,6 @@ def register_routes(app):
             print(f"❌ [CRITICAL ERROR] /analyze-styles 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
-
     @app.route('/generate-document', methods=['POST'])
     def generate_document():
         print("\n" + "="*50)
@@ -319,7 +320,9 @@ def register_routes(app):
             downloads_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'download')
             os.makedirs(downloads_dir, exist_ok=True)
             
-            output_filename = 'generated_document.docx'
+            # 优化：加上时间戳防止多个用户同时请求时文件被互相覆盖
+            timestamp = int(time.time())
+            output_filename = f'generated_document_{timestamp}.docx'
             output_path = os.path.join(downloads_dir, output_filename)
             
             print(f"🔄 [ACTION] 开始生成 DOCX 文档...")
@@ -329,14 +332,38 @@ def register_routes(app):
                 print("❌ [ERROR] 文档生成核心逻辑 (generate_docx_document) 返回 False")
                 return jsonify({'error': 'Failed to generate docx document'}), 500
             
-            print(f"✅ [SUCCESS] DOCX 文档生成完毕，保存至: {output_path}")
+            # 核心修改：生成 HTTP 下载链接
+            # request.host_url 会自动获取当前服务器的地址 (如 http://127.0.0.1:5000/ 或公网 IP)
+            download_url = f"{request.host_url.rstrip('/')}/download/{output_filename}"
+            
+            print(f"✅ [SUCCESS] DOCX 文档生成完毕，保存至本地: {output_path}")
+            print(f"🔗 [LINK] 生成下载链接: {download_url}")
             print("🏁 [API OUT] 请求处理成功返回 200")
             
-            return jsonify({'status': 'success', 'message': 'Document generated successfully', 'file_path': output_path}), 200
+            return jsonify({
+                'status': 'success', 
+                'message': 'Document generated successfully', 
+                'file_url': download_url,   # 返回给客户端的 HTTP 下载链接
+                'local_path': output_path   # 保留本地路径方便调试查阅
+            }), 200
         except Exception as e:
             print(f"❌ [CRITICAL ERROR] /generate-document 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    # ================= 新增：专门用于提供文件下载的路由 =================
+    @app.route('/download/<filename>', methods=['GET'])
+    def download_file(filename):
+        print(f"⬇️  [DOWNLOAD] 客户端请求下载文件: {filename}")
+        downloads_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'download')
+        
+        if not os.path.exists(os.path.join(downloads_dir, filename)):
+            print(f"❌ [ERROR] 请求的文件不存在: {filename}")
+            return jsonify({'error': 'File not found'}), 404
+            
+        # send_from_directory 会安全地把服务器本地文件通过 HTTP 发送给客户端
+        # as_attachment=True 表示强制浏览器下载，而不是直接在浏览器里打开
+        return send_from_directory(downloads_dir, filename, as_attachment=True)
 
     @app.route('/backfill-styles', methods=['POST'])
     def backfill_styles_endpoint():
