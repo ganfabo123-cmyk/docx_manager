@@ -410,7 +410,6 @@ def register_routes(app):
             print(f"❌ [CRITICAL ERROR] /backfill-styles 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
-
     @app.route('/restore-document', methods=['POST'])
     def restore_document():
         print("\n" + "="*50)
@@ -437,8 +436,12 @@ def register_routes(app):
             downloads_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'download')
             os.makedirs(downloads_dir, exist_ok=True)
             
-            output_path = os.path.join(downloads_dir, 'restored_document.docx')
-            temp_json_path = os.path.join(downloads_dir, 'temp_restore.json')
+            # --- 核心修改 1：使用时间戳生成动态文件名，防止并发覆盖 ---
+            timestamp = int(time.time())
+            filename = f'restored_document_{timestamp}.docx'
+            output_path = os.path.join(downloads_dir, filename)
+            
+            temp_json_path = os.path.join(downloads_dir, f'temp_restore_{timestamp}.json')
             
             with open(temp_json_path, 'w', encoding='utf-8') as f:
                 json.dump(json_data, f, ensure_ascii=False, indent=2)
@@ -454,20 +457,23 @@ def register_routes(app):
                 print("❌ [ERROR] 还原文档失败 (restore_docx_from_json 返回 False)")
                 return jsonify({'error': 'Failed to restore document'}), 500
             
+            # --- 核心修改 2：拼接供外部下载的 HTTP URL ---
+            download_url = f"{request.host_url.rstrip('/')}/download/{filename}"
+            
             print(f"✅ [SUCCESS] 还原文档成功，保存至: {output_path}")
+            print(f"🔗 [LINK] 成功生成下载链接: {download_url}")
             print("🏁 [API OUT] 请求处理成功返回 200")
             
             return jsonify({
                 'status': 'success', 
                 'message': 'Document restored successfully',
-                'file_path': output_path
+                'file_url': download_url,   # 返回给客户端的 HTTP 下载链接
+                'local_path': output_path   # 保留本地绝对路径，方便排查问题
             }), 200
         except Exception as e:
             print(f"❌ [CRITICAL ERROR] /restore-document 运行异常: {e}")
             traceback.print_exc()
-            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
-
-    @app.route('/parse-text', methods=['POST'])
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500    @app.route('/parse-text', methods=['POST'])
     def parse_text():
         print("\n" + "="*50)
         print(f"🌐 [API IN] 收到请求: POST /parse-text")
