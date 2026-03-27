@@ -214,7 +214,7 @@ def main():
                     print(f"表格样式: {block['table_style']}")
         
         # 保存为 JSON
-        output_path = data_dir / "parsed_styles.json"
+        output_path = data_dir / "parsed_styles_1.json"
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(blocks, f, ensure_ascii=False, indent=2)
         

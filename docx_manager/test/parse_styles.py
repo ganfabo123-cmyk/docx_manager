@@ -110,7 +110,7 @@ def get_table_style_info(table) -> Dict[str, Any]:
     prev_elem = tbl_elem.getprevious()
     if prev_elem is not None and prev_elem.tag == f"{{{W}}}p":
         from docx.text.paragraph import Paragraph
-        prev_para = Paragraph(prev_elem, table._tbl._parent)
+        prev_para = Paragraph(prev_elem, table._tbl.getparent)
         style_info["caption"] = prev_para.text.strip()
     
     # 表格样式
@@ -173,7 +173,7 @@ def parse_docx_styles(doc_path: str) -> List[Dict[str, Any]]:
 
 def main():
     data_dir = Path(__file__).parent / "data"
-    doc_path = data_dir / "full_template_v6.docx"
+    doc_path = data_dir / "template.docx"
     
     print(f"正在解析文档: {doc_path}")
     print("=" * 80)
