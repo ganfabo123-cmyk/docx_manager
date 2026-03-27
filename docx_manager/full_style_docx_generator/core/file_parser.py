@@ -115,6 +115,39 @@ def parse_text_to_json(text: str, output_json_path: str = None, remove_md: bool 
         traceback.print_exc()
         return None
 
+# 在 file_parser.py 中修改读取逻辑
+def parse_txt_file(file_path,remove_md):
+    # 尝试多种编码读取
+    try:    
+        encodings = ['utf-8', 'gbk', 'utf-16', 'ansi']
+        content = None
+        blocks = []
+        
+        for enc in encodings:
+            try:
+                with open(file_path, 'r', encoding=enc) as f:
+                    content = f.read()
+                print(f"Successfully decoded with {enc}")
+                break
+            except UnicodeDecodeError:
+                continue
+                
+        if remove_md:
+            content = remove_markdown_symbols(content)
+            
+        for i, line in enumerate(content.split('\n'), 1):
+            if line.strip():
+                blocks.append({
+                    'id': f'elem_{i}',
+                    'content': line.strip()
+                    })
+        return {"text_elements": blocks}
+    except Exception as e:
+        print(f"Error parsing txt file: {e}")
+        traceback.print_exc()
+        return None      
+
+            
 
 def parse_txt_file(file_path: str, remove_md: bool = True) -> Optional[Dict[str, List[Dict[str, str]]]]:
     """
