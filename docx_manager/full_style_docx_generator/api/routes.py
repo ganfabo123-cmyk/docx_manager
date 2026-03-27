@@ -141,6 +141,7 @@ def register_routes(app):
             
             # 兼容 {"url": "..."} 和 {"docx": {"url": "..."}} 两种格式
             file_url = data.get('url', '')
+            remove_md = data.get('remove_markdown', True)
             if not file_url and isinstance(data.get('docx'), dict):
                 file_url = data.get('docx').get('url', '')
                 
@@ -209,7 +210,7 @@ def register_routes(app):
                 print("❌ [ERROR] DOCX 转换 JSON 失败或返回为空")
                 return jsonify({'error': 'Failed to parse file'}), 500
             
-            text_elements = extract_text_from_parsed_json(full_json_path)
+            text_elements = extract_text_from_parsed_json(full_json_path,remove_md=remove_md)
             
             result = {"text_elements": text_elements}
             blocks_path = os.path.join(data_dir, 'parsed_blocks.json')
