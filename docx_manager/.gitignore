@@ -1,4 +1,5 @@
-# 写入忽略规则
-echo "__pycache__/" >> .gitignore
-echo "*.pyc" >> .gitignore
-echo "*.pyo" >> .gitignore
+*.pyo
+*.pyc
+__pycache__/
+data/
+download/
