@@ -1,4 +1,0 @@
-# 项目依赖
-python-docx
-latex2mathml  # 用于公式渲染（可选）
-flask>=3.0.0
