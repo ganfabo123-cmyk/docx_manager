@@ -181,13 +181,14 @@ def parse_txt_file(file_path: str, remove_md: bool = True) -> Optional[Dict[str,
         return None
 
 
-def parse_docx_to_json(docx_path: str, output_json_path: str = None) -> Optional[List[Dict[str, Any]]]:
+def parse_docx_to_json(docx_path: str, output_json_path: str = None, citations_path: str = None) -> Optional[List[Dict[str, Any]]]:
     """
     解析DOCX文档为JSON格式
     
     Args:
         docx_path: docx文档路径
         output_json_path: 输出JSON文件路径（可选）
+        citations_path: 引用配置文件路径（可选）
     
     Returns:
         解析后的元素列表
@@ -197,7 +198,9 @@ def parse_docx_to_json(docx_path: str, output_json_path: str = None) -> Optional
         elements = parser.parse()
         
         if output_json_path:
-            parser.to_json(output_json_path)
+            parser.to_json(output_json_path, citations_path)
+        elif citations_path and parser.citations:
+            parser.save_citations(citations_path)
         
         return elements
     except Exception as e:
@@ -280,13 +283,14 @@ def backfill_styles_to_json(edited_json_path: str, full_json_path: str, output_p
         return None
 
 
-def restore_docx_from_json(json_path: str, output_docx_path: str) -> bool:
+def restore_docx_from_json(json_path: str, output_docx_path: str, citations_path: str = None) -> bool:
     """
     从JSON还原DOCX文档
     
     Args:
         json_path: JSON文件路径
         output_docx_path: 输出docx文件路径
+        citations_path: 引用配置文件路径（可选）
     
     Returns:
         是否成功
@@ -295,7 +299,12 @@ def restore_docx_from_json(json_path: str, output_docx_path: str) -> bool:
         with open(json_path, 'r', encoding='utf-8') as f:
             elements = json.load(f)
         
-        restorer = DocxRestorer(elements)
+        citations = None
+        if citations_path and Path(citations_path).exists():
+            with open(citations_path, 'r', encoding='utf-8') as f:
+                citations = json.load(f)
+        
+        restorer = DocxRestorer(elements, citations)
         restorer.save(output_docx_path)
         
         return True
