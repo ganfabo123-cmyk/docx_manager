@@ -202,9 +202,10 @@ def register_routes(app):
             os.makedirs(data_dir, exist_ok=True)
             
             full_json_path = os.path.join(data_dir, 'full_parsed.json')
+            citations_path = os.path.join(data_dir, 'reference_config.json')
             
             print(f"🔄 [ACTION] 开始提取 DOCX 内容为 JSON...")
-            elements = parse_docx_to_json(docx_path, full_json_path)
+            elements = parse_docx_to_json(docx_path, full_json_path, citations_path)
             
             if not elements:
                 print("❌ [ERROR] DOCX 转换 JSON 失败或返回为空")
@@ -217,16 +218,25 @@ def register_routes(app):
             with open(blocks_path, 'w', encoding='utf-8') as f:
                 json.dump(result, f, ensure_ascii=False, indent=2)
             
-            print(f"📊 [INFO] 解析完成: 提取了 {len(text_elements)} 个文本块，全部元素共 {len(elements)} 个")
+            citations_count = 0
+            if os.path.exists(citations_path):
+                with open(citations_path, 'r', encoding='utf-8') as f:
+                    citations_data = json.load(f)
+                    citations_count = len(citations_data)
+            
+            print(f"📊 [INFO] 解析完成: 提取了 {len(text_elements)} 个文本块，全部元素共 {len(elements)} 个，引用 {citations_count} 个")
             print(f"💾 [SAVE] 简略文本块已保存至: {blocks_path}")
             print(f"💾 [SAVE] 完整 JSON 数据已保存至: {full_json_path}")
+            if citations_count > 0:
+                print(f"💾 [SAVE] 引用配置已保存至: {citations_path}")
             print("🏁 [API OUT] 请求处理成功返回 200")
             
             return jsonify({
                 'status': 'success', 
                 'message': 'File parsed successfully',
                 'text_count': len(text_elements),
-                'total_count': len(elements)
+                'total_count': len(elements),
+                'citations_count': citations_count
             }), 200
         except requests.exceptions.Timeout:
             print("❌ [NETWORK ERROR] 下载文件超时 (Timeout > 30s)！这通常是目标 URL 无法访问或防火墙拦截。")
@@ -428,16 +438,24 @@ def register_routes(app):
                 if os.path.exists(json_path):
                     with open(json_path, 'r', encoding='utf-8') as f:
                         json_data = json.load(f)
-                        print(f"📂 [READ] 成功从本地读取到数据，长度: {len(json_data)}")
+                    print(f"📂 [READ] 成功从本地读取数据，长度: {len(json_data)}")
             
             if not json_data:
                 print("❌ [ERROR] 既没有传入数据，也没有找到本地数据")
                 return jsonify({'error': 'No data provided or found'}), 400
             
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            citations_path = os.path.join(data_dir, 'reference_config.json')
+            
+            citations = None
+            if os.path.exists(citations_path):
+                with open(citations_path, 'r', encoding='utf-8') as f:
+                    citations = json.load(f)
+                print(f"📚 [CITATIONS] 读取到 {len(citations)} 个引用配置")
+            
             downloads_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'download')
             os.makedirs(downloads_dir, exist_ok=True)
             
-            # --- 核心修改 1：使用时间戳生成动态文件名，防止并发覆盖 ---
             timestamp = int(time.time())
             filename = f'restored_document_{timestamp}.docx'
             output_path = os.path.join(downloads_dir, filename)
@@ -448,7 +466,7 @@ def register_routes(app):
                 json.dump(json_data, f, ensure_ascii=False, indent=2)
             
             print(f"🔄 [ACTION] 开始根据 JSON 还原文档 (restore_docx_from_json)...")
-            success = restore_docx_from_json(temp_json_path, output_path)
+            success = restore_docx_from_json(temp_json_path, output_path, citations_path if citations else None)
             
             if os.path.exists(temp_json_path):
                 os.remove(temp_json_path)
@@ -458,8 +476,7 @@ def register_routes(app):
                 print("❌ [ERROR] 还原文档失败 (restore_docx_from_json 返回 False)")
                 return jsonify({'error': 'Failed to restore document'}), 500
             
-            # --- 核心修改 2：拼接供外部下载的 HTTP URL ---
-            download_url = f"{request.host_url.rstrip('/')}/download/{filename}"
+            download_url = f"/download/{filename}"
             
             print(f"✅ [SUCCESS] 还原文档成功，保存至: {output_path}")
             print(f"🔗 [LINK] 成功生成下载链接: {download_url}")
@@ -468,8 +485,9 @@ def register_routes(app):
             return jsonify({
                 'status': 'success', 
                 'message': 'Document restored successfully',
-                'file_url': download_url,   # 返回给客户端的 HTTP 下载链接
-                'local_path': output_path   # 保留本地绝对路径，方便排查问题
+                'file_url': download_url,
+                'local_path': output_path,
+                'citations_restored': len(citations) if citations else 0
             }), 200
         except Exception as e:
             print(f"❌ [CRITICAL ERROR] /restore-document 运行异常: {e}")

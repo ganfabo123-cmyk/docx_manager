@@ -43,11 +43,95 @@ class DocxRestorer:
         "justify": WD_ALIGN_PARAGRAPH.JUSTIFY
     }
     
-    def __init__(self, elements: List[Dict[str, Any]]):
+    def __init__(self, elements: List[Dict[str, Any]], citations: List[Dict[str, Any]] = None):
         self.elements = elements
+        self.citations = citations or []
         self.doc = Document()
         self._ole_counter = 0
         self._shape_counter = 0
+    
+    def load_citations(self, citations_path: str) -> None:
+        if Path(citations_path).exists():
+            with open(citations_path, 'r', encoding='utf-8') as f:
+                self.citations = json.load(f)
+    
+    def _restore_citations(self):
+        for citation in self.citations:
+            ref_id = citation.get("ref_id")
+            before = citation.get("before", "")
+            after = citation.get("after", "")
+            element_id = citation.get("element_id")
+            
+            self._insert_superscript_citation(ref_id, (before, after))
+    
+    def _insert_superscript_citation(self, ref_id: int, context: tuple) -> bool:
+        before, after = context
+        old_ref_text = f"[{ref_id}]"
+        
+        for para in self.doc.paragraphs:
+            full = para.text
+            pos = full.find(before)
+            if pos == -1:
+                continue
+            
+            insert_at = pos + len(before)
+            
+            if after and after[:5] not in full[insert_at:]:
+                continue
+            
+            runs = para.runs
+            if not runs:
+                continue
+            
+            cur = 0
+            target_idx, target_off = len(runs) - 1, len(runs[-1].text)
+            for ri, run in enumerate(runs):
+                end = cur + len(run.text)
+                if cur <= insert_at <= end:
+                    target_idx = ri
+                    target_off = insert_at - cur
+                    break
+                cur = end
+            
+            target_run = runs[target_idx]
+            orig_text = target_run.text
+            target_run.text = orig_text[:target_off]
+            
+            orig_rPr = target_run._r.find(qn("w:rPr"))
+            
+            r_sup = OxmlElement("w:r")
+            new_rPr = copy.deepcopy(orig_rPr) if orig_rPr is not None else OxmlElement("w:rPr")
+            
+            va = OxmlElement("w:vertAlign")
+            va.set(qn("w:val"), "superscript")
+            new_rPr.append(va)
+            r_sup.append(new_rPr)
+            
+            t_sup = OxmlElement("w:t")
+            t_sup.text = old_ref_text
+            r_sup.append(t_sup)
+            
+            r_tail = OxmlElement("w:r")
+            if orig_rPr is not None:
+                r_tail.append(copy.deepcopy(orig_rPr))
+            
+            t_tail = OxmlElement("w:t")
+            t_tail.set(qn("xml:space"), "preserve")
+            
+            remaining_text = orig_text[target_off:]
+            if remaining_text.startswith(old_ref_text):
+                t_tail.text = remaining_text[len(old_ref_text):]
+            else:
+                t_tail.text = remaining_text
+            
+            r_tail.append(t_tail)
+            
+            target_run._r.addnext(r_tail)
+            target_run._r.addnext(r_sup)
+            
+            return True
+        
+        return False
     
     def _apply_paragraph_style(self, paragraph, style: Dict[str, Any]):
         style_name = style.get("style_name", "Normal")
@@ -414,6 +498,9 @@ class DocxRestorer:
             else:
                 self._restore_paragraph(element)
         
+        if self.citations:
+            self._restore_citations()
+        
         return self.doc
     
     def save(self, output_path: str):
@@ -421,29 +508,31 @@ class DocxRestorer:
         self.doc.save(output_path)
 
 
-def restore_docx(elements: List[Dict[str, Any]], output_docx_path: str) -> Document:
+def restore_docx(elements: List[Dict[str, Any]], output_docx_path: str, citations: List[Dict[str, Any]] = None) -> Document:
     """
     从JSON元素列表还原docx文档
     
     Args:
         elements: JSON元素列表
         output_docx_path: 输出docx文件路径
+        citations: 引用配置列表（可选）
     
     Returns:
         还原后的Document对象
     """
-    restorer = DocxRestorer(elements)
+    restorer = DocxRestorer(elements, citations)
     restorer.save(output_docx_path)
     return restorer.doc
 
 
-def restore_from_json(json_path: str, output_docx_path: str) -> Document:
+def restore_from_json(json_path: str, output_docx_path: str, citations_path: str = None) -> Document:
     """
     从JSON文件还原docx文档
     
     Args:
         json_path: JSON文件路径
         output_docx_path: 输出docx文件路径
+        citations_path: 引用配置文件路径（可选）
     
     Returns:
         还原后的Document对象
@@ -451,7 +540,12 @@ def restore_from_json(json_path: str, output_docx_path: str) -> Document:
     with open(json_path, "r", encoding="utf-8") as f:
         elements = json.load(f)
     
-    return restore_docx(elements, output_docx_path)
+    citations = None
+    if citations_path and Path(citations_path).exists():
+        with open(citations_path, "r", encoding="utf-8") as f:
+            citations = json.load(f)
+    
+    return restore_docx(elements, output_docx_path, citations)
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ DOCX文档样式解析器
 import json
 import base64
 import traceback
+import re
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 from docx import Document
@@ -26,11 +27,60 @@ class DocxParser:
         self.doc_path = doc_path
         self.doc = Document(doc_path)
         self.elements: List[Dict[str, Any]] = []
+        self.citations: List[Dict[str, Any]] = []
         self._element_id = 0
     
     def _get_next_id(self) -> str:
         self._element_id += 1
         return f"elem_{self._element_id}"
+    
+    def _extract_superscript_citations(self, paragraph: Paragraph, element_id: str) -> List[Dict[str, Any]]:
+        """
+        提取段落中格式为上标的文献引用 [x]
+        
+        Args:
+            paragraph: 段落对象
+            element_id: 当前元素ID
+        
+        Returns:
+            引用列表 [{"ref_id": 1, "before": "...", "after": "...", "element_id": "elem_1"}, ...]
+        """
+        citations = []
+        
+        char_formats = []
+        for run in paragraph.runs:
+            is_super = (run.font.superscript is True)
+            
+            for char in run.text:
+                char_formats.append((char, is_super))
+        
+        if not char_formats:
+            return citations
+        
+        full_text = "".join([c[0] for c in char_formats])
+        
+        for match in re.finditer(r'\[(\d+)\]', full_text):
+            match_start, match_end = match.span()
+            num_start, num_end = match.span(1)
+            
+            is_superscript = any(char_formats[i][1] for i in range(num_start, num_end))
+            
+            if is_superscript:
+                before_text = full_text[:match_start]
+                after_text = full_text[match_end:]
+                
+                before_context = before_text[-50:] if len(before_text) > 50 else before_text
+                after_context = after_text[:50] if len(after_text) > 50 else after_text
+                
+                citations.append({
+                    "ref_id": int(match.group(1)),
+                    "before": before_context.strip(),
+                    "after": after_context.strip(),
+                    "element_id": element_id,
+                    "full_match": match.group(0)
+                })
+        
+        return citations
     
     def _get_paragraph_style(self, paragraph: Paragraph) -> Dict[str, Any]:
         style_info = {}
@@ -110,8 +160,14 @@ class DocxParser:
         if style_info["is_heading"]:
             element_type = f"heading{style_info['heading_level']}"
         
+        element_id = self._get_next_id()
+        
+        citations = self._extract_superscript_citations(paragraph, element_id)
+        if citations:
+            self.citations.extend(citations)
+        
         return {
-            "id": self._get_next_id(),
+            "id": element_id,
             "type": element_type,
             "content": text,
             "style": style_info
@@ -391,6 +447,7 @@ class DocxParser:
     
     def parse(self) -> List[Dict[str, Any]]:
         self.elements = []
+        self.citations = []
         
         for element in self.doc.element.body:
             if element.tag == f"{{{W}}}p":
@@ -405,7 +462,17 @@ class DocxParser:
         
         return self.elements
     
-    def to_json(self, output_path: Optional[str] = None) -> str:
+    def get_citations(self) -> List[Dict[str, Any]]:
+        return self.citations
+    
+    def save_citations(self, output_path: str) -> None:
+        if self.citations:
+            Path(output_path).write_text(
+                json.dumps(self.citations, ensure_ascii=False, indent=2),
+                encoding="utf-8"
+            )
+    
+    def to_json(self, output_path: Optional[str] = None, citations_path: Optional[str] = None) -> str:
         if not self.elements:
             self.parse()
         
@@ -414,16 +481,20 @@ class DocxParser:
         if output_path:
             Path(output_path).write_text(json_str, encoding="utf-8")
         
+        if citations_path and self.citations:
+            self.save_citations(citations_path)
+        
         return json_str
 
 
-def parse_docx(doc_path: str, output_json_path: Optional[str] = None) -> List[Dict[str, Any]]:
+def parse_docx(doc_path: str, output_json_path: Optional[str] = None, citations_path: Optional[str] = None) -> List[Dict[str, Any]]:
     """
     解析docx文档为JSON格式
     
     Args:
         doc_path: docx文档路径
         output_json_path: 输出JSON文件路径（可选）
+        citations_path: 引用配置文件路径（可选）
     
     Returns:
         解析后的元素列表
@@ -432,7 +503,9 @@ def parse_docx(doc_path: str, output_json_path: Optional[str] = None) -> List[Di
     elements = parser.parse()
     
     if output_json_path:
-        parser.to_json(output_json_path)
+        parser.to_json(output_json_path, citations_path)
+    elif citations_path and parser.citations:
+        parser.save_citations(citations_path)
     
     return elements
 
