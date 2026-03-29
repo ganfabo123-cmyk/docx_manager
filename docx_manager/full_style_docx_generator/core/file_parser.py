@@ -108,8 +108,8 @@ def parse_text_to_json(text: str, output_json_path: str = None, remove_md: bool 
                 json.dumps(elements, ensure_ascii=False, indent=2),
                 encoding='utf-8'
             )
-        
-        return elements
+        short_elements = [e for e in elements if len(e.get('content','')) ]
+        return short_elements
     except Exception as e:
         print(f"解析文本到JSON失败: {e}")
         traceback.print_exc()

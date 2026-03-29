@@ -72,12 +72,17 @@ def register_routes(app):
             blocks = result.get("text_elements", [])
             print(f"📊 [INFO] 解析完成，共提取 {len(blocks)} 个文本块")
             
+            #short_elements = {"text_elements":[e for e in blocks if len(e.get('content','')) < 30]}
             data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
             os.makedirs(data_dir, exist_ok=True)
             output_path = os.path.join(data_dir, 'parsed_blocks.json')
-            
+            full_json_path = os.path.join(data_dir, 'full_parsed.json')
+
             with open(output_path, 'w', encoding='utf-8') as f:
                 json.dump(result, f, ensure_ascii=False, indent=2)
+
+            with open(full_json_path, 'w', encoding='utf-8') as f:
+                json.dump(blocks, f, ensure_ascii=False, indent=2)
             
             print(f"💾 [SAVE] 解析结果已保存至: {output_path}")
             print("🏁 [API OUT] 请求处理成功返回 200")
@@ -475,6 +480,7 @@ def register_routes(app):
             print(f"❌ [CRITICAL ERROR] /restore-document 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500    @app.route('/parse-text', methods=['POST'])
+    @app.route('/parse-text', methods=['POST'])
     def parse_text():
         print("\n" + "="*50)
         print(f"🌐 [API IN] 收到请求: POST /parse-text")
@@ -494,7 +500,7 @@ def register_routes(app):
             data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
             os.makedirs(data_dir, exist_ok=True)
             
-            full_json_path = os.path.join(data_dir, 'text_parsed.json')
+            full_json_path = os.path.join(data_dir, 'full_parsed.json')
             elements = parse_text_to_json(text, full_json_path, remove_md)
             
             if not elements:
@@ -549,7 +555,7 @@ def register_routes(app):
             data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
             os.makedirs(data_dir, exist_ok=True)
             
-            full_json_path = os.path.join(data_dir, 'text_parsed.json')
+            full_json_path = os.path.join(data_dir, 'full_parsed.json')
             elements = parse_text_to_json(text, full_json_path, remove_md)
             
             if not elements:
