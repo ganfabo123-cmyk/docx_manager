@@ -1,13 +1,24 @@
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import copy
+import base64
 
 from .constants import W, M
+
+
+O_NS = "urn:schemas-microsoft-com:office:office"
+V_NS = "urn:schemas-microsoft-com:vml"
+R_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
 
 
 def _render_formula(doc, item, st):
     label = item.get("label", "")
     is_inline = item.get("is_inline", False)
+    
+    ole_base64 = item.get("ole_base64", "")
+    if ole_base64:
+        _render_ole_formula(doc, item, st)
+        return
     
     omml_str = item.get("omml", "")
     omml_elem = None
@@ -45,6 +56,193 @@ def _render_formula(doc, item, st):
         para = doc.add_paragraph()
         _apply_pPr(para._p, st.formula_pPr)
         para.add_run(txt)
+
+
+_ole_counter = 0
+_shape_counter = 0
+
+
+def _render_ole_formula(doc, item, st):
+    global _ole_counter, _shape_counter
+    
+    from lxml import etree
+    
+    ole_base64 = item.get("ole_base64", "")
+    image_base64 = item.get("image_base64", "")
+    label = item.get("label", "")
+    prog_id = item.get("prog_id", "Equation.3")
+    width_pt = item.get("width_pt", 50)
+    height_pt = item.get("height_pt", 20)
+    
+    if not ole_base64:
+        para = doc.add_paragraph()
+        _apply_pPr(para._p, st.formula_pPr)
+        para.alignment = 1  # WD_ALIGN_PARAGRAPH.CENTER
+        para.add_run(f"[公式占位符] {label}")
+        return
+    
+    try:
+        ole_bytes = base64.b64decode(ole_base64)
+        image_bytes = base64.b64decode(image_base64) if image_base64 else None
+        
+        _ole_counter += 1
+        _shape_counter += 1
+        
+        ole_rid, image_rid = _add_ole_parts(doc, ole_bytes, image_bytes)
+        
+        shape_id = f"_x0000_i{1025 + _shape_counter - 1}"
+        object_id = f"_{int(1468075725 + _ole_counter)}"
+        
+        p = _create_ole_paragraph(ole_rid, image_rid, shape_id, object_id, 
+                                  prog_id, width_pt, height_pt, label)
+        
+        body = doc.element.body
+        sectPr = body.find(f"{{{W}}}sectPr")
+        if sectPr is not None:
+            sectPr.addprevious(p)
+        else:
+            body.append(p)
+            
+    except Exception as e:
+        print(f"还原OLE公式时出错: {e}")
+        import traceback
+        traceback.print_exc()
+        para = doc.add_paragraph()
+        _apply_pPr(para._p, st.formula_pPr)
+        para.alignment = 1
+        para.add_run(f"[公式还原失败: {e}] {label}")
+
+
+def _add_ole_parts(doc, ole_bytes: bytes, image_bytes: bytes = None) -> tuple:
+    ole_rid = _add_ole_embedded_part(doc, ole_bytes)
+    image_rid = _add_ole_image_part(doc, image_bytes)
+    return ole_rid, image_rid
+
+
+def _get_next_rid(doc) -> str:
+    rels = doc.part.rels
+    rids = [r.rId for r in rels.values()]
+    return f"rId{max([int(r[3:]) for r in rids if r.startswith('rId')], default=0) + 1}"
+
+
+def _add_ole_embedded_part(doc, ole_bytes: bytes) -> str:
+    from docx.opc.part import Part
+    from docx.opc.packuri import PackURI
+    from docx.opc.constants import RELATIONSHIP_TYPE as RT
+    
+    partname = PackURI(f"/word/embeddings/oleObject{_ole_counter}.bin")
+    content_type = "application/vnd.ms-office.activeX"
+    
+    part = Part(partname, content_type, ole_bytes)
+    
+    new_rid = _get_next_rid(doc)
+    rel = doc.part.rels.add_relationship(RT.OLE_OBJECT, part, new_rid)
+    
+    return new_rid
+
+
+def _add_ole_image_part(doc, image_bytes: bytes = None) -> str:
+    from docx.opc.part import Part
+    from docx.opc.packuri import PackURI
+    from docx.opc.constants import RELATIONSHIP_TYPE as RT
+    
+    if image_bytes is None:
+        image_bytes = _create_ole_placeholder_image()
+    
+    partname = PackURI(f"/word/media/oleImage{_ole_counter}.wmf")
+    content_type = "image/x-wmf"
+    
+    part = Part(partname, content_type, image_bytes)
+    
+    new_rid = _get_next_rid(doc)
+    rel = doc.part.rels.add_relationship(RT.IMAGE, part, new_rid)
+    
+    return new_rid
+
+
+def _create_ole_placeholder_image() -> bytes:
+    wmf_header = bytes([
+        0xD7, 0xCD, 0xC6, 0x9A,
+        0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00,
+        0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00,
+    ])
+    return wmf_header
+
+
+def _create_ole_paragraph(ole_rid: str, image_rid: str, shape_id: str, 
+                          object_id: str, prog_id: str, width_pt: float, 
+                          height_pt: float, label: str):
+    from lxml import etree
+    
+    p = etree.Element(f"{{{W}}}p")
+    
+    pPr = etree.SubElement(p, f"{{{W}}}pPr")
+    
+    jc = etree.SubElement(pPr, f"{{{W}}}jc")
+    jc.set(f"{{{W}}}val", "center")
+    
+    r = etree.SubElement(p, f"{{{W}}}r")
+    
+    obj = etree.SubElement(r, f"{{{W}}}object")
+    
+    shape = etree.SubElement(obj, f"{{{V_NS}}}shape")
+    shape.set("id", shape_id)
+    shape.set(f"{{{O_NS}}}spt", "75")
+    shape.set("type", "#_x0000_t75")
+    shape.set("style", f"height:{height_pt}pt;width:{width_pt}pt;")
+    shape.set(f"{{{O_NS}}}ole", "t")
+    shape.set("filled", "f")
+    shape.set(f"{{{O_NS}}}preferrelative", "t")
+    shape.set("stroked", "f")
+    shape.set("coordsize", "21600,21600")
+    
+    etree.SubElement(shape, f"{{{V_NS}}}path")
+    
+    fill = etree.SubElement(shape, f"{{{V_NS}}}fill")
+    fill.set("on", "f")
+    fill.set("focussize", "0,0")
+    
+    stroke = etree.SubElement(shape, f"{{{V_NS}}}stroke")
+    stroke.set("on", "f")
+    
+    imagedata = etree.SubElement(shape, f"{{{V_NS}}}imagedata")
+    imagedata.set(f"{{{R_NS}}}id", image_rid)
+    imagedata.set(f"{{{O_NS}}}title", "")
+    
+    lock = etree.SubElement(shape, f"{{{O_NS}}}lock")
+    lock.set(f"{{{V_NS}}}ext", "edit")
+    lock.set("grouping", "f")
+    lock.set("rotation", "f")
+    lock.set("text", "f")
+    lock.set("aspectratio", "t")
+    
+    wrap = etree.SubElement(shape, f"{{{W}}}wrap")
+    wrap.set("type", "none")
+    
+    anchorlock = etree.SubElement(shape, f"{{{W}}}anchorlock")
+    
+    ole_obj = etree.SubElement(obj, f"{{{O_NS}}}OLEObject")
+    ole_obj.set("Type", "Embed")
+    ole_obj.set("ProgID", prog_id)
+    ole_obj.set("ShapeID", shape_id)
+    ole_obj.set("DrawAspect", "Content")
+    ole_obj.set("ObjectID", object_id)
+    ole_obj.set(f"{{{R_NS}}}id", ole_rid)
+    
+    locked_field = etree.SubElement(ole_obj, f"{{{O_NS}}}LockedField")
+    locked_field.text = "false"
+    
+    if label:
+        r_label = etree.SubElement(p, f"{{{W}}}r")
+        t_label = etree.SubElement(r_label, f"{{{W}}}t")
+        t_label.set("{http://www.w3.org/XML/1998/namespace}space", "preserve")
+        t_label.text = f"    {label}"
+    
+    return p
 
 
 def _build_inline_formula_para(omml_elem, label, st):

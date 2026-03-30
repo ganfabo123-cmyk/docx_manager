@@ -240,6 +240,98 @@ def parse_formula(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any
             "is_inline": True
         }
 
+    ole_result = _parse_ole_formula(paragraph, doc)
+    if ole_result:
+        return ole_result
+
+    return None
+
+
+def _parse_ole_formula(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any]]:
+    O_NS = "urn:schemas-microsoft-com:office:office"
+    V_NS = "urn:schemas-microsoft-com:vml"
+    R_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    
+    objects = paragraph._element.findall(".//" + f"{{{W}}}object")
+    
+    if not objects:
+        return None
+    
+    for obj in objects:
+        ole_objects = obj.findall(".//" + f"{{{O_NS}}}OLEObject")
+        for ole_obj in ole_objects:
+            prog_id = ole_obj.get("ProgID", "")
+            if "Equation" in prog_id or "equation" in prog_id.lower():
+                try:
+                    embed_id = ole_obj.get(f"{{{R_NS}}}id")
+                    if not embed_id:
+                        embed_id = ole_obj.get(qn("r:id"))
+                    if not embed_id:
+                        embed_id = ole_obj.get("r:id")
+                    
+                    if embed_id:
+                        ole_part = doc.part.related_parts.get(embed_id)
+                        if ole_part:
+                            ole_bytes = ole_part.blob
+                            base64_str = base64.b64encode(ole_bytes).decode('utf-8')
+                            
+                            label = ""
+                            text = paragraph.text.strip()
+                            if text:
+                                label_match = re.search(r'\([^)]+\)', text)
+                                if label_match:
+                                    label = label_match.group()
+                            
+                            shape_elem = obj.find(".//" + f"{{{V_NS}}}shape")
+                            width_pt = None
+                            height_pt = None
+                            image_base64 = None
+                            
+                            if shape_elem is not None:
+                                style = shape_elem.get("style", "")
+                                if "width:" in style:
+                                    width_match = re.search(r'width:([\d.]+)pt', style)
+                                    if width_match:
+                                        width_pt = float(width_match.group(1))
+                                if "height:" in style:
+                                    height_match = re.search(r'height:([\d.]+)pt', style)
+                                    if height_match:
+                                        height_pt = float(height_match.group(1))
+                                
+                                imagedata = shape_elem.find(f".//{{{V_NS}}}imagedata")
+                                if imagedata is not None:
+                                    image_rid = imagedata.get(f"{{{R_NS}}}id")
+                                    if not image_rid:
+                                        image_rid = imagedata.get(qn("r:id"))
+                                    if not image_rid:
+                                        image_rid = imagedata.get("r:id")
+                                    if image_rid:
+                                        image_part = doc.part.related_parts.get(image_rid)
+                                        if image_part:
+                                            image_bytes = image_part.blob
+                                            image_base64 = base64.b64encode(image_bytes).decode('utf-8')
+                            
+                            result = {
+                                "type": "formula",
+                                "label": label,
+                                "omml": "",
+                                "ole_base64": base64_str,
+                                "prog_id": prog_id
+                            }
+                            
+                            if image_base64:
+                                result["image_base64"] = image_base64
+                            if width_pt is not None:
+                                result["width_pt"] = width_pt
+                            if height_pt is not None:
+                                result["height_pt"] = height_pt
+                            
+                            return result
+                except Exception as e:
+                    print(f"解析OLE公式时出错: {e}")
+                    import traceback
+                    traceback.print_exc()
+    
     return None
 
 
