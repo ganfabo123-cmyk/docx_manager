@@ -42,7 +42,7 @@ class DataCollector:
             "ext": "png"
         }
         self.formula_defaults = {
-            "label_prefix": "式"
+            "label_prefix": ""
         }
         self.parsed_data = {"docx_infos": [], "citations": []} 
 
@@ -209,7 +209,7 @@ class DataCollector:
             "ext": "png"
         }
         self.formula_defaults = {
-            "label_prefix": "式"
+            "label_prefix": ""
         }
 
 

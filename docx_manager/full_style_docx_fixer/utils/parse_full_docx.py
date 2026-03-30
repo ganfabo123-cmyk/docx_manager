@@ -8,7 +8,7 @@ import io
 import re
 from typing import List, Dict, Any, Optional
 import xml.etree.ElementTree as ET
-
+import traceback
 
 W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 MATH_NS = "http://schemas.openxmlformats.org/officeDocument/2006/math"
@@ -205,9 +205,142 @@ def parse_image(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any]]
 
     return None
 
+    
+def _parse_formula(paragraph: Paragraph,doc:Document) -> Optional[Dict[str, Any]]:
+        omath_paras = paragraph._element.findall(".//" + f"{{{MATH_NS}}}oMathPara")
+        
+        for omath_para in omath_paras:
+            try:
+                omml_str = ET.tostring(omath_para, encoding="unicode", method="xml")
+                
+                label = ""
+                text = paragraph.text.strip()
+                if text:
+                    label_match = re.search(r'\([^)]+\)', text)
+                    if label_match:
+                        label = label_match.group()
+                
+                return {
+                    "type": "formula",
+                    "label": label,
+                    "omml": omml_str
+                }
+            except Exception as e:
+                print(f"解析公式时出错: {e}")
+                traceback.print_exc()
+        
+        omaths = paragraph._element.findall(".//" + f"{{{MATH_NS}}}oMath")
+        if omaths:
+            try:
+                omml_str = ET.tostring(omaths[0], encoding="unicode", method="xml")
+                
+                label = ""
+                text = paragraph.text.strip()
+                if text:
+                    label_match = re.search(r'\([^)]+\)', text)
+                    if label_match:
+                        label = label_match.group()
+                
+                return {
+                    "type": "formula",
+                    "label": label,
+                    "omml": omml_str,
+                    "is_inline": True
+                }
+            except Exception as e:
+                print(f"解析公式时出错: {e}")
+                traceback.print_exc()
+        
+        ole_result = _parse_ole_formula(paragraph,doc)
+        if ole_result:
+            return ole_result
+        
+        return None
+    
+def _parse_ole_formula(paragraph: Paragraph,doc) -> Optional[Dict[str, Any]]:
+        O_NS = "urn:schemas-microsoft-com:office:office"
+        V_NS = "urn:schemas-microsoft-com:vml"
+        
+        objects = paragraph._element.findall(".//" + f"{{{W}}}object")
+        
+        if not objects:
+            return None
+        
+        for obj in objects:
+            ole_objects = obj.findall(".//" + f"{{{O_NS}}}OLEObject")
+            for ole_obj in ole_objects:
+                prog_id = ole_obj.get("ProgID", "")
+                if "Equation" in prog_id or "equation" in prog_id.lower():
+                    try:
+                        embed_id = ole_obj.get(f"{{{qn('r:embed').split('}')[0]}}}id")
+                        if not embed_id:
+                            embed_id = ole_obj.get(qn("r:id"))
+                        if embed_id:
+                            ole_part = doc.part.related_parts.get(embed_id)
+                            if ole_part:
+                                ole_bytes = ole_part.blob
+                                base64_str = base64.b64encode(ole_bytes).decode('utf-8')
+                                
+                                label = ""
+                                text = paragraph.text.strip()
+                                if text:
+                                    label_match = re.search(r'\([^)]+\)', text)
+                                    if label_match:
+                                        label = label_match.group()
+                                
+                                shape_elem = obj.find(".//" + f"{{{V_NS}}}shape")
+                                width_pt = None
+                                height_pt = None
+                                image_base64 = None
+                                
+                                if shape_elem is not None:
+                                    style = shape_elem.get("style", "")
+                                    if "width:" in style:
+                                        width_match = re.search(r'width:([\d.]+)pt', style)
+                                        if width_match:
+                                            width_pt = float(width_match.group(1))
+                                    if "height:" in style:
+                                        height_match = re.search(r'height:([\d.]+)pt', style)
+                                        if height_match:
+                                            height_pt = float(height_match.group(1))
+                                    
+                                    imagedata = shape_elem.find(f".//{{{V_NS}}}imagedata")
+                                    if imagedata is not None:
+                                        image_rid = imagedata.get(f"{{{qn('r:id').split('}')[0]}}}id")
+                                        if not image_rid:
+                                            image_rid = imagedata.get(qn("r:id"))
+                                        if image_rid:
+                                            image_part = doc.part.related_parts.get(image_rid)
+                                            if image_part:
+                                                image_bytes = image_part.blob
+                                                image_base64 = base64.b64encode(image_bytes).decode('utf-8')
+                                
+                                result = {
+                                    "type": "formula",
+                                    "label": label,
+                                    "omml": "",
+                                    "ole_base64": base64_str,
+                                    "prog_id": prog_id
+                                }
+                                
+                                if image_base64:
+                                    result["image_base64"] = image_base64
+                                if width_pt is not None:
+                                    result["width_pt"] = width_pt
+                                if height_pt is not None:
+                                    result["height_pt"] = height_pt
+                                
+                                return result
+                    except Exception as e:
+                        print(f"解析OLE公式时出错: {e}")
+                        traceback.print_exc()
+        
+        return None
+
 
 def parse_formula(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any]]:
-    for omath_para in _iter_elements_by_tag(paragraph._element, "oMathPara"):
+    return _parse_formula(paragraph=paragraph,doc=doc)
+    """for omath_para in _iter_elements_by_tag(paragraph._element, "oMathPara"):
         omml_str = ET.tostring(omath_para, encoding="unicode", method="xml")
 
         label = ""
@@ -239,7 +372,7 @@ def parse_formula(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any
             "omml": omml_str,
             "is_inline": True
         }
-
+"""
     return None
 
 
@@ -388,6 +521,8 @@ def parse_full_docx(doc_path: str) -> list:
     for element in doc.element.body:
         if element.tag == f"{{{W}}}p":
             paragraph = Paragraph(element, doc)
+            if '用……，则每一个方向上的……由公式（4-1）、（4-2）求得' in paragraph.text:
+                pass 
             heading_result = parse_heading(paragraph)
             if heading_result:
                 elements.append(heading_result)

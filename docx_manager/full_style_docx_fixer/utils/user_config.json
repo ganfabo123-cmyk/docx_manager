@@ -28,7 +28,7 @@
     "ext": "png"
   },
   "formula_defaults": {
-    "label_prefix": "式"
+    "label_prefix": ""
   },
   "section_toc_exclude": {
     "abstract": true,
