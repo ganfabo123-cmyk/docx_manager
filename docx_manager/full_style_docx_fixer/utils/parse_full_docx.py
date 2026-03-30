@@ -211,21 +211,35 @@ def parse_formula(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any
         omml_str = ET.tostring(omath_para, encoding="unicode", method="xml")
 
         label = ""
-        prev_text = ""
-        prev_sibling = paragraph._element.getprevious()
-        if prev_sibling is not None:
-            try:
-                prev_para = Paragraph(prev_sibling, doc)
-                prev_text = prev_para.text.strip()
-                if "(" in prev_text and ")" in prev_text:
-                    label = prev_text
-            except Exception:
-                pass
+        text = paragraph.text.strip()
+        if text:
+            import re
+            label_match = re.search(r'\([^)]+\)', text)
+            if label_match:
+                label = label_match.group()
 
         return {
             "type": "formula",
             "omml": omml_str,
             "label": label if label else None
+        }
+    
+    for omath in _iter_elements_by_tag(paragraph._element, "oMath"):
+        omml_str = ET.tostring(omath, encoding="unicode", method="xml")
+        
+        label = ""
+        text = paragraph.text.strip()
+        if text:
+            import re
+            label_match = re.search(r'\([^)]+\)', text)
+            if label_match:
+                label = label_match.group()
+        
+        return {
+            "type": "formula",
+            "omml": omml_str,
+            "label": label if label else None,
+            "is_inline": True
         }
 
     return None

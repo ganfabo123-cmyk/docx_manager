@@ -7,30 +7,57 @@ from .constants import W, M
 
 def _render_formula(doc, item, st):
     label = item.get("label", "")
-    if "omml" in item:
-        omml_elem = _parse_omml_string(item["omml"])
-    elif "latex" in item:
-        omml_elem = _latex_to_omml(item["latex"])
-    else:
-        omml_elem = None
+    is_inline = item.get("is_inline", False)
+    
+    omml_str = item.get("omml", "")
+    omml_elem = None
+    
+    if omml_str and omml_str.strip():
+        try:
+            omml_elem = _parse_omml_string(omml_str)
+        except Exception as e:
+            print(f"警告: OMML 解析失败: {e}")
+            omml_elem = None
+    
+    if omml_elem is None and "latex" in item:
+        try:
+            omml_elem = _latex_to_omml(item["latex"])
+        except Exception as e:
+            print(f"警告: LaTeX 转换失败: {e}")
+            omml_elem = None
 
-    body   = doc.element.body
+    body = doc.element.body
     sectPr = body.find(f"{{{W}}}sectPr")
 
     if omml_elem is not None:
-        p_elem = (_build_formula_para_with_label(omml_elem, label, st)
-                  if label else _build_formula_para(omml_elem, st))
+        if is_inline:
+            p_elem = _build_inline_formula_para(omml_elem, label, st)
+        else:
+            p_elem = (_build_formula_para_with_label(omml_elem, label, st)
+                      if label else _build_formula_para(omml_elem, st))
         if sectPr is not None:
             sectPr.addprevious(p_elem)
         else:
             body.append(p_elem)
     else:
-        raw  = item.get("latex", item.get("omml", ""))
-        txt  = f"{raw}    {label}" if label else raw
-        # 降级为纯文本，格式完全来自模板 formula_pPr，不加硬编码对齐
+        raw = item.get("latex", item.get("omml", ""))
+        txt = f"{raw}    {label}" if label else raw
         para = doc.add_paragraph()
         _apply_pPr(para._p, st.formula_pPr)
         para.add_run(txt)
+
+
+def _build_inline_formula_para(omml_elem, label, st):
+    p = OxmlElement("w:p")
+    p.append(_make_formula_pPr(st))
+    p.append(copy.deepcopy(omml_elem))
+    if label:
+        r = OxmlElement("w:r")
+        t = OxmlElement("w:t")
+        t.text = f" {label}"
+        r.append(t)
+        p.append(r)
+    return p
 
 
 def _build_formula_para(omml_elem, st):
@@ -92,7 +119,14 @@ def _make_formula_pPr(st):
 def _parse_omml_string(omml_str):
     from lxml import etree
     try:
-        return etree.fromstring(omml_str.encode())
+        elem = etree.fromstring(omml_str.encode())
+        
+        if elem.tag.endswith("oMath"):
+            oMathPara = OxmlElement("m:oMathPara")
+            oMathPara.append(elem)
+            return oMathPara
+        
+        return elem
     except Exception as exc:
         raise ValueError(f"无效的 OMML XML：{exc}") from exc
 

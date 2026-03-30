@@ -147,13 +147,21 @@ def convert_image(item: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any
 
 
 def convert_formula(item: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+    omml = item.get('omml', '')
+    
+    if not omml or not omml.strip():
+        print(f"警告: 公式元素缺少有效的 OMML 数据: {item.get('label', '未知公式')}")
+    
     result = {
         'type': 'formula',
-        'omml': item.get('omml', '')
+        'omml': omml
     }
     
     if item.get('label'):
         result['label'] = item['label']
+    
+    if item.get('is_inline'):
+        result['is_inline'] = True
     
     return result
 
