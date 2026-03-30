@@ -16,3 +16,4 @@ TODO: 目前图片,公式啥的要完整还原
 
 1 generator 引用没有正确生成
 2 fixer或者helper没有正确生成公式
+3 两个server间出错了
