@@ -260,17 +260,15 @@ class DocxRestorer:
             paragraph.add_run(f"[图片还原失败: {e}]")
     
     def _restore_formula(self, element: Dict[str, Any]):
-        content = element.get("content", {})
-        style = element.get("style", {})
+        ole_base64 = element.get("ole_base64", "")
         
-        formula_type = style.get("formula_type", "omml")
-        
-        if formula_type == "ole":
+        if ole_base64:
             self._restore_ole_formula(element)
             return
         
-        omml_str = content.get("omml", "")
-        label = content.get("label", "")
+        omml_str = element.get("omml", "")
+        label = element.get("label", "")
+        is_inline = element.get("is_inline", False)
         
         if omml_str:
             try:
@@ -312,15 +310,12 @@ class DocxRestorer:
             paragraph.add_run(f"[公式] {label}")
     
     def _restore_ole_formula(self, element: Dict[str, Any]):
-        content = element.get("content", {})
-        style = element.get("style", {})
-        
-        ole_base64 = content.get("ole_base64", "")
-        image_base64 = content.get("image_base64", "")
-        label = content.get("label", "")
-        prog_id = content.get("prog_id", "Equation.3")
-        width_pt = style.get("width_pt", 50)
-        height_pt = style.get("height_pt", 20)
+        ole_base64 = element.get("ole_base64", "")
+        image_base64 = element.get("image_base64", "")
+        label = element.get("label", "")
+        prog_id = element.get("prog_id", "Equation.3")
+        width_pt = element.get("width_pt", 50)
+        height_pt = element.get("height_pt", 20)
         
         if not ole_base64:
             paragraph = self.doc.add_paragraph()

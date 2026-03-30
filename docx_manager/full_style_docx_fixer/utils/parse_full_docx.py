@@ -213,15 +213,14 @@ def parse_formula(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any
         label = ""
         text = paragraph.text.strip()
         if text:
-            import re
             label_match = re.search(r'\([^)]+\)', text)
             if label_match:
                 label = label_match.group()
 
         return {
             "type": "formula",
-            "omml": omml_str,
-            "label": label if label else None
+            "label": label,
+            "omml": omml_str
         }
     
     for omath in _iter_elements_by_tag(paragraph._element, "oMath"):
@@ -230,15 +229,14 @@ def parse_formula(paragraph: Paragraph, doc: Document) -> Optional[Dict[str, Any
         label = ""
         text = paragraph.text.strip()
         if text:
-            import re
             label_match = re.search(r'\([^)]+\)', text)
             if label_match:
                 label = label_match.group()
         
         return {
             "type": "formula",
+            "label": label,
             "omml": omml_str,
-            "label": label if label else None,
             "is_inline": True
         }
 
