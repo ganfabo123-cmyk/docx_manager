@@ -304,21 +304,14 @@ class DocxParser:
                 label = ""
                 text = paragraph.text.strip()
                 if text:
-                    label = text
-                
-                style_info = {
-                    "style_name": "Formula",
-                    "formula_type": "omml"
-                }
+                    label_match = re.search(r'\([^)]+\)', text)
+                    if label_match:
+                        label = label_match.group()
                 
                 return {
-                    "id": self._get_next_id(),
                     "type": "formula",
-                    "content": {
-                        "omml": omml_str,
-                        "label": label
-                    },
-                    "style": style_info
+                    "label": label,
+                    "omml": omml_str
                 }
             except Exception as e:
                 print(f"解析公式时出错: {e}")
@@ -332,21 +325,15 @@ class DocxParser:
                 label = ""
                 text = paragraph.text.strip()
                 if text:
-                    label = text
-                
-                style_info = {
-                    "style_name": "Formula",
-                    "formula_type": "omml"
-                }
+                    label_match = re.search(r'\([^)]+\)', text)
+                    if label_match:
+                        label = label_match.group()
                 
                 return {
-                    "id": self._get_next_id(),
                     "type": "formula",
-                    "content": {
-                        "omml": omml_str,
-                        "label": label
-                    },
-                    "style": style_info
+                    "label": label,
+                    "omml": omml_str,
+                    "is_inline": True
                 }
             except Exception as e:
                 print(f"解析公式时出错: {e}")
@@ -385,7 +372,9 @@ class DocxParser:
                                 label = ""
                                 text = paragraph.text.strip()
                                 if text:
-                                    label = text
+                                    label_match = re.search(r'\([^)]+\)', text)
+                                    if label_match:
+                                        label = label_match.group()
                                 
                                 shape_elem = obj.find(".//" + f"{{{V_NS}}}shape")
                                 width_pt = None
@@ -395,12 +384,10 @@ class DocxParser:
                                 if shape_elem is not None:
                                     style = shape_elem.get("style", "")
                                     if "width:" in style:
-                                        import re
                                         width_match = re.search(r'width:([\d.]+)pt', style)
                                         if width_match:
                                             width_pt = float(width_match.group(1))
                                     if "height:" in style:
-                                        import re
                                         height_match = re.search(r'height:([\d.]+)pt', style)
                                         if height_match:
                                             height_pt = float(height_match.group(1))
@@ -416,29 +403,22 @@ class DocxParser:
                                                 image_bytes = image_part.blob
                                                 image_base64 = base64.b64encode(image_bytes).decode('utf-8')
                                 
-                                style_info = {
-                                    "style_name": "Formula",
-                                    "formula_type": "ole",
-                                    "prog_id": prog_id,
-                                    "width_pt": width_pt,
-                                    "height_pt": height_pt
-                                }
-                                
-                                content = {
-                                    "ole_base64": base64_str,
+                                result = {
+                                    "type": "formula",
                                     "label": label,
+                                    "omml": "",
+                                    "ole_base64": base64_str,
                                     "prog_id": prog_id
                                 }
                                 
                                 if image_base64:
-                                    content["image_base64"] = image_base64
+                                    result["image_base64"] = image_base64
+                                if width_pt is not None:
+                                    result["width_pt"] = width_pt
+                                if height_pt is not None:
+                                    result["height_pt"] = height_pt
                                 
-                                return {
-                                    "id": self._get_next_id(),
-                                    "type": "formula",
-                                    "content": content,
-                                    "style": style_info
-                                }
+                                return result
                     except Exception as e:
                         print(f"解析OLE公式时出错: {e}")
                         traceback.print_exc()
