@@ -37,6 +37,8 @@ import uuid
 from pathlib import Path
 
 import requests as http_requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from flask import Flask, jsonify, request, send_file, abort
 
 # ── Pipeline imports ───────────────────────────────────────────────────────────
@@ -158,7 +160,7 @@ def convert():
 
     log.info("Downloading file from: %s", file_url)
     try:
-        resp = http_requests.get(file_url, timeout=30)
+        resp = http_requests.get(file_url, timeout=30, verify=False)
         resp.raise_for_status()
     except Exception as exc:
         log.error("Download failed: %s", exc)
