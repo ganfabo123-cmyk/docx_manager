@@ -38,5 +38,11 @@
     "references": true
   },
   "heading_toc_exclude_default": false,
-  "citations": []
+  "citations": [
+    {
+      "ref_id": 3,
+      "before": "1828年，R.R.Willis",
+      "after": "发表了一篇关于小孔节流平板中压力分布的文章，这是有记载的研究气体润滑的最早文献。……"
+    }
+  ]
 }

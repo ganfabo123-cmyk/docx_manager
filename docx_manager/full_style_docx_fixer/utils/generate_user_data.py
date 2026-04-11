@@ -148,13 +148,24 @@ def convert_image(item: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any
 
 def convert_formula(item: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
     omml = item.get('omml', '')
+    ole_base64 = item.get("ole_base64", "")
+    image_base64 = item.get("image_base64", "")
+    label = item.get("label", "")
+    prog_id = item.get("prog_id", "Equation.3")
+    width_pt = item.get("width_pt", 50)
+    height_pt = item.get("height_pt", 20)
     
-    if not omml or not omml.strip():
-        print(f"警告: 公式元素缺少有效的 OMML 数据: {item.get('label', '未知公式')}")
+    #if not omml or not omml.strip():
+    #    print(f"警告: 公式元素缺少有效的 OMML 数据,加载ole: {item.get('label', '未知公式')}")
     
     result = {
         'type': 'formula',
-        'omml': omml
+        'omml': omml,
+        'ole_base64': ole_base64,
+        'image_base64':image_base64,
+        'prog_id':prog_id,
+        'width_pt':width_pt,
+        'height-pt':height_pt
     }
     
     if item.get('label'):
@@ -230,7 +241,8 @@ def generate_user_data(docx_info: List[Dict[str, Any]], config: Dict[str, Any], 
     for i in range(len(docx_info)):
         # --- 这里可以放你的调试代码，现在它能捕捉到每一个 i 了 ---
         print(f"Debug: Processing index {i}, type: {docx_info[i].get('type')}")
-            
+        if i == 110:
+            pass
         if i in processed_indices:
             continue
             
