@@ -28,6 +28,7 @@ Usage
   python server.py [--host 0.0.0.0] [--port 5000]
 """
 
+import json
 import logging
 import os
 import shutil
@@ -35,6 +36,7 @@ import traceback
 import uuid
 from pathlib import Path
 
+import requests as http_requests
 from flask import Flask, jsonify, request, send_file, abort
 
 # ── Pipeline imports ───────────────────────────────────────────────────────────
@@ -136,37 +138,51 @@ def health():
 @app.route("/convert", methods=["POST"])
 def convert():
     """
-    Accept a .docx upload, run the pipeline, return a download link.
+    Accept a JSON body with a file URL, run the pipeline, return a download link.
 
-    Expects multipart/form-data with field name 'file'.
+    Expects: application/json  {"url": "<docx_url>"}
+    Also accepts: {"docx": {"url": "<docx_url>"}}
+
+    Response: {"status": "ok", "download_url": "/download/<job_id>"}
     """
-    if "file" not in request.files:
-        return jsonify({"error": "No file field in request"}), 400
+    data = request.json or {}
+    log.info("Payload: %s", json.dumps(data, ensure_ascii=False)[:300])
 
-    f = request.files["file"]
-    if not f.filename:
-        return jsonify({"error": "Empty filename"}), 400
-    if not _allowed(f.filename):
-        return jsonify({"error": f"Only .docx files are accepted"}), 415
+    # Support {"url": "..."} and {"docx": {"url": "..."}}
+    file_url = data.get("url", "")
+    if not file_url and isinstance(data.get("docx"), dict):
+        file_url = data["docx"].get("url", "")
+
+    if not file_url:
+        return jsonify({"status": "error", "message": "No URL provided"}), 400
+
+    log.info("Downloading file from: %s", file_url)
+    try:
+        resp = http_requests.get(file_url, timeout=30)
+        resp.raise_for_status()
+    except Exception as exc:
+        log.error("Download failed: %s", exc)
+        return jsonify({"status": "error", "message": f"Failed to download file: {exc}"}), 400
 
     job_id  = uuid.uuid4().hex
     job_dir = _OUTPUTS_DIR / job_id
     job_dir.mkdir(parents=True, exist_ok=True)
 
     input_path = str(job_dir / "input.docx")
-    f.save(input_path)
-    log.info("Job %s: saved upload → %s", job_id, input_path)
+    with open(input_path, "wb") as fh:
+        fh.write(resp.content)
+    log.info("Job %s: saved download → %s (%d bytes)", job_id, input_path, len(resp.content))
 
     try:
         output_path = _run_pipeline(input_path, job_dir)
     except Exception as exc:
         log.error("Job %s failed:\n%s", job_id, traceback.format_exc())
         shutil.rmtree(job_dir, ignore_errors=True)
-        return jsonify({"error": str(exc)}), 500
+        return jsonify({"status": "error", "message": str(exc)}), 500
 
     log.info("Job %s complete → %s", job_id, output_path)
     return jsonify({
-        "job_id":       job_id,
+        "status":       "ok",
         "download_url": f"/download/{job_id}",
     })
 
