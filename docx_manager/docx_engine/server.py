@@ -36,9 +36,33 @@ import traceback
 import uuid
 from pathlib import Path
 
+import ssl
 import requests as http_requests
 import urllib3
+from requests.adapters import HTTPAdapter
+from urllib3.util.ssl_ import create_urllib3_context
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+class _LaxTLSAdapter(HTTPAdapter):
+    """允许旧 TLS 配置的自定义适配器（应对 UNEXPECTED_EOF_WHILE_READING）。"""
+    def init_poolmanager(self, *args, **kwargs):
+        ctx = create_urllib3_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        ctx.set_ciphers("DEFAULT@SECLEVEL=1")
+        ctx.options |= ssl.OP_LEGACY_SERVER_CONNECT
+        kwargs["ssl_context"] = ctx
+        return super().init_poolmanager(*args, **kwargs)
+
+
+def _download(url: str, timeout: int = 30) -> bytes:
+    session = http_requests.Session()
+    session.mount("https://", _LaxTLSAdapter())
+    resp = session.get(url, timeout=timeout, verify=False)
+    resp.raise_for_status()
+    return resp.content
 from flask import Flask, jsonify, request, send_file, abort
 
 # ── Pipeline imports ───────────────────────────────────────────────────────────
@@ -160,8 +184,7 @@ def convert():
 
     log.info("Downloading file from: %s", file_url)
     try:
-        resp = http_requests.get(file_url, timeout=30, verify=False)
-        resp.raise_for_status()
+        content = _download(file_url)
     except Exception as exc:
         log.error("Download failed: %s", exc)
         return jsonify({"status": "error", "message": f"Failed to download file: {exc}"}), 400
@@ -172,8 +195,8 @@ def convert():
 
     input_path = str(job_dir / "input.docx")
     with open(input_path, "wb") as fh:
-        fh.write(resp.content)
-    log.info("Job %s: saved download → %s (%d bytes)", job_id, input_path, len(resp.content))
+        fh.write(content)
+    log.info("Job %s: saved download → %s (%d bytes)", job_id, input_path, len(content))
 
     try:
         output_path = _run_pipeline(input_path, job_dir)
