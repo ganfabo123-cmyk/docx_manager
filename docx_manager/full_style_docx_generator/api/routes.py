@@ -27,6 +27,13 @@ except ImportError:
 
 def register_routes(app):
 
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        print(f"❌ [全局异常] {type(e).__name__}: {e}")
+        import traceback
+        traceback.print_exc()
+        return {"error": "Internal Server Error"}, 500
+
     @app.route('/parse-txt-file', methods=['POST'])
     def parse_txt_file():
         print("\n" + "="*50)

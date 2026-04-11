@@ -348,3 +348,6 @@ def parse_file(file_path: str, output_json_path: str = None, remove_md: bool = T
         print(f"解析文件失败: {e}")
         traceback.print_exc()
         return None
+
+if __name__ == "__main__":
+    parse_docx_to_json("D:\PycharmProjects\\hit-paper-helper\\docx_manager\\data\\template.docx","D:\PycharmProjects\\hit-paper-helper\\docx_manager\\data\\full_parsed.json")

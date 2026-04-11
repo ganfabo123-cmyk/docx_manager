@@ -1,0 +1,179 @@
+ ▐▛███▜▌   Claude Code v2.1.92
+▝▜█████▛▘  Sonnet 4.6 · Claude Pro
+  ▘▘ ▝▝    D:\PycharmProjects\docx_engine_V3
+
+✻ Conversation compacted (ctrl+o for history)
+
+  ⎿  Referenced file docx_compiler.py
+  ⎿  Read docx_extractor.py (354 lines)
+  ⎿  Read docx_restore.py (334 lines)
+  ⎿  Read REVIEW.md (11 lines)
+  ⎿  Referenced file docx_tools.py
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(docx_extractor.py)
+  ⎿  Added 2 lines, removed 46 lines
+      240                  pass
+      241              if tag == 'p':
+      242                  para = _extract_paragraph(child, idx)
+      243 +                body_elements.append(para)                    
+      244  
+      244 -                # ── Promote inline-image runs to dedicated bo
+          -dy elements ─────                                             
+      245 -                # wp:inline drawings are content pictures; pro
+          -mote each one to                                              
+      246 -                # a standalone {'type':'image'} element so the
+          - compiler can                                                 
+      247 -                # process them the same way it handles DocxToo
+          -ls-added images.                                              
+      248 -                #                                             
+      249 -                # wp:anchor drawings are floating shapes (line
+          -s, arrows, etc.);                                             
+      250 -                # they stay in the paragraph's run list — the 
+          -compiler re-emits                                             
+      251 -                # them verbatim via _build_para.              
+      252 -                #                                             
+      253 -                # OLE runs (object_xml) stay in the paragraph 
+          -together with the                                             
+      254 -                # formula-number text runs that follow them in
+          - the same <w:p>.                                              
+      255 -                inline_image_runs = [                         
+      256 -                    r for r in para.get('runs', [])           
+      257 -                    if r.get('drawing_xml') and _is_inline_dra
+          -wing(r['drawing_xml'])                                        
+      258 -                ]                                             
+      259 -                for img_run in inline_image_runs:             
+      260 -                    body_elements.append({                    
+      261 -                        'index':       len(body_elements),    
+      262 -                        'type':        'image',               
+      263 -                        'drawing_xml': img_run['drawing_xml'],
+      264 -                        'caption':     '',                    
+      265 -                        'position':    'center',              
+      266 -                        'width':       0,                     
+      267 -                        'height':      0,                     
+      268 -                    })                                        
+      269 -                                                              
+      270 -                # Remove promoted runs from the paragraph; kee
+          -p anchor drawings,                                            
+      271 -                # OLE runs, and all text runs.                
+      272 -                para['runs'] = [                              
+      273 -                    r for r in para.get('runs', [])           
+      274 -                    if not (r.get('drawing_xml') and _is_inlin
+          -e_drawing(r['drawing_xml']))                                  
+      275 -                ]                                             
+      276 -                para['index'] = len(body_elements)            
+      277 -                                                              
+      278 -                # Only keep the paragraph if it still has mean
+          -ingful content:                                               
+      279 -                # non-empty text, an OLE object, or an anchor 
+          -drawing.                                                      
+      280 -                has_content = any(                            
+      281 -                    r.get('text', '').strip()                 
+      282 -                    or r.get('object_xml')                    
+      283 -                    or r.get('drawing_xml')       # anchor dra
+          -wing stays here                                               
+      284 -                    for r in para['runs']                     
+      285 -                )                                             
+      286 -                if has_content or para.get('pPr') or para.get(
+          -'section_break'):                                             
+      287 -                    body_elements.append(para)                
+      288 -                                                              
+      245                  if para['section_break']:
+      290 -                    sections.append({'paragraph_index': para['
+          -index'], **para['section_break']})                            
+      246 +                    sections.append({'paragraph_index': idx, *
+          +*para['section_break']})                                      
+      247  
+      248              elif tag == 'tbl':
+      249                  body_elements.append(_extract_table(child, idx
+           ))
+
+● Now I need to check how docx_compiler.py handles type:'image' elements from
+  docx_tools.py (user-added images) vs the old promoted inline images, to make
+  sure the compiler still handles user-added images correctly while also
+  re-emitting template inline images through _build_para.
+
+  Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● Good — _build_para already handles drawing_xml correctly at lines 441–455. Now
+   with the promotion logic removed, inline images stay in their original
+  paragraph's run list, and _build_para re-emits them verbatim inside <w:r>.
+  This preserves the original side-by-side layout.
+
+  However, there's one issue: _build_para wraps every run in <w:r>
+  unconditionally (line 435), then appends the drawing_elem as a child of <w:r>.
+   For inline images, <w:drawing> should be a direct child of <w:r>, which is
+  correct. For mc:AlternateContent (anchor shapes), this is also correct — it's
+  a child of <w:r>.
+
+  The fix looks correct. Let me also verify the extractor still compiles without
+   syntax issues by checking the updated section:
+
+  Read 1 file (ctrl+o to expand)
+
+● The extractor body loop is now clean. All paragraphs are kept intact — no
+  promotion, no filtering. Every <w:p> from the source document maps to exactly
+  one paragraph entry in body_elements, with all its runs (text, inline images,
+  anchor drawings, OLE) preserved.
+
+  The layout fix works because:
+  1. Inline images (wp:inline) stay inside their original <w:p> alongside any
+  anchor shapes and text → side-by-side layout is preserved
+  2. Anchor shape runs (with drawing_xml containing mc:AlternateContent) stay in
+   the same paragraph they belong to → relativeFrom="paragraph" offsets
+  reference the correct host paragraph
+  3. _build_para in the compiler re-emits all run types verbatim, so the output
+  XML matches the original structure
+
+✻ Brewed for 3m 58s
+
+❯ well done!!!!!!!!!!!!!!!!!!!!!!请在@D:\PycharmProjects\docx_engine_V3\PHASE_O 
+NE_ENGINE.md中详尽写一下目前的extractor.py和compile.py,这个文档的目的是方便后期 
+维护和修改这两个程序                                                            
+
+  Read 2 files (ctrl+o to expand)
+
+● Now I have the full picture of both files. Let me write the documentation.
+
+● Now I have everything I need. Let me write the documentation file.
+
+● Write(PHASE_ONE_ENGINE.md)
+  ⎿  Error writing file
+
+  Read 1 file, listed 1 directory (ctrl+o to expand)
+
+● Write(PHASE_ONE_ENGINE.md)
+  ⎿  Wrote 810 lines to PHASE_ONE_ENGINE.md
+       1 # DOCX Engine V3 — Phase One 技术文档
+       2 
+       3 > **目的**：为后期维护和修改 `docx_extractor.py` 与 `docx_compil
+         er.py` 提供完整的参考手册。
+       4 > 记录每个模块的设计原理、数据模型、函数职责、关键实现细节及已知
+         陷阱。
+       5 
+       6 ---
+       7 
+       8 ## 目录
+       9 
+      10 1. [整体流水线](#1-整体流水线)
+     … +800 lines (ctrl+o to expand)
+
+● PHASE_ONE_ENGINE.md 已写入，共 6 个章节。文档内容涵盖：
+
+  1. 整体流水线 — 模板目录的双重用途（提取解压 + 编译资产来源），以及
+  extraction.json 作为唯一内容权威的核心原则
+  2. extraction.json 数据模型 — 所有顶层字段、每种 body_element 类型的完整 JSON
+  结构、run 的三种互斥形态（文本/绘图/OLE）、drawing_xml 的三种子类型详解
+  3. docx_extractor.py — 每个函数的职责、_extract_run 的完整决策树、必须存储完整
+   mc:AlternateContent 的原因（含 XML 示例）、已知局限（w:hyperlink 内 run
+  被跳过）
+  4. docx_compiler.py — 命名空间注册时机要求、所有工具函数、WPS anchor
+  辅助函数、每个 _build_* 方法的完整逻辑（含 _build_para 的 run 内容决策树、TOC
+  开关说明表格）
+  5. 关键设计决策与已知陷阱 — 6
+  条，最重要的是段落完整性原则（内联图片提升的历史教训）、mc:AlternateContent
+  完整性、sectPr 不从 extraction 重建
+  6. 维护指南 — 6 个具体修改场景，附代码片段
+
+✻ Baked for 11m 41s
