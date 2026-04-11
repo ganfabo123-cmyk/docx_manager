@@ -36,6 +36,10 @@ import traceback
 import uuid
 from pathlib import Path
 
+import tempfile
+
+import pythoncom
+import win32com.client as win32
 import requests as http_requests
 from flask import Flask, jsonify, request, send_file, abort
 
@@ -165,14 +169,54 @@ def convert():
         log.error("Download failed: %s", exc)
         return jsonify({"status": "error", "message": f"Failed to download file: {exc}"}), 400
 
+    # ── 先把下载内容存为 .doc，再用 Word 转成 .docx ──────────────────────────────
+    temp_dir  = tempfile.gettempdir()
+    raw_path  = os.path.join(temp_dir, f"input_{os.getpid()}.doc")
+    with open(raw_path, "wb") as fh:
+        fh.write(content)
+    log.info("Downloaded %d bytes → %s", len(content), raw_path)
+
+    abs_raw  = os.path.abspath(raw_path)
+    base     = os.path.splitext(os.path.basename(abs_raw))[0]
+    abs_docx = os.path.abspath(os.path.join(temp_dir, f"{base}.docx"))
+
+    log.info("Converting .doc → .docx via Word COM …")
+    pythoncom.CoInitialize()
+    word = doc = None
+    try:
+        word = win32.gencache.EnsureDispatch("Word.Application")
+        word.Visible = False
+        word.DisplayAlerts = False
+        doc = word.Documents.Open(abs_raw)
+        doc.SaveAs2(abs_docx, FileFormat=16)
+        log.info("Word conversion OK → %s", abs_docx)
+    except Exception as exc:
+        log.error("Word conversion failed: %s", exc)
+        return jsonify({"status": "error", "message": f"Word conversion failed: {exc}"}), 500
+    finally:
+        if doc:
+            doc.Close(False)
+        if word:
+            word.Quit()
+        pythoncom.CoUninitialize()
+
+    if not os.path.exists(abs_docx):
+        return jsonify({"status": "error", "message": "Word finished but no .docx produced"}), 500
+
     job_id  = uuid.uuid4().hex
     job_dir = _OUTPUTS_DIR / job_id
     job_dir.mkdir(parents=True, exist_ok=True)
 
     input_path = str(job_dir / "input.docx")
-    with open(input_path, "wb") as fh:
-        fh.write(content)
-    log.info("Job %s: saved download → %s (%d bytes)", job_id, input_path, len(content))
+    shutil.copy2(abs_docx, input_path)
+    log.info("Job %s: input ready → %s", job_id, input_path)
+
+    # 清理临时文件
+    for p in (raw_path, abs_docx):
+        try:
+            os.remove(p)
+        except OSError:
+            pass
 
     try:
         output_path = _run_pipeline(input_path, job_dir)
