@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(curl -s http://localhost:5001/health)",
+      "Bash(mkdir -p engine utils)",
+      "Bash(touch engine/__init__.py utils/__init__.py)",
+      "Bash(cp docx_parser.py engine/docx_parser.py)",
+      "Bash(cp docx_tools.py engine/docx_tools.py)",
+      "Bash(cp user_data_generator.py engine/user_data_generator.py)",
+      "Bash(cp user_data_compiler.py engine/user_data_compiler.py)",
+      "Bash(cp docx_compiler.py engine/docx_compiler.py)",
+      "Bash(cp formatting_style.py utils/)",
+      "Bash(cp style_normalizer.py utils/)",
+      "Bash(cp sundry_style_parse.py utils/)",
+      "Bash(cp docx_extractor.py utils/)",
+      "Bash(cp docx_restore.py utils/)",
+      "Bash(mv file_parser.py recycle/)",
+      "Bash(mv docx_demo_generator.py recycle/)",
+      "Bash(mv output.docx recycle/)",
+      "Bash(mv output_test.docx recycle/)",
+      "Bash(mv template.docx recycle/)",
+      "Bash(mv TODO recycle/)"
+    ]
+  }
+}

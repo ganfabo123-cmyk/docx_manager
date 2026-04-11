@@ -14,9 +14,9 @@ LLM_API_KEY = "sk-54f3b9e43a1b44ed8eaaf8666da594ca"
 LLM_API_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 LLM_MODEL = "qwen3-30b-a3b-instruct-2507"
 
-SERVER_URL = "http://10.68.232.95:5000"
+SERVER_URL = "http://192.168.47.118:5000"
 
-FULL_DOCX_FILE_URL = "https://agent.hit.edu.cn/api/proxy/down?Action=Download&Version=2022-01-01&Path=upload%2Ffull%2F66%2F9b%2Fc70cedf0e0971155db2a4849dd4b4198757825bcb8280ff32e71b4cc64ff&IsAnonymous=true"
+FULL_DOCX_FILE_URL = "https://agent.hit.edu.cn/api/proxy/down?Action=Download&Version=2022-01-01&Path=upload%2Ffull%2Fe8%2F40%2Fe2287dec7224ec7da65630ef712ab6c60650293ff2f5aa739aef02b7f45d&IsAnonymous=true"
 PART_DOCX_FILE_URL = "https://agent.hit.edu.cn/api/proxy/down?Action=Download&Version=2022-01-01&Path=upload%2Ffull%2F75%2F41%2F6e569b142cb40f6edc625af45972af4aac0c93952f273b9055262029db8e&IsAnonymous=true"
 TXT_FILE_URL = "https://agent.hit.edu.cn/api/proxy/down?Action=Download&Version=2022-01-01&Path=upload%2Ffull%2Fa8%2F8e%2F83d4b9ac8b1d4fbf0c17e5ece81250531f2d97616e80720c7853acd893e9&IsAnonymous=true"
 SAMPLE_TEXT = """# 第一章 绪论
@@ -79,7 +79,8 @@ def parse_docx_file(url: str) -> Dict[str, Any]:
     print(f"[1/5] 解析 DOCX 文件: {url[:50]}...")
     response = requests.post(
         f"{SERVER_URL}/parse-docx-file",
-        json={"url": url}
+        json={"url": url},
+        proxies={"http": None, "https": None}
     )
     
     if response.status_code == 200:
@@ -182,7 +183,7 @@ def main():
     print("=" * 60)
     
     try:
-        result =  parse_docx_file(PART_DOCX_FILE_URL)
+        result =  parse_docx_file(FULL_DOCX_FILE_URL)
         if not result:
             print("解析失败，退出...")
             return

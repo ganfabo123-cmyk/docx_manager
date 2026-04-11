@@ -1,0 +1,97 @@
+{
+  "template": "hit-template",
+  "description": "哈工大学位论文模板节配置。第一节固定为摘要，每个一级标题对应一节；摘要/Abstract/目录用罗马数字，目录后正文用阿拉伯数字从1开始。",
+  "page_size": {"w": "11906", "h": "16838"},
+  "dismiss_before_front": true,
+  "toc_max_level": 4,
+  "page_break_before_body_h1": true,
+
+  "cover_section_break": {
+    "note": "封面节，含首页不同页眉(first)，无页码",
+    "header_refs": {"first": "rId5", "default": "rId3", "even": "rId4"},
+    "footer_refs": {"default": "rId6", "even": "rId7"},
+    "page_size": {"w": "11906", "h": "16838"}
+  },
+
+  "front_matter": [
+    {
+      "name": "摘  要",
+      "note": "中文摘要，无页眉，页脚罗马数字",
+      "page_numbering": "roman",
+      "section_break": {
+        "header_refs": {},
+        "footer_refs": {"default": "rId8", "even": "rId9"},
+        "page_size": {"w": "11906", "h": "16838"}
+      }
+    },
+    {
+      "name": "Abstract",
+      "note": "英文摘要，有页眉，页脚罗马数字",
+      "page_numbering": "roman",
+      "section_break": {
+        "header_refs": {"default": "rId10", "even": "rId11"},
+        "footer_refs": {"default": "rId12", "even": "rId13"},
+        "page_size": {"w": "11906", "h": "16838"}
+      }
+    },
+    {
+      "name": "目  录",
+      "note": "目录，compiler自动在此节插入generate_toc；页脚罗马数字",
+      "page_numbering": "roman",
+      "auto_generate_toc": true,
+      "section_break": {
+        "header_refs": {"default": "rId14", "even": "rId15"},
+        "footer_refs": {"default": "rId16"},
+        "page_size": {"w": "11906", "h": "16838"}
+      }
+    }
+  ],
+
+  "body_start_section_break": {
+    "note": "目录末尾节，紧接正文第一章；阿拉伯数字从1开始",
+    "header_refs": {"default": "rId17", "even": "rId18"},
+    "footer_refs": {"even": "rId19"},
+    "restart_page_number": 1,
+    "page_size": {"w": "11906", "h": "16838"}
+  },
+
+  "body_section_breaks": [
+    {
+      "note": "正文节1",
+      "header_refs": {"default": "rId20", "even": "rId21"},
+      "footer_refs": {"default": "rId22", "even": "rId23"},
+      "page_size": {"w": "11906", "h": "16838"}
+    },
+    {
+      "note": "正文节2",
+      "header_refs": {"default": "rId24"},
+      "footer_refs": {"default": "rId25"},
+      "page_size": {"w": "11906", "h": "16838"}
+    },
+    {
+      "note": "正文节3",
+      "header_refs": {"default": "rId26", "even": "rId27"},
+      "footer_refs": {"default": "rId28", "even": "rId29"},
+      "page_size": {"w": "11906", "h": "16838"}
+    },
+    {
+      "note": "正文节4",
+      "header_refs": {"default": "rId30", "even": "rId31"},
+      "footer_refs": {},
+      "page_size": {"w": "11906", "h": "16838"}
+    },
+    {
+      "note": "正文节5",
+      "header_refs": {"default": "rId32", "even": "rId33"},
+      "footer_refs": {"default": "rId34", "even": "rId35"},
+      "page_size": {"w": "11906", "h": "16838"}
+    }
+  ],
+
+  "final_section_break": {
+    "note": "文档末尾节（致谢/声明等之后），paragraph_index为null",
+    "header_refs": {"default": "rId36", "even": "rId37"},
+    "footer_refs": {"default": "rId38"},
+    "page_size": {"w": "11906", "h": "16838"}
+  }
+}

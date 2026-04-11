@@ -1,0 +1,1113 @@
+"""
+Compiles a .docx from extraction.json + template directory.
+
+Primary source : extraction.json  — body_elements, headers, footers, metadata
+Supporting role: template/        — table structure (tblPr/tblGrid/trPr/tcPr),
+                                    body-level sectPr, binary assets, styles,
+                                    settings, theme, relationships, content types
+
+The template is consulted ONLY for data that extraction.json does not store:
+  • <w:tblPr> / <w:tblGrid> / <w:trPr> / <w:tcPr>  (table structural XML)
+  • The body-level <w:sectPr>  (page size, margins, section layout)
+  • The document root element  (namespace declarations are reused)
+  • Binary blobs: media/, embeddings/  (never modified)
+  • styles.xml, settings.xml, theme/   (never modified)
+
+Every paragraph (pPr, runs, rPr) and every header/footer paragraph comes
+exclusively from extraction.json.
+
+Usage:
+    python docx_compiler.py [extraction.json] [output.docx] [template_dir]
+
+Defaults:
+    extraction  = data/extraction.json
+    output      = output.docx
+    template    = template
+"""
+
+import base64
+import copy
+import json
+import os
+import re
+import shutil
+import sys
+import tempfile
+import zipfile
+from xml.etree import ElementTree as ET
+
+# ── Namespace registration ─────────────────────────────────────────────────────
+# Must happen before any ET.parse() / ET.tostring() call so prefixes are stable.
+
+_NS_MAP = {
+    'wpc':          'http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas',
+    'mc':           'http://schemas.openxmlformats.org/markup-compatibility/2006',
+    'o':            'urn:schemas-microsoft-com:office:office',
+    'r':            'http://schemas.openxmlformats.org/officeDocument/2006/relationships',
+    'm':            'http://schemas.openxmlformats.org/officeDocument/2006/math',
+    'v':            'urn:schemas-microsoft-com:vml',
+    'wp14':         'http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing',
+    'wp':           'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing',
+    'w':            'http://schemas.openxmlformats.org/wordprocessingml/2006/main',
+    'w14':          'http://schemas.microsoft.com/office/word/2010/wordml',
+    'w10':          'urn:schemas-microsoft-com:office:word',
+    'w15':          'http://schemas.microsoft.com/office/word/2012/wordml',
+    'wpg':          'http://schemas.microsoft.com/office/word/2010/wordprocessingGroup',
+    'wpi':          'http://schemas.microsoft.com/office/word/2010/wordprocessingInk',
+    'wne':          'http://schemas.microsoft.com/office/word/2006/wordml',
+    'wps':          'http://schemas.microsoft.com/office/word/2010/wordprocessingShape',
+    'wpsCustomData':'http://www.wps.cn/officeDocument/2013/wpsCustomData',
+    # DrawingML namespaces (needed for inline images)
+    'a':            'http://schemas.openxmlformats.org/drawingml/2006/main',
+    'pic':          'http://schemas.openxmlformats.org/drawingml/2006/picture',
+}
+for _p, _u in _NS_MAP.items():
+    ET.register_namespace(_p, _u)
+
+# Namespace URI constants
+W   = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+M   = 'http://schemas.openxmlformats.org/officeDocument/2006/math'
+R   = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
+REL = 'http://schemas.openxmlformats.org/package/2006/relationships'
+CT  = 'http://schemas.openxmlformats.org/package/2006/content-types'
+A   = 'http://schemas.openxmlformats.org/drawingml/2006/main'
+PIC = 'http://schemas.openxmlformats.org/drawingml/2006/picture'
+WP  = 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing'
+XML_SPACE = '{http://www.w3.org/XML/1998/namespace}space'
+
+REL_TYPE_IMAGE = (
+    'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image'
+)
+REL_TYPE_OLE = (
+    'http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject'
+)
+
+# VML and Office namespace URIs (already registered in _NS_MAP; constants
+# are needed when constructing elements programmatically).
+V_NS = 'urn:schemas-microsoft-com:vml'
+O_NS = 'urn:schemas-microsoft-com:office:office'
+MC   = 'http://schemas.openxmlformats.org/markup-compatibility/2006'
+
+
+def _q(local: str) -> str:   return f'{{{W}}}{local}'
+def _qm(local: str) -> str:  return f'{{{M}}}{local}'
+def _qr(local: str) -> str:  return f'{{{R}}}{local}'
+
+def _tag(elem: ET.Element) -> str:
+    t = elem.tag
+    return t.split('}', 1)[1] if '}' in t else t
+
+
+# ── XML fragment parser ────────────────────────────────────────────────────────
+
+def _parse_xml(xml_str: str | None) -> ET.Element | None:
+    """
+    Parse an XML fragment string from extraction.json into an Element.
+
+    Extraction stores pPr/rPr with the ns0: prefix (an artefact of ET
+    serialising without registered prefixes in the extractor).  fromstring()
+    resolves ns0: to the correct URI; tostring() then re-serialises with
+    the registered w: prefix.  No manual prefix rewriting is needed.
+    """
+    if not xml_str:
+        return None
+    try:
+        return ET.fromstring(xml_str)
+    except ET.ParseError:
+        return None
+
+
+# ── DOCX packing ──────────────────────────────────────────────────────────────
+
+def _pack_docx(source_dir: str, output_path: str) -> None:
+    with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zf:
+        for dirpath, dirnames, filenames in os.walk(source_dir):
+            dirnames.sort()
+            for filename in sorted(filenames):
+                abs_path = os.path.join(dirpath, filename)
+                arc_path = os.path.relpath(abs_path, source_dir).replace(os.sep, '/')
+                zf.write(abs_path, arc_path)
+
+
+# ── XML writer ─────────────────────────────────────────────────────────────────
+
+def _write_xml(path: str, root: ET.Element) -> None:
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n')
+        f.write(ET.tostring(root, encoding='unicode'))
+
+
+# ── Image format detection ─────────────────────────────────────────────────────
+
+def _image_suffix(data: bytes) -> str:
+    if data[:4]  == b'\x89PNG':                        return '.png'
+    if data[:2]  == b'\xff\xd8':                       return '.jpg'
+    if data[:4]  in (b'II\x2a\x00', b'MM\x00\x2a'):   return '.tiff'
+    if data[:4]  == b'\xd7\xcd\xc6\x9a':              return '.wmf'
+    if data[:6]  in (b'GIF87a', b'GIF89a'):            return '.gif'
+    return '.png'
+
+
+# ── .rels file helper (string-based to avoid default-namespace issues) ─────────
+
+def _rels_append(rels_path: str, rid: str, rel_type: str, target: str) -> None:
+    """Insert a new Relationship element into a .rels file."""
+    with open(rels_path, 'r', encoding='utf-8') as f:
+        text = f.read()
+    entry = (
+        f'<Relationship Id="{rid}" Type="{rel_type}" Target="{target}"/>'
+    )
+    close = '</Relationships>'
+    text = text.replace(close, entry + close)
+    with open(rels_path, 'w', encoding='utf-8') as f:
+        f.write(text)
+
+
+# ── [Content_Types].xml helper ─────────────────────────────────────────────────
+
+_MIME: dict[str, str] = {
+    'png':  'image/png',
+    'jpg':  'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'tif':  'image/tiff',
+    'tiff': 'image/tiff',
+    'wmf':  'image/x-wmf',
+    'gif':  'image/gif',
+    'bin':  'application/vnd.openxmlformats-officedocument.oleObject',
+}
+
+def _ensure_content_type(ct_path: str, ext: str) -> None:
+    """Add a Default entry for ``ext`` if absent (string-based)."""
+    ext = ext.lower().lstrip('.')
+    with open(ct_path, 'r', encoding='utf-8') as f:
+        text = f.read()
+    if f'Extension="{ext}"' in text:
+        return
+    mime  = _MIME.get(ext, 'application/octet-stream')
+    entry = f'<Default Extension="{ext}" ContentType="{mime}"/>'
+    close = '</Types>'
+    text  = text.replace(close, entry + close)
+    with open(ct_path, 'w', encoding='utf-8') as f:
+        f.write(text)
+
+
+# ── Anchor-drawing helpers ─────────────────────────────────────────────────────
+
+# WPS-specific graphicData URIs that require mc:AlternateContent wrapping.
+_WPS_URIS = {
+    'http://schemas.microsoft.com/office/word/2010/wordprocessingShape',
+    'http://schemas.microsoft.com/office/word/2010/wordprocessingGroup',
+    'http://schemas.microsoft.com/office/word/2010/wordprocessingInk',
+    'http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas',
+}
+
+
+def _is_wps_anchor_drawing(elem: ET.Element) -> bool:
+    """
+    Return True when elem is a bare <w:drawing> containing a wp:anchor whose
+    graphicData URI points to a WPS-specific shape namespace.
+
+    These drawings MUST be wrapped in <mc:AlternateContent><mc:Choice
+    Requires="wps"> so that WPS Office honours the anchor's posOffset
+    values.  Without the wrapper WPS ignores the stored position and renders
+    the shape at an unpredictable location.
+    """
+    if _tag(elem) != 'drawing':
+        return False
+    anchor = elem.find(f'{{{WP}}}anchor')
+    if anchor is None:
+        return False
+    for gd in anchor.iter(f'{{{A}}}graphicData'):
+        if gd.get('uri', '') in _WPS_URIS:
+            return True
+    return False
+
+
+def _wrap_in_mc_choice(drawing_elem: ET.Element) -> ET.Element:
+    """
+    Wrap a <w:drawing> in <mc:AlternateContent><mc:Choice Requires="wps">.
+
+    Used by the compiler to restore the mc:AlternateContent structure that
+    the extractor stripped when it stored only the inner w:drawing from an
+    mc:Choice block.  The mc:Fallback (VML) section is omitted because the
+    extractor did not preserve it; WPS will still render correctly using the
+    Choice path.
+    """
+    alt    = ET.Element(f'{{{MC}}}AlternateContent')
+    choice = ET.SubElement(alt, f'{{{MC}}}Choice')
+    choice.set('Requires', 'wps')
+    choice.append(drawing_elem)
+    return alt
+
+
+# ── Main compiler ──────────────────────────────────────────────────────────────
+
+class DocxCompiler:
+    """
+    Compile a .docx from extraction.json and a template directory.
+
+    The template is used ONLY to provide structural data not stored in
+    extraction.json: table skeleton XML, body-level sectPr, binary assets,
+    and the document root element (for namespace declarations).
+
+    Every content decision — paragraph text, run formatting, pPr, rPr,
+    header and footer text — is driven by extraction.json.
+    """
+
+    def __init__(
+        self,
+        extraction_path: str = 'data/extraction.json',
+        template_dir:    str = 'template',
+    ) -> None:
+        if not os.path.exists(extraction_path):
+            raise FileNotFoundError(f'extraction not found: {extraction_path!r}')
+        if not os.path.isdir(template_dir):
+            raise FileNotFoundError(f'template dir not found: {template_dir!r}')
+
+        with open(extraction_path, 'r', encoding='utf-8') as f:
+            self.ext: dict = json.load(f)
+
+        self.template_dir    = template_dir
+        self.extraction_path = extraction_path
+        self._rid_counter    = 0   # next unused rId number
+        self._shape_counter  = 1   # docPr id for inline images
+
+    # ── Public API ─────────────────────────────────────────────────────────────
+
+    def compile(self, output_path: str = 'output.docx') -> str:
+        """
+        Build the .docx and write it to output_path.
+
+        Returns the absolute path of the generated file.
+        """
+        tmp_base = tempfile.mkdtemp(prefix='docx_compile_')
+        work_dir = os.path.join(tmp_base, 'work')
+        try:
+            shutil.copytree(self.template_dir, work_dir)
+            self._init_rid_counter(work_dir)
+
+            print('[compiler] Rebuilding document.xml …')
+            stats = self._rebuild_document(work_dir)
+            print(f'[compiler]   paragraphs : {stats["paragraphs"]}')
+            print(f'[compiler]   tables     : {stats["tables"]}')
+            print(f'[compiler]   raw_xml    : {stats["raw_xml"]}')
+            print(f'[compiler]   images     : {stats["images"]}')
+            print(f'[compiler]   omath      : {stats["omath"]}')
+            print(f'[compiler]   ole        : {stats["ole"]}')
+            print(f'[compiler]   toc        : {stats["toc"]}')
+
+            print('[compiler] Rebuilding headers/footers …')
+            hf_count = self._rebuild_hf_files(work_dir)
+            print(f'[compiler]   files rebuilt: {hf_count}')
+
+            self._patch_settings(work_dir)
+
+            _pack_docx(work_dir, output_path)
+        finally:
+            shutil.rmtree(tmp_base, ignore_errors=True)
+
+        abs_out = os.path.abspath(output_path)
+        print(f'[compiler] Done → {abs_out}')
+        return abs_out
+
+    # ── rId management ─────────────────────────────────────────────────────────
+
+    def _init_rid_counter(self, work_dir: str) -> None:
+        rels_path = os.path.join(work_dir, 'word', '_rels', 'document.xml.rels')
+        if not os.path.exists(rels_path):
+            self._rid_counter = 100
+            return
+        root = ET.parse(rels_path).getroot()
+        nums = [
+            int(rel.get('Id', 'rId0')[3:])
+            for rel in root
+            if rel.get('Id', '').startswith('rId')
+            and rel.get('Id', '')[3:].isdigit()
+        ]
+        self._rid_counter = max(nums, default=0) + 1
+
+    def _alloc_rid(self) -> str:
+        rid = f'rId{self._rid_counter}'
+        self._rid_counter += 1
+        return rid
+
+    def _alloc_shape_id(self) -> int:
+        sid = self._shape_counter
+        self._shape_counter += 1
+        return sid
+
+    # ── Document body reconstruction ───────────────────────────────────────────
+
+    def _rebuild_document(self, work_dir: str) -> dict:
+        """
+        Reconstruct word/document.xml entirely from extraction body_elements.
+
+        The template document.xml contributes:
+          • The root <w:document> element with all namespace declarations.
+          • The structural XML of each table (tblPr, tblGrid, trPr, tcPr).
+          • The body-level <w:sectPr> (appended last, unchanged).
+        """
+        doc_path = os.path.join(work_dir, 'word', 'document.xml')
+
+        # Parse template to obtain the root element (namespace declarations)
+        # and the template body for structural reference.
+        tree = ET.parse(doc_path)
+        root = tree.getroot()
+        body = root.find(_q('body'))
+
+        # Collect template tables (positional: k-th extraction table → k-th
+        # template table) and the final body-level sectPr before clearing.
+        tmpl_tables = [c for c in body if _tag(c) == 'tbl']
+        final_sectPr = body.find(_q('sectPr'))  # body-level, not inside pPr
+
+        # Clear the body — every element will come from extraction.
+        for child in list(body):
+            body.remove(child)
+
+        stats = dict(paragraphs=0, tables=0, images=0, omath=0, ole=0, toc=0, raw_xml=0)
+        table_seq = 0  # counts tables seen in extraction order
+
+        for elem in self.ext.get('body_elements', []):
+            etype = elem.get('type')
+
+            if etype == 'paragraph':
+                body.append(self._build_para(elem))
+                stats['paragraphs'] += 1
+
+            elif etype == 'raw_xml':
+                # TOC field blocks, fldChar structures, w:sdt — preserved verbatim
+                # by the extractor.  Re-emit directly; never attempt to parse or
+                # regenerate these — doing so breaks TOC hyperlinks, page numbers,
+                # cross-references, and structured-document-tag numbering.
+                node = _parse_xml(elem.get('xml', ''))
+                if node is not None:
+                    body.append(node)
+                stats['raw_xml'] += 1
+
+            elif etype == 'toc':
+                body.append(self._build_toc_para(elem))
+                stats['toc'] += 1
+
+            elif etype == 'table':
+                tmpl_tbl = (
+                    tmpl_tables[table_seq]
+                    if table_seq < len(tmpl_tables)
+                    else None
+                )
+                body.append(self._build_table(elem, tmpl_tbl))
+                table_seq += 1
+                stats['tables'] += 1
+
+            elif etype == 'image':
+                nodes = self._build_image_nodes(elem, work_dir)
+                for n in nodes:
+                    body.append(n)
+                stats['images'] += 1
+
+            elif etype in ('omath', 'omathpara'):
+                body.append(self._build_omath_para(elem))
+                stats['omath'] += 1
+
+            elif etype == 'ole':
+                body.append(self._build_ole_para(elem, work_dir))
+                stats['ole'] += 1
+
+            # Other tags (bookmarkEnd, etc.) are internal Word markers with no
+            # content stored in extraction — skip them safely.
+
+        # The body-level sectPr is not fully stored in extraction.json
+        # (only header_refs, footer_refs, page_size are captured — not the
+        # full XML with margins, line numbers, header distance, etc.).
+        # This is a legitimate gap: use the template's sectPr verbatim.
+        if final_sectPr is not None:
+            body.append(copy.deepcopy(final_sectPr))
+
+        _write_xml(doc_path, root)
+        return stats
+
+    # ── Section break builder ──────────────────────────────────────────────────
+
+    def _build_sectPr(self, sb: dict) -> ET.Element:
+        """
+        Build a <w:sectPr> element from a section_break dict.
+
+        sb keys:
+            header_refs        : {"default": "rIdX", "even": "rIdY", "first": "rIdZ"}
+            footer_refs        : {"default": "rIdX", "even": "rIdY"}
+            page_size          : {"w": "11906", "h": "16838"}
+            restart_page_number: int | None
+
+        The rIds are written verbatim — they reference header/footer XML files
+        already present in the template's word/ directory, so no .rels surgery
+        is needed for template-owned headers/footers.
+
+        pgMar values are fixed to the HIT template standard (A4, matching every
+        section in template.docx).  <w:type> is intentionally omitted so Word/WPS
+        treats the break as "nextPage" (the OOXML default), which forces a page
+        break at the paragraph boundary.
+        """
+        sectPr = ET.Element(_q('sectPr'))
+
+        # Header references
+        for ref_type, rid in sb.get('header_refs', {}).items():
+            ref = ET.SubElement(sectPr, _q('headerReference'))
+            ref.set(_q('type'), ref_type)
+            ref.set(_qr('id'), rid)
+
+        # Footer references
+        for ref_type, rid in sb.get('footer_refs', {}).items():
+            ref = ET.SubElement(sectPr, _q('footerReference'))
+            ref.set(_q('type'), ref_type)
+            ref.set(_qr('id'), rid)
+
+        # Page size
+        ps = sb.get('page_size', {})
+        pgSz = ET.SubElement(sectPr, _q('pgSz'))
+        pgSz.set(_q('w'), str(ps.get('w', '11906')))
+        pgSz.set(_q('h'), str(ps.get('h', '16838')))
+
+        # Page margins — HIT template fixed values
+        pgMar = ET.SubElement(sectPr, _q('pgMar'))
+        pgMar.set(_q('top'),    '2155')
+        pgMar.set(_q('right'),  '1701')
+        pgMar.set(_q('bottom'), '1701')
+        pgMar.set(_q('left'),   '1701')
+        pgMar.set(_q('header'), '1701')
+        pgMar.set(_q('footer'), '1304')
+        pgMar.set(_q('gutter'), '0')
+
+        # Page number restart
+        rp = sb.get('restart_page_number')
+        if rp is not None:
+            pgNum = ET.SubElement(sectPr, _q('pgNumType'))
+            pgNum.set(_q('start'), str(rp))
+
+        # Single column
+        cols = ET.SubElement(sectPr, _q('cols'))
+        cols.set(_q('space'), '720')
+
+        # Document grid
+        docGrid = ET.SubElement(sectPr, _q('docGrid'))
+        docGrid.set(_q('type'),      'linesAndChars')
+        docGrid.set(_q('linePitch'), '395')
+        docGrid.set(_q('charSpace'), '1861')
+
+        return sectPr
+
+    # ── Paragraph builder ──────────────────────────────────────────────────────
+
+    def _build_para(self, pdata: dict) -> ET.Element:
+        """
+        Build a <w:p> element entirely from extraction paragraph data.
+
+        Source of every piece:
+          pPr  → pdata['pPr']  (XML string, re-parsed; ns0: → w: on output)
+          rPr  → run['rPr']    (XML string, re-parsed)
+          text → run['text']
+
+        If the element carries a 'section_break' dict, a <w:sectPr> is built
+        and appended to <w:pPr>.  Omitting <w:type> inside sectPr lets Word/WPS
+        default to "nextPage", so the break both changes headers/footers and
+        starts a new page.
+        """
+        p = ET.Element(_q('p'))
+
+        pPr_elem = _parse_xml(pdata.get('pPr'))
+
+        # Attach sectPr when this paragraph marks a section boundary
+        sb = pdata.get('section_break')
+        if sb is not None:
+            if pPr_elem is None:
+                pPr_elem = ET.Element(_q('pPr'))
+            pPr_elem.append(self._build_sectPr(sb))
+
+        if pPr_elem is not None:
+            p.append(pPr_elem)
+
+        for run in pdata.get('runs', []):
+            r = ET.SubElement(p, _q('r'))
+
+            rPr_elem = _parse_xml(run.get('rPr'))
+            if rPr_elem is not None:
+                r.append(rPr_elem)
+
+            if run.get('drawing_xml'):
+                drawing_elem = _parse_xml(run['drawing_xml'])
+                if drawing_elem is not None:
+                    # mc:AlternateContent — stored whole by the updated extractor;
+                    # re-emit directly (includes VML fallback for WPS).
+                    # Bare w:drawing with a WPS anchor shape — extractor stripped
+                    # the mc:AlternateContent wrapper; restore it so WPS honours
+                    # the posOffset values instead of floating the shape randomly.
+                    if (
+                        _tag(drawing_elem) != 'AlternateContent'
+                        and _is_wps_anchor_drawing(drawing_elem)
+                    ):
+                        r.append(_wrap_in_mc_choice(drawing_elem))
+                    else:
+                        r.append(drawing_elem)
+            elif run.get('object_xml'):
+                # OLE object (e.g. Equation Editor formula) — re-emit verbatim.
+                object_elem = _parse_xml(run['object_xml'])
+                if object_elem is not None:
+                    r.append(object_elem)
+            else:
+                text = run.get('text') or ''
+                t = ET.SubElement(r, _q('t'))
+                t.text = text
+                if text and (text[0] == ' ' or text[-1] == ' '):
+                    t.set(XML_SPACE, 'preserve')
+
+        return p
+
+    # ── TOC field builder ──────────────────────────────────────────────────────
+
+    def _build_toc_para(self, elem: dict) -> ET.Element:
+        """
+        Build a single <w:p> that contains a TOC complex field.
+
+        The field uses ``w:dirty="true"`` so Word/WPS regenerates the entire
+        Table of Contents from the document's heading paragraphs the first time
+        the document is opened.
+
+        The ``\\h`` hyperlink switch is intentionally omitted: with ``\\h``
+        Word wraps each entry in a ``<w:hyperlink>`` element and applies the
+        Hyperlink character style (blue + underlined).  Without ``\\h`` the
+        auto-generated entries are plain black text, which is the standard
+        appearance for Chinese academic thesis TOCs.
+
+        Field instruction: ``TOC \\o "1-N" \\z``
+            \\o "1-N"  — include heading outline levels 1 through max_level
+            \\z        — suppress tab leader and page numbers in Web Layout view
+        """
+        max_level = elem.get('max_level', 4)
+        instr = f' TOC \\o "1-{max_level}" \\z '
+
+        p = ET.Element(_q('p'))
+
+        # begin — w:dirty="true" tells Word the cached content is stale
+        r1  = ET.SubElement(p, _q('r'))
+        fc1 = ET.SubElement(r1, _q('fldChar'))
+        fc1.set(_q('fldCharType'), 'begin')
+        fc1.set(_q('dirty'), 'true')
+
+        # field instruction
+        r2 = ET.SubElement(p, _q('r'))
+        it = ET.SubElement(r2, _q('instrText'))
+        it.set(XML_SPACE, 'preserve')
+        it.text = instr
+
+        # separate — cached content follows (empty; Word will fill it in)
+        r3  = ET.SubElement(p, _q('r'))
+        fc3 = ET.SubElement(r3, _q('fldChar'))
+        fc3.set(_q('fldCharType'), 'separate')
+
+        # end
+        r4  = ET.SubElement(p, _q('r'))
+        fc4 = ET.SubElement(r4, _q('fldChar'))
+        fc4.set(_q('fldCharType'), 'end')
+
+        return p
+
+    # ── Table builder ──────────────────────────────────────────────────────────
+
+    def _build_table(
+        self,
+        tdata:    dict,
+        tmpl_tbl: ET.Element | None,
+    ) -> ET.Element:
+        """
+        Reconstruct a <w:tbl> element.
+
+        Cell content (paragraphs, text, run formatting) → extraction.json.
+        Table skeleton (tblPr, tblGrid, trPr, tcPr)     → template table.
+
+        If no matching template table exists (e.g. a table added by
+        DocxTools that was not in the original document), a minimal valid
+        skeleton is used instead.
+        """
+        # Deep-copy the template table so we start with the correct skeleton
+        # (tblPr, tblGrid) and row/cell structure (trPr, tcPr).
+        if tmpl_tbl is not None:
+            tbl = copy.deepcopy(tmpl_tbl)
+        else:
+            tbl = _minimal_tbl()
+
+        # Detach all rows from the skeleton — we will rebuild them.
+        tmpl_rows = tbl.findall(_q('tr'))
+        for tr in tmpl_rows:
+            tbl.remove(tr)
+
+        ext_rows = tdata.get('rows', [])
+
+        for row_i, ext_row in enumerate(ext_rows):
+            # Choose the template row that best represents this row's structure.
+            if row_i < len(tmpl_rows):
+                row_proto = tmpl_rows[row_i]
+            elif tmpl_rows:
+                row_proto = tmpl_rows[-1]   # clone last row for extra rows
+            else:
+                row_proto = ET.Element(_q('tr'))
+
+            tr = copy.deepcopy(row_proto)
+
+            # Detach cells from the cloned row.
+            tmpl_cells = tr.findall(_q('tc'))
+            for tc in tmpl_cells:
+                tr.remove(tc)
+
+            for col_i, ext_cell in enumerate(ext_row):
+                # Choose the template cell that best represents this column.
+                if col_i < len(tmpl_cells):
+                    cell_proto = tmpl_cells[col_i]
+                elif tmpl_cells:
+                    cell_proto = tmpl_cells[-1]
+                else:
+                    cell_proto = _minimal_tc()
+
+                tc = copy.deepcopy(cell_proto)
+
+                # Remove existing paragraphs from the cloned cell
+                # (leave tcPr intact — it carries column width, borders, etc.).
+                for old_p in tc.findall(_q('p')):
+                    tc.remove(old_p)
+
+                # Append paragraphs from extraction.
+                cell_paras = ext_cell.get('paragraphs', [])
+                if cell_paras:
+                    for pdata in cell_paras:
+                        tc.append(self._build_para(pdata))
+                else:
+                    # OOXML requires at least one <w:p> per cell.
+                    tc.append(ET.Element(_q('p')))
+
+                tr.append(tc)
+
+            tbl.append(tr)
+
+        return tbl
+
+    # ── Image paragraph builder ────────────────────────────────────────────────
+
+    def _build_image_nodes(
+        self,
+        elem:     dict,
+        work_dir: str,
+    ) -> list[ET.Element]:
+        """
+        Return a list of <w:p> elements for an image element.
+
+        Two source paths are supported:
+
+        drawing_xml path (template-derived images)
+            The extractor stored the original <w:drawing> XML verbatim.
+            Re-emit it directly so that all DrawingML properties (positioning,
+            size, effects) and the rId → media file mapping are preserved
+            exactly.  The rId is valid because the compiler copies the
+            template's word/media/ and word/_rels/ files unchanged.
+
+        base64 path (DocxTools-added images)
+            Build a fresh inline DrawingML paragraph from the image bytes.
+            Falls back to a plain-text placeholder when decoding fails.
+        """
+        caption  = elem.get('caption', '')
+        position = elem.get('position', 'center')
+        nodes: list[ET.Element] = []
+
+        # ── drawing_xml path ──────────────────────────────────────────────────
+        drawing_xml = elem.get('drawing_xml')
+        if drawing_xml:
+            drawing_elem = _parse_xml(drawing_xml)
+            if drawing_elem is not None:
+                p = ET.Element(_q('p'))
+                r = ET.SubElement(p, _q('r'))
+                r.append(drawing_elem)
+                nodes.append(p)
+                if caption:
+                    nodes.append(self._caption_para(caption))
+                return nodes
+
+        # ── base64 path ───────────────────────────────────────────────────────
+        raw_b64   = elem.get('base64', '')
+        width_pt  = int(elem.get('width',  0) or 0)
+        height_pt = int(elem.get('height', 0) or 0)
+
+        img_bytes: bytes | None = None
+        try:
+            img_bytes = base64.b64decode(raw_b64, validate=True)
+        except Exception:
+            pass
+
+        if img_bytes is None:
+            label = f'[图片: {caption}]' if caption else '[图片]'
+            nodes.append(_plain_para(label))
+            return nodes
+
+        suffix   = _image_suffix(img_bytes)
+        rid      = self._embed_image(img_bytes, suffix, work_dir)
+        cx       = (width_pt  or 100) * 12700   # points → EMU
+        cy       = (height_pt or 100) * 12700
+        shape_id = self._alloc_shape_id()
+        img_name = caption or f'image{shape_id}'
+
+        nodes.append(self._drawing_para(rid, cx, cy, shape_id, img_name, position))
+
+        if caption:
+            nodes.append(self._caption_para(caption))
+
+        return nodes
+
+    def _drawing_para(
+        self,
+        rid:      str,
+        cx:       int,
+        cy:       int,
+        shape_id: int,
+        name:     str,
+        position: str,
+    ) -> ET.Element:
+        """Build a <w:p> containing an inline <w:drawing> for the given rId."""
+        p = ET.Element(_q('p'))
+
+        if position == 'center':
+            pPr = ET.SubElement(p, _q('pPr'))
+            jc  = ET.SubElement(pPr, _q('jc'))
+            jc.set(_q('val'), 'center')
+
+        r       = ET.SubElement(p,       _q('r'))
+        drawing = ET.SubElement(r,       _q('drawing'))
+        inline  = ET.SubElement(drawing, f'{{{WP}}}inline')
+        for attr in ('distT', 'distB', 'distL', 'distR'):
+            inline.set(attr, '0')
+
+        extent = ET.SubElement(inline, f'{{{WP}}}extent')
+        extent.set('cx', str(cx))
+        extent.set('cy', str(cy))
+
+        docPr = ET.SubElement(inline, f'{{{WP}}}docPr')
+        docPr.set('id',   str(shape_id))
+        docPr.set('name', name)
+
+        ET.SubElement(inline, f'{{{WP}}}cNvGraphicFramePr')
+
+        graphic     = ET.SubElement(inline,      f'{{{A}}}graphic')
+        graphicData = ET.SubElement(graphic,     f'{{{A}}}graphicData')
+        graphicData.set('uri', PIC)
+
+        pic_e    = ET.SubElement(graphicData, f'{{{PIC}}}pic')
+        nvPicPr  = ET.SubElement(pic_e,       f'{{{PIC}}}nvPicPr')
+        cNvPr    = ET.SubElement(nvPicPr,     f'{{{PIC}}}cNvPr')
+        cNvPr.set('id',   '0')
+        cNvPr.set('name', name)
+        ET.SubElement(nvPicPr, f'{{{PIC}}}cNvPicPr')
+
+        blipFill = ET.SubElement(pic_e,    f'{{{PIC}}}blipFill')
+        blip     = ET.SubElement(blipFill, f'{{{A}}}blip')
+        blip.set(f'{{{R}}}embed', rid)
+        stretch  = ET.SubElement(blipFill, f'{{{A}}}stretch')
+        ET.SubElement(stretch, f'{{{A}}}fillRect')
+
+        spPr    = ET.SubElement(pic_e, f'{{{PIC}}}spPr')
+        xfrm    = ET.SubElement(spPr,  f'{{{A}}}xfrm')
+        off     = ET.SubElement(xfrm,  f'{{{A}}}off')
+        off.set('x', '0');  off.set('y', '0')
+        ext_e   = ET.SubElement(xfrm,  f'{{{A}}}ext')
+        ext_e.set('cx', str(cx));  ext_e.set('cy', str(cy))
+        prstGeom = ET.SubElement(spPr, f'{{{A}}}prstGeom')
+        prstGeom.set('prst', 'rect')
+        ET.SubElement(prstGeom, f'{{{A}}}avLst')
+
+        return p
+
+    def _caption_para(self, caption: str) -> ET.Element:
+        """Plain centered paragraph used as a figure/table caption."""
+        p   = ET.Element(_q('p'))
+        pPr = ET.SubElement(p, _q('pPr'))
+        jc  = ET.SubElement(pPr, _q('jc'))
+        jc.set(_q('val'), 'center')
+        r = ET.SubElement(p, _q('r'))
+        t = ET.SubElement(r, _q('t'))
+        t.text = caption
+        return p
+
+    def _embed_image(self, img_bytes: bytes, suffix: str, work_dir: str) -> str:
+        """
+        Write image bytes to word/media/, register the relationship, update
+        [Content_Types].xml, and return the allocated rId.
+        """
+        media_dir = os.path.join(work_dir, 'word', 'media')
+        os.makedirs(media_dir, exist_ok=True)
+
+        existing = os.listdir(media_dir)
+        nums = [
+            int(m.group(1))
+            for f in existing
+            if (m := re.match(r'image(\d+)', f))
+        ]
+        next_num  = max(nums, default=0) + 1
+        img_name  = f'image{next_num}{suffix}'
+        with open(os.path.join(media_dir, img_name), 'wb') as f:
+            f.write(img_bytes)
+
+        rid       = self._alloc_rid()
+        rels_path = os.path.join(work_dir, 'word', '_rels', 'document.xml.rels')
+        _rels_append(rels_path, rid, REL_TYPE_IMAGE, f'media/{img_name}')
+
+        ct_path = os.path.join(work_dir, '[Content_Types].xml')
+        _ensure_content_type(ct_path, suffix)
+
+        return rid
+
+    # ── OLE paragraph builder ──────────────────────────────────────────────────
+
+    def _build_ole_para(self, elem: dict, work_dir: str) -> ET.Element:
+        """
+        Build a paragraph containing an OLE embedded object (e.g. Equation.3).
+
+        Constructs the VML ``<v:shape>`` + ``<o:OLEObject>`` structure required
+        by Word/WPS to render the embedded object.  When the document is opened,
+        the OLE host (Equation Editor / MathType) renders the formula content
+        directly from the embedded binary.
+
+        Falls back to a plain-text placeholder only when the base64 payload
+        cannot be decoded (e.g. a sentinel string from DocxTools).
+
+        Note: no ``<v:imagedata>`` preview is included because the extractor
+        does not store preview images for DocxTools-added OLE objects.  Word
+        and WPS will render the live OLE content instead.
+        """
+        raw_b64       = elem.get('base64', '')
+        formula_index = (elem.get('formula_index') or '').strip()
+
+        try:
+            ole_bytes = base64.b64decode(raw_b64, validate=True)
+        except Exception:
+            label = f'[公式 {formula_index}]' if formula_index else '[OLE 对象]'
+            return _plain_para(label)
+
+        ole_rid    = self._embed_ole(ole_bytes, work_dir)
+        shape_id   = self._alloc_shape_id()
+        shape_name = f'_x0000_i{shape_id + 1024}'
+
+        # Default display size for an inline equation (points → twips: ×20)
+        width_pt, height_pt = 120, 30
+
+        p = ET.Element(_q('p'))
+        # Centre the equation on the line
+        pPr = ET.SubElement(p, _q('pPr'))
+        jc  = ET.SubElement(pPr, _q('jc'))
+        jc.set(_q('val'), 'center')
+
+        r = ET.SubElement(p, _q('r'))
+
+        obj = ET.SubElement(r, _q('object'))
+        obj.set(_q('dxaOrig'), str(width_pt  * 20))
+        obj.set(_q('dyaOrig'), str(height_pt * 20))
+
+        shape = ET.SubElement(obj, f'{{{V_NS}}}shape')
+        shape.set('id',    shape_name)
+        shape.set('type',  '#_x0000_t75')
+        shape.set('style', f'width:{width_pt}pt;height:{height_pt}pt')
+        shape.set(f'{{{O_NS}}}ole', '')
+
+        ole_elem = ET.SubElement(obj, f'{{{O_NS}}}OLEObject')
+        ole_elem.set('Type',       'Embed')
+        ole_elem.set('ProgID',     'Equation.3')
+        ole_elem.set('ShapeID',    shape_name)
+        ole_elem.set('DrawAspect', 'Content')
+        ole_elem.set('ObjectID',   f'_{shape_id}')
+        ole_elem.set(f'{{{R}}}id', ole_rid)
+
+        if formula_index:
+            r_idx = ET.SubElement(p, _q('r'))
+            t_idx = ET.SubElement(r_idx, _q('t'))
+            t_idx.text = f'  {formula_index}'
+            t_idx.set(XML_SPACE, 'preserve')
+
+        return p
+
+    def _embed_ole(self, ole_bytes: bytes, work_dir: str) -> str:
+        """Write OLE bytes to word/embeddings/ and register the relationship."""
+        emb_dir = os.path.join(work_dir, 'word', 'embeddings')
+        os.makedirs(emb_dir, exist_ok=True)
+
+        existing = os.listdir(emb_dir)
+        nums = [
+            int(m.group(1))
+            for f in existing
+            if (m := re.match(r'oleObject(\d+)\.bin', f))
+        ]
+        next_num = max(nums, default=0) + 1
+        ole_name = f'oleObject{next_num}.bin'
+        with open(os.path.join(emb_dir, ole_name), 'wb') as f:
+            f.write(ole_bytes)
+
+        rid       = self._alloc_rid()
+        rels_path = os.path.join(work_dir, 'word', '_rels', 'document.xml.rels')
+        _rels_append(rels_path, rid, REL_TYPE_OLE, f'embeddings/{ole_name}')
+        return rid
+
+    # ── OMath paragraph builder ────────────────────────────────────────────────
+
+    def _build_omath_para(self, elem: dict) -> ET.Element:
+        """
+        Build a <w:p> containing an Office Math (OMML) block.
+
+        If ``formula`` is a valid XML fragment it is embedded directly.
+        Plain-text formulas are wrapped in a minimal <m:r><m:t> element.
+        The formula index (e.g. "(4-1)") is appended as a plain run.
+        """
+        formula       = (elem.get('formula') or '').strip()
+        formula_index = (elem.get('formula_index') or '').strip()
+
+        p         = ET.Element(_q('p'))
+        oMathPara = ET.SubElement(p, _qm('oMathPara'))
+        oMath     = ET.SubElement(oMathPara, _qm('oMath'))
+
+        if formula.startswith('<'):
+            formula_elem = _parse_xml(formula)
+            if formula_elem is not None:
+                oMath.append(formula_elem)
+            else:
+                _math_text(oMath, formula)
+        else:
+            _math_text(oMath, formula)
+
+        if formula_index:
+            r = ET.SubElement(p, _q('r'))
+            t = ET.SubElement(r, _q('t'))
+            t.text = f'  {formula_index}'
+            t.set(XML_SPACE, 'preserve')
+
+        return p
+
+    # ── settings.xml patch ─────────────────────────────────────────────────────
+
+    def _patch_settings(self, work_dir: str) -> None:
+        """
+        Ensure ``word/settings.xml`` contains ``<w:updateFields w:val="true"/>``.
+
+        This instructs Word/WPS to recalculate all fields (including the TOC)
+        every time the document is opened, so the TOC is always up to date
+        without any manual intervention from the user.
+
+        Uses string-based injection to avoid disturbing existing namespace
+        declarations in the settings file.
+        """
+        settings_path = os.path.join(work_dir, 'word', 'settings.xml')
+        if not os.path.exists(settings_path):
+            return
+        with open(settings_path, 'r', encoding='utf-8') as f:
+            text = f.read()
+        if 'updateFields' in text:
+            return
+        entry = '<w:updateFields w:val="true"/>'
+        text  = text.replace('</w:settings>', entry + '</w:settings>')
+        with open(settings_path, 'w', encoding='utf-8') as f:
+            f.write(text)
+
+    # ── Header / footer reconstruction ─────────────────────────────────────────
+
+    def _rebuild_hf_files(self, work_dir: str) -> int:
+        """
+        Rebuild every header and footer XML file from extraction data.
+
+        Unlike the body, headers and footers contain no tables in this
+        template, so they can be fully reconstructed: the template root
+        element (<w:hdr> / <w:ftr>) is kept for its tag and namespace
+        declarations; all children are replaced from extraction.
+        """
+        word_dir = os.path.join(work_dir, 'word')
+        count    = 0
+
+        all_hf: dict[str, dict] = {
+            **self.ext.get('headers', {}),
+            **self.ext.get('footers', {}),
+        }
+
+        for filename, hf_data in all_hf.items():
+            xml_path = os.path.join(word_dir, filename)
+            if not os.path.exists(xml_path):
+                continue
+            self._rebuild_hf(xml_path, hf_data)
+            count += 1
+
+        return count
+
+    def _rebuild_hf(self, xml_path: str, hf_data: dict) -> None:
+        """
+        Reconstruct a single header/footer XML file.
+
+        The root element (<w:hdr> or <w:ftr>) comes from the template so
+        that its namespace declarations are preserved.  All children are
+        replaced with paragraphs built from extraction data.
+
+        Source of content: hf_data['paragraphs'] from extraction.json.
+        Source of structure: root element tag only (from template).
+        """
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+
+        # Remove all existing children — we rebuild entirely from extraction.
+        for child in list(root):
+            root.remove(child)
+
+        for pdata in hf_data.get('paragraphs', []):
+            root.append(self._build_para(pdata))
+
+        # OOXML requires at least one paragraph in a header/footer.
+        if not hf_data.get('paragraphs'):
+            root.append(ET.Element(_q('p')))
+
+        _write_xml(xml_path, root)
+
+
+# ── Module-level structural helpers ───────────────────────────────────────────
+
+def _minimal_tbl() -> ET.Element:
+    """Bare <w:tbl> with the minimum valid structure."""
+    tbl    = ET.Element(_q('tbl'))
+    tblPr  = ET.SubElement(tbl, _q('tblPr'))
+    tblSty = ET.SubElement(tblPr, _q('tblStyle'))
+    tblSty.set(_q('val'), 'TableGrid')
+    tblW   = ET.SubElement(tblPr, _q('tblW'))
+    tblW.set(_q('w'),    '0')
+    tblW.set(_q('type'), 'auto')
+    ET.SubElement(tbl, _q('tblGrid'))
+    return tbl
+
+
+def _minimal_tc() -> ET.Element:
+    """Bare <w:tc> with empty <w:tcPr>."""
+    tc = ET.Element(_q('tc'))
+    ET.SubElement(tc, _q('tcPr'))
+    return tc
+
+
+def _plain_para(text: str) -> ET.Element:
+    """Plain paragraph with a single unstyled run."""
+    p = ET.Element(_q('p'))
+    r = ET.SubElement(p, _q('r'))
+    t = ET.SubElement(r, _q('t'))
+    t.text = text
+    return p
+
+
+def _math_text(oMath: ET.Element, text: str) -> None:
+    """Append a plain-text run inside an <m:oMath> element."""
+    mr = ET.SubElement(oMath, f'{{{M}}}r')
+    mt = ET.SubElement(mr,    f'{{{M}}}t')
+    mt.text = text
+
+
+# ── Entry point ────────────────────────────────────────────────────────────────
+
+if __name__ == '__main__':
+    _extraction = sys.argv[1] if len(sys.argv) > 1 else 'data/user_extraction.json'
+    _output     = sys.argv[2] if len(sys.argv) > 2 else 'output.docx'
+    _template   = sys.argv[3] if len(sys.argv) > 3 else 'templates/hit-template'
+
+    DocxCompiler(
+        extraction_path=_extraction,
+        template_dir=_template,
+    ).compile(output_path=_output)
