@@ -24,8 +24,10 @@ import json
 import sys
 from pathlib import Path
 
-from . import docx_tools as dt
-
+try:
+    from . import docx_tools as dt
+except:
+    import docx_tools as dt
 # ── Paths ──────────────────────────────────────────────────────────────────────
 _BASE          = Path(__file__).parent.parent
 _EXTRACTION    = _BASE / "data" / "extraction.json"
@@ -161,6 +163,6 @@ def compile_user_data(
 if __name__ == "__main__":
     args = sys.argv[1:]
     compile_user_data(
-        user_data_path = args[0] if len(args) > 0 else "data/user_data.json",
-        output_path    = args[1] if len(args) > 1 else "data/user_extraction.json",
+        user_data_path = args[0] if len(args) > 0 else "docx_manager\\docx_engine\\data\\user_data.json",
+        output_path    = args[1] if len(args) > 1 else "docx_manager\\docx_engine\\data\\user_extraction.json",
     )

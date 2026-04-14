@@ -265,11 +265,23 @@ def _sb_action(sb: dict) -> dict:
     a: dict = {
         "type":        "insert_section_break",
         "header_refs": sb.get("header_refs", {}),
-        "footer_refs":  sb.get("footer_refs",  {}),
+        "footer_refs":  None,
     }
     if "restart_page_number" in sb:
         a["restart_page_number"] = sb["restart_page_number"]
     return a
+
+
+def _para_sb(sb: dict) -> dict:
+    """Build a paragraph-embedded section_break dict from a hit_config section_break dict."""
+    result: dict = {
+        "header_refs": sb.get("header_refs", {}),
+        "footer_refs": None,
+        "page_size":   sb.get("page_size", {"w": "11906", "h": "16838"}),
+    }
+    if "restart_page_number" in sb:
+        result["restart_page_number"] = sb["restart_page_number"]
+    return result
 
 
 # ── Main generator ─────────────────────────────────────────────────────────────
@@ -359,6 +371,16 @@ def generate(
 
     # 5b. Abstract block (only when at least one side has content)
     if cn_content or en_content:
+        # Collect CN/EN section breaks to embed directly in keyword paragraphs (问题1/2修复)
+        cn_sb_config: dict = {}
+        en_sb_config: dict = {}
+        for fm in active_fm:
+            nm = fm["name"].strip()
+            if name0 and nm == name0:
+                cn_sb_config = fm.get("section_break", {})
+            elif name1 and nm == name1:
+                en_sb_config = fm.get("section_break", {})
+
         actions.append({
             "type":             "insert_abstract_with_keywords",
             "cn_content":       cn_content,
@@ -369,21 +391,43 @@ def generate(
             "en_title":         fm_names[1] if len(fm_names) > 1 else "Abstract",
             "keyword_label_cn": "关键词",
             "keyword_label_en": "Keywords",
+            "cn_section_break": _para_sb(cn_sb_config) if cn_sb_config else None,
+            "en_section_break": _para_sb(en_sb_config) if en_sb_config else None,
         })
 
-    # 5c. Active front-matter section breaks; auto_generate_toc also emits TOC
-    # Only emit front-matter structure when there is actual abstract/front content.
+    # 5c. Active front-matter section breaks; auto_generate_toc also emits TOC.
+    # CN/EN section breaks are already embedded in abstract keyword paragraphs,
+    # so skip those fm entries here to avoid consecutive section_breaks (blank page).
     has_front_matter = bool(cn_content or en_content)
+    bssb_consumed = False
     if has_front_matter:
         for fm in active_fm:
-            sb = fm.get("section_break", {})
-            if sb:
-                actions.append(_sb_action(sb))
+            nm = fm["name"].strip()
+            if name0 and nm == name0:
+                continue  # section break already embedded in CN keywords paragraph
+            if name1 and nm == name1:
+                continue  # section break already embedded in EN keywords paragraph
             if fm.get("auto_generate_toc"):
+                # 普适修复：不在 TOC 前单独 emit section_break（否则与前置嵌入分节叠加产生空白页）。
+                # 改为在 generate_toc 后 emit 一个合并了 TOC header_refs 与
+                # body_start restart_page_number 的 section_break，body_start 不再单独 emit。
+                toc_sb = fm.get("section_break", {})
+                actions.append({"type": "add_heading", "text": fm["name"], "level": 1})
                 actions.append({"type": "generate_toc", "max_level": toc_level})
+                merged: dict = dict(toc_sb) if toc_sb else {}
+                if bssb and "restart_page_number" in bssb:
+                    merged["restart_page_number"] = bssb["restart_page_number"]
+                if merged:
+                    actions.append(_sb_action(merged))
+                bssb_consumed = True
+            else:
+                sb = fm.get("section_break", {})
+                if sb:
+                    actions.append(_sb_action(sb))
 
     # 5d. Body-start section break (ends TOC section, restarts page at 1)
-    if bssb and has_front_matter:
+    # 若 TOC 已在 5c 合并处理，则跳过。
+    if bssb and has_front_matter and not bssb_consumed:
         actions.append(_sb_action(bssb))
 
     # 5d. Body elements
@@ -413,8 +457,27 @@ def generate(
             actions.append({"type": "add_heading", "text": data, "level": int(t[1])})
 
         elif t == "text":
-            if str(data).strip():
-                actions.append({"type": "add_paragraph", "text": data, "style_type": "正文"})
+            text = str(data).strip()
+            if text:
+                detect_ref = cfg.get("detect_reference_pattern", False)
+                ref_pattern = cfg.get("reference_pattern")
+                if detect_ref and ref_pattern and re.match(ref_pattern, text):
+                    m = re.match(ref_pattern, text)
+                    index = int(re.search(r'\d+', m.group()).group()) if m else 0
+                    content = re.sub(ref_pattern, '', text, count=1).strip() if m else text
+                    before = elem.get("before") if isinstance(elem, dict) else None
+                    after = elem.get("after") if isinstance(elem, dict) else None
+                    auto_cite = elem.get("auto_cite", False) if isinstance(elem, dict) else False
+                    actions.append({
+                        "type": "add_reference",
+                        "index": index,
+                        "content": content,
+                        "before": before,
+                        "after": after,
+                        "auto_cite": auto_cite,
+                    })
+                else:
+                    actions.append({"type": "add_paragraph", "text": data, "style_type": "正文"})
 
         elif t == "figure":
             a: dict = {"type": "insert_figure"}

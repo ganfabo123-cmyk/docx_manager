@@ -118,12 +118,14 @@ def _ind(
     firstLineChars: int | None = None,
     left:           int | None = None,
     leftChars:      int | None = None,
+    hanging:        int | None = None,
 ) -> str:
     attrs: list[str] = []
     if firstLine      is not None: attrs.append(f'ns0:firstLine="{firstLine}"')
     if firstLineChars is not None: attrs.append(f'ns0:firstLineChars="{firstLineChars}"')
     if left           is not None: attrs.append(f'ns0:left="{left}"')
     if leftChars      is not None: attrs.append(f'ns0:leftChars="{leftChars}"')
+    if hanging        is not None: attrs.append(f'ns0:hanging="{hanging}"')
     return f'<ns0:ind {" ".join(attrs)} />'
 
 
@@ -154,6 +156,77 @@ def _sz(val: int) -> str:
     return f'<ns0:sz ns0:val="{val}" /><ns0:szCs ns0:val="{val}" />'
 
 
+# ── Unified style loading ─────────────────────────────────────────────────────
+# Style name mapping: internal role key → style_name in unified_style.json.
+# To switch to a different style set, update the values in this dict only.
+_STYLE_MAP: dict[str, str] = {
+    "body":    "正文",
+    "h1":      "标题一",
+    "h2":      "标题二",
+    "h3":      "标题三",
+    "h4":      "标题四",
+    "caption": "图表标题",
+    "ref":     "参考文献",
+}
+
+
+def _load_unified_styles() -> dict[str, dict]:
+    """Read unified_style.json and return fingerprints keyed by style_name."""
+    path = Path(__file__).parent.parent / "data" / "unified_style.json"
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        result: dict[str, dict] = {}
+        for style in data.get("standard_styles", {}).values():
+            name = style.get("style_name")
+            if name:
+                result[name] = style.get("fingerprint", {})
+        return result
+    except Exception as exc:
+        print(f"[WARN] unified_style.json unavailable: {exc}")
+        return {}
+
+
+# Fingerprints keyed by style_name; populated once at import time.
+_STYLES: dict[str, dict] = _load_unified_styles()
+
+
+def _style_layout(role: str) -> dict:
+    """Return the layout sub-dict for the given role key (see _STYLE_MAP)."""
+    return _STYLES.get(_STYLE_MAP.get(role, ""), {}).get("layout", {})
+
+
+def _style_font(role: str) -> dict:
+    """Return the font sub-dict for the given role key (see _STYLE_MAP)."""
+    return _STYLES.get(_STYLE_MAP.get(role, ""), {}).get("font", {})
+
+
+def _make_heading_ppr(role: str, pstyle_val: str, include_ea_hint: bool = False) -> str:
+    """Build pPr XML for a heading level using the unified_style fingerprint.
+
+    Conversion rule: layout.line × 2 = OOXML w:line (unified uses half the OOXML unit).
+    layout.before / after are used as-is (already in OOXML twips).
+    layout.jc is forwarded directly to w:jc.
+    """
+    lp = _style_layout(role)
+    parts: list[str] = [_pstyle(pstyle_val)]
+    sp: dict = {}
+    if "before" in lp:
+        sp["before"] = lp["before"]
+    if "after" in lp:
+        sp["after"] = lp["after"]
+    if "line" in lp:
+        sp["line"] = lp["line"] * 2
+        sp["lineRule"] = "auto"
+    if sp:
+        parts.append(_spacing(**sp))
+    if "jc" in lp:
+        parts.append(_jc(lp["jc"]))
+    if include_ea_hint:
+        parts.append(_rpr(_EA_HINT))
+    return _ppr(*parts)
+
+
 # ── Reusable XML fragments ────────────────────────────────────────────────────
 
 _SNAP_GRID  = '<ns0:snapToGrid ns0:val="0" />'
@@ -166,57 +239,59 @@ _BODY_RPR   = _rpr(_EA_HINT)
 # run rPr for superscript citation runs
 _CITE_RPR   = _rpr('<ns0:kern ns0:val="0" />', _vert_align("superscript"))
 
-# pPr for normal body / abstract paragraphs
+# pPr for normal body / abstract paragraphs (正文 style)
+_body_l = _style_layout("body")
 _BODY_PPR = _ppr(
     _SNAP_GRID,
-    _spacing(line=300, lineRule="auto"),
-    _ind(firstLine=498, firstLineChars=200),
+    _spacing(line=_body_l.get("line", 150) * 2, lineRule="auto"),
+    _ind(firstLine=_body_l.get("firstLine", 498), firstLineChars=200),
     _rpr(_EA_HINT),
 )
 
 # pPr for keyword line (no firstLine indent)
+# NOTE: hardcoded — no corresponding entry in unified_style.json; update separately
 _KW_PPR = _ppr(
     _SNAP_GRID,
     _spacing(line=300, lineRule="auto"),
     _rpr(_EA_HINT),
 )
 
-# pPr templates for heading levels 1–4
+# pPr templates for heading levels 1–4 (标题一~四 styles)
 _HEADING_PPR: dict[int, str] = {
-    1: _ppr(
-        _pstyle("2"),
-        _spacing(before=391, after=312, line=300, lineRule="auto"),
-        _rpr(_EA_HINT),
-    ),
-    2: _ppr(
-        _pstyle("3"),
-        _spacing(before=195, after=195),
-    ),
-    3: _ppr(
-        _pstyle("4"),
-        _spacing(before=195, after=195, line=300, lineRule="auto"),
-    ),
-    4: _ppr(
-        _pstyle("5"),
-        _spacing(before=195, after=195, line=300, lineRule="auto"),
-    ),
+    1: _make_heading_ppr("h1", "2", include_ea_hint=True),
+    2: _make_heading_ppr("h2", "3"),
+    3: _make_heading_ppr("h3", "4"),
+    4: _make_heading_ppr("h4", "5"),
 }
 
-# pPr for reference entries (style "9")
+# pPr for reference entries (style "9", 参考文献 style)
+_ref_l      = _style_layout("ref")
+_ref_indent = _ref_l.get("indent", {})
 _REF_PPR = _ppr(
-    _pstyle("9"),
+    _pstyle("1"),
     _ADJ_RIGHT,
     _SNAP_GRID,
-    _spacing(after=0, line=300, lineRule="auto"),
-    _ind(firstLine=498, firstLineChars=200, left=0, leftChars=0),
+    _spacing(
+        after=0,  # structural: suppress spacing between consecutive reference entries
+        line=_ref_l.get("line", 150) * 2,
+        lineRule="auto",
+    ),
+    _ind(
+        left=_ref_indent.get("left", 543),
+        hanging=_ref_indent.get("hanging", 542),
+    ),
 )
 
-# pPr for figure/table captions (centered, 10.5 pt = sz 21)
+# pPr and run rPr for figure/table captions (图表标题 style)
+_cap_l = _style_layout("caption")
+_cap_f = _style_font("caption")
 _CAPTION_PPR = _ppr(
     _ADJ_RIGHT,
     _jc("center"),
-    _rpr(_sz(21)),
+    _spacing(line=_cap_l.get("line", 140) * 2, lineRule="auto"),
+    _rpr(_sz(_cap_f.get("size", 10) * 2)),
 )
+_CAPTION_RPR = _rpr(_EA_HINT, _sz(_cap_f.get("size", 10) * 2))
 
 
 # ── Run / paragraph dict helpers ──────────────────────────────────────────────
@@ -458,12 +533,10 @@ def insert_figure(
         _DOCUMENT.append(elem)
 
     if caption:
-        # Figure caption paragraph (小五号/10.5pt, 居中)
-        cap_rpr = _rpr(_EA_HINT, _sz(21))
         _append_para(
             style=None,
             text=caption,
-            runs=[_mk_run(caption, cap_rpr)],
+            runs=[_mk_run(caption, _CAPTION_RPR)],
             ppr=_CAPTION_PPR,
         )
 
@@ -484,11 +557,10 @@ def insert_table(
     """
     if caption:
         # Table caption appears ABOVE the table (Chinese academic convention).
-        cap_rpr = _rpr(_EA_HINT, _sz(21))
         _append_para(
             style=None,
             text=caption,
-            runs=[_mk_run(caption, cap_rpr)],
+            runs=[_mk_run(caption, _CAPTION_RPR)],
             ppr=_CAPTION_PPR,
         )
 
@@ -534,36 +606,61 @@ def insert_table(
 # ── 公式 ────────────────────────────────────────────────────────────────────────
 
 def insert_equation(
-    expression: str,
-    category: Literal["omath", "ole"],
-    position: Literal["left", "center", "right"] = "center",
-    suffix: Optional[str] = None,       # 如 "(4-1)", "(5-2)"
+    expression:   str                              = "",
+    category:     Optional[Literal["omath", "ole"]] = None,
+    position:     Literal["left", "center", "right"] = "center",
+    suffix:       Optional[str]   = None,   # 如 "(4-1)", "(5-2)"
     suffix_position: Literal["right", "new_line"] = "right",
+    # Structured fields produced by user_data_generator (all optional):
+    omml:         Optional[str]   = None,   # OMML XML fragment → omath 模式
+    ole_base64:   Optional[str]   = None,   # OLE 二进制 base64 → ole 模式
+    image_base64: Optional[str]   = None,   # OLE 预览图 base64（可选，暂存备用）
+    label:        Optional[str]   = None,   # 无法渲染时的占位文字
+    width_pt:     Optional[float] = None,   # OLE 显示宽度（点）
+    height_pt:    Optional[float] = None,   # OLE 显示高度（点）
+    prog_id:      Optional[str]   = None,   # OLE ProgID（默认 Equation.3）
 ) -> None:
     """
     插入公式 body_element。
 
-    category="omath"  → type="omath", 使用 Office Math Markup (OMML)
-                         expression 为 LaTeX-like 字符串或 OMML XML 片段
-    category="ole"    → type="ole",   使用 OLE Equation.3 对象
-                         base64 留空, docx_compiler 生成占位符段落
+    模式自动推断规则（优先级从高到低）：
+      1. ole_base64 非空  → category="ole"，base64 数据传入编译器写入 word/embeddings/
+      2. omml 非空        → category="omath"，OMML XML 作为 formula 字段
+      3. 以上均空         → 沿用 category 参数（默认 "omath"），formula 取 expression
 
-    suffix      : 公式编号, 如 "(4-1)"
-    suffix_position: "right"    → 编号紧跟公式同行
-                     "new_line" → 编号另起一行
+    suffix          : 公式编号, 如 "(4-1)"
+    suffix_position : "right"    → 编号紧跟公式同行
+                      "new_line" → 编号另起一行
     """
+    # ── 自动推断 category ────────────────────────────────────────────────────────
+    if ole_base64:
+        category = "ole"
+    elif omml:
+        category = "omath"
+    elif category is None:
+        category = "omath"
+
+    # ── 解析 formula 字段 ────────────────────────────────────────────────────────
+    if category == "omath":
+        formula = omml or expression
+    else:  # ole
+        formula = label or expression
+
     elem: dict = {
-        "index":         _next_idx(),
-        "type":          category,
-        "formula":       expression,
-        "formula_index": suffix or "",
-        "position":      position,
+        "index":           _next_idx(),
+        "type":            category,
+        "formula":         formula,
+        "formula_index":   suffix or "",
+        "position":        position,
         "suffix_position": suffix_position,
     }
     if category == "ole":
-        # OLE path requires a base64-encoded binary; empty string signals
-        # docx_compiler to emit a plain-text placeholder.
-        elem["base64"] = ""
+        # base64 非空时编译器写入 word/embeddings/ 并渲染 OLE 对象；
+        # 空字符串时退回纯文本占位符。
+        elem["base64"] = ole_base64 or ""
+        if width_pt  is not None: elem["width_pt"]  = width_pt
+        if height_pt is not None: elem["height_pt"] = height_pt
+        if prog_id   is not None: elem["prog_id"]   = prog_id
     _DOCUMENT.append(elem)
 
 
@@ -578,16 +675,23 @@ def insert_abstract_with_keywords(
     en_title: str = "Abstract",
     keyword_label_cn: str = "关键词",
     keyword_label_en: str = "Keywords",
+    cn_section_break: Optional[Dict] = None,
+    en_section_break: Optional[Dict] = None,
 ) -> None:
     """
     插入摘要及关键词, 生成以下段落序列:
 
         [标题一] cn_title
         [正文  ] cn_content  (style null, firstLine indent)
-        [关键词] 关键词:kw1；kw2；…  (label 黑体, 关键词宋体)
+        [关键词] 关键词:kw1；kw2；…  (label 黑体, 关键词宋体)  ← cn_section_break 嵌入此段
         [标题一] en_title
         [正文  ] en_content
-        [关键词] Keywords：kw1, kw2, …  (Keywords 加粗)
+        [关键词] Keywords：kw1, kw2, …  (Keywords 加粗)        ← en_section_break 嵌入此段
+
+    cn_section_break / en_section_break:
+        分节信息 dict，格式与 _append_para section_break 参数一致：
+        {"header_refs": {...}, "footer_refs": None, "page_size": {...}}
+        直接嵌入对应关键词段落的 section_break 字段，绝对不会产生空白页。
     """
     # ── Chinese abstract ─────────────────────────────────────────────────────
     add_heading(cn_title, level=1)
@@ -605,7 +709,8 @@ def insert_abstract_with_keywords(
         _mk_run(keyword_label_cn, cn_kw_label_rpr),
         _mk_run(f":{'；'.join(cn_keywords)}", cn_kw_body_rpr),
     ]
-    _append_para(style=None, text=cn_kw_text, runs=cn_kw_runs, ppr=_KW_PPR)
+    _append_para(style=None, text=cn_kw_text, runs=cn_kw_runs, ppr=_KW_PPR,
+                 section_break=cn_section_break)
 
     # ── English abstract ─────────────────────────────────────────────────────
     add_heading(en_title, level=1)
@@ -623,7 +728,8 @@ def insert_abstract_with_keywords(
         _mk_run("：",             en_kw_colon_rpr),
         _mk_run(", ".join(en_keywords), en_kw_body_rpr),
     ]
-    _append_para(style=None, text=en_kw_text, runs=en_kw_runs, ppr=_KW_PPR)
+    _append_para(style=None, text=en_kw_text, runs=en_kw_runs, ppr=_KW_PPR,
+                 section_break=en_section_break)
 
 
 # ── 参考文献 ──────────────────────────────────────────────────────────────────────
@@ -645,11 +751,11 @@ def add_reference(
 
     参考文献文本以 "[index] content" 格式写入, 符合 GB/T 7714 编排惯例。
     """
-    full_text = f"［{index}］ {content}"
+    full_text = f"［{index}］{content}"
     run_rpr   = _rpr(_EA_HINT)
     runs      = [_mk_run(full_text, run_rpr)]
 
-    elem = _append_para(style="9", text=full_text, runs=runs, ppr=_REF_PPR)
+    elem = _append_para(style="1", text=full_text, runs=runs, ppr=_REF_PPR)
 
     # Attach citation context as extra metadata fields (not in base extraction
     # schema, but harmless — compiler ignores unknown keys).
