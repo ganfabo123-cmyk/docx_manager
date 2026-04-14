@@ -187,7 +187,7 @@ def register_routes(app):
                 word = None
                 doc = None
                 try:
-                    word = win32.gencache.EnsureDispatch('Word.Application')
+                    word = win32.Dispatch('Word.Application')
                     word.Visible = False
                     word.DisplayAlerts = False
 

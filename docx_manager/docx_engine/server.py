@@ -184,7 +184,7 @@ def convert():
     pythoncom.CoInitialize()
     word = doc = None
     try:
-        word = win32.gencache.EnsureDispatch("Word.Application")
+        word = win32.Dispatch("Word.Application")
         word.Visible = False
         word.DisplayAlerts = False
         doc = word.Documents.Open(abs_raw)
