@@ -5,6 +5,8 @@
   "dismiss_before_front": true,
   "toc_max_level": 4,
   "page_break_before_body_h1": true,
+  "detect_reference_pattern": true,
+  "reference_pattern": "［\\d+］",
 
   "cover_section_break": {
     "note": "封面节，含首页不同页眉(first)，无页码",

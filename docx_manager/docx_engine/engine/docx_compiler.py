@@ -449,16 +449,18 @@ class DocxCompiler:
         sectPr = ET.Element(_q('sectPr'))
 
         # Header references
-        for ref_type, rid in sb.get('header_refs', {}).items():
-            ref = ET.SubElement(sectPr, _q('headerReference'))
-            ref.set(_q('type'), ref_type)
-            ref.set(_qr('id'), rid)
+        if sb.get('header_refs', {}):
+            for ref_type, rid in sb.get('header_refs', {}).items():
+                ref = ET.SubElement(sectPr, _q('headerReference'))
+                ref.set(_q('type'), ref_type)
+                ref.set(_qr('id'), rid)
 
         # Footer references
-        for ref_type, rid in sb.get('footer_refs', {}).items():
-            ref = ET.SubElement(sectPr, _q('footerReference'))
-            ref.set(_q('type'), ref_type)
-            ref.set(_qr('id'), rid)
+        if sb.get('footer_refs', {}):
+            for ref_type, rid in sb.get('footer_refs', {}).items():
+                ref = ET.SubElement(sectPr, _q('footerReference'))
+                ref.set(_q('type'), ref_type)
+                ref.set(_qr('id'), rid)
 
         # Page size
         ps = sb.get('page_size', {})
@@ -872,12 +874,23 @@ class DocxCompiler:
         Falls back to a plain-text placeholder only when the base64 payload
         cannot be decoded (e.g. a sentinel string from DocxTools).
 
-        Note: no ``<v:imagedata>`` preview is included because the extractor
-        does not store preview images for DocxTools-added OLE objects.  Word
-        and WPS will render the live OLE content instead.
+        Layout:
+          - With formula_index : tab-stop layout — center tab (4252 twips) pushes
+            the equation to the middle; right tab (8504 twips) pushes the index
+            number to the right margin.  Based on HIT A4 template margins
+            (left=right=1701, content width=8504 twips).
+          - Without formula_index: simple jc="center" paragraph.
+
+        Preview image:
+          - If elem contains ``image_base64`` (WMF bytes, base64-encoded), the image
+            is embedded in word/media/ and referenced via <v:imagedata> for a static
+            preview when the OLE host is inactive.
         """
         raw_b64       = elem.get('base64', '')
-        formula_index = (elem.get('formula_index') or '').strip()
+        formula_index = (elem.get('formula') or '').strip()
+        width_pt      = float(elem.get('width_pt',  120))
+        height_pt     = float(elem.get('height_pt',  30))
+        prog_id       = elem.get('prog_id', 'Equation.3')
 
         try:
             ole_bytes = base64.b64decode(raw_b64, validate=True)
@@ -889,40 +902,69 @@ class DocxCompiler:
         shape_id   = self._alloc_shape_id()
         shape_name = f'_x0000_i{shape_id + 1024}'
 
-        # Default display size for an inline equation (points → twips: ×20)
-        width_pt, height_pt = 120, 30
-
-        p = ET.Element(_q('p'))
-        # Centre the equation on the line
+        p   = ET.Element(_q('p'))
         pPr = ET.SubElement(p, _q('pPr'))
-        jc  = ET.SubElement(pPr, _q('jc'))
-        jc.set(_q('val'), 'center')
 
-        r = ET.SubElement(p, _q('r'))
+        if formula_index:
+            # Tab-stop layout: center tab centers the equation, right tab
+            # right-aligns the index number.
+            # HIT template: content width = 11906 - 1701×2 = 8504 twips.
+            tabs_elem = ET.SubElement(pPr, _q('tabs'))
+            tab_c = ET.SubElement(tabs_elem, _q('tab'))
+            tab_c.set(_q('val'), 'center')
+            tab_c.set(_q('pos'), '4252')
+            tab_r = ET.SubElement(tabs_elem, _q('tab'))
+            tab_r.set(_q('val'), 'right')
+            tab_r.set(_q('pos'), '8504')
 
+            # Tab before OLE run — pushes equation to center
+            r_tab1 = ET.SubElement(p, _q('r'))
+            ET.SubElement(r_tab1, _q('tab'))
+        else:
+            jc = ET.SubElement(pPr, _q('jc'))
+            jc.set(_q('val'), 'center')
+
+        # OLE object run
+        r   = ET.SubElement(p, _q('r'))
         obj = ET.SubElement(r, _q('object'))
-        obj.set(_q('dxaOrig'), str(width_pt  * 20))
-        obj.set(_q('dyaOrig'), str(height_pt * 20))
+        obj.set(_q('dxaOrig'), str(int(width_pt  * 20)))
+        obj.set(_q('dyaOrig'), str(int(height_pt * 20)))
 
         shape = ET.SubElement(obj, f'{{{V_NS}}}shape')
-        shape.set('id',    shape_name)
-        shape.set('type',  '#_x0000_t75')
-        shape.set('style', f'width:{width_pt}pt;height:{height_pt}pt')
+        shape.set('id',      shape_name)
+        shape.set('type',    '#_x0000_t75')
+        shape.set('style',   f'width:{width_pt}pt;height:{height_pt}pt')
         shape.set(f'{{{O_NS}}}ole', '')
+        shape.set('stroked', 'f')   # Fix: suppress default black border
+
+        # Optional WMF preview image (keeps static preview when OLE host inactive)
+        img_b64 = elem.get('image_base64', '')
+        if img_b64:
+            try:
+                img_bytes = base64.b64decode(img_b64, validate=True)
+                img_rid   = self._embed_image(img_bytes, 'wmf', work_dir)
+                imgdata   = ET.SubElement(shape, f'{{{V_NS}}}imagedata')
+                imgdata.set(f'{{{R}}}id',       img_rid)
+                imgdata.set(f'{{{O_NS}}}title', '')
+            except Exception:
+                pass  # preview is optional; skip silently on any error
 
         ole_elem = ET.SubElement(obj, f'{{{O_NS}}}OLEObject')
         ole_elem.set('Type',       'Embed')
-        ole_elem.set('ProgID',     'Equation.3')
+        ole_elem.set('ProgID',     prog_id)
         ole_elem.set('ShapeID',    shape_name)
         ole_elem.set('DrawAspect', 'Content')
         ole_elem.set('ObjectID',   f'_{shape_id}')
         ole_elem.set(f'{{{R}}}id', ole_rid)
 
         if formula_index:
+            # Tab after OLE run — pushes index number to right margin
+            r_tab2 = ET.SubElement(p, _q('r'))
+            ET.SubElement(r_tab2, _q('tab'))
+
             r_idx = ET.SubElement(p, _q('r'))
             t_idx = ET.SubElement(r_idx, _q('t'))
-            t_idx.text = f'  {formula_index}'
-            t_idx.set(XML_SPACE, 'preserve')
+            t_idx.text = formula_index
 
         return p
 
@@ -1103,9 +1145,9 @@ def _math_text(oMath: ET.Element, text: str) -> None:
 # ── Entry point ────────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
-    _extraction = sys.argv[1] if len(sys.argv) > 1 else 'data/user_extraction.json'
-    _output     = sys.argv[2] if len(sys.argv) > 2 else 'output.docx'
-    _template   = sys.argv[3] if len(sys.argv) > 3 else 'templates/hit-template'
+    _extraction = sys.argv[1] if len(sys.argv) > 1 else 'docx_manager\\docx_engine\\data\\user_extraction.json'
+    _output     = sys.argv[2] if len(sys.argv) > 2 else 'docx_manager\\docx_engine\\outputs\\output.docx'
+    _template   = sys.argv[3] if len(sys.argv) > 3 else 'docx_manager\\docx_engine\\templates\\hit-template'
 
     DocxCompiler(
         extraction_path=_extraction,

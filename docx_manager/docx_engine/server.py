@@ -81,6 +81,47 @@ def _allowed(filename: str) -> bool:
     return Path(filename).suffix.lower() in _ALLOWED_EXT
 
 
+def _refresh_ole_previews(docx_path: str) -> None:
+    """
+    Open the generated docx in WPS/Word so the OLE host renders all
+    embedded equation objects and writes their WMF previews back into
+    the document on save.
+
+    Tries WPS (Kwps.Application) first, then Word (Word.Application).
+    Silently skipped when neither application is available.
+    """
+    abs_path = os.path.abspath(docx_path)
+    pythoncom.CoInitialize()
+    app = doc = None
+    used_prog_id = None
+    try:
+        for prog_id in ("Kwps.Application", "Word.Application"):
+            try:
+                app = win32.Dispatch(prog_id)
+                used_prog_id = prog_id
+                break
+            except Exception:
+                app = None
+        if app is None:
+            log.warning("[OLE] Neither WPS nor Word available — WMF previews skipped")
+            return
+        app.Visible = False
+        app.DisplayAlerts = False
+        doc = app.Documents.Open(abs_path)
+        doc.Save()
+        log.info("[OLE] Previews refreshed via %s", used_prog_id)
+    except Exception as exc:
+        log.warning("[OLE] Refresh failed (%s) — WMF previews may be missing", exc)
+    finally:
+        if doc:
+            try: doc.Close(False)
+            except Exception: pass
+        if app:
+            try: app.Quit()
+            except Exception: pass
+        pythoncom.CoUninitialize()
+
+
 def _run_pipeline(input_docx: str, job_dir: Path) -> str:
     """
     Execute all four pipeline stages for one job.
@@ -98,14 +139,14 @@ def _run_pipeline(input_docx: str, job_dir: Path) -> str:
     output_docx   = str(job_dir / "output.docx")
 
     # ── Step 1: parse uploaded docx → full_parsed.json ────────────────────────
-    log.info("[1/4] Parsing %s", input_docx)
+    log.info("[1/5] Parsing %s", input_docx)
     parser = DocxParser(input_docx)
     parser.parse()
     parser.to_json(full_parsed)
     log.info("      → %s", full_parsed)
 
     # ── Step 2: generate user_data.json ───────────────────────────────────────
-    log.info("[2/4] Generating user_data …")
+    log.info("[2/5] Generating user_data …")
     udg.generate(
         full_parsed_path = full_parsed,
         config_path      = _HIT_CONFIG,
@@ -114,7 +155,7 @@ def _run_pipeline(input_docx: str, job_dir: Path) -> str:
     log.info("      → %s", user_data)
 
     # ── Step 3: compile user_data → user_extraction.json ──────────────────────
-    log.info("[3/4] Compiling user_data …")
+    log.info("[3/5] Compiling user_data …")
     udc.compile_user_data(
         user_data_path = user_data,
         output_path    = user_extract,
@@ -122,12 +163,16 @@ def _run_pipeline(input_docx: str, job_dir: Path) -> str:
     log.info("      → %s", user_extract)
 
     # ── Step 4: compile docx ──────────────────────────────────────────────────
-    log.info("[4/4] Building output.docx …")
+    log.info("[4/5] Building output.docx …")
     DocxCompiler(
         extraction_path = user_extract,
         template_dir    = _TEMPLATE_DIR,
     ).compile(output_path=output_docx)
     log.info("      → %s", output_docx)
+
+    # ── Step 5: refresh OLE previews ─────────────────────────────────────────
+    log.info("[5/5] Refreshing OLE previews …")
+    _refresh_ole_previews(output_docx)
 
     return output_docx
 
@@ -184,7 +229,7 @@ def convert():
     pythoncom.CoInitialize()
     word = doc = None
     try:
-        word = win32.gencache.EnsureDispatch("Word.Application")
+        word = win32.Dispatch("Word.Application")
         word.Visible = False
         word.DisplayAlerts = False
         doc = word.Documents.Open(abs_raw)
