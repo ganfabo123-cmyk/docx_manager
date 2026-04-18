@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: hit-paper-helper
+Version: 0.1.0
+Summary: HIT Paper Helper - DOCX processing tools
+Requires-Python: >=3.8
+Requires-Dist: pywin32

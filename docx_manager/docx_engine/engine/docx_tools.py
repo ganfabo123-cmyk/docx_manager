@@ -467,6 +467,7 @@ def insert_section_break(
 
 def insert_figure(
     data_source: Union[str, bytes, None] = None,
+    base64:      Optional[str]           = None,   # alias: user_data.json 直接传入 base64 字符串
     width: float = 0.0,
     height: float = 0.0,
     caption: Optional[str] = None,
@@ -484,9 +485,9 @@ def insert_figure(
         (来自 extraction.json runs[].drawing_xml 字段)。
         docx_compiler 将其原样嵌入 <w:r> 中, 保留所有定位与关系 rId。
 
-    data_source (回退):
-        str   → 文件路径, 读取后 base64 编码
-        bytes → 直接 base64 编码
+    data_source / base64 (回退, 二者取其一):
+        base64      → user_data.json 直接传入的 base64 字符串, 优先于 data_source
+        data_source → str 文件路径 或 bytes 原始数据
 
     position:
         字符串 "left"/"center"/"right"
@@ -509,17 +510,23 @@ def insert_figure(
         }
         _DOCUMENT.append(elem)
     else:
-        # base64 path
-        if isinstance(data_source, (str, Path)):
+        # Resolve the b64 string.
+        # Import the module under an alias to avoid shadowing by the `base64` parameter.
+        import base64 as _b64lib
+
+        if base64:
+            # Parameter is already a base64-encoded string (from user_data.json).
+            b64 = base64
+        elif isinstance(data_source, (str, Path)):
             try:
                 raw: bytes = Path(data_source).read_bytes()
             except (OSError, FileNotFoundError):
                 raw = b""
+            b64 = _b64lib.b64encode(raw).decode("ascii") if raw else ""
         elif isinstance(data_source, bytes):
-            raw = data_source
+            b64 = _b64lib.b64encode(data_source).decode("ascii") if data_source else ""
         else:
-            raw = b""
-        b64 = base64.b64encode(raw).decode("ascii") if raw else ""
+            b64 = ""
 
         elem = {
             "index":    _next_idx(),
@@ -544,7 +551,7 @@ def insert_figure(
 # ── 表格 ────────────────────────────────────────────────────────────────────────
 
 def insert_table(
-    data: List[List[Any]],
+    rows: List[List[Any]],
     caption: Optional[str] = None,
     auto_format: bool = True,
     column_widths: Optional[List[float]] = None,
@@ -565,8 +572,8 @@ def insert_table(
         )
 
     # Build rows in extraction.json table format
-    rows: list[list[dict]] = []
-    for row_data in data:
+    built_rows: list[list[dict]] = []
+    for row_data in rows:
         row: list[dict] = []
         for cell_val in row_data:
             cell_text = str(cell_val) if not isinstance(cell_val, str) else cell_val
@@ -591,12 +598,12 @@ def insert_table(
                 ],
             }
             row.append(cell)
-        rows.append(row)
+        built_rows.append(row)
 
     elem: dict = {
         "index":         _next_idx(),
         "type":          "table",
-        "rows":          rows,
+        "rows":          built_rows,
         "auto_format":   auto_format,
         "column_widths": column_widths,
     }
@@ -658,6 +665,7 @@ def insert_equation(
         # base64 非空时编译器写入 word/embeddings/ 并渲染 OLE 对象；
         # 空字符串时退回纯文本占位符。
         elem["base64"] = ole_base64 or ""
+        elem["image_base64"] = image_base64 or ""
         if width_pt  is not None: elem["width_pt"]  = width_pt
         if height_pt is not None: elem["height_pt"] = height_pt
         if prog_id   is not None: elem["prog_id"]   = prog_id

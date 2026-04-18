@@ -172,7 +172,7 @@ def _run_pipeline(input_docx: str, job_dir: Path) -> str:
 
     # ── Step 5: refresh OLE previews ─────────────────────────────────────────
     log.info("[5/5] Refreshing OLE previews …")
-    _refresh_ole_previews(output_docx)
+   # _refresh_ole_previews(output_docx)
 
     return output_docx
 

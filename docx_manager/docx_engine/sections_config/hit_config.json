@@ -15,85 +15,42 @@
     "page_size": {"w": "11906", "h": "16838"}
   },
 
-  "front_matter": [
+  "special_section_break": [
     {
-      "name": "摘  要",
-      "note": "中文摘要，无页眉，页脚罗马数字",
-      "page_numbering": "roman",
-      "section_break": {
-        "header_refs": {},
-        "footer_refs": {"default": "rId8", "even": "rId9"},
-        "page_size": {"w": "11906", "h": "16838"}
+      "name":             "摘  要",
+      "note":             "中文摘要及英文摘要节共享此分节配置（英文摘要继承）",
+      "header_refs":      {},
+      "footer_refs":      {"default": "rId8", "even": "rId9"},
+      "page_size":        {"w": "11906", "h": "16838"},
+      "restart_page_number": 1,
+      "addition_attrs":{
+              "en_abstract_name": "Abstract"
       }
     },
     {
-      "name": "Abstract",
-      "note": "英文摘要，有页眉，页脚罗马数字",
-      "page_numbering": "roman",
-      "section_break": {
-        "header_refs": {"default": "rId10", "even": "rId11"},
-        "footer_refs": {"default": "rId12", "even": "rId13"},
-        "page_size": {"w": "11906", "h": "16838"}
-      }
-    },
-    {
-      "name": "目  录",
-      "note": "目录，compiler自动在此节插入generate_toc；页脚罗马数字",
-      "page_numbering": "roman",
-      "auto_generate_toc": true,
-      "section_break": {
-        "header_refs": {"default": "rId14", "even": "rId15"},
-        "footer_refs": {"default": "rId16"},
-        "page_size": {"w": "11906", "h": "16838"}
+      "name":                    "目  录",
+      "note":                    "目录节；auto_generate_toc 触发目录生成；后续所有正文节继承此配置",
+      "header_refs":             {"default": "rId14", "even": "rId15"},
+      "footer_refs":             {"default": "rId16"},
+      "page_size":               {"w": "11906", "h": "16838"},
+      "restart_page_number": 1,
+      "addition_attrs":{
+              "auto_generate_toc":       true
       }
     }
   ],
 
-  "body_start_section_break": {
-    "note": "目录末尾节，紧接正文第一章；阿拉伯数字从1开始",
-    "header_refs": {"default": "rId17", "even": "rId18"},
-    "footer_refs": {"even": "rId19"},
-    "restart_page_number": 1,
-    "page_size": {"w": "11906", "h": "16838"}
+  "hit_footer_rule": {
+    "note": "一次性全文页码方案：先清空全文页脚，再按规则依次应用",
+    "rules": [
+      {"sec_from": 1, "sec_to": 3, "style": "roman-upper", "position": "bottom-center", "start_idx": 1},
+      {"sec_from": 4, "sec_to": 0,  "style": "dash-arabic", "position": "bottom-center", "start_idx": 1}
+    ]
   },
 
-  "body_section_breaks": [
-    {
-      "note": "正文节1",
-      "header_refs": {"default": "rId20", "even": "rId21"},
-      "footer_refs": {"default": "rId22", "even": "rId23"},
-      "page_size": {"w": "11906", "h": "16838"}
-    },
-    {
-      "note": "正文节2",
-      "header_refs": {"default": "rId24"},
-      "footer_refs": {"default": "rId25"},
-      "page_size": {"w": "11906", "h": "16838"}
-    },
-    {
-      "note": "正文节3",
-      "header_refs": {"default": "rId26", "even": "rId27"},
-      "footer_refs": {"default": "rId28", "even": "rId29"},
-      "page_size": {"w": "11906", "h": "16838"}
-    },
-    {
-      "note": "正文节4",
-      "header_refs": {"default": "rId30", "even": "rId31"},
-      "footer_refs": {},
-      "page_size": {"w": "11906", "h": "16838"}
-    },
-    {
-      "note": "正文节5",
-      "header_refs": {"default": "rId32", "even": "rId33"},
-      "footer_refs": {"default": "rId34", "even": "rId35"},
-      "page_size": {"w": "11906", "h": "16838"}
-    }
-  ],
-
-  "final_section_break": {
-    "note": "文档末尾节（致谢/声明等之后），paragraph_index为null",
-    "header_refs": {"default": "rId36", "even": "rId37"},
-    "footer_refs": {"default": "rId38"},
-    "page_size": {"w": "11906", "h": "16838"}
+  "figure_defaults": {
+    "note": "insert_figure 的默认尺寸，当 user_data 中未提供 width/height 时使用",
+    "width_pt": 198.43,
+    "height_pt": 99.21
   }
 }

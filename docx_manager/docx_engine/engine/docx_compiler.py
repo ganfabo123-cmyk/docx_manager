@@ -420,7 +420,12 @@ class DocxCompiler:
         # full XML with margins, line numbers, header distance, etc.).
         # This is a legitimate gap: use the template's sectPr verbatim.
         if final_sectPr is not None:
-            body.append(copy.deepcopy(final_sectPr))
+            final_copy = copy.deepcopy(final_sectPr)
+            # Strip <w:type> from the template's body-level sectPr — the template
+            # uses oddPage here, which forces a blank even page before the last section.
+            for t in final_copy.findall(_q('type')):
+                final_copy.remove(t)
+            body.append(final_copy)
 
         _write_xml(doc_path, root)
         return stats
