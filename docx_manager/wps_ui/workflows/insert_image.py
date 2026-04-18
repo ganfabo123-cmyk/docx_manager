@@ -12,7 +12,7 @@ Layer 3 — 图片排版工作流。
 from .. import wps_nav as W
 from .. import primitives as P
 
-_MARKER = "AAAAAAAA"
+_MARKER = "XXXXX"
 
 
 def _locate_caption_line(caption: str, offset_up: int = 40) -> tuple[int, int]:

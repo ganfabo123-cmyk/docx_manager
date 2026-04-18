@@ -155,7 +155,7 @@ def _get_ocr_reader():
         import easyocr
         if OCR_MODEL_DIR:
             _patch_easyocr_md5()
-        kwargs: dict = dict(gpu=False, verbose=False)
+        kwargs: dict = dict(gpu=True, verbose=False)
         if OCR_MODEL_DIR:
             kwargs['model_storage_directory'] = OCR_MODEL_DIR
             kwargs['download_enabled'] = False
