@@ -1,0 +1,1910 @@
+{
+  "metadata": {
+    "source": "d:\\PycharmProjects\\docx_engine_V3\\data\\extraction.json",
+    "total_paragraphs": 233,
+    "total_clusters": 18
+  },
+  "standard_styles": {
+    "Style_001": {
+      "style_name": "参考文献",
+      "fingerprint": {
+        "layout": {
+          "line": 150,
+          "indent": {
+            "left": 543,
+            "hanging": 542
+          }
+        },
+        "font": {
+          "size": 12,
+          "font_cn": "宋体",
+          "font_en": "Times New Roman"
+        }
+      },
+      "occurrence_count": 109,
+      "paragraphs": [
+        {
+          "index": 3,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 4,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 5,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 6,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 7,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 8,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 9,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 10,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 11,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 12,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 13,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 15,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 17,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 18,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 19,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 20,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 21,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 31,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 35,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 36,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 37,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 38,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 39,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 40,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 41,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 46,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 47,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 48,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 55,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 56,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 59,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 60,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 61,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 62,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 69,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 70,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 71,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 73,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 74,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 75,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 82,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 83,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 84,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 87,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 117,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 133,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 134,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 135,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 136,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 137,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 138,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 139,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 140,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 141,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 143,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 147,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 149,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 163,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 164,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 165,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 166,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 167,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 168,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 169,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 191,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 192,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 193,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 194,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 195,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 196,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 197,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 198,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 199,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 200,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 201,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 202,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 204,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 207,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 208,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 209,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 210,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 211,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 212,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 213,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 216,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 217,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 220,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 221,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 222,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 232,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 233,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 234,
+          "original_style": "24",
+          "text": ""
+        },
+        {
+          "index": 236,
+          "original_style": "12",
+          "text": "［1］林来兴. 空间控制技术［M］. 北京：中国宇航出版社，1992：25-42."
+        },
+        {
+          "index": 237,
+          "original_style": "12",
+          "text": "［2］辛希孟. 信息技术与信息服务国际研讨会论文集：A集［C］. 北京：中国科学出版社，1999：45-49."
+        },
+        {
+          "index": 238,
+          "original_style": "12",
+          "text": "［3］赵耀东. 新时代的工业工程师［M/OL］. 台北：天下文化出版社，1998 ［1998-09-26］. http://www.ie.nthu.edu.tw/info/ie.newie.htm（Big5）."
+        },
+        {
+          "index": 239,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 240,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 242,
+          "original_style": "12",
+          "text": ""
+        },
+        {
+          "index": 243,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 244,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 245,
+          "original_style": "2",
+          "text": ""
+        },
+        {
+          "index": 246,
+          "original_style": null,
+          "text": ""
+        },
+        {
+          "index": 249,
+          "original_style": "12",
+          "text": "［1］  ×××，×××. Static Oxidation Model of Al-Mg/C Dissipation Thermal Protection Materials［J］. Rare Metal Materials and Engineering, 2010, 39(Suppl. 1): 520-524.（SCI收录，IDS号为669JS）"
+        },
+        {
+          "index": 250,
+          "original_style": "12",
+          "text": "［2］  ×××，×××. 精密超声振动切削单晶铜的计算机仿真研究［J］. 系统仿真学报，2007，19（4）：738-741，753.（EI收录号：20071310514841）"
+        },
+        {
+          "index": 251,
+          "original_style": "12",
+          "text": "［3］  ×××，×××. 局部多孔质气体静压轴向轴承静态特性的数值求解［J］. 摩擦学学报，2007（1）：68-72.（EI收录号：20071510544816）"
+        },
+        {
+          "index": 252,
+          "original_style": "12",
+          "text": "［4］  ×××，×××. 硬脆光学晶体材料超精密切削理论研究综述［J］. 机械工程学报，2003，39（8）：15-22.（EI收录号：2004088028875）"
+        },
+        {
+          "index": 253,
+          "original_style": "12",
+          "text": "［5］  ×××，×××. 基于遗传算法的超精密切削加工表面粗糙度预测模型的参数辨识以及切削参数优化［J］. 机械工程学报，2005，41（11）：158-162.（EI收录号：2006039650087）"
+        },
+        {
+          "index": 254,
+          "original_style": "12",
+          "text": "［6］  ×××，×××. Discrete Sliding Mode Cintrok with Fuzzy Adaptive Reaching Law on 6-PEES Parallel Robot［C］. Intelligent System Design and Applications, Jinan, 2006: 649-652.（EI收录号：20073210746529）"
+        },
+        {
+          "index": 260,
+          "original_style": "2",
+          "text": ""
+        }
+      ]
+    },
+    "Style_002": {
+      "style_name": "正文",
+      "fingerprint": {
+        "layout": {
+          "line": 150,
+          "firstLine": 498
+        },
+        "font": {
+          "font_cn": "宋体",
+          "font_en": "Times New Roman",
+          "size": 12
+        }
+      },
+      "occurrence_count": 31,
+      "paragraphs": [
+        {
+          "index": 64,
+          "original_style": null,
+          "text": "气体静压轴承由于具有运动精度高、摩擦损耗小、发热变形小、寿命长、无污染等特点，在航空航天工业、半导体工业、纺织工业和测量仪器中得到广泛应用。本文在分析国内外气体静压轴承的基础上，以改善气体静压轴承的静态特性和稳定性为目的，通过理论分析、仿真计算和实验研究对局部多孔质气体静压止推轴承进行了研究，同时分析轴承的结构参数和工作参数对局部多孔质气体静压止推轴承工作特性的影响，为局部多孔质气体静压轴承的设计和工程应用奠定理论基础。"
+        },
+        {
+          "index": 65,
+          "original_style": null,
+          "text": "建立基于分形几何理论的多孔质石墨渗透率与分形维数之间关系的数学模型，该模型可预测多孔质石墨的渗透率，并可直观描述孔隙的大小对渗透率的影响。"
+        },
+        {
+          "index": 66,
+          "original_style": null,
+          "text": "本文在理论分析的基础上，建立局部多孔质气体静压止推轴承静态特性的数学模型，在此基础上，通过工程方法和有限元方法对所建立的模型进行求解。在采用有限元方法时，首先通过加权余量法，将二阶偏微分方程降为一阶，从而，降低了对插值函数连续度的要求，同时，方便采用有限元方法进行求解。"
+        },
+        {
+          "index": 67,
+          "original_style": null,
+          "text": "……"
+        },
+        {
+          "index": 77,
+          "original_style": null,
+          "text": "Externally pressurized gas bearing has been widely used in the field of aviation, semiconductor, weave, and measurement apparatus because of its advantage of high accuracy, little friction, low heat distortion, long life-span, and no pollution. In this thesis, based on the domestic and overseas researching development about externally pressurized gas bearing, the author investigated the partial porous externally pressurized gas thrust bearing by theoretical analysis, computer simulation, and experiments to improve its static charaterictics and stability. The effects of structure and operating parameters on partial porous externally pressurized gas bearing has been studied. Therefore, a theoretical foundation for the designing and application for the partial porous externally pressurized gas bearing has been presented."
+        },
+        {
+          "index": 78,
+          "original_style": null,
+          "text": "Based on the fractal theory, a model was established to demonstrate the relationship between the porous graphite permeability and the fractal dimension. It can predict the permeability of porous graphite and show the effects of the pore size on the permeability."
+        },
+        {
+          "index": 79,
+          "original_style": null,
+          "text": "In this thesis, the author established a model about the static characteristics of partial porous externally pressurized gas thrust bearing, and it was analyzed by engineering solution and Finite Element Method (FEM). While using FEM, the second-order partial differential equation was reduced to one-order by adopting Galerkin weighted residual method, for decreasing the continuity degree requirement of the interpolation function and facilitating to the calculation."
+        },
+        {
+          "index": 80,
+          "original_style": null,
+          "text": "…"
+        },
+        {
+          "index": 85,
+          "original_style": null,
+          "text": "英文摘要与中文摘要的内容应一致，在语法、用词上应准确无误。关键词间用逗号相连。"
+        },
+        {
+          "index": 153,
+          "original_style": null,
+          "text": "由于气体的压力低和可压缩性，……。"
+        },
+        {
+          "index": 155,
+          "original_style": null,
+          "text": "轴承工作面的整体或……。"
+        },
+        {
+          "index": 158,
+          "original_style": null,
+          "text": "（1）孔隙特性  多孔质材料是由……。"
+        },
+        {
+          "index": 174,
+          "original_style": null,
+          "text": "本文采用……，则每一个方向上的……由公式（4-1）、（4-2）求得："
+        },
+        {
+          "index": 180,
+          "original_style": null,
+          "text": "……"
+        },
+        {
+          "index": 185,
+          "original_style": null,
+          "text": "在前面几章中，分别对局部多孔质材料的渗透率……"
+        },
+        {
+          "index": 219,
+          "original_style": null,
+          "text": "……"
+        },
+        {
+          "index": 224,
+          "original_style": null,
+          "text": "本文对局部多孔质气体静压止推轴承的静态特性和稳定性进行了理论研究，对于局部多孔质气体静压径向轴承、圆锥轴承和球轴承仅需对止推轴承压力分布的数学模型进行适当的坐标变换即可对其特性进行求解。同时，本文对局部多孔质气体静压止推轴承进行了实验研究并与整体多孔质和小孔节流止推轴承的静态特性和稳定性进行了实验对比。"
+        },
+        {
+          "index": 225,
+          "original_style": null,
+          "text": "本论文的主要创造性工作归纳如下："
+        },
+        {
+          "index": 226,
+          "original_style": null,
+          "text": "1. 建立了基于分形几何理论的多孔质石墨渗透率与分形维数之间关系的数学模型，该模型可预测多孔质石墨的渗透率，并可直观描述各种孔隙的大小对渗透率的影响。通过实验验证了该模型的正确性。"
+        },
+        {
+          "index": 227,
+          "original_style": null,
+          "text": "2. 分别建立了基于气体连续性方程、Navier-Stokes 方程、Darcy 定律以及气体状态方程的局部多孔质气体静压轴承的承载能力、静态刚度和质量流量的数学模型，利用有限元法进行求解，给出了局部多孔质气体静压轴承的承载能力、静态刚度和质量流量特性曲线。"
+        },
+        {
+          "index": 228,
+          "original_style": null,
+          "text": "……"
+        },
+        {
+          "index": 229,
+          "original_style": null,
+          "text": "今后还应在以下几个方面继续深入研究："
+        },
+        {
+          "index": 230,
+          "original_style": null,
+          "text": "1. 本文仅是采用了局部多孔质圆柱塞这种节流方式，在以后的研究中，可以通过改变局部多孔质材料的形状来改变节流方式，从而通过性能对比，获得最优的节流效果。"
+        },
+        {
+          "index": 231,
+          "original_style": null,
+          "text": "……"
+        },
+        {
+          "index": 45,
+          "original_style": null,
+          "text": "毕业论文  毕业设计          （宋体小4号字）          密级：公开"
+        },
+        {
+          "index": 144,
+          "original_style": null,
+          "text": "(d)(d)   (c)(c)"
+        },
+        {
+          "index": 175,
+          "original_style": null,
+          "text": "(4-1)"
+        },
+        {
+          "index": 176,
+          "original_style": null,
+          "text": "(4-2)"
+        },
+        {
+          "index": 178,
+          "original_style": null,
+          "text": "——孔隙度（孔隙体积占总体积的百分比）；"
+        },
+        {
+          "index": 179,
+          "original_style": null,
+          "text": "——特征渗透性或固有渗透性（m2）。"
+        },
+        {
+          "index": 150,
+          "original_style": null,
+          "text": "(a) 气体静压轴承                          (b) 气体动压轴承"
+        }
+      ]
+    },
+    "Style_006": {
+      "style_name": "标题一",
+      "fingerprint": {
+        "layout": {
+          "line": 150,
+          "before": 240,
+          "jc": "center"
+        },
+        "font": {
+          "font_cn": "黑体",
+          "size": 18,
+          "font_en": "Times New Roman"
+        }
+      },
+      "occurrence_count": 11,
+      "paragraphs": [
+        {
+          "index": 28,
+          "original_style": null,
+          "text": "RESEARCH ON KEY TECHNOLOGIES OF PARTIAL POROUS EXTERNALLY PRESSURIZED GAS BEARING"
+        },
+        {
+          "index": 63,
+          "original_style": "2",
+          "text": "摘  要"
+        },
+        {
+          "index": 76,
+          "original_style": "2",
+          "text": "Abstract"
+        },
+        {
+          "index": 88,
+          "original_style": "2",
+          "text": "目  录"
+        },
+        {
+          "index": 118,
+          "original_style": "2",
+          "text": "第1章  绪  论"
+        },
+        {
+          "index": 170,
+          "original_style": "2",
+          "text": "第4章  基于FLUENT软件的轴承静态特性研究"
+        },
+        {
+          "index": 183,
+          "original_style": "2",
+          "text": "第6章  局部多孔质静压轴承的试验研究"
+        },
+        {
+          "index": 223,
+          "original_style": "2",
+          "text": "结  论"
+        },
+        {
+          "index": 235,
+          "original_style": "2",
+          "text": "参考文献"
+        },
+        {
+          "index": 247,
+          "original_style": "2",
+          "text": "攻读学士学位期间取得创新性成果"
+        },
+        {
+          "index": 261,
+          "original_style": "2",
+          "text": "致  谢"
+        }
+      ]
+    },
+    "Style_007": {
+      "style_name": "标题二",
+      "fingerprint": {
+        "layout": {
+          "before": 195,
+          "after": 195,
+          "line": 150,
+          "jc": "both"
+        },
+        "font": {
+          "font_cn": "黑体",
+          "font_en": "Times New Roman",
+          "size": 15
+        }
+      },
+      "occurrence_count": 8,
+      "paragraphs": [
+        {
+          "index": 119,
+          "original_style": "3",
+          "text": "1.1  课题背景及研究的目的和意义"
+        },
+        {
+          "index": 122,
+          "original_style": "3",
+          "text": "1.2  气体润滑轴承及其相关理论的发展概况"
+        },
+        {
+          "index": 160,
+          "original_style": "3",
+          "text": "1.4  本文的主要研究内容"
+        },
+        {
+          "index": 171,
+          "original_style": "3",
+          "text": "4.1  引言"
+        },
+        {
+          "index": 181,
+          "original_style": "3",
+          "text": "4.4  本章小结"
+        },
+        {
+          "index": 184,
+          "original_style": "3",
+          "text": "6.1  引言"
+        },
+        {
+          "index": 186,
+          "original_style": "3",
+          "text": "6.2  多孔质石墨渗透率测试试验"
+        },
+        {
+          "index": 218,
+          "original_style": "3",
+          "text": "6.5  本章小结"
+        }
+      ]
+    },
+    "Style_009": {
+      "style_name": "标题三",
+      "fingerprint": {
+        "layout": {
+          "line": 150,
+          "before": 195,
+          "after": 195,
+          "jc": "both"
+        },
+        "font": {
+          "font_cn": "黑体",
+          "font_en": "Times New Roman",
+          "size": 14
+        }
+      },
+      "occurrence_count": 5,
+      "paragraphs": [
+        {
+          "index": 125,
+          "original_style": "4",
+          "text": "1.2.1  气体润滑轴承的发展"
+        },
+        {
+          "index": 129,
+          "original_style": "4",
+          "text": "1.2.2  气体润滑轴承的分类"
+        },
+        {
+          "index": 152,
+          "original_style": "4",
+          "text": "1.2.5  多孔质气体静压轴承的研究"
+        },
+        {
+          "index": 173,
+          "original_style": "4",
+          "text": "4.2.3  边界条件的设定"
+        },
+        {
+          "index": 157,
+          "original_style": null,
+          "text": "材料的主要特点是具有一定的……。"
+        }
+      ]
+    },
+    "Style_010": {
+      "style_name": "图表标题",
+      "fingerprint": {
+        "layout": {
+          "line": 140,
+          "jc": "center"
+        },
+        "font": {
+          "size": 10,
+          "font_cn": "宋体",
+          "font_en": "Times New Roman"
+        }
+      },
+      "occurrence_count": 4,
+      "paragraphs": [
+        {
+          "index": 151,
+          "original_style": null,
+          "text": "图1-1  气体润滑轴承的分类"
+        },
+        {
+          "index": 189,
+          "original_style": null,
+          "text": "表6-1  1号试样渗透率测试数据(温度：T=16 ℃  高度：H=5.31 mm)"
+        },
+        {
+          "index": 205,
+          "original_style": null,
+          "text": "表6-2  试样渗透率测试数据"
+        },
+        {
+          "index": 145,
+          "original_style": null,
+          "text": "图1-1  气体润滑轴承的分类"
+        }
+      ]
+    },
+    "Style_011": {
+      "style_name": "Cluster_11_sz12_both",
+      "fingerprint": {
+        "layout": {
+          "line": 150,
+          "after": 0,
+          "firstLine": 498,
+          "left": 0,
+          "jc": "both"
+        },
+        "font": {
+          "font_en": "宋体",
+          "font_cn": "宋体",
+          "size": 12
+        }
+      },
+      "occurrence_count": 3,
+      "paragraphs": [
+        {
+          "index": 187,
+          "original_style": "9",
+          "text": "……"
+        },
+        {
+          "index": 188,
+          "original_style": "9",
+          "text": "1号试样的试验数据见表6-1。"
+        },
+        {
+          "index": 262,
+          "original_style": "9",
+          "text": "衷心感谢导师×××教授对本人的精心指导。他的言传身教将使我终身受益。"
+        }
+      ]
+    },
+    "Style_016": {
+      "style_name": "标题四",
+      "fingerprint": {
+        "layout": {
+          "line": 150
+        },
+        "font": {
+          "font_cn": "黑体",
+          "font_en": "Times New Roman"
+        }
+      },
+      "occurrence_count": 2,
+      "paragraphs": [
+        {
+          "index": 154,
+          "original_style": null,
+          "text": "1.2.5.1  多孔质静压轴承的分类"
+        },
+        {
+          "index": 156,
+          "original_style": null,
+          "text": "1.2.5.2  多孔质材料特性的研究"
+        }
+      ]
+    }
+  },
+  "style_definitions": {
+    "1": {
+      "name": "Normal",
+      "basedOn": null,
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both"
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 12,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "2": {
+      "name": "heading 1",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "center",
+        "keepNext": {},
+        "keepLines": {},
+        "adjustRightInd": {
+          "val": "0"
+        },
+        "snapToGrid": {
+          "val": "0"
+        },
+        "spacing": {
+          "before": "312",
+          "beforeLines": "100",
+          "after": "249",
+          "afterLines": "80",
+          "line": "288",
+          "lineRule": "auto"
+        },
+        "outlineLvl": {
+          "val": "0"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "黑体"
+        },
+        "sz": 18,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        },
+        "spacing": {
+          "val": "-4"
+        }
+      }
+    },
+    "3": {
+      "name": "heading 2",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both",
+        "keepNext": {},
+        "keepLines": {},
+        "adjustRightInd": {
+          "val": "0"
+        },
+        "snapToGrid": {
+          "val": "0"
+        },
+        "spacing": {
+          "before": "156",
+          "beforeLines": "50",
+          "after": "156",
+          "afterLines": "50",
+          "line": "300",
+          "lineRule": "auto"
+        },
+        "outlineLvl": {
+          "val": "1"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "黑体"
+        },
+        "sz": 15,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "zh-CN"
+        }
+      }
+    },
+    "4": {
+      "name": "heading 3",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both",
+        "keepNext": {},
+        "keepLines": {},
+        "snapToGrid": {
+          "val": "0"
+        },
+        "spacing": {
+          "before": "156",
+          "beforeLines": "50",
+          "after": "156",
+          "afterLines": "50",
+          "line": "288",
+          "lineRule": "auto"
+        },
+        "outlineLvl": {
+          "val": "2"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "黑体"
+        },
+        "sz": 14,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "zh-CN"
+        }
+      }
+    },
+    "5": {
+      "name": "heading 4",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "right",
+        "keepNext": {},
+        "wordWrap": {
+          "val": "0"
+        },
+        "outlineLvl": {
+          "val": "3"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 16,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "26": {
+      "name": "Default Paragraph Font",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        }
+      }
+    },
+    "25": {
+      "name": "Normal Table",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        }
+      }
+    },
+    "6": {
+      "name": "toc 7",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "ind": {
+          "left": "1440"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "7": {
+      "name": "Normal Indent",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both",
+        "ind": {
+          "firstLine": "499"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 10,
+        "_sz_source": "szCs",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "8": {
+      "name": "Body Text",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both",
+        "spacing": {
+          "after": "120",
+          "afterLines": "0"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 12,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "9": {
+      "name": "Body Text Indent",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both",
+        "spacing": {
+          "after": "120",
+          "afterLines": "0"
+        },
+        "ind": {
+          "left": "420",
+          "leftChars": "200"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 12,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "10": {
+      "name": "toc 5",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "ind": {
+          "left": "960"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "11": {
+      "name": "toc 3",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "tabs": {},
+        "snapToGrid": {
+          "val": "0"
+        },
+        "spacing": {
+          "line": "288",
+          "lineRule": "auto"
+        },
+        "ind": {
+          "left": "480"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 12,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        },
+        "iCs": {},
+        "color": {
+          "val": "000000"
+        }
+      }
+    },
+    "12": {
+      "name": "Plain Text",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both"
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "宋体",
+          "font_cn": "宋体"
+        },
+        "sz": 10,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "13": {
+      "name": "toc 8",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "ind": {
+          "left": "1680"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "14": {
+      "name": "Date",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both"
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "黑体"
+        },
+        "sz": 10,
+        "_sz_source": "szCs",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "15": {
+      "name": "Balloon Text",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both"
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "16": {
+      "name": "footer",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "tabs": {},
+        "snapToGrid": {
+          "val": "0"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "17": {
+      "name": "header",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "center",
+        "pBdr": {},
+        "tabs": {},
+        "snapToGrid": {
+          "val": "0"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "18": {
+      "name": "toc 1",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "tabs": {},
+        "snapToGrid": {
+          "val": "0"
+        },
+        "spacing": {
+          "line": "300",
+          "lineRule": "auto"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "宋体",
+          "font_cn": "黑体"
+        },
+        "sz": 12,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        },
+        "bCs": {},
+        "caps": {}
+      }
+    },
+    "19": {
+      "name": "toc 4",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "ind": {
+          "left": "720"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "20": {
+      "name": "toc 6",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "ind": {
+          "left": "1200"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "21": {
+      "name": "toc 2",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "ind": {
+          "left": "240"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "Times New Roman"
+        },
+        "sz": 10,
+        "_sz_source": "szCs",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        },
+        "smallCaps": {}
+      }
+    },
+    "22": {
+      "name": "toc 9",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "left",
+        "ind": {
+          "left": "1920"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "23": {
+      "name": "Title",
+      "basedOn": null,
+      "resolved_pPr": {
+        "keepLines": {},
+        "pageBreakBefore": {},
+        "widowControl": {
+          "val": "0"
+        },
+        "spacing": {
+          "before": "240",
+          "after": "120"
+        },
+        "jc": "center",
+        "outlineLvl": {
+          "val": "0"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "黑体"
+        },
+        "b": "1",
+        "sz": 18,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "24": {
+      "name": "Body Text First Indent",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both",
+        "ind": {
+          "firstLine": "498",
+          "firstLineChars": "200"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 10,
+        "_sz_source": "szCs",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "27": {
+      "name": "page number",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        }
+      }
+    },
+    "28": {
+      "name": "Hyperlink",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "color": {
+          "val": "0000FF"
+        },
+        "u": "single"
+      }
+    },
+    "29": {
+      "name": "纯文本 字符",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "宋体",
+          "font_cn": "宋体"
+        },
+        "sz": 10,
+        "_sz_source": "sz"
+      }
+    },
+    "30": {
+      "name": "页眉 字符",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 9,
+        "_sz_source": "sz"
+      }
+    },
+    "31": {
+      "name": "fr_label1",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "b": "1",
+        "bCs": {}
+      }
+    },
+    "32": {
+      "name": "short_text1",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 14,
+        "_sz_source": "sz"
+      }
+    },
+    "33": {
+      "name": "样式3",
+      "basedOn": "1",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "center",
+        "snapToGrid": {
+          "val": "0"
+        },
+        "spacing": {
+          "line": "360",
+          "lineRule": "auto"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "黑体"
+        },
+        "sz": 18,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    },
+    "34": {
+      "name": "页眉 Char",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        }
+      }
+    },
+    "35": {
+      "name": "纯文本 Char",
+      "basedOn": null,
+      "resolved_pPr": {},
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "宋体",
+          "font_cn": "宋体"
+        },
+        "sz": 10,
+        "_sz_source": "sz"
+      }
+    },
+    "36": {
+      "name": "参考文献",
+      "basedOn": "12",
+      "resolved_pPr": {
+        "widowControl": {
+          "val": "0"
+        },
+        "jc": "both",
+        "adjustRightInd": {
+          "val": "0"
+        },
+        "snapToGrid": {
+          "val": "0"
+        },
+        "spacing": {
+          "line": "300",
+          "lineRule": "auto"
+        },
+        "ind": {
+          "left": "552",
+          "hanging": "551",
+          "hangingChars": "218"
+        }
+      },
+      "resolved_rPr": {
+        "rFonts": {
+          "font_en": "Times New Roman",
+          "font_cn": "宋体"
+        },
+        "sz": 10,
+        "_sz_source": "sz",
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN",
+          "bidi": "ar-SA"
+        }
+      }
+    }
+  }
+}

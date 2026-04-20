@@ -1,0 +1,94 @@
+Project Context Tree
+====================
+Legend:
+  C = Class
+  m = Method (inside Class)
+  f = Function (Global)
+  # = Docstring summary
+====================
+测试/
+├── template
+│   ├── _rels
+│   │   └── .rels
+│   ├── customXml
+│   │   ├── _rels
+│   │   │   └── item1.xml.rels
+│   │   ├── item1.xml
+│   │   └── itemProps1.xml
+│   ├── docProps
+│   │   ├── app.xml
+│   │   ├── core.xml
+│   │   └── custom.xml
+│   ├── word
+│   │   ├── _rels
+│   │   │   └── document.xml.rels
+│   │   ├── embeddings
+│   │   │   ├── oleObject1.bin
+│   │   │   ├── oleObject2.bin
+│   │   │   ├── oleObject3.bin
+│   │   │   ├── oleObject4.bin
+│   │   │   ├── oleObject5.bin
+│   │   │   └── oleObject6.bin
+│   │   ├── media
+│   │   │   ├── image1.tiff
+│   │   │   ├── image10.wmf
+│   │   │   ├── image11.wmf
+│   │   │   ├── image2.tiff
+│   │   │   ├── image3.tiff
+│   │   │   ├── image4.tiff
+│   │   │   ├── image5.tiff
+│   │   │   ├── image6.wmf
+│   │   │   ├── image7.wmf
+│   │   │   ├── image8.wmf
+│   │   │   └── image9.wmf
+│   │   ├── theme
+│   │   │   └── theme1.xml
+│   │   ├── document.xml
+│   │   ├── fontTable.xml
+│   │   ├── footer1.xml
+│   │   ├── footer10.xml
+│   │   ├── footer11.xml
+│   │   ├── footer12.xml
+│   │   ├── footer13.xml
+│   │   ├── footer14.xml
+│   │   ├── footer15.xml
+│   │   ├── footer16.xml
+│   │   ├── footer2.xml
+│   │   ├── footer3.xml
+│   │   ├── footer4.xml
+│   │   ├── footer5.xml
+│   │   ├── footer6.xml
+│   │   ├── footer7.xml
+│   │   ├── footer8.xml
+│   │   ├── footer9.xml
+│   │   ├── header1.xml
+│   │   ├── header10.xml
+│   │   ├── header11.xml
+│   │   ├── header12.xml
+│   │   ├── header13.xml
+│   │   ├── header14.xml
+│   │   ├── header15.xml
+│   │   ├── header16.xml
+│   │   ├── header17.xml
+│   │   ├── header18.xml
+│   │   ├── header19.xml
+│   │   ├── header2.xml
+│   │   ├── header20.xml
+│   │   ├── header3.xml
+│   │   ├── header4.xml
+│   │   ├── header5.xml
+│   │   ├── header6.xml
+│   │   ├── header7.xml
+│   │   ├── header8.xml
+│   │   ├── header9.xml
+│   │   ├── settings.xml
+│   │   └── styles.xml
+│   └── [Content_Types].xml
+├── PROJECT_CONTEXT.txt
+├── print_tree.py
+│   ├── f get_node_signature(node)  # 获取函数/方法的签名字符串
+│   ├── f get_docstring_summary(node)  # 获取文档注释的第一行
+│   ├── f parse_py_structure(file_path: Path, prefix: str)  # 解析 py 文件，生成 类->方法 和 函数 的树状结构
+│   ├── f generate_tree(dir_path: Path, prefix: str='')
+│   └── f save_optimized_tree(start_path='.', output_file='PROJECT_CONTEXT.txt')
+└── template.zip

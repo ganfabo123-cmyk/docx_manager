@@ -1,0 +1,1828 @@
+{
+  "generated_at": "2026-04-06T21:18:09",
+  "source": "extraction.json",
+  "total_new_character_styles": 73,
+  "character_styles": [
+    {
+      "style_id": "cs-10pt",
+      "style_name": "10pt",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-10pt\"><w:name w:val=\"10pt\" /><w:rPr><w:sz w:val=\"21\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "sz": {
+          "val": "21"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-10pt-CS",
+      "style_name": "10pt CS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-10pt-CS\"><w:name w:val=\"10pt CS\" /><w:rPr><w:sz w:val=\"21\" /><w:szCs w:val=\"21\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "sz": {
+          "val": "21"
+        },
+        "szCs": {
+          "val": "21"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 6,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-18pt-CS-Bold",
+      "style_name": "18pt CS Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-18pt-CS-Bold\"><w:name w:val=\"18pt CS Bold\" /><w:rPr><w:b /><w:sz w:val=\"36\" /><w:szCs w:val=\"36\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "b": {},
+        "sz": {
+          "val": "36"
+        },
+        "szCs": {
+          "val": "36"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Black",
+      "style_name": "Black",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Black\"><w:name w:val=\"Black\" /><w:rPr><w:color w:val=\"000000\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "color": {
+          "val": "000000"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Black-Pos-14",
+      "style_name": "Black Pos-14",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Black-Pos-14\"><w:name w:val=\"Black Pos-14\" /><w:rPr><w:color w:val=\"000000\" /><w:position w:val=\"-14\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "color": {
+          "val": "000000"
+        },
+        "position": {
+          "val": "-14"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Bold",
+      "style_name": "Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Bold\"><w:name w:val=\"Bold\" /><w:rPr><w:b /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "b": {}
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 5,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA",
+      "style_name": "EA",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA\"><w:name w:val=\"EA\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 62,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "16",
+          "para_style_name": "footer",
+          "occurrence_count": 31,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"16\"><w:name w:val=\"footer\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:tabs><w:tab w:val=\"center\" w:pos=\"4153\" /><w:tab w:val=\"right\" w:pos=\"8306\" /></w:tabs><w:snapToGrid w:val=\"0\" /><w:jc w:val=\"left\" /></w:pPr><w:rPr><w:sz w:val=\"18\" /><w:szCs w:val=\"18\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "17",
+          "para_style_name": "header",
+          "occurrence_count": 19,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"17\"><w:name w:val=\"header\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"30\" /><w:uiPriority w:val=\"99\" /><w:pPr><w:pBdr><w:bottom w:val=\"single\" w:color=\"auto\" w:sz=\"6\" w:space=\"1\" /></w:pBdr><w:tabs><w:tab w:val=\"center\" w:pos=\"4153\" /><w:tab w:val=\"right\" w:pos=\"8306\" /></w:tabs><w:snapToGrid w:val=\"0\" /><w:jc w:val=\"center\" /></w:pPr><w:rPr><w:sz w:val=\"18\" /><w:szCs w:val=\"18\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "2",
+          "para_style_name": "heading 1",
+          "occurrence_count": 12,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"2\"><w:name w:val=\"heading 1\" /><w:basedOn w:val=\"1\" /><w:next w:val=\"1\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:keepNext /><w:keepLines /><w:adjustRightInd w:val=\"0\" /><w:snapToGrid w:val=\"0\" /><w:spacing w:before=\"312\" w:beforeLines=\"100\" w:after=\"249\" w:afterLines=\"80\" w:line=\"288\" w:lineRule=\"auto\" /><w:jc w:val=\"center\" /><w:outlineLvl w:val=\"0\" /></w:pPr><w:rPr><w:rFonts w:eastAsia=\"黑体\" /><w:spacing w:val=\"-4\" /><w:kern w:val=\"44\" /><w:sz w:val=\"36\" /><w:szCs w:val=\"36\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "3",
+          "para_style_name": "heading 2",
+          "occurrence_count": 11,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"3\"><w:name w:val=\"heading 2\" /><w:basedOn w:val=\"1\" /><w:next w:val=\"1\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:keepNext /><w:keepLines /><w:adjustRightInd w:val=\"0\" /><w:snapToGrid w:val=\"0\" /><w:spacing w:before=\"156\" w:beforeLines=\"50\" w:after=\"156\" w:afterLines=\"50\" w:line=\"300\" w:lineRule=\"auto\" /><w:outlineLvl w:val=\"1\" /></w:pPr><w:rPr><w:rFonts w:eastAsia=\"黑体\" /><w:kern w:val=\"0\" /><w:sz w:val=\"30\" /><w:szCs w:val=\"32\" /><w:lang w:val=\"zh-CN\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "4",
+          "para_style_name": "heading 3",
+          "occurrence_count": 5,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"4\"><w:name w:val=\"heading 3\" /><w:basedOn w:val=\"1\" /><w:next w:val=\"1\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:keepNext /><w:keepLines /><w:snapToGrid w:val=\"0\" /><w:spacing w:before=\"156\" w:beforeLines=\"50\" w:after=\"156\" w:afterLines=\"50\" w:line=\"288\" w:lineRule=\"auto\" /><w:outlineLvl w:val=\"2\" /></w:pPr><w:rPr><w:rFonts w:eastAsia=\"黑体\" /><w:kern w:val=\"0\" /><w:sz w:val=\"28\" /><w:szCs w:val=\"28\" /><w:lang w:val=\"zh-CN\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "7",
+          "para_style_name": "Normal Indent",
+          "occurrence_count": 5,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"7\"><w:name w:val=\"Normal Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"499\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "9",
+          "para_style_name": "Body Text Indent",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"9\"><w:name w:val=\"Body Text Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:spacing w:after=\"120\" w:afterLines=\"0\" /><w:ind w:left=\"420\" w:leftChars=\"200\" /></w:pPr></w:style>"
+        },
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-10pt",
+      "style_name": "EA 10pt",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-10pt\"><w:name w:val=\"EA 10pt\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:sz w:val=\"21\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "sz": {
+          "val": "21"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 7,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-10pt-CS",
+      "style_name": "EA 10pt CS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-10pt-CS\"><w:name w:val=\"EA 10pt CS\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"21\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "sz": {
+          "val": "21"
+        },
+        "szCs": {
+          "val": "21"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 10,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-10pt-Italic",
+      "style_name": "EA 10pt Italic",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-10pt-Italic\"><w:name w:val=\"EA 10pt Italic\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:i /><w:sz w:val=\"21\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "i": {},
+        "sz": {
+          "val": "21"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-16pt-CS",
+      "style_name": "EA 16pt CS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-16pt-CS\"><w:name w:val=\"EA 16pt CS\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:sz w:val=\"32\" /><w:szCs w:val=\"32\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "sz": {
+          "val": "32"
+        },
+        "szCs": {
+          "val": "32"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-18pt-Bold-zhCN",
+      "style_name": "EA 18pt Bold zhCN",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-18pt-Bold-zhCN\"><w:name w:val=\"EA 18pt Bold zhCN\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:b /><w:sz w:val=\"36\" /><w:lang w:eastAsia=\"zh-CN\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "b": {},
+        "sz": {
+          "val": "36"
+        },
+        "lang": {
+          "eastAsia": "zh-CN"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-18pt-CS-Bold",
+      "style_name": "EA 18pt CS Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-18pt-CS-Bold\"><w:name w:val=\"EA 18pt CS Bold\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:b /><w:sz w:val=\"36\" /><w:szCs w:val=\"36\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "b": {},
+        "sz": {
+          "val": "36"
+        },
+        "szCs": {
+          "val": "36"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-24pt-CS-Bold-zhCN",
+      "style_name": "EA 24pt CS Bold zhCN",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-24pt-CS-Bold-zhCN\"><w:name w:val=\"EA 24pt CS Bold zhCN\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:b /><w:sz w:val=\"48\" /><w:szCs w:val=\"48\" /><w:lang w:eastAsia=\"zh-CN\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "b": {},
+        "sz": {
+          "val": "48"
+        },
+        "szCs": {
+          "val": "48"
+        },
+        "lang": {
+          "eastAsia": "zh-CN"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-Blue",
+      "style_name": "EA Blue",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-Blue\"><w:name w:val=\"EA Blue\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:color w:val=\"0000FF\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "color": {
+          "val": "0000FF"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-Bold",
+      "style_name": "EA Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-Bold\"><w:name w:val=\"EA Bold\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:b /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "b": {}
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 6,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-Red",
+      "style_name": "EA Red",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-Red\"><w:name w:val=\"EA Red\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:color w:val=\"FF0000\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "color": {
+          "val": "FF0000"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 9,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-Spc-4",
+      "style_name": "EA Spc-4",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-Spc-4\"><w:name w:val=\"EA Spc-4\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:spacing w:val=\"-4\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "spacing": {
+          "val": "-4"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-csz10pt-Kern0",
+      "style_name": "EA csz10pt Kern0",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-csz10pt-Kern0\"><w:name w:val=\"EA csz10pt Kern0\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:kern w:val=\"0\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "kern": {
+          "val": "0"
+        },
+        "szCs": {
+          "val": "20"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-csz12pt",
+      "style_name": "EA csz12pt",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-csz12pt\"><w:name w:val=\"EA csz12pt\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 6,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-csz12pt-Bold",
+      "style_name": "EA csz12pt Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-csz12pt-Bold\"><w:name w:val=\"EA csz12pt Bold\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:b /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "b": {},
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-csz16pt",
+      "style_name": "EA csz16pt",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-csz16pt\"><w:name w:val=\"EA csz16pt\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:szCs w:val=\"32\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "szCs": {
+          "val": "32"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-csz16pt-Black",
+      "style_name": "EA csz16pt Black",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-csz16pt-Black\"><w:name w:val=\"EA csz16pt Black\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:color w:val=\"000000\" /><w:szCs w:val=\"32\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "color": {
+          "val": "000000"
+        },
+        "szCs": {
+          "val": "32"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-enUS-zhCN",
+      "style_name": "EA enUS-zhCN",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-enUS-zhCN\"><w:name w:val=\"EA enUS-zhCN\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-EA-zhCN",
+      "style_name": "EA zhCN",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-EA-zhCN\"><w:name w:val=\"EA zhCN\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" /><w:lang w:eastAsia=\"zh-CN\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia"
+        },
+        "lang": {
+          "eastAsia": "zh-CN"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "17",
+          "para_style_name": "header",
+          "occurrence_count": 12,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"17\"><w:name w:val=\"header\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"30\" /><w:uiPriority w:val=\"99\" /><w:pPr><w:pBdr><w:bottom w:val=\"single\" w:color=\"auto\" w:sz=\"6\" w:space=\"1\" /></w:pBdr><w:tabs><w:tab w:val=\"center\" w:pos=\"4153\" /><w:tab w:val=\"right\" w:pos=\"8306\" /></w:tabs><w:snapToGrid w:val=\"0\" /><w:jc w:val=\"center\" /></w:pPr><w:rPr><w:sz w:val=\"18\" /><w:szCs w:val=\"18\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Kern0",
+      "style_name": "Kern0",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Kern0\"><w:name w:val=\"Kern0\" /><w:rPr><w:kern w:val=\"0\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "kern": {
+          "val": "0"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Pos-10",
+      "style_name": "Pos-10",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Pos-10\"><w:name w:val=\"Pos-10\" /><w:rPr><w:position w:val=\"-10\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "position": {
+          "val": "-10"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Pos-30",
+      "style_name": "Pos-30",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Pos-30\"><w:name w:val=\"Pos-30\" /><w:rPr><w:position w:val=\"-30\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "position": {
+          "val": "-30"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Pos-32",
+      "style_name": "Pos-32",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Pos-32\"><w:name w:val=\"Pos-32\" /><w:rPr><w:position w:val=\"-32\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "position": {
+          "val": "-32"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Superscript",
+      "style_name": "Superscript",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Superscript\"><w:name w:val=\"Superscript\" /><w:rPr><w:vertAlign w:val=\"superscript\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "vertAlign": {
+          "val": "superscript"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Superscript-Kern0",
+      "style_name": "Superscript Kern0",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Superscript-Kern0\"><w:name w:val=\"Superscript Kern0\" /><w:rPr><w:kern w:val=\"0\" /><w:vertAlign w:val=\"superscript\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "kern": {
+          "val": "0"
+        },
+        "vertAlign": {
+          "val": "superscript"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Times-New-Roman-12pt-CS",
+      "style_name": "Times New Roman 12pt CS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Times-New-Roman-12pt-CS\"><w:name w:val=\"Times New Roman 12pt CS\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "Times New Roman",
+          "hAnsi": "Times New Roman"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 70,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Times-New-Roman-12pt-CS-Kern0",
+      "style_name": "Times New Roman 12pt CS Kern0",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Times-New-Roman-12pt-CS-Kern0\"><w:name w:val=\"Times New Roman 12pt CS Kern0\" /><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" /><w:kern w:val=\"0\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "ascii": "Times New Roman",
+          "hAnsi": "Times New Roman"
+        },
+        "kern": {
+          "val": "0"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 6,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Times-New-Roman-12pt-CS-Kern0_1",
+      "style_name": "Times New Roman 12pt CS Kern0_1",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Times-New-Roman-12pt-CS-Kern0_1\"><w:name w:val=\"Times New Roman 12pt CS Kern0_1\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" /><w:kern w:val=\"0\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "Times New Roman",
+          "hAnsi": "Times New Roman"
+        },
+        "kern": {
+          "val": "0"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 5,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Times-New-Roman-12pt-CS_1",
+      "style_name": "Times New Roman 12pt CS_1",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Times-New-Roman-12pt-CS_1\"><w:name w:val=\"Times New Roman 12pt CS_1\" /><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "ascii": "Times New Roman",
+          "hAnsi": "Times New Roman"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 79,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Times-New-Roman-12pt-CS_2",
+      "style_name": "Times New Roman 12pt CS_2",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Times-New-Roman-12pt-CS_2\"><w:name w:val=\"Times New Roman 12pt CS_2\" /><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" /><w:bCs /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "ascii": "Times New Roman",
+          "hAnsi": "Times New Roman"
+        },
+        "bCs": {},
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Times-New-Roman-12pt-CS_3",
+      "style_name": "Times New Roman 12pt CS_3",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Times-New-Roman-12pt-CS_3\"><w:name w:val=\"Times New Roman 12pt CS_3\" /><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"宋体\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "ascii": "Times New Roman",
+          "hAnsi": "宋体"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 7,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Times-New-Roman-12pt-CS_4",
+      "style_name": "Times New Roman 12pt CS_4",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Times-New-Roman-12pt-CS_4\"><w:name w:val=\"Times New Roman 12pt CS_4\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"Times New Roman\" w:hAnsi=\"宋体\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "Times New Roman",
+          "hAnsi": "宋体"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-csz12pt",
+      "style_name": "csz12pt",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-csz12pt\"><w:name w:val=\"csz12pt\" /><w:rPr><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-enUS",
+      "style_name": "enUS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-enUS\"><w:name w:val=\"enUS\" /><w:rPr><w:lang w:val=\"en-US\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "lang": {
+          "val": "en-US"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "4",
+          "para_style_name": "heading 3",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"4\"><w:name w:val=\"heading 3\" /><w:basedOn w:val=\"1\" /><w:next w:val=\"1\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:keepNext /><w:keepLines /><w:snapToGrid w:val=\"0\" /><w:spacing w:before=\"156\" w:beforeLines=\"50\" w:after=\"156\" w:afterLines=\"50\" w:line=\"288\" w:lineRule=\"auto\" /><w:outlineLvl w:val=\"2\" /></w:pPr><w:rPr><w:rFonts w:eastAsia=\"黑体\" /><w:kern w:val=\"0\" /><w:sz w:val=\"28\" /><w:szCs w:val=\"28\" /><w:lang w:val=\"zh-CN\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-zhCN",
+      "style_name": "zhCN",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-zhCN\"><w:name w:val=\"zhCN\" /><w:rPr><w:lang w:val=\"zh-CN\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "lang": {
+          "val": "zh-CN"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "16",
+          "para_style_name": "footer",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"16\"><w:name w:val=\"footer\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:tabs><w:tab w:val=\"center\" w:pos=\"4153\" /><w:tab w:val=\"right\" w:pos=\"8306\" /></w:tabs><w:snapToGrid w:val=\"0\" /><w:jc w:val=\"left\" /></w:pPr><w:rPr><w:sz w:val=\"18\" /><w:szCs w:val=\"18\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti",
+      "style_name": "宋体",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti\"><w:name w:val=\"宋体\" /><w:rPr><w:rFonts w:hAnsi=\"宋体\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hAnsi": "宋体"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-10pt-CS",
+      "style_name": "宋体 10pt CS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-10pt-CS\"><w:name w:val=\"宋体 10pt CS\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"宋体\" w:hAnsi=\"宋体\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"21\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "宋体",
+          "hAnsi": "宋体"
+        },
+        "sz": {
+          "val": "21"
+        },
+        "szCs": {
+          "val": "21"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-12pt-CS",
+      "style_name": "宋体 12pt CS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-12pt-CS\"><w:name w:val=\"宋体 12pt CS\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:hAnsi=\"宋体\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "hAnsi": "宋体"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-12pt-CS_1",
+      "style_name": "宋体 12pt CS_1",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-12pt-CS_1\"><w:name w:val=\"宋体 12pt CS_1\" /><w:rPr><w:rFonts w:hAnsi=\"宋体\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hAnsi": "宋体"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 8,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-12pt-CS_2",
+      "style_name": "宋体 12pt CS_2",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-12pt-CS_2\"><w:name w:val=\"宋体 12pt CS_2\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:hAnsi=\"宋体\" w:cs=\"宋体\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "hAnsi": "宋体",
+          "cs": "宋体"
+        },
+        "sz": {
+          "val": "24"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 5,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-18pt-CS-Bold",
+      "style_name": "宋体 18pt CS Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-18pt-CS-Bold\"><w:name w:val=\"宋体 18pt CS Bold\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"宋体\" w:hAnsi=\"宋体\" /><w:b /><w:sz w:val=\"36\" /><w:szCs w:val=\"36\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "宋体",
+          "hAnsi": "宋体"
+        },
+        "b": {},
+        "sz": {
+          "val": "36"
+        },
+        "szCs": {
+          "val": "36"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-18pt-CS-Bold_1",
+      "style_name": "宋体 18pt CS Bold_1",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-18pt-CS-Bold_1\"><w:name w:val=\"宋体 18pt CS Bold_1\" /><w:rPr><w:rFonts w:hAnsi=\"宋体\" /><w:b /><w:sz w:val=\"36\" /><w:szCs w:val=\"36\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hAnsi": "宋体"
+        },
+        "b": {},
+        "sz": {
+          "val": "36"
+        },
+        "szCs": {
+          "val": "36"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-Bold",
+      "style_name": "宋体 Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-Bold\"><w:name w:val=\"宋体 Bold\" /><w:rPr><w:rFonts w:hAnsi=\"宋体\" /><w:b /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hAnsi": "宋体"
+        },
+        "b": {}
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 4,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-Kern0",
+      "style_name": "宋体 Kern0",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-Kern0\"><w:name w:val=\"宋体 Kern0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"宋体\" /><w:kern w:val=\"0\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "ascii": "宋体",
+          "hAnsi": "宋体"
+        },
+        "kern": {
+          "val": "0"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-csz10pt-Kern0",
+      "style_name": "宋体 csz10pt Kern0",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-csz10pt-Kern0\"><w:name w:val=\"宋体 csz10pt Kern0\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:hAnsi=\"宋体\" /><w:kern w:val=\"0\" /><w:szCs w:val=\"21\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "hAnsi": "宋体"
+        },
+        "kern": {
+          "val": "0"
+        },
+        "szCs": {
+          "val": "21"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 4,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-csz10pt-Kern0_1",
+      "style_name": "宋体 csz10pt Kern0_1",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-csz10pt-Kern0_1\"><w:name w:val=\"宋体 csz10pt Kern0_1\" /><w:rPr><w:rFonts w:hAnsi=\"宋体\" /><w:kern w:val=\"0\" /><w:szCs w:val=\"21\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hAnsi": "宋体"
+        },
+        "kern": {
+          "val": "0"
+        },
+        "szCs": {
+          "val": "21"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-csz12pt",
+      "style_name": "宋体 csz12pt",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-csz12pt\"><w:name w:val=\"宋体 csz12pt\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"宋体\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "ascii": "宋体",
+          "hAnsi": "宋体"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 6,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-csz12pt_1",
+      "style_name": "宋体 csz12pt_1",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-csz12pt_1\"><w:name w:val=\"宋体 csz12pt_1\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"宋体\" w:hAnsi=\"宋体\" /><w:szCs w:val=\"24\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "宋体",
+          "hAnsi": "宋体"
+        },
+        "szCs": {
+          "val": "24"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti-enUS-zhCN",
+      "style_name": "宋体 enUS-zhCN",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti-enUS-zhCN\"><w:name w:val=\"宋体 enUS-zhCN\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"Times New Roman\" w:hAnsi=\"宋体\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "Times New Roman",
+          "hAnsi": "宋体",
+          "eastAsia": "宋体",
+          "cs": "Times New Roman"
+        },
+        "lang": {
+          "val": "en-US",
+          "eastAsia": "zh-CN"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti_1",
+      "style_name": "宋体_1",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti_1\"><w:name w:val=\"宋体_1\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"宋体\" w:hAnsi=\"宋体\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "宋体",
+          "hAnsi": "宋体"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 5,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "7",
+          "para_style_name": "Normal Indent",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"7\"><w:name w:val=\"Normal Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"499\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "9",
+          "para_style_name": "Body Text Indent",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"9\"><w:name w:val=\"Body Text Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:spacing w:after=\"120\" w:afterLines=\"0\" /><w:ind w:left=\"420\" w:leftChars=\"200\" /></w:pPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Songti_2",
+      "style_name": "宋体_2",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Songti_2\"><w:name w:val=\"宋体_2\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"宋体\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "ascii": "宋体",
+          "hAnsi": "宋体"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 10,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "24",
+          "para_style_name": "Body Text First Indent",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"24\"><w:name w:val=\"Body Text First Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:ind w:firstLine=\"498\" w:firstLineChars=\"200\" /></w:pPr><w:rPr><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        },
+        {
+          "para_style_id": "9",
+          "para_style_name": "Body Text Indent",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"9\"><w:name w:val=\"Body Text Indent\" /><w:basedOn w:val=\"1\" /><w:uiPriority w:val=\"0\" /><w:pPr><w:spacing w:after=\"120\" w:afterLines=\"0\" /><w:ind w:left=\"420\" w:leftChars=\"200\" /></w:pPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Kaiti-18pt-CS-Bold",
+      "style_name": "楷体 18pt CS Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Kaiti-18pt-CS-Bold\"><w:name w:val=\"楷体 18pt CS Bold\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"楷体\" w:hAnsi=\"楷体\" w:eastAsia=\"楷体\" /><w:b /><w:sz w:val=\"36\" /><w:szCs w:val=\"36\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "楷体",
+          "hAnsi": "楷体",
+          "eastAsia": "楷体"
+        },
+        "b": {},
+        "sz": {
+          "val": "36"
+        },
+        "szCs": {
+          "val": "36"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Kaiti_GB2312-16pt-CS",
+      "style_name": "楷体_GB2312 16pt CS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Kaiti_GB2312-16pt-CS\"><w:name w:val=\"楷体_GB2312 16pt CS\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"楷体_GB2312\" w:eastAsia=\"楷体_GB2312\" /><w:sz w:val=\"32\" /><w:szCs w:val=\"32\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "楷体_GB2312",
+          "eastAsia": "楷体_GB2312"
+        },
+        "sz": {
+          "val": "32"
+        },
+        "szCs": {
+          "val": "32"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Kaiti_GB2312-16pt-CS-zhCN",
+      "style_name": "楷体_GB2312 16pt CS zhCN",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Kaiti_GB2312-16pt-CS-zhCN\"><w:name w:val=\"楷体_GB2312 16pt CS zhCN\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"楷体_GB2312\" w:eastAsia=\"楷体_GB2312\" /><w:sz w:val=\"32\" /><w:szCs w:val=\"32\" /><w:lang w:eastAsia=\"zh-CN\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "楷体_GB2312",
+          "eastAsia": "楷体_GB2312"
+        },
+        "sz": {
+          "val": "32"
+        },
+        "szCs": {
+          "val": "32"
+        },
+        "lang": {
+          "eastAsia": "zh-CN"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Kaiti_GB2312-18pt-CS-Bold",
+      "style_name": "楷体_GB2312 18pt CS Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Kaiti_GB2312-18pt-CS-Bold\"><w:name w:val=\"楷体_GB2312 18pt CS Bold\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"楷体_GB2312\" w:eastAsia=\"楷体_GB2312\" /><w:b /><w:sz w:val=\"36\" /><w:szCs w:val=\"36\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "楷体_GB2312",
+          "eastAsia": "楷体_GB2312"
+        },
+        "b": {},
+        "sz": {
+          "val": "36"
+        },
+        "szCs": {
+          "val": "36"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Kaiti_GB2312-22pt-CS-Bold",
+      "style_name": "楷体_GB2312 22pt CS Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Kaiti_GB2312-22pt-CS-Bold\"><w:name w:val=\"楷体_GB2312 22pt CS Bold\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"楷体_GB2312\" w:eastAsia=\"楷体_GB2312\" /><w:b /><w:sz w:val=\"44\" /><w:szCs w:val=\"44\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "楷体_GB2312",
+          "eastAsia": "楷体_GB2312"
+        },
+        "b": {},
+        "sz": {
+          "val": "44"
+        },
+        "szCs": {
+          "val": "44"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Lishu-26pt",
+      "style_name": "隶书 26pt",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Lishu-26pt\"><w:name w:val=\"隶书 26pt\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"隶书\" w:hAnsi=\"方正隶书_GBK\" w:eastAsia=\"隶书\" /><w:sz w:val=\"52\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "隶书",
+          "hAnsi": "方正隶书_GBK",
+          "eastAsia": "隶书"
+        },
+        "sz": {
+          "val": "52"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Lishu-26pt-CS-Spc-18",
+      "style_name": "隶书 26pt CS Spc-18",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Lishu-26pt-CS-Spc-18\"><w:name w:val=\"隶书 26pt CS Spc-18\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"隶书\" w:hAnsi=\"宋体\" w:eastAsia=\"隶书\" /><w:spacing w:val=\"-18\" /><w:sz w:val=\"52\" /><w:szCs w:val=\"52\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "隶书",
+          "hAnsi": "宋体",
+          "eastAsia": "隶书"
+        },
+        "spacing": {
+          "val": "-18"
+        },
+        "sz": {
+          "val": "52"
+        },
+        "szCs": {
+          "val": "52"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Lishu-28pt-CS-Spc-18",
+      "style_name": "隶书 28pt CS Spc-18",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Lishu-28pt-CS-Spc-18\"><w:name w:val=\"隶书 28pt CS Spc-18\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"隶书\" w:hAnsi=\"方正隶书_GBK\" w:eastAsia=\"隶书\" /><w:spacing w:val=\"-18\" /><w:sz w:val=\"56\" /><w:szCs w:val=\"56\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "隶书",
+          "hAnsi": "方正隶书_GBK",
+          "eastAsia": "隶书"
+        },
+        "spacing": {
+          "val": "-18"
+        },
+        "sz": {
+          "val": "56"
+        },
+        "szCs": {
+          "val": "56"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Lishu-28pt-CS-Spc-18-zhCN",
+      "style_name": "隶书 28pt CS Spc-18 zhCN",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Lishu-28pt-CS-Spc-18-zhCN\"><w:name w:val=\"隶书 28pt CS Spc-18 zhCN\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"隶书\" w:hAnsi=\"方正隶书_GBK\" w:eastAsia=\"隶书\" /><w:spacing w:val=\"-18\" /><w:sz w:val=\"56\" /><w:szCs w:val=\"56\" /><w:lang w:eastAsia=\"zh-CN\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "隶书",
+          "hAnsi": "方正隶书_GBK",
+          "eastAsia": "隶书"
+        },
+        "spacing": {
+          "val": "-18"
+        },
+        "sz": {
+          "val": "56"
+        },
+        "szCs": {
+          "val": "56"
+        },
+        "lang": {
+          "eastAsia": "zh-CN"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "12",
+          "para_style_name": "Plain Text",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:styleId=\"12\"><w:name w:val=\"Plain Text\" /><w:basedOn w:val=\"1\" /><w:link w:val=\"29\" /><w:uiPriority w:val=\"0\" /><w:rPr><w:rFonts w:ascii=\"宋体\" w:hAnsi=\"Courier New\" /><w:sz w:val=\"21\" /><w:szCs w:val=\"20\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Heiti",
+      "style_name": "黑体",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Heiti\"><w:name w:val=\"黑体\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"黑体\" w:hAnsi=\"黑体\" w:eastAsia=\"黑体\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "黑体",
+          "hAnsi": "黑体",
+          "eastAsia": "黑体"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Heiti-15pt-CS-Kern0",
+      "style_name": "黑体 15pt CS Kern0",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Heiti-15pt-CS-Kern0\"><w:name w:val=\"黑体 15pt CS Kern0\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:eastAsia=\"黑体\" /><w:kern w:val=\"0\" /><w:sz w:val=\"30\" /><w:szCs w:val=\"32\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "eastAsia": "黑体"
+        },
+        "kern": {
+          "val": "0"
+        },
+        "sz": {
+          "val": "30"
+        },
+        "szCs": {
+          "val": "32"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Heiti-18pt-CS-Bold",
+      "style_name": "黑体 18pt CS Bold",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Heiti-18pt-CS-Bold\"><w:name w:val=\"黑体 18pt CS Bold\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:eastAsia=\"黑体\" /><w:b /><w:sz w:val=\"36\" /><w:szCs w:val=\"36\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "eastAsia": "黑体"
+        },
+        "b": {},
+        "sz": {
+          "val": "36"
+        },
+        "szCs": {
+          "val": "36"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 1,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Heiti-22pt",
+      "style_name": "黑体 22pt",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Heiti-22pt\"><w:name w:val=\"黑体 22pt\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"黑体\" w:eastAsia=\"黑体\" /><w:sz w:val=\"44\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "黑体",
+          "eastAsia": "黑体"
+        },
+        "sz": {
+          "val": "44"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Heiti-22pt-CS",
+      "style_name": "黑体 22pt CS",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Heiti-22pt-CS\"><w:name w:val=\"黑体 22pt CS\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:ascii=\"黑体\" w:eastAsia=\"黑体\" /><w:sz w:val=\"44\" /><w:szCs w:val=\"44\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "ascii": "黑体",
+          "eastAsia": "黑体"
+        },
+        "sz": {
+          "val": "44"
+        },
+        "szCs": {
+          "val": "44"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 2,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Heiti_1",
+      "style_name": "黑体_1",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Heiti_1\"><w:name w:val=\"黑体_1\" /><w:rPr><w:rFonts w:eastAsia=\"黑体\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "eastAsia": "黑体"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    },
+    {
+      "style_id": "cs-Heiti_2",
+      "style_name": "黑体_2",
+      "style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"character\" w:styleId=\"cs-Heiti_2\"><w:name w:val=\"黑体_2\" /><w:rPr><w:rFonts w:hint=\"eastAsia\" w:eastAsia=\"黑体\" /></w:rPr></w:style>",
+      "based_on": null,
+      "properties": {
+        "rFonts": {
+          "hint": "eastAsia",
+          "eastAsia": "黑体"
+        }
+      },
+      "paragraph_contexts": [
+        {
+          "para_style_id": "1",
+          "para_style_name": "Normal",
+          "occurrence_count": 3,
+          "para_style_xml": "<w:style xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:type=\"paragraph\" w:default=\"1\" w:styleId=\"1\"><w:name w:val=\"Normal\" /><w:qFormat /><w:uiPriority w:val=\"0\" /><w:pPr><w:widowControl w:val=\"0\" /><w:jc w:val=\"both\" /></w:pPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"宋体\" w:cs=\"Times New Roman\" /><w:kern w:val=\"2\" /><w:sz w:val=\"24\" /><w:szCs w:val=\"24\" /><w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\" w:bidi=\"ar-SA\" /></w:rPr></w:style>"
+        }
+      ]
+    }
+  ]
+}

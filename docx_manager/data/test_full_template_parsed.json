@@ -1,0 +1,320 @@
+[
+  {
+    "id": "elem_1",
+    "type": "body",
+    "content": "[[摘要标题]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_2",
+    "type": "body",
+    "content": "摘  要",
+    "style": {
+      "style_name": "Normal",
+      "alignment": "center",
+      "spacing_before": 480,
+      "spacing_after": 240,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_3",
+    "type": "body",
+    "content": "[[摘要标题]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_4",
+    "type": "body",
+    "content": "[[摘要]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_5",
+    "type": "body",
+    "content": "这里是摘要正文示例。",
+    "style": {
+      "style_name": "Normal",
+      "line_spacing": 360,
+      "left_indent": 480,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_6",
+    "type": "body",
+    "content": "[[摘要]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_7",
+    "type": "body",
+    "content": "[[abstract_en标题]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_8",
+    "type": "body",
+    "content": "Abstract",
+    "style": {
+      "style_name": "Normal",
+      "alignment": "center",
+      "spacing_before": 480,
+      "spacing_after": 240,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_9",
+    "type": "body",
+    "content": "[[abstract_en标题]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_10",
+    "type": "body",
+    "content": "[[目录]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_11",
+    "type": "body",
+    "content": "第一章  一级示例条目……1",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_12",
+    "type": "body",
+    "content": "1.1  二级示例条目……1",
+    "style": {
+      "style_name": "Normal",
+      "left_indent": 420,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_13",
+    "type": "body",
+    "content": "1.1.1  三级示例条目……1",
+    "style": {
+      "style_name": "Normal",
+      "left_indent": 840,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_14",
+    "type": "body",
+    "content": "[[目录]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_15",
+    "type": "body",
+    "content": "[[表格]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_16",
+    "type": "table",
+    "content": [
+      [
+        "表头A",
+        "表头B",
+        "表头C"
+      ],
+      [
+        "示例数据",
+        "0.00",
+        "单位"
+      ]
+    ],
+    "style": {
+      "style_name": "Table",
+      "rows": 2,
+      "cols": 3,
+      "width": 9360
+    }
+  },
+  {
+    "id": "elem_17",
+    "type": "body",
+    "content": "[[表格]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_18",
+    "type": "body",
+    "content": "[[结论]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_19",
+    "type": "body",
+    "content": "结论正文示例。",
+    "style": {
+      "style_name": "Normal",
+      "line_spacing": 360,
+      "left_indent": 480,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_20",
+    "type": "body",
+    "content": "[[结论]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_21",
+    "type": "body",
+    "content": "[[致谢]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_22",
+    "type": "body",
+    "content": "致谢正文示例。",
+    "style": {
+      "style_name": "Normal",
+      "line_spacing": 360,
+      "left_indent": 480,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_23",
+    "type": "body",
+    "content": "[[致谢]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_24",
+    "type": "body",
+    "content": "[[已发表成果]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_25",
+    "type": "body",
+    "content": "1. 作者. 题目[J]. 期刊, 年.",
+    "style": {
+      "style_name": "Normal",
+      "left_indent": 480,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_26",
+    "type": "body",
+    "content": "[[已发表成果]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_27",
+    "type": "body",
+    "content": "[[参考文献]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_28",
+    "type": "body",
+    "content": "[1] 参考文献示例。",
+    "style": {
+      "style_name": "Normal",
+      "left_indent": 480,
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_29",
+    "type": "body",
+    "content": "[[参考文献]]",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  }
+]
