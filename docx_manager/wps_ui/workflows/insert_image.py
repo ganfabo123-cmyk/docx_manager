@@ -17,7 +17,7 @@ HIT_DEFAULT_SINGLE_IMG_WIDTH = 12.00
 HIT_DEFAULT_SINGLE_IMG_HEIGHT = 6.00
 
 
-def _find_image_center(image_path: str, confidence: float = 0.09, grayscale: bool = True) -> tuple[int, int]:
+def _find_image_center(image_path: str, confidence: float = 0.014, grayscale: bool = True) -> tuple[int, int]:
     import pyautogui
     box = pyautogui.locateOnScreen(image_path, confidence=confidence, grayscale=grayscale)
     if box is None:
@@ -34,42 +34,6 @@ def open_image_property_panel(x: int, y: int) -> None:
     P.wait(0.4)
     P.press('o')
     P.wait(3)
-
-
-def _set_align_center_ribbon() -> None:
-    """ribbon 对齐操作：alt+H+A+L → alt+H+A+C"""
-    P.hotkey('alt')
-    P.hotkey('H')
-    P.hotkey('A')
-    P.hotkey('L')
-    P.hotkey('alt')
-    P.hotkey('H')
-    P.hotkey('A')
-    P.hotkey('C')
-
-
-def _format_caption_line() -> None:
-    """选中图题行 → 居中对齐 → 段前距清零"""
-    P.hotkey('home')
-    P.hotkey('shift', 'end')
-    _set_align_center_ribbon()
-    P.hotkey('home')
-    P.hotkey('shift', 'end')
-    P.hotkey('alt')
-    P.hotkey('o')
-    P.hotkey('p')
-    P.hotkey('y')
-    P.hotkey('0')
-    P.hotkey('enter')
-
-
-def _clean_image_line(img_cx: int, img_cy: int) -> None:
-    """点击图片 → 左移 → 删两个幽灵字符 → 居中对齐"""
-    P.click(img_cx, img_cy)
-    P.hotkey('left')
-    P.hotkey('backspace')
-    P.hotkey('backspace')
-    _set_align_center_ribbon()
 
 
 def insert_image_after_paragraph(
@@ -95,6 +59,7 @@ def insert_image_after_paragraph(
     #P.press('up')
     P.hotkey('enter')
     P.wait(0.5)
+    P.wait(0.5)
     W.open_insert_picture_dialog()
     W.input_file_path_confirm(image_path)
     P.wait(0.5)
@@ -102,10 +67,48 @@ def insert_image_after_paragraph(
     print(f"→ 写图题：{caption!r}")
     P.hotkey('right')
     P.wait(0.5)
+    P.wait(0.5)
     P.hotkey('enter')
+    P.wait(0.5)
    # P.hotkey('ctrl', 'e')
     P.type_text(caption)
-    _format_caption_line()
+    P.wait(1)
+    P.hotkey('home')
+    P.wait(1)
+    P.hotkey('shift','end')
+    P.wait(1)
+    P.hotkey('alt')
+    P.wait(0.5)
+    P.hotkey('H')
+    P.wait(0.5)
+    P.hotkey('A')
+    P.wait(0.5)
+    P.hotkey('L')
+    P.wait(0.5)
+    P.hotkey('alt')
+    P.wait(0.5)
+    P.hotkey('H')
+    P.wait(0.5)
+    P.hotkey('A')
+    P.wait(0.5)
+    P.hotkey('C')
+    P.wait(0.5)
+    P.hotkey('home')
+    P.wait(0.5)
+    P.hotkey('shift','end')
+    P.wait(0.5)
+    P.hotkey('alt')
+    P.wait(0.5)
+    P.hotkey('o')
+    P.wait(0.5)
+    P.hotkey('p')
+    P.wait(0.5)
+    P.hotkey('y')
+    P.wait(0.5)
+    P.hotkey('0')
+    P.wait(0.5)
+    P.hotkey('enter')
+    P.wait(0.5)
     P.wait(0.5)
 
     print("→ pyautogui 定位图片")
@@ -120,7 +123,30 @@ def insert_image_after_paragraph(
         click_crop = False
     W.navigate_to_crop_inputs(img_width=HIT_DEFAULT_SINGLE_IMG_WIDTH, img_height=HIT_DEFAULT_SINGLE_IMG_HEIGHT,click_crop=click_crop)
     P.wait(0.5)
-    _clean_image_line(img_cx, img_cy)
+    P.click(img_cx, img_cy)
+    P.wait(0.5)
+    P.hotkey('left')
+    P.wait(0.5)
+    P.hotkey('backspace')
+    P.wait(0.5)
+    P.hotkey('backspace')
+    P.wait(0.5)
+    P.hotkey('alt')
+    P.wait(0.5)
+    P.hotkey('H')
+    P.wait(0.5)
+    P.hotkey('A')
+    P.wait(0.5)
+    P.hotkey('L')
+    P.wait(0.5)
+    P.hotkey('alt')
+    P.wait(0.5)
+    P.hotkey('H')
+    P.wait(0.5)
+    P.hotkey('A')
+    P.wait(0.5)
+    P.hotkey('C')
+    P.wait(0.5)
 
     if close_after:
         print("→ 保存关闭")
@@ -129,6 +155,7 @@ def insert_image_after_paragraph(
     else:
         print("→ 仅保存")
         P.hotkey('ctrl', 's')
+        P.wait(0.5)
         P.wait(0.5)
         print("完成！")
 

@@ -342,4 +342,7 @@ def input_file_path_confirm(path: str) -> None:
     P.wait(0.3)
     P.hotkey('ctrl', 'a')
     P.hotkey('ctrl', 'v')
-
+    P.wait(0.3)
+    P.press('return')
+    P.wait(1.0)
+    P.press('return')
