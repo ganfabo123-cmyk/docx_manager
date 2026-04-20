@@ -1,0 +1,66 @@
+{
+  "total_valid": 18,
+  "total_garbage": 12,
+  "garbage_details": [
+    {
+      "style_name": "Cluster_14_sz24_both",
+      "occurrence_count": 2,
+      "merged_into": "Style_002"
+    },
+    {
+      "style_name": "Cluster_15_sz24_center",
+      "occurrence_count": 2,
+      "merged_into": "Style_004"
+    },
+    {
+      "style_name": "Cluster_17_sz24_right",
+      "occurrence_count": 2,
+      "merged_into": "Style_002"
+    },
+    {
+      "style_name": "Cluster_18_sz24_both",
+      "occurrence_count": 2,
+      "merged_into": "Style_002"
+    },
+    {
+      "style_name": "Cluster_23_sz22_center",
+      "occurrence_count": 1,
+      "merged_into": "Style_008"
+    },
+    {
+      "style_name": "Cluster_24_sz24_center",
+      "occurrence_count": 1,
+      "merged_into": "Style_008"
+    },
+    {
+      "style_name": "Cluster_25_sz10_center",
+      "occurrence_count": 1,
+      "merged_into": "Style_010"
+    },
+    {
+      "style_name": "Cluster_26_sz10_both",
+      "occurrence_count": 1,
+      "merged_into": "Style_003"
+    },
+    {
+      "style_name": "Cluster_27_sz24_left",
+      "occurrence_count": 1,
+      "merged_into": "Style_002"
+    },
+    {
+      "style_name": "Cluster_28_sz14_both",
+      "occurrence_count": 1,
+      "merged_into": "Style_009"
+    },
+    {
+      "style_name": "Cluster_29_sz10_both",
+      "occurrence_count": 1,
+      "merged_into": "Style_003"
+    },
+    {
+      "style_name": "Cluster_30_sz10_right",
+      "occurrence_count": 1,
+      "merged_into": "Style_003"
+    }
+  ]
+}

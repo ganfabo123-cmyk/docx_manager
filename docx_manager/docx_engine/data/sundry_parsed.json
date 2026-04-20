@@ -1,0 +1,6481 @@
+{
+  "keywords": {
+    "chinese": {
+      "index": 68,
+      "raw_text": "关键词:多孔质石墨；……；稳定性",
+      "keywords": [
+        "多孔质石墨",
+        "……",
+        "稳定性"
+      ],
+      "runs": [
+        {
+          "text": "关键词",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": "黑体",
+          "font_en": "黑体",
+          "size_pt": null,
+          "kern": null
+        },
+        {
+          "text": ":多孔质石墨；",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": null
+        },
+        {
+          "text": "……",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": "宋体",
+          "font_en": "宋体",
+          "size_pt": null,
+          "kern": null
+        },
+        {
+          "text": "；稳定性",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": null
+        }
+      ]
+    },
+    "english": {
+      "index": 81,
+      "raw_text": "Keywords：porous graphite, …, Stability",
+      "keywords": [
+        "porous graphite",
+        "…",
+        "Stability"
+      ],
+      "runs": [
+        {
+          "text": "Keywords",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": null
+        },
+        {
+          "text": "：",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": null
+        },
+        {
+          "text": "porous graphite, …,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": null
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": null
+        },
+        {
+          "text": "Stability",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": null
+        }
+      ]
+    }
+  },
+  "citations": [
+    {
+      "index": 126,
+      "style": "24",
+      "text": "1828年，R.R.Willis[3]发表了一篇关于小孔节流平板中压力分布的文章，这是有记载的研究气体润滑的最早文献。……",
+      "citations": [
+        {
+          "ref": "[3]",
+          "superscript_text": "[3]"
+        }
+      ],
+      "runs": [
+        {
+          "text": "1828年，R.R.Willis",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": 0
+        },
+        {
+          "text": "[3]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": "superscript",
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": 0
+        },
+        {
+          "text": "发表了一篇关于小孔节流平板中压力分布的文章，这是有记载的研究气体润滑的最早文献。",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": null,
+          "font_en": null,
+          "size_pt": null,
+          "kern": 0
+        },
+        {
+          "text": "……",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "vert_align": null,
+          "font_cn": "宋体",
+          "font_en": "宋体",
+          "size_pt": null,
+          "kern": 0
+        }
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "index": 58,
+      "rows": [
+        [
+          {
+            "text": "本科生",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "本科生",
+                "runs": [
+                  {
+                    "text": "本科生",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "黑体",
+                    "font_en": "黑体",
+                    "size_pt": 14.0,
+                    "kern": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "：",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "：",
+                "runs": [
+                  {
+                    "text": "：",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "□□□",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "□□□",
+                "runs": [
+                  {
+                    "text": "□□□",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "学号",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "学号",
+                "runs": [
+                  {
+                    "text": "学号",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "黑体",
+                    "font_en": "黑体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "：",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "：",
+                "runs": [
+                  {
+                    "text": "：",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "□□□□□□□□□□",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "□□□□□□□□□□",
+                "runs": [
+                  {
+                    "text": "□□□□□□□□□□",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "指导教师",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "指导教师",
+                "runs": [
+                  {
+                    "text": "指导教师",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "黑体",
+                    "font_en": "黑体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "：",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "：",
+                "runs": [
+                  {
+                    "text": "：",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "□□□教授",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "□□□教授",
+                "runs": [
+                  {
+                    "text": "□□□教授",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "专业",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "专业",
+                "runs": [
+                  {
+                    "text": "专业",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "黑体",
+                    "font_en": "黑体",
+                    "size_pt": 14.0,
+                    "kern": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "：",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "：",
+                "runs": [
+                  {
+                    "text": "：",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "机械制造及其自动化",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "机械制造及其自动化",
+                "runs": [
+                  {
+                    "text": "机械制造及其自动化",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "学院",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "学院",
+                "runs": [
+                  {
+                    "text": "学院",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "黑体",
+                    "font_en": "黑体",
+                    "size_pt": 14.0,
+                    "kern": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "：",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "：",
+                "runs": [
+                  {
+                    "text": "：",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "机电工程学院",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "机电工程学院",
+                "runs": [
+                  {
+                    "text": "机电工程学院",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "答 辩 日 期",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "答 辩 日 期",
+                "runs": [
+                  {
+                    "text": "答 辩 日 期",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "黑体",
+                    "font_en": "黑体",
+                    "size_pt": 14.0,
+                    "kern": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "：",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "：",
+                "runs": [
+                  {
+                    "text": "：",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "2022年6月",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "2022年6月",
+                "runs": [
+                  {
+                    "text": "202",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 14.0,
+                    "kern": null
+                  },
+                  {
+                    "text": "2",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 14.0,
+                    "kern": null
+                  },
+                  {
+                    "text": "年",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  },
+                  {
+                    "text": "6",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 14.0,
+                    "kern": null
+                  },
+                  {
+                    "text": "月",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "学校",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "学校",
+                "runs": [
+                  {
+                    "text": "学校",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "黑体",
+                    "font_en": "黑体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "：",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "：",
+                "runs": [
+                  {
+                    "text": "：",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "哈尔滨工业大学",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "哈尔滨工业大学",
+                "runs": [
+                  {
+                    "text": "哈尔滨工业",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  },
+                  {
+                    "text": "大学",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 14.0,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": null,
+                "text": "",
+                "runs": []
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "index": 190,
+      "rows": [
+        [
+          {
+            "text": "供气压力Ps (MPa)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "供气压力",
+                "runs": [
+                  {
+                    "text": "供气压力",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "Ps (MPa)",
+                "runs": [
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "s",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": "subscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "(MPa)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "流量测量M′(m3/h)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "流量测量",
+                "runs": [
+                  {
+                    "text": "流量测量",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "M′(m3/h)",
+                "runs": [
+                  {
+                    "text": "M",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "′(m",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "3",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "/h)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "流量修正值M (m3/s) ×10-4",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "流量修正值M (m3/s) ×10-4",
+                "runs": [
+                  {
+                    "text": "流量修正值",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "M ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "(m",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "3",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "/s) ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "×",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "10",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "-4",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "压力差ΔP (Pa)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "压力差",
+                "runs": [
+                  {
+                    "text": "压力差",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "ΔP (Pa)",
+                "runs": [
+                  {
+                    "text": "Δ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " (Pa)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "lgΔP",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "lgΔP",
+                "runs": [
+                  {
+                    "text": "lg",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "Δ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "lg M",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "lg M",
+                "runs": [
+                  {
+                    "text": "lg ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "M",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.15",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.15",
+                "runs": [
+                  {
+                    "text": "0.15",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.009",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.009",
+                "runs": [
+                  {
+                    "text": "0.009",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.023 12",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.023 12",
+                "runs": [
+                  {
+                    "text": "0.023",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "12",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "46 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "46 900",
+                "runs": [
+                  {
+                    "text": "46 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "4.671 17",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "4.671 17",
+                "runs": [
+                  {
+                    "text": "4.671",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "17",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-5.636 01",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-5.636 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.636 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.2",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.2",
+                "runs": [
+                  {
+                    "text": "0.2",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.021",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.021",
+                "runs": [
+                  {
+                    "text": "0.021",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.045 84",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.045 84",
+                "runs": [
+                  {
+                    "text": "0.045",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "84",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "96 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "96 900",
+                "runs": [
+                  {
+                    "text": "96 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "4.986 32",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "4.986 32",
+                "runs": [
+                  {
+                    "text": "4.986",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "32",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-5.338 76",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-5.338 76",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.338 76",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.25",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.25",
+                "runs": [
+                  {
+                    "text": "0.25",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.039",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.039",
+                "runs": [
+                  {
+                    "text": "0.039",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.074 13",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.074 13",
+                "runs": [
+                  {
+                    "text": "0.074",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "13",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "146 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "146 900",
+                "runs": [
+                  {
+                    "text": "146 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.167 02",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.167 02",
+                "runs": [
+                  {
+                    "text": "5.167",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "02",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-5.130 01",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-5.130 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.130 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.3",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.3",
+                "runs": [
+                  {
+                    "text": "0.3",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.097",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.097",
+                "runs": [
+                  {
+                    "text": "0.097",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.167 47",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.167 47",
+                "runs": [
+                  {
+                    "text": "0.167",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "47",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "196 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "196 900",
+                "runs": [
+                  {
+                    "text": "196 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.294 24",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.294 24",
+                "runs": [
+                  {
+                    "text": "5.294",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "24",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-4.776 06",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-4.776 06",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "4.776 06",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.35",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.35",
+                "runs": [
+                  {
+                    "text": "0.35",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.136",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.136",
+                "runs": [
+                  {
+                    "text": "0.136",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.217 53",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.217 53",
+                "runs": [
+                  {
+                    "text": "0.217",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "53",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "246 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "246 900",
+                "runs": [
+                  {
+                    "text": "246 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.392 52",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.392 52",
+                "runs": [
+                  {
+                    "text": "5.392",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "52",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-4.662 48",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-4.662 48",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "4.662 48",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.4",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.4",
+                "runs": [
+                  {
+                    "text": "0.4",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.171",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.171",
+                "runs": [
+                  {
+                    "text": "0.171",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.254 85",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.254 85",
+                "runs": [
+                  {
+                    "text": "0.254",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "85",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "296 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "296 900",
+                "runs": [
+                  {
+                    "text": "296 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.472 61",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.472 61",
+                "runs": [
+                  {
+                    "text": "5.472",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "61",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-4.593 72",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-4.593 72",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "4.593 72",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.45",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.45",
+                "runs": [
+                  {
+                    "text": "0.45",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.202",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.202",
+                "runs": [
+                  {
+                    "text": "0.202",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.284 67",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.284 67",
+                "runs": [
+                  {
+                    "text": "0.284",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "67",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "346 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "346 900",
+                "runs": [
+                  {
+                    "text": "346 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.540 20",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.540 20",
+                "runs": [
+                  {
+                    "text": "5.540",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "20",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "—",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "—",
+                "runs": [
+                  {
+                    "text": "—",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "index": 206,
+      "rows": [
+        [
+          {
+            "text": "供气压力Ps (MPa)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "供气压力",
+                "runs": [
+                  {
+                    "text": "供气压力",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "Ps (MPa)",
+                "runs": [
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "s",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": "subscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "(MPa)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "流量测量M′(m3/h)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "流量测量",
+                "runs": [
+                  {
+                    "text": "流量测量",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "M′(m3/h)",
+                "runs": [
+                  {
+                    "text": "M",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "′(m",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "3",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "/h)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "流量修正值M (m3/s) ×10-4",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "流量修正值M (m3/s) ×10-4",
+                "runs": [
+                  {
+                    "text": "流量修正值",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "M ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "(m",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "3",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "/s) ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "×",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "10",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "-4",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "压力差ΔP (Pa)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "压力差",
+                "runs": [
+                  {
+                    "text": "压力差",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "ΔP (Pa)",
+                "runs": [
+                  {
+                    "text": "Δ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " (Pa)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "lgΔP",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "lgΔP",
+                "runs": [
+                  {
+                    "text": "lg",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "Δ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "lg M",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "lg M",
+                "runs": [
+                  {
+                    "text": "lg ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "M",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.15",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.15",
+                "runs": [
+                  {
+                    "text": "0.15",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.009",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.009",
+                "runs": [
+                  {
+                    "text": "0.009",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.023 12",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.023 12",
+                "runs": [
+                  {
+                    "text": "0.023",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "12",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "46 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "46 900",
+                "runs": [
+                  {
+                    "text": "46 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "4.671 17",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "4.671 17",
+                "runs": [
+                  {
+                    "text": "4.671",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "17",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-5.636 01",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-5.636 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.636 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.2",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.2",
+                "runs": [
+                  {
+                    "text": "0.2",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.021",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.021",
+                "runs": [
+                  {
+                    "text": "0.021",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.045 84",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.045 84",
+                "runs": [
+                  {
+                    "text": "0.045",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "84",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "96 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "96 900",
+                "runs": [
+                  {
+                    "text": "96 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "4.986 32",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "4.986 32",
+                "runs": [
+                  {
+                    "text": "4.986",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "32",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-5.338 76",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-5.338 76",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.338 76",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.25",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.25",
+                "runs": [
+                  {
+                    "text": "0.25",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.039",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.039",
+                "runs": [
+                  {
+                    "text": "0.039",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.074 13",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.074 13",
+                "runs": [
+                  {
+                    "text": "0.074",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "13",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "146 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "146 900",
+                "runs": [
+                  {
+                    "text": "146 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.167 02",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.167 02",
+                "runs": [
+                  {
+                    "text": "5.167",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "02",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-5.130 01",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-5.130 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.130 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.150.20.250.150.20.250.150.20.250.150.20.250.150.20.250.3",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.15",
+                "runs": [
+                  {
+                    "text": "0.15",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": null,
+                "text": "0.2",
+                "runs": [
+                  {
+                    "text": "0.2",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "style": null,
+                "text": "0.25",
+                "runs": [
+                  {
+                    "text": "0.25",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 3,
+                "style": null,
+                "text": "0.15",
+                "runs": [
+                  {
+                    "text": "0.15",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 4,
+                "style": null,
+                "text": "0.2",
+                "runs": [
+                  {
+                    "text": "0.2",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 5,
+                "style": null,
+                "text": "0.25",
+                "runs": [
+                  {
+                    "text": "0.25",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 6,
+                "style": null,
+                "text": "0.15",
+                "runs": [
+                  {
+                    "text": "0.15",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 7,
+                "style": null,
+                "text": "0.2",
+                "runs": [
+                  {
+                    "text": "0.2",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "style": null,
+                "text": "0.25",
+                "runs": [
+                  {
+                    "text": "0.25",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 9,
+                "style": null,
+                "text": "0.15",
+                "runs": [
+                  {
+                    "text": "0.15",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 10,
+                "style": null,
+                "text": "0.2",
+                "runs": [
+                  {
+                    "text": "0.2",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 11,
+                "style": null,
+                "text": "0.25",
+                "runs": [
+                  {
+                    "text": "0.25",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 12,
+                "style": null,
+                "text": "0.15",
+                "runs": [
+                  {
+                    "text": "0.15",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 13,
+                "style": null,
+                "text": "0.2",
+                "runs": [
+                  {
+                    "text": "0.2",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 14,
+                "style": null,
+                "text": "0.25",
+                "runs": [
+                  {
+                    "text": "0.25",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 15,
+                "style": null,
+                "text": "",
+                "runs": [
+                  {
+                    "text": "",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 16,
+                "style": null,
+                "text": "0.3",
+                "runs": [
+                  {
+                    "text": "0.3",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.0090.0210.0390.0090.0210.0390.0090.0210.0390.0090.0210.0390.0090.0210.0390.097",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.009",
+                "runs": [
+                  {
+                    "text": "0.009",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": null,
+                "text": "0.021",
+                "runs": [
+                  {
+                    "text": "0.021",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "style": null,
+                "text": "0.039",
+                "runs": [
+                  {
+                    "text": "0.039",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 3,
+                "style": null,
+                "text": "0.009",
+                "runs": [
+                  {
+                    "text": "0.009",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 4,
+                "style": null,
+                "text": "0.021",
+                "runs": [
+                  {
+                    "text": "0.021",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 5,
+                "style": null,
+                "text": "0.039",
+                "runs": [
+                  {
+                    "text": "0.039",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 6,
+                "style": null,
+                "text": "0.009",
+                "runs": [
+                  {
+                    "text": "0.009",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 7,
+                "style": null,
+                "text": "0.021",
+                "runs": [
+                  {
+                    "text": "0.021",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "style": null,
+                "text": "0.039",
+                "runs": [
+                  {
+                    "text": "0.039",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 9,
+                "style": null,
+                "text": "0.009",
+                "runs": [
+                  {
+                    "text": "0.009",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 10,
+                "style": null,
+                "text": "0.021",
+                "runs": [
+                  {
+                    "text": "0.021",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 11,
+                "style": null,
+                "text": "0.039",
+                "runs": [
+                  {
+                    "text": "0.039",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 12,
+                "style": null,
+                "text": "0.009",
+                "runs": [
+                  {
+                    "text": "0.009",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 13,
+                "style": null,
+                "text": "0.021",
+                "runs": [
+                  {
+                    "text": "0.021",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 14,
+                "style": null,
+                "text": "0.039",
+                "runs": [
+                  {
+                    "text": "0.039",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 15,
+                "style": null,
+                "text": "",
+                "runs": []
+              },
+              {
+                "index": 16,
+                "style": null,
+                "text": "0.097",
+                "runs": [
+                  {
+                    "text": "0.097",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.023 120.045 840.074 130.023 120.045 840.074 130.023 120.045 840.074 130.023 120.045 840.074 130.023 120.045 840.074 130.167 47",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.023 12",
+                "runs": [
+                  {
+                    "text": "0.023 12",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": null,
+                "text": "0.045 84",
+                "runs": [
+                  {
+                    "text": "0.045 84",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "style": null,
+                "text": "0.074 13",
+                "runs": [
+                  {
+                    "text": "0.074 13",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 3,
+                "style": null,
+                "text": "0.023 12",
+                "runs": [
+                  {
+                    "text": "0.023 12",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 4,
+                "style": null,
+                "text": "0.045 84",
+                "runs": [
+                  {
+                    "text": "0.045 84",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 5,
+                "style": null,
+                "text": "0.074 13",
+                "runs": [
+                  {
+                    "text": "0.074 13",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 6,
+                "style": null,
+                "text": "0.023 12",
+                "runs": [
+                  {
+                    "text": "0.023 12",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 7,
+                "style": null,
+                "text": "0.045 84",
+                "runs": [
+                  {
+                    "text": "0.045 84",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "style": null,
+                "text": "0.074 13",
+                "runs": [
+                  {
+                    "text": "0.074 13",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 9,
+                "style": null,
+                "text": "0.023 12",
+                "runs": [
+                  {
+                    "text": "0.023 12",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 10,
+                "style": null,
+                "text": "0.045 84",
+                "runs": [
+                  {
+                    "text": "0.045 84",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 11,
+                "style": null,
+                "text": "0.074 13",
+                "runs": [
+                  {
+                    "text": "0.074 13",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 12,
+                "style": null,
+                "text": "0.023 12",
+                "runs": [
+                  {
+                    "text": "0.023 12",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 13,
+                "style": null,
+                "text": "0.045 84",
+                "runs": [
+                  {
+                    "text": "0.045 84",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 14,
+                "style": null,
+                "text": "0.074 13",
+                "runs": [
+                  {
+                    "text": "0.074 13",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 15,
+                "style": null,
+                "text": "",
+                "runs": []
+              },
+              {
+                "index": 16,
+                "style": null,
+                "text": "0.167 47",
+                "runs": [
+                  {
+                    "text": "0.167",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "47",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "46 90096 900146 90046 90096 900146 90046 90096 900146 90046 90096 900146 90046 90096 900146 900196 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "46 900",
+                "runs": [
+                  {
+                    "text": "46 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": null,
+                "text": "96 900",
+                "runs": [
+                  {
+                    "text": "96 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "style": null,
+                "text": "146 900",
+                "runs": [
+                  {
+                    "text": "146 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 3,
+                "style": null,
+                "text": "46 900",
+                "runs": [
+                  {
+                    "text": "46 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 4,
+                "style": null,
+                "text": "96 900",
+                "runs": [
+                  {
+                    "text": "96 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 5,
+                "style": null,
+                "text": "146 900",
+                "runs": [
+                  {
+                    "text": "146 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 6,
+                "style": null,
+                "text": "46 900",
+                "runs": [
+                  {
+                    "text": "46 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 7,
+                "style": null,
+                "text": "96 900",
+                "runs": [
+                  {
+                    "text": "96 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "style": null,
+                "text": "146 900",
+                "runs": [
+                  {
+                    "text": "146 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 9,
+                "style": null,
+                "text": "46 900",
+                "runs": [
+                  {
+                    "text": "46 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 10,
+                "style": null,
+                "text": "96 900",
+                "runs": [
+                  {
+                    "text": "96 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 11,
+                "style": null,
+                "text": "146 900",
+                "runs": [
+                  {
+                    "text": "146 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 12,
+                "style": null,
+                "text": "46 900",
+                "runs": [
+                  {
+                    "text": "46 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 13,
+                "style": null,
+                "text": "96 900",
+                "runs": [
+                  {
+                    "text": "96 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 14,
+                "style": null,
+                "text": "146 900",
+                "runs": [
+                  {
+                    "text": "146 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 15,
+                "style": null,
+                "text": "",
+                "runs": []
+              },
+              {
+                "index": 16,
+                "style": null,
+                "text": "196 900",
+                "runs": [
+                  {
+                    "text": "196 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "4.671 174.986 325.167 024.671 174.986 325.167 024.671 174.986 325.167 024.671 174.986 325.167 024.671 174.986 325.167 025.294 24",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "4.671 17",
+                "runs": [
+                  {
+                    "text": "4.671 17",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": null,
+                "text": "4.986 32",
+                "runs": [
+                  {
+                    "text": "4.986 32",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "style": null,
+                "text": "5.167 02",
+                "runs": [
+                  {
+                    "text": "5.167 02",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 3,
+                "style": null,
+                "text": "4.671 17",
+                "runs": [
+                  {
+                    "text": "4.671 17",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 4,
+                "style": null,
+                "text": "4.986 32",
+                "runs": [
+                  {
+                    "text": "4.986 32",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 5,
+                "style": null,
+                "text": "5.167 02",
+                "runs": [
+                  {
+                    "text": "5.167 02",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 6,
+                "style": null,
+                "text": "4.671 17",
+                "runs": [
+                  {
+                    "text": "4.671 17",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 7,
+                "style": null,
+                "text": "4.986 32",
+                "runs": [
+                  {
+                    "text": "4.986 32",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "style": null,
+                "text": "5.167 02",
+                "runs": [
+                  {
+                    "text": "5.167 02",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 9,
+                "style": null,
+                "text": "4.671 17",
+                "runs": [
+                  {
+                    "text": "4.671 17",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 10,
+                "style": null,
+                "text": "4.986 32",
+                "runs": [
+                  {
+                    "text": "4.986 32",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 11,
+                "style": null,
+                "text": "5.167 02",
+                "runs": [
+                  {
+                    "text": "5.167 02",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 12,
+                "style": null,
+                "text": "4.671 17",
+                "runs": [
+                  {
+                    "text": "4.671 17",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 13,
+                "style": null,
+                "text": "4.986 32",
+                "runs": [
+                  {
+                    "text": "4.986 32",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 14,
+                "style": null,
+                "text": "5.167 02",
+                "runs": [
+                  {
+                    "text": "5.167 02",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 15,
+                "style": null,
+                "text": "",
+                "runs": []
+              },
+              {
+                "index": 16,
+                "style": null,
+                "text": "5.294 24",
+                "runs": [
+                  {
+                    "text": "5.294",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "24",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-5.636 01-5.338 76-5.130 01-5.636 01-5.338 76-5.130 01-5.636 01-5.338 76-5.130 01-5.636 01-5.338 76-5.130 01-5.636 01-5.338 76-5.130 01-4.776 06",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-5.636 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.636 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": null,
+                "text": "-5.338 76",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.338 76",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "style": null,
+                "text": "-5.130 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.130 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 3,
+                "style": null,
+                "text": "-5.636 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.636 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 4,
+                "style": null,
+                "text": "-5.338 76",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.338 76",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 5,
+                "style": null,
+                "text": "-5.130 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.130 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 6,
+                "style": null,
+                "text": "-5.636 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.636 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 7,
+                "style": null,
+                "text": "-5.338 76",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.338 76",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 8,
+                "style": null,
+                "text": "-5.130 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.130 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 9,
+                "style": null,
+                "text": "-5.636 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.636 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 10,
+                "style": null,
+                "text": "-5.338 76",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.338 76",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 11,
+                "style": null,
+                "text": "-5.130 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.130 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 12,
+                "style": null,
+                "text": "-5.636 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.636 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 13,
+                "style": null,
+                "text": "-5.338 76",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.338 76",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 14,
+                "style": null,
+                "text": "-5.130 01",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "5.130 01",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 15,
+                "style": null,
+                "text": "",
+                "runs": []
+              },
+              {
+                "index": 16,
+                "style": null,
+                "text": "-4.776 06",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "4.776 06",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "index": 215,
+      "rows": [
+        [
+          {
+            "text": "供气压力Ps (MPa)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "供气压力",
+                "runs": [
+                  {
+                    "text": "供气压力",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "Ps (MPa)",
+                "runs": [
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "s",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": "subscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "(MPa)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "流量测量M′(m3/h)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "流量测量",
+                "runs": [
+                  {
+                    "text": "流量测量",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "M′(m3/h)",
+                "runs": [
+                  {
+                    "text": "M",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "′(m",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "3",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "/h)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "流量修正值M (m3/s) ×10-4",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "流量修正值M (m3/s) ×10-4",
+                "runs": [
+                  {
+                    "text": "流量修正值",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "M ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "(m",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "3",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "/s) ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "×",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "10",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "-4",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": "superscript",
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "压力差ΔP (Pa)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "压力差",
+                "runs": [
+                  {
+                    "text": "压力差",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "style": "9",
+                "text": "ΔP (Pa)",
+                "runs": [
+                  {
+                    "text": "Δ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " (Pa)",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "lgΔP",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "lgΔP",
+                "runs": [
+                  {
+                    "text": "lg",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "Δ",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "P",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "lg M",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": "9",
+                "text": "lg M",
+                "runs": [
+                  {
+                    "text": "lg ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "M",
+                    "bold": false,
+                    "italic": true,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.35",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.35",
+                "runs": [
+                  {
+                    "text": "0.35",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.136",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.136",
+                "runs": [
+                  {
+                    "text": "0.136",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.217 53",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.217 53",
+                "runs": [
+                  {
+                    "text": "0.217",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "53",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "246 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "246 900",
+                "runs": [
+                  {
+                    "text": "246 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.392 52",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.392 52",
+                "runs": [
+                  {
+                    "text": "5.392",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "52",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-4.662 48",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-4.662 48",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "4.662 48",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.4",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.4",
+                "runs": [
+                  {
+                    "text": "0.4",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.171",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.171",
+                "runs": [
+                  {
+                    "text": "0.171",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.254 85",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.254 85",
+                "runs": [
+                  {
+                    "text": "0.254",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "85",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "296 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "296 900",
+                "runs": [
+                  {
+                    "text": "296 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.472 61",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.472 61",
+                "runs": [
+                  {
+                    "text": "5.472",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "61",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "-4.593 72",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "-4.593 72",
+                "runs": [
+                  {
+                    "text": "-",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "4.593 72",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.45",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.45",
+                "runs": [
+                  {
+                    "text": "0.45",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.202",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.202",
+                "runs": [
+                  {
+                    "text": "0.202",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "0.284 67",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "0.284 67",
+                "runs": [
+                  {
+                    "text": "0.284",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "67",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "346 900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "346 900",
+                "runs": [
+                  {
+                    "text": "346 900",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "5.540 20",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "5.540 20",
+                "runs": [
+                  {
+                    "text": "5.540",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": " ",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  },
+                  {
+                    "text": "20",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": null,
+                    "font_en": null,
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "text": "—",
+            "paragraphs": [
+              {
+                "index": 0,
+                "style": null,
+                "text": "—",
+                "runs": [
+                  {
+                    "text": "—",
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "vert_align": null,
+                    "font_cn": "宋体",
+                    "font_en": "宋体",
+                    "size_pt": 10.5,
+                    "kern": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "text_elements": [
+    {
+      "id": "elem_72",
+      "content": "第1章  绪  论",
+      "type": "heading1"
+    },
+    {
+      "id": "elem_73",
+      "content": "1.1  课题背景及研究的目的和意义",
+      "type": "heading2"
+    },
+    {
+      "id": "elem_79",
+      "content": "1.2.1  气体润滑轴承的发展",
+      "type": "heading3"
+    },
+    {
+      "id": "elem_83",
+      "content": "1.2.2  气体润滑轴承的分类",
+      "type": "heading3"
+    },
+    {
+      "id": "elem_95",
+      "content": "1.2.5  多孔质气体静压轴承的研究",
+      "type": "heading3"
+    },
+    {
+      "id": "elem_103",
+      "content": "1.4  本文的主要研究内容",
+      "type": "heading2"
+    },
+    {
+      "id": "elem_106",
+      "content": "第4章  基于FLUENT软件的轴承静态特性研究",
+      "type": "heading1"
+    },
+    {
+      "id": "elem_107",
+      "content": "4.1  引言",
+      "type": "heading2"
+    },
+    {
+      "id": "elem_109",
+      "content": "4.2.3  边界条件的设定",
+      "type": "heading3"
+    },
+    {
+      "id": "elem_117",
+      "content": "4.4  本章小结",
+      "type": "heading2"
+    },
+    {
+      "id": "elem_119",
+      "content": "第6章  局部多孔质静压轴承的试验研究",
+      "type": "heading1"
+    },
+    {
+      "id": "elem_120",
+      "content": "6.1  引言",
+      "type": "heading2"
+    },
+    {
+      "id": "elem_122",
+      "content": "6.2  多孔质石墨渗透率测试试验",
+      "type": "heading2"
+    },
+    {
+      "id": "elem_132",
+      "content": "6.5  本章小结",
+      "type": "heading2"
+    },
+    {
+      "id": "elem_134",
+      "content": "结  论",
+      "type": "heading1"
+    },
+    {
+      "id": "elem_143",
+      "content": "参考文献",
+      "type": "heading1"
+    },
+    {
+      "id": "elem_147",
+      "content": "攻读学士学位期间取得创新性成果",
+      "type": "heading1"
+    },
+    {
+      "id": "elem_160",
+      "content": "致  谢",
+      "type": "heading1"
+    }
+  ]
+}

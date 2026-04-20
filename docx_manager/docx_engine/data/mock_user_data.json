@@ -1,0 +1,155 @@
+{
+  "document": [
+    {
+      "type": "insert_abstract_with_keywords",
+      "cn_content": "本文针对多孔质气体静压轴承的流动特性进行了理论与实验研究，建立了节流模型并通过实验验证了其有效性。",
+      "en_content": "This paper presents theoretical and experimental studies on the flow characteristics of porous aerostatic bearings. A throttling model is established and validated experimentally.",
+      "cn_keywords": ["多孔质石墨", "气体静压轴承", "流量特性", "稳定性"],
+      "en_keywords": ["porous graphite", "aerostatic bearing", "flow characteristics", "stability"],
+      "cn_title": "摘  要",
+      "en_title": "Abstract",
+      "keyword_label_cn": "关键词",
+      "keyword_label_en": "Keywords"
+    },
+    {
+      "type": "generate_toc",
+      "max_level": 4
+    },
+    {
+      "type": "insert_section_break",
+      "header_refs": {"default": "rId10", "even": "rId11"},
+      "footer_refs": {"default": "rId12", "even": "rId13"},
+      "restart_page_number": 1
+    },
+    {
+      "type": "add_heading",
+      "text": "绪论",
+      "level": 1
+    },
+    {
+      "type": "add_heading",
+      "text": "研究背景与意义",
+      "level": 2
+    },
+    {
+      "type": "add_paragraph",
+      "text": "气体静压轴承以其低摩擦、高精度的特点，在精密仪器与超精密加工领域得到广泛应用。1828年，R.R.Willis[1]发表了有记载的最早气体润滑研究文献。",
+      "style_type": "正文"
+    },
+    {
+      "type": "add_heading",
+      "text": "国内外研究现状",
+      "level": 2
+    },
+    {
+      "type": "add_paragraph",
+      "text": "近年来，多孔质节流方式因其均匀供气特性受到广泛关注[2][3]。",
+      "style_type": "正文"
+    },
+    {
+      "type": "add_heading",
+      "text": "实验方法",
+      "level": 1
+    },
+    {
+      "type": "add_heading",
+      "text": "实验装置与方案",
+      "level": 2
+    },
+    {
+      "type": "add_paragraph",
+      "text": "实验系统由气源、调压阀、流量计、被测轴承及数据采集系统组成，供气压力范围为0.15～0.35 MPa。",
+      "style_type": "正文"
+    },
+    {
+      "type": "insert_figure",
+      "drawing_xml": "<ns0:drawing xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:ns1=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:ns2=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:ns3=\"http://schemas.openxmlformats.org/drawingml/2006/picture\" xmlns:ns4=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><ns1:inline distT=\"0\" distB=\"0\" distL=\"114300\" distR=\"114300\"><ns1:extent cx=\"2496185\" cy=\"1141095\" /><ns1:effectExtent l=\"0\" t=\"0\" r=\"3175\" b=\"1905\" /><ns1:docPr id=\"12\" name=\"图片 1\" descr=\"书写范例1_页面_13_图像_0001\" /><ns1:cNvGraphicFramePr><ns2:graphicFrameLocks noChangeAspect=\"1\" /></ns1:cNvGraphicFramePr><ns2:graphic><ns2:graphicData uri=\"http://schemas.openxmlformats.org/drawingml/2006/picture\"><ns3:pic><ns3:nvPicPr><ns3:cNvPr id=\"12\" name=\"图片 1\" descr=\"书写范例1_页面_13_图像_0001\" /><ns3:cNvPicPr><ns2:picLocks noChangeAspect=\"1\" /></ns3:cNvPicPr></ns3:nvPicPr><ns3:blipFill><ns2:blip ns4:embed=\"rId40\" /><ns2:stretch><ns2:fillRect /></ns2:stretch></ns3:blipFill><ns3:spPr><ns2:xfrm><ns2:off x=\"0\" y=\"0\" /><ns2:ext cx=\"2496185\" cy=\"1141095\" /></ns2:xfrm><ns2:prstGeom prst=\"rect\"><ns2:avLst /></ns2:prstGeom><ns2:noFill /><ns2:ln><ns2:noFill /></ns2:ln></ns3:spPr></ns3:pic></ns2:graphicData></ns2:graphic></ns1:inline></ns0:drawing>",
+      "caption": "图2-1 多孔质气体静压轴承结构示意图",
+      "position": "center"
+    },
+    {
+      "type": "add_heading",
+      "text": "流量计算模型",
+      "level": 2
+    },
+    {
+      "type": "add_paragraph",
+      "text": "根据达西定律，通过多孔质材料的体积流量由下式确定：",
+      "style_type": "正文"
+    },
+    {
+      "type": "insert_equation",
+      "expression": "Q = \\frac{k A \\Delta P}{\\mu L}",
+      "category": "omath",
+      "position": "center",
+      "suffix": "(2-1)",
+      "suffix_position": "right"
+    },
+    {
+      "type": "add_heading",
+      "text": "实验结果与分析",
+      "level": 1
+    },
+    {
+      "type": "add_heading",
+      "text": "流量测量结果",
+      "level": 2
+    },
+    {
+      "type": "add_paragraph",
+      "text": "不同供气压力下的流量测量结果如表3-1所示。",
+      "style_type": "正文"
+    },
+    {
+      "type": "insert_table",
+      "data": [
+        ["供气压力 Ps (MPa)", "流量测量 M' (m³/h)", "流量修正值 M (m³/s) ×10⁻⁴", "压力差 ΔP (Pa)"],
+        [0.15, 0.009, 0.02312, 46900],
+        [0.20, 0.021, 0.04584, 96900],
+        [0.25, 0.039, 0.07413, 146900],
+        [0.30, 0.097, 0.16747, 196900]
+      ],
+      "caption": "表3-1 不同供气压力下的流量测量结果",
+      "auto_format": true,
+      "column_widths": null
+    },
+    {
+      "type": "insert_section_break",
+      "header_refs": {"default": "rId14", "even": "rId15"},
+      "footer_refs": {"default": "rId16"},
+      "restart_page_number": null
+    },
+    {
+      "type": "insert_page_break"
+    },
+    {
+      "type": "add_heading",
+      "text": "参考文献",
+      "level": 1
+    },
+    {
+      "type": "add_reference",
+      "index": 1,
+      "content": "WILLIS R R. On the pressure produced on a flat plate when opposed to a stream of air[J]. Transactions of the Cambridge Philosophical Society, 1828, 3: 121-140.",
+      "before": "R.R.Willis",
+      "after": "发表了有记载的最早气体润滑研究文献",
+      "auto_cite": true
+    },
+    {
+      "type": "add_reference",
+      "index": 2,
+      "content": "陈超. 多孔质气体静压轴承流动特性研究[D]. 哈尔滨: 哈尔滨工业大学, 2018.",
+      "before": null,
+      "after": null,
+      "auto_cite": true
+    },
+    {
+      "type": "add_reference",
+      "index": 3,
+      "content": "MORI H, MIYAMATSU Y. Theoretical flow-models for porous material bearings[J]. ASME Journal of Lubrication Technology, 1969, 91(1): 156-166.",
+      "before": "多孔质节流方式因其均匀供气特性受到广泛关注",
+      "after": null,
+      "auto_cite": true
+    }
+  ]
+}
