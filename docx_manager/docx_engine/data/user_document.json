@@ -1,0 +1,871 @@
+{
+  "body_elements": [
+    {
+      "index": 0,
+      "type": "paragraph",
+      "style": "2",
+      "text": "摘  要",
+      "runs": [
+        {
+          "text": "摘  要",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"2\" /><ns0:spacing ns0:before=\"391\" ns0:after=\"312\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 1,
+      "type": "paragraph",
+      "style": null,
+      "text": "本文针对多孔质气体静压轴承的流动特性进行了理论与实验研究，建立了节流模型并通过实验验证了其有效性。",
+      "runs": [
+        {
+          "text": "本文针对多孔质气体静压轴承的流动特性进行了理论与实验研究，建立了节流模型并通过实验验证了其有效性。",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 2,
+      "type": "paragraph",
+      "style": null,
+      "text": "关键词:多孔质石墨；气体静压轴承；流量特性；稳定性",
+      "runs": [
+        {
+          "text": "关键词",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" ns0:ascii=\"黑体\" ns0:hAnsi=\"黑体\" ns0:eastAsia=\"黑体\" /></ns0:rPr>"
+        },
+        {
+          "text": ":多孔质石墨；气体静压轴承；流量特性；稳定性",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 3,
+      "type": "paragraph",
+      "style": "2",
+      "text": "Abstract",
+      "runs": [
+        {
+          "text": "Abstract",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"2\" /><ns0:spacing ns0:before=\"391\" ns0:after=\"312\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 4,
+      "type": "paragraph",
+      "style": null,
+      "text": "This paper presents theoretical and experimental studies on the flow characteristics of porous aerostatic bearings. A throttling model is established and validated experimentally.",
+      "runs": [
+        {
+          "text": "This paper presents theoretical and experimental studies on the flow characteristics of porous aerostatic bearings. A throttling model is established and validated experimentally.",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 5,
+      "type": "paragraph",
+      "style": null,
+      "text": "Keywords：porous graphite, aerostatic bearing, flow characteristics, stability",
+      "runs": [
+        {
+          "text": "Keywords",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:b /><ns0:bCs /></ns0:rPr>"
+        },
+        {
+          "text": "：",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        },
+        {
+          "text": "porous graphite, aerostatic bearing, flow characteristics, stability",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 6,
+      "type": "toc",
+      "max_level": 3,
+      "style_prefix": "toc"
+    },
+    {
+      "index": 7,
+      "type": "paragraph",
+      "style": null,
+      "text": "",
+      "runs": [],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:snapToGrid ns0:val=\"0\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": {
+        "header_refs": {
+          "default": "__template__"
+        },
+        "footer_refs": {
+          "default": "__template__"
+        },
+        "page_size": {
+          "w": "11906",
+          "h": "16838"
+        },
+        "restart_page_number": 1
+      }
+    },
+    {
+      "index": 8,
+      "type": "paragraph",
+      "style": "2",
+      "text": "绪论",
+      "runs": [
+        {
+          "text": "绪论",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"2\" /><ns0:spacing ns0:before=\"391\" ns0:after=\"312\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 9,
+      "type": "paragraph",
+      "style": "3",
+      "text": "研究背景与意义",
+      "runs": [
+        {
+          "text": "研究背景与意义",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"3\" /><ns0:spacing ns0:before=\"195\" ns0:after=\"195\" /></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 10,
+      "type": "paragraph",
+      "style": null,
+      "text": "气体静压轴承以其低摩擦、高精度的特点，在精密仪器与超精密加工领域得到广泛应用。1828年，R.R.Willis[1]发表了有记载的最早气体润滑研究文献。",
+      "runs": [
+        {
+          "text": "气体静压轴承以其低摩擦、高精度的特点，在精密仪器与超精密加工领域得到广泛应用。1828年，R.R.Willis",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        },
+        {
+          "text": "[1]",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:kern ns0:val=\"0\" /><ns0:vertAlign ns0:val=\"superscript\" /></ns0:rPr>"
+        },
+        {
+          "text": "发表了有记载的最早气体润滑研究文献。",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 11,
+      "type": "paragraph",
+      "style": "3",
+      "text": "国内外研究现状",
+      "runs": [
+        {
+          "text": "国内外研究现状",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"3\" /><ns0:spacing ns0:before=\"195\" ns0:after=\"195\" /></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 12,
+      "type": "paragraph",
+      "style": null,
+      "text": "近年来，多孔质节流方式因其均匀供气特性受到广泛关注[2][3]。",
+      "runs": [
+        {
+          "text": "近年来，多孔质节流方式因其均匀供气特性受到广泛关注",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        },
+        {
+          "text": "[2]",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:kern ns0:val=\"0\" /><ns0:vertAlign ns0:val=\"superscript\" /></ns0:rPr>"
+        },
+        {
+          "text": "[3]",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:kern ns0:val=\"0\" /><ns0:vertAlign ns0:val=\"superscript\" /></ns0:rPr>"
+        },
+        {
+          "text": "。",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 13,
+      "type": "paragraph",
+      "style": "2",
+      "text": "实验方法",
+      "runs": [
+        {
+          "text": "实验方法",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"2\" /><ns0:spacing ns0:before=\"391\" ns0:after=\"312\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 14,
+      "type": "paragraph",
+      "style": "3",
+      "text": "实验装置与方案",
+      "runs": [
+        {
+          "text": "实验装置与方案",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"3\" /><ns0:spacing ns0:before=\"195\" ns0:after=\"195\" /></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 15,
+      "type": "paragraph",
+      "style": null,
+      "text": "实验系统由气源、调压阀、流量计、被测轴承及数据采集系统组成，供气压力范围为0.15～0.35 MPa。",
+      "runs": [
+        {
+          "text": "实验系统由气源、调压阀、流量计、被测轴承及数据采集系统组成，供气压力范围为0.15～0.35 MPa。",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 16,
+      "type": "image",
+      "base64": "",
+      "width": 200.0,
+      "height": 150.0,
+      "caption": "图2-1 多孔质气体静压轴承结构示意图",
+      "position": "center"
+    },
+    {
+      "index": 17,
+      "type": "paragraph",
+      "style": null,
+      "text": "图2-1 多孔质气体静压轴承结构示意图",
+      "runs": [
+        {
+          "text": "图2-1 多孔质气体静压轴承结构示意图",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 18,
+      "type": "paragraph",
+      "style": "3",
+      "text": "流量计算模型",
+      "runs": [
+        {
+          "text": "流量计算模型",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"3\" /><ns0:spacing ns0:before=\"195\" ns0:after=\"195\" /></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 19,
+      "type": "paragraph",
+      "style": null,
+      "text": "根据达西定律，通过多孔质材料的体积流量由下式确定：",
+      "runs": [
+        {
+          "text": "根据达西定律，通过多孔质材料的体积流量由下式确定：",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 20,
+      "type": "omath",
+      "formula": "Q = \\frac{k A \\Delta P}{\\mu L}",
+      "formula_index": "(2-1)",
+      "position": "center",
+      "suffix_position": "right"
+    },
+    {
+      "index": 21,
+      "type": "paragraph",
+      "style": "2",
+      "text": "实验结果与分析",
+      "runs": [
+        {
+          "text": "实验结果与分析",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"2\" /><ns0:spacing ns0:before=\"391\" ns0:after=\"312\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 22,
+      "type": "paragraph",
+      "style": "3",
+      "text": "流量测量结果",
+      "runs": [
+        {
+          "text": "流量测量结果",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"3\" /><ns0:spacing ns0:before=\"195\" ns0:after=\"195\" /></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 23,
+      "type": "paragraph",
+      "style": null,
+      "text": "不同供气压力下的流量测量结果如表3-1所示。",
+      "runs": [
+        {
+          "text": "不同供气压力下的流量测量结果如表3-1所示。",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 24,
+      "type": "paragraph",
+      "style": null,
+      "text": "表3-1 不同供气压力下的流量测量结果",
+      "runs": [
+        {
+          "text": "表3-1 不同供气压力下的流量测量结果",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 25,
+      "type": "table",
+      "rows": [
+        [
+          {
+            "text": "供气压力 Ps (MPa)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "供气压力 Ps (MPa)",
+                "runs": [
+                  {
+                    "text": "供气压力 Ps (MPa)",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "流量测量 M' (m³/h)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "流量测量 M' (m³/h)",
+                "runs": [
+                  {
+                    "text": "流量测量 M' (m³/h)",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "流量修正值 M (m³/s) ×10⁻⁴",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "流量修正值 M (m³/s) ×10⁻⁴",
+                "runs": [
+                  {
+                    "text": "流量修正值 M (m³/s) ×10⁻⁴",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "压力差 ΔP (Pa)",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "压力差 ΔP (Pa)",
+                "runs": [
+                  {
+                    "text": "压力差 ΔP (Pa)",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.15",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.15",
+                "runs": [
+                  {
+                    "text": "0.15",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "0.009",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.009",
+                "runs": [
+                  {
+                    "text": "0.009",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "0.02312",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.02312",
+                "runs": [
+                  {
+                    "text": "0.02312",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "46900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "46900",
+                "runs": [
+                  {
+                    "text": "46900",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.2",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.2",
+                "runs": [
+                  {
+                    "text": "0.2",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "0.021",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.021",
+                "runs": [
+                  {
+                    "text": "0.021",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "0.04584",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.04584",
+                "runs": [
+                  {
+                    "text": "0.04584",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "96900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "96900",
+                "runs": [
+                  {
+                    "text": "96900",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.25",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.25",
+                "runs": [
+                  {
+                    "text": "0.25",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "0.039",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.039",
+                "runs": [
+                  {
+                    "text": "0.039",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "0.07413",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.07413",
+                "runs": [
+                  {
+                    "text": "0.07413",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "146900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "146900",
+                "runs": [
+                  {
+                    "text": "146900",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "0.3",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.3",
+                "runs": [
+                  {
+                    "text": "0.3",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "0.097",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.097",
+                "runs": [
+                  {
+                    "text": "0.097",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "0.16747",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "0.16747",
+                "runs": [
+                  {
+                    "text": "0.16747",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          },
+          {
+            "text": "196900",
+            "paragraphs": [
+              {
+                "index": 0,
+                "type": "paragraph",
+                "style": null,
+                "text": "196900",
+                "runs": [
+                  {
+                    "text": "196900",
+                    "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr>"
+                  }
+                ],
+                "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:jc ns0:val=\"center\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:sz ns0:val=\"21\" /><ns0:szCs ns0:val=\"21\" /></ns0:rPr></ns0:pPr>",
+                "section_break": null
+              }
+            ]
+          }
+        ]
+      ],
+      "auto_format": true,
+      "column_widths": null
+    },
+    {
+      "index": 26,
+      "type": "paragraph",
+      "style": null,
+      "text": "",
+      "runs": [],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:adjustRightInd ns0:val=\"0\" /><ns0:snapToGrid ns0:val=\"0\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": {
+        "header_refs": {},
+        "footer_refs": {},
+        "page_size": {
+          "w": "11906",
+          "h": "16838"
+        }
+      }
+    },
+    {
+      "index": 27,
+      "type": "paragraph",
+      "style": null,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>",
+          "break_type": "page"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:line=\"300\" ns0:lineRule=\"auto\" /></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 28,
+      "type": "paragraph",
+      "style": "2",
+      "text": "参考文献",
+      "runs": [
+        {
+          "text": "参考文献",
+          "rPr": null
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"2\" /><ns0:spacing ns0:before=\"391\" ns0:after=\"312\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+      "section_break": null
+    },
+    {
+      "index": 29,
+      "type": "paragraph",
+      "style": "9",
+      "text": "[1] WILLIS R R. On the pressure produced on a flat plate when opposed to a stream of air[J]. Transactions of the Cambridge Philosophical Society, 1828, 3: 121-140.",
+      "runs": [
+        {
+          "text": "[1] WILLIS R R. On the pressure produced on a flat plate when opposed to a stream of air[J]. Transactions of the Cambridge Philosophical Society, 1828, 3: 121-140.",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"9\" /><ns0:adjustRightInd ns0:val=\"0\" /><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:after=\"0\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" ns0:left=\"0\" ns0:leftChars=\"0\" /></ns0:pPr>",
+      "section_break": null,
+      "citation_index": 1,
+      "citation_before": "R.R.Willis",
+      "citation_after": "发表了有记载的最早气体润滑研究文献",
+      "auto_cite": true
+    },
+    {
+      "index": 30,
+      "type": "paragraph",
+      "style": "9",
+      "text": "[2] 陈超. 多孔质气体静压轴承流动特性研究[D]. 哈尔滨: 哈尔滨工业大学, 2018.",
+      "runs": [
+        {
+          "text": "[2] 陈超. 多孔质气体静压轴承流动特性研究[D]. 哈尔滨: 哈尔滨工业大学, 2018.",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"9\" /><ns0:adjustRightInd ns0:val=\"0\" /><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:after=\"0\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" ns0:left=\"0\" ns0:leftChars=\"0\" /></ns0:pPr>",
+      "section_break": null,
+      "citation_index": 2,
+      "citation_before": null,
+      "citation_after": null,
+      "auto_cite": true
+    },
+    {
+      "index": 31,
+      "type": "paragraph",
+      "style": "9",
+      "text": "[3] MORI H, MIYAMATSU Y. Theoretical flow-models for porous material bearings[J]. ASME Journal of Lubrication Technology, 1969, 91(1): 156-166.",
+      "runs": [
+        {
+          "text": "[3] MORI H, MIYAMATSU Y. Theoretical flow-models for porous material bearings[J]. ASME Journal of Lubrication Technology, 1969, 91(1): 156-166.",
+          "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+        }
+      ],
+      "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"9\" /><ns0:adjustRightInd ns0:val=\"0\" /><ns0:snapToGrid ns0:val=\"0\" /><ns0:spacing ns0:after=\"0\" ns0:line=\"300\" ns0:lineRule=\"auto\" /><ns0:ind ns0:firstLine=\"498\" ns0:firstLineChars=\"200\" ns0:left=\"0\" ns0:leftChars=\"0\" /></ns0:pPr>",
+      "section_break": null,
+      "citation_index": 3,
+      "citation_before": "多孔质节流方式因其均匀供气特性受到广泛关注",
+      "citation_after": null,
+      "auto_cite": true
+    }
+  ]
+}
