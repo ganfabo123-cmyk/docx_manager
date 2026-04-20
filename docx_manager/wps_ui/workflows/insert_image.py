@@ -8,55 +8,29 @@ Layer 3 — 图片排版工作流。
   caption    : 图片标题文字（图片下方居中段落）
 
 环绕方式：嵌入型（WPS 插图默认，学术论文标准）
+定位方式：插入后用 pyautogui 模板匹配在屏幕上找到图片中心，无需 OCR。
 """
 from .. import wps_nav as W
 from .. import primitives as P
 
-_MARKER = "XXXXX"
+HIT_DEFAULT_SINGLE_IMG_WIDTH = 12.00
+HIT_DEFAULT_SINGLE_IMG_HEIGHT = 6.00
 
 
-def _locate_caption_line(caption: str, offset_up: int = 40) -> tuple[int, int]:
-    """
-    OCR 扫描截图，定位 MARKER 所在行，上移点击后将 MARKER 替换为真正的图题文字。
-    返回最终点击坐标。
-    """
-    P.hotkey("down")#光标下移,防止干扰
-    
-    screenshot = W.capture_screen()
-    screenshot.save(r"D:\PycharmProjects\hit-paper-helper\ocr_debug.png")
-    import numpy as np
-    reader = W._get_ocr_reader()
-    results = reader.readtext(np.array(screenshot), paragraph=False)
-    print(f"   OCR 识别到 {len(results)} 条结果，搜索 {_MARKER!r}：")
-    marker_center = None
-    for bbox, text, conf in results:
-        x1, y1 = int(bbox[0][0]), int(bbox[0][1])
-        x2, y2 = int(bbox[2][0]), int(bbox[2][1])
-        found = _MARKER in text
-        tag = " <<<" if found else ""
-        print(f"     ({x1:4d},{y1:4d})-({x2:4d},{y2:4d})  conf={conf:.3f}  {text!r}{tag}")
-        if found and marker_center is None:
-            marker_center = ((x1 + x2) // 2, (y1 + y2) // 2)
-
-    if marker_center is None:
-        raise RuntimeError(f"屏幕上未找到 MARKER {_MARKER!r}")
-
-    tx, ty = marker_center[0], marker_center[1] - offset_up
-    print(f"→ 定位图题行：MARKER 中心 {marker_center}，上移 {offset_up}px → 点击 ({tx}, {ty})")
-    P.move(tx, ty)
-    P.click(tx, ty)
-
-    print(f"→ 替换 MARKER 为图题：{caption!r}")
-    P.hotkey('up')#光标回归
-    P.hotkey('ctrl', 'a')
-    P.type_text(caption)
-
-    return tx, ty
+def _find_image_center(image_path: str, confidence: float = 0.09, grayscale: bool = True) -> tuple[int, int]:
+    import pyautogui
+    box = pyautogui.locateOnScreen(image_path, confidence=confidence, grayscale=grayscale)
+    if box is None:
+        raise RuntimeError(f"屏幕上未找到图片（confidence={confidence}）：{image_path}")
+    cx = box.left + box.width // 2
+    cy = box.top + box.height // 2
+    print(f"   pyautogui 定位成功，图片中心 ({cx}, {cy})")
+    return cx, cy
 
 
-def open_image_property_panel() -> None:
-    """右键菜单 → 属性面板：Shift+F10 → O"""
-    P.hotkey('shift', 'f10')
+def open_image_property_panel(x: int, y: int) -> None:
+    """右键点击图片 → 属性面板：右键 → O"""
+    P.right_click(x, y)
     P.wait(0.4)
     P.press('o')
     P.wait(3)
@@ -67,36 +41,108 @@ def insert_image_after_paragraph(
     anchor_text: str,
     image_path: str,
     caption: str,
+    close_after: bool = True,
+    cnt: int = 0
 ) -> None:
     W.open_doc(docx_path)
     W.goto_start()
+    P.wait(0.5)
 
     print(f"→ 定位段落：{anchor_text!r}")
     W.find_text(anchor_text)
     W.goto_line_end()
-
-    print("→ 插入图片")
-    W.newline()
-    W.newline()
-    P.press('up')
-    before_img = W.capture_screen()
-    W.open_insert_picture_dialog()
-    W.input_file_path_confirm(image_path)
-
-    img_cx, _ = W.get_changed_center(before_img)
-    print(f"   图片中心 X={img_cx}px")
-
-    print(f"→ 插入标记占位符，OCR 定位")
-    P.press('down')
-    P.hotkey('ctrl', 'e')
-    P.type_text(_MARKER)
     P.wait(0.5)
 
-    _locate_caption_line(caption)
-    print("调出属性选项卡")
-    open_image_property_panel()
-    print("寻找图片配置")
-    W.navigate_to_crop_inputs()
-    print("→ 保存关闭")
-    W.save_close()
-    print("完成！")
+    print("→ 插入图片")
+    #W.newline()
+    #W.newline()
+    #P.press('up')
+    P.hotkey('enter')
+    P.wait(0.5)
+    W.open_insert_picture_dialog()
+    W.input_file_path_confirm(image_path)
+    P.wait(0.5)
+
+    print(f"→ 写图题：{caption!r}")
+    P.hotkey('right')
+    P.wait(0.5)
+    P.hotkey('enter')
+   # P.hotkey('ctrl', 'e')
+    P.type_text(caption)
+    P.hotkey('home')
+    P.hotkey('shift','end')
+    P.hotkey('alt')
+    P.hotkey('H')
+    P.hotkey('A')
+    P.hotkey('L')
+    P.hotkey('alt')
+    P.hotkey('H')
+    P.hotkey('A')
+    P.hotkey('C')
+    P.hotkey('home')
+    P.hotkey('shift','end')
+    P.hotkey('alt')
+    P.hotkey('o')
+    P.hotkey('p')
+    P.hotkey('y')
+    P.hotkey('0')
+    P.hotkey('enter')
+    P.wait(0.5)
+
+    print("→ pyautogui 定位图片")
+    img_cx, img_cy = _find_image_center(image_path)
+    P.wait(0.5)
+
+    print("→ 调出属性面板，设置图片尺寸")
+    open_image_property_panel(img_cx, img_cy)
+    
+    click_crop = True
+    if cnt > 0:
+        click_crop = False
+    W.navigate_to_crop_inputs(img_width=HIT_DEFAULT_SINGLE_IMG_WIDTH, img_height=HIT_DEFAULT_SINGLE_IMG_HEIGHT,click_crop=click_crop)
+    P.wait(0.5)
+    P.click(img_cx, img_cy)
+    P.hotkey('left')
+    P.hotkey('backspace')
+    P.hotkey('backspace')
+    P.hotkey('alt')
+    P.hotkey('H')
+    P.hotkey('A')
+    P.hotkey('L')
+    P.hotkey('alt')
+    P.hotkey('H')
+    P.hotkey('A')
+    P.hotkey('C')
+
+    if close_after:
+        print("→ 保存关闭")
+        W.save_close()
+        print("完成！")
+    else:
+        print("→ 仅保存")
+        P.hotkey('ctrl', 's')
+        P.wait(0.5)
+        print("完成！")
+
+
+def insert_n_image_after_paragraph(
+    docx_path: str,
+    anchor_text: str,
+    items: list[tuple[str, str]],
+) -> None:
+    """
+    items: [(image_path, caption), ...]
+    第一轮用 anchor_text 定位，后续每轮用上一轮的 caption 作为 anchor。
+    """
+    for i, (image_path, caption) in enumerate(items):
+        anchor = anchor_text if i == 0 else items[i - 1][1]
+        is_last = (i == len(items) - 1)
+        print(f"→ 第 {i+1}/{len(items)} 张，anchor={anchor!r}")
+        insert_image_after_paragraph(
+            docx_path=docx_path,
+            anchor_text=anchor,
+            image_path=image_path,
+            caption=caption,
+            close_after=is_last,
+            cnt=i
+        )

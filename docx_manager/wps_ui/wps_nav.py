@@ -233,7 +233,7 @@ def set_picture_size_via_panel(
 
 # ── 图片属性面板导航（模板匹配）─────────────────────────────────────────────
 
-def navigate_to_crop_inputs(confidence: float = 0.9, input_offset_right: int = 60) -> tuple[tuple[int,int], tuple[int,int]]:
+def navigate_to_crop_inputs(confidence: float = 0.9, input_offset_right: int = 150, img_width: float = None, img_height: float = None, click_crop: bool = True) -> tuple[tuple[int,int], tuple[int,int]]:
     """
     在已打开的属性面板中，依次点击：
       属性(包含图片) → 图片按钮 → 裁剪 → 宽度输入框 → 高度输入框
@@ -253,7 +253,8 @@ def navigate_to_crop_inputs(confidence: float = 0.9, input_offset_right: int = 6
     P.wait(0.3)
 
     # Step 2-3: 在面板区域内依次点击
-    for filename in ['panel_image_btn.png', 'panel_image_crop.png']:
+    steps = ['panel_image_btn.png', 'panel_image_crop.png'] if click_crop else ['panel_image_btn.png']
+    for filename in steps:
         print(f"→ 模板定位：{filename}")
         P.find_and_click_image(str(_ASSETS / filename), confidence=confidence, region=panel_region)
         P.wait(0.3)
@@ -265,13 +266,59 @@ def navigate_to_crop_inputs(confidence: float = 0.9, input_offset_right: int = 6
     width_pos = (wx + input_offset_right, wy)
     P.move(*width_pos)
     P.wait(0.2)
-
+    if img_width:
+        P.click(*width_pos)
+        P.hotkey('ctrl','a')
+        P.type_text(img_width)
     print("→ 模板定位：高度输入框")
     hx, hy = P.find_and_click_image(
         str(_ASSETS / 'panel_crop_height.png'), confidence=confidence, region=panel_region
     )
     height_pos = (hx + input_offset_right, hy)
     P.move(*height_pos)
+    if img_height:
+        P.click(*height_pos)
+        P.hotkey('ctrl','a')
+        P.type_text(img_height)
+
+    # ── 裁剪位置区域：宽度 / 高度 ──────────────────────────────────────────
+    print("→ 模板定位：裁剪位置区域")
+    crop_left, crop_top, crop_w, crop_h = P.locate_image_box(
+        str(_ASSETS / 'panel_crop_area.png'), confidence=confidence, region=panel_region
+    )
+    crop_region = (crop_left, crop_top, crop_w + input_offset_right + 80, crop_h + 60)
+
+    print("→ 模板定位：裁剪位置-宽度")
+    bwx, bwy = P.find_and_click_image(
+        str(_ASSETS / 'panel_crop_width_below.png'), confidence=confidence, region=crop_region
+    )
+    bwidth_pos = (bwx + input_offset_right, bwy)
+    P.click(*bwidth_pos)
+    
+    if img_width:
+        P.hotkey('ctrl', 'a')
+        P.type_text(img_width)
+
+    print("→ 模板定位：裁剪位置-高度")
+    bhx, bhy = P.find_and_click_image(
+        str(_ASSETS / 'panel_crop_height_below.png'), confidence=confidence, region=crop_region
+    )
+    bheight_pos = (bhx + input_offset_right, bhy)
+    P.click(*bheight_pos)
+    
+    if img_height:
+        P.hotkey('ctrl', 'a')
+        P.type_text(img_height)
+
+    # ── 偏移 X / Y 归零 ────────────────────────────────────────────────────
+    for filename, label in [('panel_offset_X.png', 'X'), ('panel_offset_Y.png', 'Y')]:
+        print(f"→ 模板定位：偏移{label}")
+        ox, oy = P.find_and_click_image(
+            str(_ASSETS / filename), confidence=confidence, region=panel_region
+        )
+        P.click(ox + input_offset_right, oy)
+        P.hotkey('ctrl', 'a')
+        P.type_text('0')
 
     return width_pos, height_pos
 
