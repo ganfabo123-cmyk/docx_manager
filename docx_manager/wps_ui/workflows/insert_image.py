@@ -95,11 +95,11 @@ def insert_image_after_paragraph(
     P.wait(0.5)
    # P.hotkey('ctrl', 'e')
     P.type_text(caption)
-    P.wait(0.5)
+    P.wait(1)
     P.hotkey('home')
-    P.wait(0.5)
+    P.wait(1)
     P.hotkey('shift','end')
-    P.wait(0.5)
+    P.wait(1)
     P.hotkey('alt')
     P.wait(0.5)
     P.hotkey('H')
@@ -144,7 +144,7 @@ def insert_image_after_paragraph(
     click_crop = True
     if cnt > 0:
         click_crop = False
-    W.navigate_to_crop_inputs(img_width=HIT_DEFAULT_SINGLE_IMG_WIDTH, img_height=HIT_DEFAULT_SINGLE_IMG_HEIGHT,click_crop=click_crop)
+    W.navigate_to_crop_inputs(img_width=HIT_DEFAULT_SINGLE_IMG_WIDTH, img_height=HIT_DEFAULT_SINGLE_IMG_HEIGHT,crop_width=HIT_DEFAULT_SINGLE_IMG_WIDTH,crop_height=HIT_DEFAULT_SINGLE_IMG_HEIGHT,click_crop=click_crop)
     P.wait(0.5)
     P.click(img_cx, img_cy)
     P.wait(0.5)

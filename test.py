@@ -3,15 +3,14 @@ sys.path.insert(0, r"D:\PycharmProjects\hit-paper-helper")
 
 from docx_manager.wps_ui.workflows.insert_image import insert_n_image_after_paragraph
 
-DOCX = r"D:\PycharmProjects\hit-paper-helper\docx_manager\docx_engine\outputs\output.docx"
+DOCX = r"D:\PythonProjects\docx_manager\docx_manager\docx_engine\outputs\output.docx"
 
 if __name__ == '__main__':
     items = [
-        (r'D:\PycharmProjects\hit-paper-helper\ocr_debug.png', 'tu1'),
-        (r'D:\PycharmProjects\hit-paper-helper\ocr_debug.png', 'tu2'),
-        (r'D:\PycharmProjects\hit-paper-helper\ocr_debug.png', 'tu3'),
-        (r'D:\PycharmProjects\hit-paper-helper\ocr_debug.png', 'tu4'),
-        (r'D:\PycharmProjects\hit-paper-helper\ocr_debug.png', 'tu5'),
+        (r'D:\PythonProjects\docx_manager\image.png', 'tu1'),
+        (r'D:\PythonProjects\docx_manager\image.png', 'tu2'),
+        (r'D:\PythonProjects\docx_manager\image.png', 'tu3'),
+        (r'D:\PythonProjects\docx_manager\image.png', 'tu4'),
     ]
     insert_n_image_after_paragraph(
         docx_path=DOCX,

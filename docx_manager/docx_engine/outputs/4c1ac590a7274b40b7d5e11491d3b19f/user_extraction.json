@@ -1,0 +1,1524 @@
+{
+  "source": "template.docx",
+  "headers": {
+    "header3.xml": {
+      "text": "",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"none\" ns0:color=\"auto\" ns0:sz=\"0\" ns0:space=\"1\" /></ns0:pBdr><ns0:jc ns0:val=\"both\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header2.xml": {
+      "text": "",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"none\" ns0:color=\"auto\" ns0:sz=\"0\" ns0:space=\"1\" /></ns0:pBdr><ns0:jc ns0:val=\"both\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header20.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header19.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header18.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header17.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）原创性声明和使用权限",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）原创性声明和使用权限",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            },
+            {
+              "text": "原创性声明和使用权限",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header16.xml": {
+      "text": "哈尔滨工业大学工学博士学位论文",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学工学博士学位论文",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学工学博士学位论文",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header15.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header1.xml": {
+      "text": "",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"none\" ns0:color=\"auto\" ns0:sz=\"0\" ns0:space=\"0\" /></ns0:pBdr><ns0:jc ns0:val=\"both\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header14.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header13.xml": {
+      "text": "结  论",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "结  论",
+          "runs": [
+            {
+              "text": "结  论",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header12.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header11.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header10.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header9.xml": {
+      "text": "",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header8.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header7.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header6.xml": {
+      "text": "                               Abstract    （Times New Roman 小5号字）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "                               Abstract    （Times New Roman 小5号字）",
+          "runs": [
+            {
+              "text": "                               ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "Abstract",
+              "rPr": null
+            },
+            {
+              "text": "    （",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "Times New Roman ",
+              "rPr": null
+            },
+            {
+              "text": "小5号字）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"24\" ns0:space=\"4\" /></ns0:pBdr><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header5.xml": {
+      "text": "Abstract",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "Abstract",
+          "runs": [
+            {
+              "text": "Abstract",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "header4.xml": {
+      "text": "哈尔滨工业大学本科综合设计（论文）",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "17",
+          "text": "哈尔滨工业大学本科综合设计（论文）",
+          "runs": [
+            {
+              "text": "哈尔滨工业大学",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "本科综合设计（论文）",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"17\" /><ns0:pBdr><ns0:bottom ns0:val=\"thinThickSmallGap\" ns0:color=\"auto\" ns0:sz=\"18\" ns0:space=\"1\" /></ns0:pBdr><ns0:tabs><ns0:tab ns0:val=\"left\" ns0:pos=\"4320\" /><ns0:tab ns0:val=\"right\" ns0:pos=\"8880\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"4153\" /><ns0:tab ns0:val=\"clear\" ns0:pos=\"8306\" /></ns0:tabs><ns0:adjustRightInd ns0:val=\"0\" /><ns0:rPr><ns0:rFonts ns0:hint=\"eastAsia\" /><ns0:lang ns0:eastAsia=\"zh-CN\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    }
+  },
+  "footers": {
+    "footer4.xml": {
+      "text": "",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:ind ns0:right=\"360\" ns0:firstLine=\"360\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer3.xml": {
+      "text": "",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer2.xml": {
+      "text": "- 2 -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 2 -",
+          "runs": [
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "- 2 -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:framePr ns0:wrap=\"around\" ns0:vAnchor=\"text\" ns0:hAnchor=\"margin\" ns0:xAlign=\"center\" ns0:y=\"1\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:ind ns0:right=\"360\" ns0:firstLine=\"360\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer1.xml": {
+      "text": "",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:ind ns0:right=\"360\" ns0:firstLine=\"360\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer16.xml": {
+      "text": "11",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "11",
+          "runs": [
+            {
+              "text": "11",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:ind ns0:right=\"360\" ns0:firstLine=\"360\" /><ns0:jc ns0:val=\"center\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer15.xml": {
+      "text": "- 12 -- 12 -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 12 -- 12 -",
+          "runs": [
+            {
+              "text": "",
+              "rPr": null,
+              "drawing_xml": "<ns0:AlternateContent xmlns:ns0=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:ns1=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:ns2=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:ns3=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:ns4=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:ns5=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:ns6=\"urn:schemas-microsoft-com:vml\" xmlns:ns7=\"urn:schemas-microsoft-com:office:office\"><ns0:Choice Requires=\"wps\"><ns1:drawing><ns2:anchor distT=\"0\" distB=\"0\" distL=\"114300\" distR=\"114300\" simplePos=\"0\" relativeHeight=\"251662336\" behindDoc=\"0\" locked=\"0\" layoutInCell=\"1\" allowOverlap=\"1\"><ns2:simplePos x=\"0\" y=\"0\" /><ns2:positionH relativeFrom=\"margin\"><ns2:align>center</ns2:align></ns2:positionH><ns2:positionV relativeFrom=\"paragraph\"><ns2:align>top</ns2:align></ns2:positionV><ns2:extent cx=\"1828800\" cy=\"1828800\" /><ns2:effectExtent l=\"0\" t=\"0\" r=\"0\" b=\"0\" /><ns2:wrapNone /><ns2:docPr id=\"21\" name=\"文本框55\" /><ns2:cNvGraphicFramePr /><ns3:graphic><ns3:graphicData uri=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\"><ns4:wsp><ns4:cNvSpPr /><ns4:spPr><ns3:xfrm><ns3:off x=\"0\" y=\"0\" /><ns3:ext cx=\"1828800\" cy=\"1828800\" /></ns3:xfrm><ns3:prstGeom prst=\"rect\"><ns3:avLst /></ns3:prstGeom><ns3:noFill /><ns3:ln><ns3:noFill /></ns3:ln></ns4:spPr><ns4:txbx><ns1:txbxContent><ns1:p ns5:paraId=\"1BC0F9BF\"><ns1:pPr><ns1:pStyle ns1:val=\"16\" /><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr></ns1:pPr><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\">- </ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"begin\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:instrText xml:space=\"preserve\">PAGE  </ns1:instrText></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"separate\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:t>12</ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"end\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\"> -</ns1:t></ns1:r></ns1:p></ns1:txbxContent></ns4:txbx><ns4:bodyPr wrap=\"none\" lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" upright=\"0\"><ns3:spAutoFit /></ns4:bodyPr></ns4:wsp></ns3:graphicData></ns3:graphic></ns2:anchor></ns1:drawing></ns0:Choice><ns0:Fallback><ns1:pict><ns6:rect id=\"文本框55\" ns7:spid=\"_x0000_s1026\" ns7:spt=\"1\" style=\"position:absolute;left:0pt;height:144pt;width:144pt;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:top;mso-wrap-style:none;z-index:251662336;mso-width-relative:page;mso-height-relative:page;\" filled=\"f\" stroked=\"f\" coordsize=\"21600,21600\" ns7:gfxdata=\"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&#10;bFBLBQYAAAAABgAGAFkBAABWBQAAAAA=&#10;\"><ns6:fill on=\"f\" focussize=\"0,0\" /><ns6:stroke on=\"f\" /><ns6:imagedata ns7:title=\"\" /><ns7:lock ns6:ext=\"edit\" aspectratio=\"f\" /><ns6:textbox inset=\"0mm,0mm,0mm,0mm\" style=\"mso-fit-shape-to-text:t;\"><ns1:txbxContent><ns1:p ns5:paraId=\"1BC0F9BF\"><ns1:pPr><ns1:pStyle ns1:val=\"16\" /><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr></ns1:pPr><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\">- </ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"begin\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:instrText xml:space=\"preserve\">PAGE  </ns1:instrText></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"separate\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:t>12</ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"end\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\"> -</ns1:t></ns1:r></ns1:p></ns1:txbxContent></ns6:textbox></ns6:rect></ns1:pict></ns0:Fallback></ns0:AlternateContent>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 12 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "12",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 2,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 12 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "12",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer14.xml": {
+      "text": "- 11 -- 11 -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 11 -- 11 -",
+          "runs": [
+            {
+              "text": "",
+              "rPr": null,
+              "drawing_xml": "<ns0:AlternateContent xmlns:ns0=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:ns1=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:ns2=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:ns3=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:ns4=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:ns5=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:ns6=\"urn:schemas-microsoft-com:vml\" xmlns:ns7=\"urn:schemas-microsoft-com:office:office\"><ns0:Choice Requires=\"wps\"><ns1:drawing><ns2:anchor distT=\"0\" distB=\"0\" distL=\"114300\" distR=\"114300\" simplePos=\"0\" relativeHeight=\"251661312\" behindDoc=\"0\" locked=\"0\" layoutInCell=\"1\" allowOverlap=\"1\"><ns2:simplePos x=\"0\" y=\"0\" /><ns2:positionH relativeFrom=\"margin\"><ns2:align>center</ns2:align></ns2:positionH><ns2:positionV relativeFrom=\"paragraph\"><ns2:align>top</ns2:align></ns2:positionV><ns2:extent cx=\"1828800\" cy=\"1828800\" /><ns2:effectExtent l=\"0\" t=\"0\" r=\"0\" b=\"0\" /><ns2:wrapNone /><ns2:docPr id=\"20\" name=\"文本框54\" /><ns2:cNvGraphicFramePr /><ns3:graphic><ns3:graphicData uri=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\"><ns4:wsp><ns4:cNvSpPr /><ns4:spPr><ns3:xfrm><ns3:off x=\"0\" y=\"0\" /><ns3:ext cx=\"1828800\" cy=\"1828800\" /></ns3:xfrm><ns3:prstGeom prst=\"rect\"><ns3:avLst /></ns3:prstGeom><ns3:noFill /><ns3:ln><ns3:noFill /></ns3:ln></ns4:spPr><ns4:txbx><ns1:txbxContent><ns1:p ns5:paraId=\"1BA63D59\"><ns1:pPr><ns1:pStyle ns1:val=\"16\" /><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr></ns1:pPr><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\">- </ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"begin\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:instrText xml:space=\"preserve\">PAGE  </ns1:instrText></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"separate\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:t>11</ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"end\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\"> -</ns1:t></ns1:r></ns1:p></ns1:txbxContent></ns4:txbx><ns4:bodyPr wrap=\"none\" lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" upright=\"0\"><ns3:spAutoFit /></ns4:bodyPr></ns4:wsp></ns3:graphicData></ns3:graphic></ns2:anchor></ns1:drawing></ns0:Choice><ns0:Fallback><ns1:pict><ns6:rect id=\"文本框54\" ns7:spid=\"_x0000_s1026\" ns7:spt=\"1\" style=\"position:absolute;left:0pt;height:144pt;width:144pt;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:top;mso-wrap-style:none;z-index:251661312;mso-width-relative:page;mso-height-relative:page;\" filled=\"f\" stroked=\"f\" coordsize=\"21600,21600\" ns7:gfxdata=\"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&#10;UEsFBgAAAAAGAAYAWQEAAFUFAAAAAA==&#10;\"><ns6:fill on=\"f\" focussize=\"0,0\" /><ns6:stroke on=\"f\" /><ns6:imagedata ns7:title=\"\" /><ns7:lock ns6:ext=\"edit\" aspectratio=\"f\" /><ns6:textbox inset=\"0mm,0mm,0mm,0mm\" style=\"mso-fit-shape-to-text:t;\"><ns1:txbxContent><ns1:p ns5:paraId=\"1BA63D59\"><ns1:pPr><ns1:pStyle ns1:val=\"16\" /><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr></ns1:pPr><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\">- </ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"begin\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:instrText xml:space=\"preserve\">PAGE  </ns1:instrText></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"separate\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:t>11</ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"end\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\"> -</ns1:t></ns1:r></ns1:p></ns1:txbxContent></ns6:textbox></ns6:rect></ns1:pict></ns0:Fallback></ns0:AlternateContent>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:ind ns0:right=\"360\" ns0:firstLine=\"360\" /></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 11 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "11",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 2,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 11 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "11",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer13.xml": {
+      "text": "- 8 -- 8 -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 8 -- 8 -",
+          "runs": [
+            {
+              "text": "",
+              "rPr": null,
+              "drawing_xml": "<ns0:AlternateContent xmlns:ns0=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:ns1=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:ns2=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:ns3=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:ns4=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:ns5=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:ns6=\"urn:schemas-microsoft-com:vml\" xmlns:ns7=\"urn:schemas-microsoft-com:office:office\"><ns0:Choice Requires=\"wps\"><ns1:drawing><ns2:anchor distT=\"0\" distB=\"0\" distL=\"114300\" distR=\"114300\" simplePos=\"0\" relativeHeight=\"251660288\" behindDoc=\"0\" locked=\"0\" layoutInCell=\"1\" allowOverlap=\"1\"><ns2:simplePos x=\"0\" y=\"0\" /><ns2:positionH relativeFrom=\"margin\"><ns2:align>center</ns2:align></ns2:positionH><ns2:positionV relativeFrom=\"paragraph\"><ns2:align>top</ns2:align></ns2:positionV><ns2:extent cx=\"1828800\" cy=\"1828800\" /><ns2:effectExtent l=\"0\" t=\"0\" r=\"0\" b=\"0\" /><ns2:wrapNone /><ns2:docPr id=\"19\" name=\"文本框53\" /><ns2:cNvGraphicFramePr /><ns3:graphic><ns3:graphicData uri=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\"><ns4:wsp><ns4:cNvSpPr /><ns4:spPr><ns3:xfrm><ns3:off x=\"0\" y=\"0\" /><ns3:ext cx=\"1828800\" cy=\"1828800\" /></ns3:xfrm><ns3:prstGeom prst=\"rect\"><ns3:avLst /></ns3:prstGeom><ns3:noFill /><ns3:ln><ns3:noFill /></ns3:ln></ns4:spPr><ns4:txbx><ns1:txbxContent><ns1:p ns5:paraId=\"457C3DD5\"><ns1:pPr><ns1:pStyle ns1:val=\"16\" /><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr></ns1:pPr><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\">- </ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"begin\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:instrText xml:space=\"preserve\">PAGE  </ns1:instrText></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"separate\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:t>8</ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"end\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\"> -</ns1:t></ns1:r></ns1:p></ns1:txbxContent></ns4:txbx><ns4:bodyPr wrap=\"none\" lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" upright=\"0\"><ns3:spAutoFit /></ns4:bodyPr></ns4:wsp></ns3:graphicData></ns3:graphic></ns2:anchor></ns1:drawing></ns0:Choice><ns0:Fallback><ns1:pict><ns6:rect id=\"文本框53\" ns7:spid=\"_x0000_s1026\" ns7:spt=\"1\" style=\"position:absolute;left:0pt;height:144pt;width:144pt;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:top;mso-wrap-style:none;z-index:251660288;mso-width-relative:page;mso-height-relative:page;\" filled=\"f\" stroked=\"f\" coordsize=\"21600,21600\" ns7:gfxdata=\"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&#10;UEsFBgAAAAAGAAYAWQEAAFUFAAAAAA==&#10;\"><ns6:fill on=\"f\" focussize=\"0,0\" /><ns6:stroke on=\"f\" /><ns6:imagedata ns7:title=\"\" /><ns7:lock ns6:ext=\"edit\" aspectratio=\"f\" /><ns6:textbox inset=\"0mm,0mm,0mm,0mm\" style=\"mso-fit-shape-to-text:t;\"><ns1:txbxContent><ns1:p ns5:paraId=\"457C3DD5\"><ns1:pPr><ns1:pStyle ns1:val=\"16\" /><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr></ns1:pPr><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\">- </ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"begin\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:instrText xml:space=\"preserve\">PAGE  </ns1:instrText></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"separate\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:t>8</ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"end\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\"> -</ns1:t></ns1:r></ns1:p></ns1:txbxContent></ns6:textbox></ns6:rect></ns1:pict></ns0:Fallback></ns0:AlternateContent>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 8 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "8",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 2,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 8 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "8",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer12.xml": {
+      "text": "- 9 -- 9 -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 9 -- 9 -",
+          "runs": [
+            {
+              "text": "",
+              "rPr": null,
+              "drawing_xml": "<ns0:AlternateContent xmlns:ns0=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:ns1=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:ns2=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:ns3=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:ns4=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:ns5=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:ns6=\"urn:schemas-microsoft-com:vml\" xmlns:ns7=\"urn:schemas-microsoft-com:office:office\"><ns0:Choice Requires=\"wps\"><ns1:drawing><ns2:anchor distT=\"0\" distB=\"0\" distL=\"114300\" distR=\"114300\" simplePos=\"0\" relativeHeight=\"251659264\" behindDoc=\"0\" locked=\"0\" layoutInCell=\"1\" allowOverlap=\"1\"><ns2:simplePos x=\"0\" y=\"0\" /><ns2:positionH relativeFrom=\"margin\"><ns2:align>center</ns2:align></ns2:positionH><ns2:positionV relativeFrom=\"paragraph\"><ns2:align>top</ns2:align></ns2:positionV><ns2:extent cx=\"1828800\" cy=\"1828800\" /><ns2:effectExtent l=\"0\" t=\"0\" r=\"0\" b=\"0\" /><ns2:wrapNone /><ns2:docPr id=\"18\" name=\"文本框52\" /><ns2:cNvGraphicFramePr /><ns3:graphic><ns3:graphicData uri=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\"><ns4:wsp><ns4:cNvSpPr /><ns4:spPr><ns3:xfrm><ns3:off x=\"0\" y=\"0\" /><ns3:ext cx=\"1828800\" cy=\"1828800\" /></ns3:xfrm><ns3:prstGeom prst=\"rect\"><ns3:avLst /></ns3:prstGeom><ns3:noFill /><ns3:ln><ns3:noFill /></ns3:ln></ns4:spPr><ns4:txbx><ns1:txbxContent><ns1:p ns5:paraId=\"0FD2C082\"><ns1:pPr><ns1:pStyle ns1:val=\"16\" /><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr></ns1:pPr><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\">- </ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"begin\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:instrText xml:space=\"preserve\">PAGE  </ns1:instrText></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"separate\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:t>9</ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"end\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\"> -</ns1:t></ns1:r></ns1:p></ns1:txbxContent></ns4:txbx><ns4:bodyPr wrap=\"none\" lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" upright=\"0\"><ns3:spAutoFit /></ns4:bodyPr></ns4:wsp></ns3:graphicData></ns3:graphic></ns2:anchor></ns1:drawing></ns0:Choice><ns0:Fallback><ns1:pict><ns6:rect id=\"文本框52\" ns7:spid=\"_x0000_s1026\" ns7:spt=\"1\" style=\"position:absolute;left:0pt;height:144pt;width:144pt;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:top;mso-wrap-style:none;z-index:251659264;mso-width-relative:page;mso-height-relative:page;\" filled=\"f\" stroked=\"f\" coordsize=\"21600,21600\" ns7:gfxdata=\"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&#10;UEsFBgAAAAAGAAYAWQEAAFUFAAAAAA==&#10;\"><ns6:fill on=\"f\" focussize=\"0,0\" /><ns6:stroke on=\"f\" /><ns6:imagedata ns7:title=\"\" /><ns7:lock ns6:ext=\"edit\" aspectratio=\"f\" /><ns6:textbox inset=\"0mm,0mm,0mm,0mm\" style=\"mso-fit-shape-to-text:t;\"><ns1:txbxContent><ns1:p ns5:paraId=\"0FD2C082\"><ns1:pPr><ns1:pStyle ns1:val=\"16\" /><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr></ns1:pPr><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\">- </ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"begin\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:instrText xml:space=\"preserve\">PAGE  </ns1:instrText></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"separate\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /></ns1:rPr><ns1:t>9</ns1:t></ns1:r><ns1:r><ns1:fldChar ns1:fldCharType=\"end\" /></ns1:r><ns1:r><ns1:rPr><ns1:rStyle ns1:val=\"27\" /><ns1:rFonts ns1:hint=\"eastAsia\" /></ns1:rPr><ns1:t xml:space=\"preserve\"> -</ns1:t></ns1:r></ns1:p></ns1:txbxContent></ns6:textbox></ns6:rect></ns1:pict></ns0:Fallback></ns0:AlternateContent>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 9 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "9",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 2,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 9 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "9",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer11.xml": {
+      "text": "-7- ",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "-7- ",
+          "runs": [
+            {
+              "text": "-",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "7",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:lang ns0:val=\"zh-CN\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:framePr ns0:wrap=\"around\" ns0:vAnchor=\"text\" ns0:hAnchor=\"margin\" ns0:xAlign=\"center\" ns0:y=\"1\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer10.xml": {
+      "text": "- 6 -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 6 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "6",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:framePr ns0:wrap=\"around\" ns0:vAnchor=\"text\" ns0:hAnchor=\"margin\" ns0:xAlign=\"center\" ns0:y=\"1\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:jc ns0:val=\"both\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer9.xml": {
+      "text": "- 3 -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- 3 -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "3",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:framePr ns0:wrap=\"around\" ns0:vAnchor=\"text\" ns0:hAnchor=\"margin\" ns0:xAlign=\"center\" ns0:y=\"1\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:jc ns0:val=\"both\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer8.xml": {
+      "text": "- IV -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- IV -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "IV",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:framePr ns0:wrap=\"around\" ns0:vAnchor=\"text\" ns0:hAnchor=\"margin\" ns0:xAlign=\"center\" ns0:y=\"1\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:jc ns0:val=\"both\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer7.xml": {
+      "text": "- III -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- III -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "III",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:framePr ns0:wrap=\"around\" ns0:vAnchor=\"text\" ns0:hAnchor=\"margin\" ns0:xAlign=\"center\" ns0:y=\"1\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer6.xml": {
+      "text": "- II -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- II -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "II",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:framePr ns0:wrap=\"around\" ns0:vAnchor=\"text\" ns0:hAnchor=\"margin\" ns0:xAlign=\"center\" ns0:y=\"1\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    },
+    "footer5.xml": {
+      "text": "- I -",
+      "paragraphs": [
+        {
+          "index": 0,
+          "type": "paragraph",
+          "style": "16",
+          "text": "- I -",
+          "runs": [
+            {
+              "text": "- ",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": "I",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /></ns0:rPr>"
+            },
+            {
+              "text": "",
+              "rPr": null
+            },
+            {
+              "text": " -",
+              "rPr": "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr>"
+            }
+          ],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /><ns0:framePr ns0:wrap=\"around\" ns0:vAnchor=\"text\" ns0:hAnchor=\"margin\" ns0:xAlign=\"center\" ns0:y=\"1\" /><ns0:ind ns0:firstLine=\"180\" ns0:firstLineChars=\"100\" /><ns0:rPr><ns0:rStyle ns0:val=\"27\" /><ns0:rFonts ns0:hint=\"eastAsia\" /></ns0:rPr></ns0:pPr>",
+          "section_break": null
+        },
+        {
+          "index": 1,
+          "type": "paragraph",
+          "style": "16",
+          "text": "",
+          "runs": [],
+          "pPr": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"16\" /></ns0:pPr>",
+          "section_break": null
+        }
+      ]
+    }
+  },
+  "relationships": {
+    "rId9": {
+      "type": "footer",
+      "target": "footer4.xml"
+    },
+    "rId8": {
+      "type": "footer",
+      "target": "footer3.xml"
+    },
+    "rId7": {
+      "type": "footer",
+      "target": "footer2.xml"
+    },
+    "rId6": {
+      "type": "footer",
+      "target": "footer1.xml"
+    },
+    "rId58": {
+      "type": "fontTable",
+      "target": "fontTable.xml"
+    },
+    "rId57": {
+      "type": "customXml",
+      "target": "../customXml/item1.xml"
+    },
+    "rId56": {
+      "type": "image",
+      "target": "media/image11.wmf"
+    },
+    "rId55": {
+      "type": "oleObject",
+      "target": "embeddings/oleObject6.bin"
+    },
+    "rId54": {
+      "type": "image",
+      "target": "media/image10.wmf"
+    },
+    "rId53": {
+      "type": "oleObject",
+      "target": "embeddings/oleObject5.bin"
+    },
+    "rId52": {
+      "type": "image",
+      "target": "media/image9.wmf"
+    },
+    "rId51": {
+      "type": "oleObject",
+      "target": "embeddings/oleObject4.bin"
+    },
+    "rId50": {
+      "type": "image",
+      "target": "media/image8.wmf"
+    },
+    "rId5": {
+      "type": "header",
+      "target": "header3.xml"
+    },
+    "rId49": {
+      "type": "oleObject",
+      "target": "embeddings/oleObject3.bin"
+    },
+    "rId48": {
+      "type": "image",
+      "target": "media/image7.wmf"
+    },
+    "rId47": {
+      "type": "oleObject",
+      "target": "embeddings/oleObject2.bin"
+    },
+    "rId46": {
+      "type": "image",
+      "target": "media/image6.wmf"
+    },
+    "rId45": {
+      "type": "oleObject",
+      "target": "embeddings/oleObject1.bin"
+    },
+    "rId44": {
+      "type": "image",
+      "target": "media/image5.tiff"
+    },
+    "rId43": {
+      "type": "image",
+      "target": "media/image4.tiff"
+    },
+    "rId42": {
+      "type": "image",
+      "target": "media/image3.tiff"
+    },
+    "rId41": {
+      "type": "image",
+      "target": "media/image2.tiff"
+    },
+    "rId40": {
+      "type": "image",
+      "target": "media/image1.tiff"
+    },
+    "rId4": {
+      "type": "header",
+      "target": "header2.xml"
+    },
+    "rId39": {
+      "type": "theme",
+      "target": "theme/theme1.xml"
+    },
+    "rId38": {
+      "type": "footer",
+      "target": "footer16.xml"
+    },
+    "rId37": {
+      "type": "header",
+      "target": "header20.xml"
+    },
+    "rId36": {
+      "type": "header",
+      "target": "header19.xml"
+    },
+    "rId35": {
+      "type": "footer",
+      "target": "footer15.xml"
+    },
+    "rId34": {
+      "type": "footer",
+      "target": "footer14.xml"
+    },
+    "rId33": {
+      "type": "header",
+      "target": "header18.xml"
+    },
+    "rId32": {
+      "type": "header",
+      "target": "header17.xml"
+    },
+    "rId31": {
+      "type": "header",
+      "target": "header16.xml"
+    },
+    "rId30": {
+      "type": "header",
+      "target": "header15.xml"
+    },
+    "rId3": {
+      "type": "header",
+      "target": "header1.xml"
+    },
+    "rId29": {
+      "type": "footer",
+      "target": "footer13.xml"
+    },
+    "rId28": {
+      "type": "footer",
+      "target": "footer12.xml"
+    },
+    "rId27": {
+      "type": "header",
+      "target": "header14.xml"
+    },
+    "rId26": {
+      "type": "header",
+      "target": "header13.xml"
+    },
+    "rId25": {
+      "type": "footer",
+      "target": "footer11.xml"
+    },
+    "rId24": {
+      "type": "header",
+      "target": "header12.xml"
+    },
+    "rId23": {
+      "type": "footer",
+      "target": "footer10.xml"
+    },
+    "rId22": {
+      "type": "footer",
+      "target": "footer9.xml"
+    },
+    "rId21": {
+      "type": "header",
+      "target": "header11.xml"
+    },
+    "rId20": {
+      "type": "header",
+      "target": "header10.xml"
+    },
+    "rId2": {
+      "type": "settings",
+      "target": "settings.xml"
+    },
+    "rId19": {
+      "type": "footer",
+      "target": "footer8.xml"
+    },
+    "rId18": {
+      "type": "header",
+      "target": "header9.xml"
+    },
+    "rId17": {
+      "type": "header",
+      "target": "header8.xml"
+    },
+    "rId16": {
+      "type": "footer",
+      "target": "footer7.xml"
+    },
+    "rId15": {
+      "type": "header",
+      "target": "header7.xml"
+    },
+    "rId14": {
+      "type": "header",
+      "target": "header6.xml"
+    },
+    "rId13": {
+      "type": "footer",
+      "target": "footer6.xml"
+    },
+    "rId12": {
+      "type": "footer",
+      "target": "footer5.xml"
+    },
+    "rId11": {
+      "type": "header",
+      "target": "header5.xml"
+    },
+    "rId10": {
+      "type": "header",
+      "target": "header4.xml"
+    },
+    "rId1": {
+      "type": "styles",
+      "target": "styles.xml"
+    }
+  },
+  "sections": [],
+  "body_elements": []
+}
