@@ -1,0 +1,7 @@
+*.pyo
+*.pyc
+__pycache__/
+download/
+docx_manager/wps_ui/assets
+*.docx
+*.png
