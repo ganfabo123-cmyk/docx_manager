@@ -20,18 +20,37 @@ HIT_DEFAULT_DOUBLE_IMG_WIDTH  = 6.99
 HIT_DEFAULT_DOUBLE_IMG_HEIGHT = 4.99
 
 
-def _find_image_center(image_path: str, confidence: float = 0.09, grayscale: bool = True) -> tuple[int, int]:
-    """
-    用 pyautogui.locateOnScreen 在屏幕上定位图片，返回中心坐标 (cx, cy)。
-    grayscale=True 可提升对渲染色差的容错。
-    """
-    import pyautogui
-    box = pyautogui.locateOnScreen(image_path, confidence=confidence, grayscale=grayscale)
-    if box is None:
-        raise RuntimeError(f"屏幕上未找到图片（confidence={confidence}）：{image_path}")
-    cx = box.left + box.width // 2
-    cy = box.top + box.height // 2
-    print(f"   pyautogui 定位成功，图片中心 ({cx}, {cy})")
+def _find_image_center(image_path: str, threshold: float = 0.8) -> tuple[int, int]:
+    import cv2
+    import numpy as np
+    import mss
+
+    with mss.mss() as sct:
+        monitor = sct.monitors[1]
+        screen = np.array(sct.grab(monitor))
+    screen_gray = cv2.cvtColor(screen, cv2.COLOR_BGRA2GRAY)
+
+    template = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    if template is None:
+        raise RuntimeError(f"无法读取模板图片：{image_path}")
+
+    best_val, best_loc, best_scale = 0, None, 1.0
+    for scale in np.linspace(0.7, 1.3, 13):
+        h, w = template.shape
+        resized = cv2.resize(template, (max(1, int(w * scale)), max(1, int(h * scale))))
+        result = cv2.matchTemplate(screen_gray, resized, cv2.TM_CCOEFF_NORMED)
+        _, val, _, loc = cv2.minMaxLoc(result)
+        if val > best_val:
+            best_val, best_loc, best_scale = val, loc, scale
+
+    if best_val < threshold:
+        raise RuntimeError(f"屏幕上未找到图片（best={best_val:.3f}）：{image_path}")
+
+    th = int(template.shape[0] * best_scale)
+    tw = int(template.shape[1] * best_scale)
+    cx = best_loc[0] + tw // 2
+    cy = best_loc[1] + th // 2
+    print(f"   CV2 定位成功，图片中心 ({cx}, {cy})，置信度 {best_val:.3f}，缩放 {best_scale:.2f}")
     return cx, cy
 
 
