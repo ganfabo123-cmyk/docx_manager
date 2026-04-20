@@ -10,6 +10,60 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "docx_cli: page-number",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/docx_manager/docx_engine/engine/docx_cli.py",
+            "console": "integratedTerminal",
+            "args": [
+                "page-number",
+                "${workspaceFolder}/docx_manager/docx_engine/outputs/output.docx",
+                "--from-config",
+                "docx_manager\\docx_engine\\sections_config\\hit_config.json",
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "docx_cli: insert-image (after-para)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/docx_manager/docx_engine/engine/docx_cli.py",
+            "console": "integratedTerminal",
+            "args": [
+                "insert-image",
+                "after-para",
+                "${workspaceFolder}/docx_manager/docx_engine/outputs/output.docx",
+                "5",
+                "img.png",
+                "200",
+                "150",
+                "--caption", "图1",
+                "--app", "wps",
+                "--visible"
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "docx_cli: insert-image (within-section)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/docx_manager/docx_engine/engine/docx_cli.py",
+            "console": "integratedTerminal",
+            "args": [
+                "insert-image",
+                "within-section",
+                "${workspaceFolder}/docx_manager/docx_engine/outputs/output.docx",
+                "3",
+                "img.png",
+                "200",
+                "150",
+                "--anchor", "auto",
+                "--app", "wps",
+                "--visible"
+            ],
+            "justMyCode": true
         }
     ]
 }

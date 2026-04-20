@@ -27,21 +27,22 @@ Markdown 兼容格式（兼容当前 full_parsed.json 占位文件）:
 
 ── hit_config.json 关键配置说明 ─────────────────────────────────────────────
   dismiss_before_front   : 若为 true，解析到第一个前言标题前的元素全部忽略
-  front_matter           : 前言节列表（摘要/Abstract/目录），各含 section_break 配置
-                           auto_generate_toc=true 的节自动在标题后插入 generate_toc
-  body_start_section_break : 目录末尾分节配置，含 restart_page_number=1
-  body_section_breaks    : 正文各节分节配置池，按一级标题顺序依次消费；
-                           池耗尽后追加空分节（继承前节配置）
-  final_section_break    : 文档末尾分节配置
+  special_section_break  : 特殊节配置列表（摘要、目录等）；每条包含标准字段
+                           (name, header_refs, footer_refs, page_size,
+                           restart_page_number) 及扩展字段 addition_attrs。
+                           addition_attrs.auto_generate_toc=true 标记目录节。
+                           addition_attrs.en_abstract_name 指定英文摘要节名。
+                           目录节之后的所有正文节继承目录节的页面布局。
+  figure_defaults        : insert_figure 的默认尺寸（width_pt / height_pt）
 
 ── 生成逻辑 ─────────────────────────────────────────────────────────────────
   1. dismiss_before_front → 丢弃前言第一标题之前的所有元素
   2. 分离前言元素（摘要/Abstract 标题及其下属文本）与正文元素
-  3. 用前言文本构造 insert_abstract_with_keywords 动作
-  4. 依次输出各前言节的 insert_section_break；auto_generate_toc 节额外输出 generate_toc
-  5. 输出 body_start_section_break
-  6. 遍历正文元素：每遇到一级标题（第二个起）先输出 body_section_breaks 池中的下一条
-  7. 末尾输出 final_section_break
+  3. 用前言文本构造 insert_abstract_with_keywords 动作；
+     CN 分节嵌入摘要特殊节配置，EN 分节继承相同配置但不重置页码
+  4. 若存在目录特殊节，输出目录标题 + generate_toc + 目录分节（含页码重置）
+  5. 遍历正文元素：每遇到一级标题（第二个起）输出继承目录节布局的分节
+  6. 末尾去除多余的 insert_section_break（防止空白末页）
 
 Usage:
     python user_data_generator.py [full_parsed.json] [hit_config.json] [output.json]
@@ -302,16 +303,36 @@ def generate(
     with open(Path(config_path), encoding="utf-8") as f:
         cfg: dict = json.load(f)
 
-    front_matter = cfg.get("front_matter", [])
-    fm_names     = [fm["name"] for fm in front_matter]
-    fm_name_set  = {n.strip() for n in fm_names}
+    special_sbs = cfg.get("special_section_break", [])
 
-    dismiss        = cfg.get("dismiss_before_front", True)
-    toc_level      = cfg.get("toc_max_level", 4)
-    bssb           = cfg.get("body_start_section_break")
-    body_sbs       = list(cfg.get("body_section_breaks", []))
-    final_sb       = cfg.get("final_section_break")
-    pb_before_h1   = cfg.get("page_break_before_body_h1", False)
+    # TOC special: entry whose addition_attrs.auto_generate_toc is true
+    toc_special    = next((s for s in special_sbs
+                           if s.get("addition_attrs", {}).get("auto_generate_toc")), None)
+    toc_idx        = special_sbs.index(toc_special) if toc_special else len(special_sbs)
+    front_specials = special_sbs[:toc_idx]   # entries before TOC (e.g. 摘要)
+
+    # Abstract names from first front special + its en_abstract_name addition_attr
+    name0 = front_specials[0]["name"].strip() if front_specials else None
+    name1 = (front_specials[0].get("addition_attrs", {}).get("en_abstract_name") or "").strip() \
+            if front_specials else None
+
+    # Front-matter heading set used by dismiss + split detection
+    fm_name_set = {n for n in [
+        name0,
+        name1,
+        toc_special["name"].strip() if toc_special else None,
+    ] if n}
+
+    # Body sections inherit TOC special's standard layout (no restart_page_number)
+    body_inh_sb: dict = {}
+    if toc_special:
+        for k in ("header_refs", "footer_refs", "page_size"):
+            if k in toc_special:
+                body_inh_sb[k] = toc_special[k]
+
+    dismiss      = cfg.get("dismiss_before_front", True)
+    toc_level    = cfg.get("toc_max_level", 4)
+    pb_before_h1 = cfg.get("page_break_before_body_h1", False)
 
     # ── 1. Dismiss before front ───────────────────────────────────────────────
     if dismiss and fm_name_set:
@@ -341,45 +362,35 @@ def generate(
         en_keywords = (explicit_en or {}).get("keywords", [])
     else:
         cn_content, en_content, cn_keywords, en_keywords = _extract_abstract(
-            front_elems, fm_names
+            front_elems, [n for n in [name0, name1] if n]
         )
 
     # ── 5. Build actions ──────────────────────────────────────────────────────
     actions: list[dict] = []
 
-    # 5a. Decide which front_matter sections are active based on detected data:
-    #       CN abstract section  → only when cn_content was found
-    #       EN abstract section  → only when en_content was found
-    #       auto_generate_toc    → always (structural requirement, data-independent)
-    #       any other entry      → always
-    name0 = fm_names[0].strip() if len(fm_names) > 0 else None
-    name1 = fm_names[1].strip() if len(fm_names) > 1 else None
-
-    active_fm: list[dict] = []
-    for fm in front_matter:
-        nm = fm["name"].strip()
-        if fm.get("auto_generate_toc"):
-            active_fm.append(fm)
-        elif nm == name0:
+    # 5a. Active front specials: include CN/EN abstract entries only when
+    #     content was actually found; other front specials always included.
+    active_front: list[dict] = []
+    for sp in front_specials:
+        nm = sp["name"].strip()
+        if name0 and nm == name0:
             if cn_content:
-                active_fm.append(fm)
-        elif nm == name1:
+                active_front.append(sp)
+        elif name1 and nm == name1:
             if en_content:
-                active_fm.append(fm)
+                active_front.append(sp)
         else:
-            active_fm.append(fm)
+            active_front.append(sp)
 
     # 5b. Abstract block (only when at least one side has content)
     if cn_content or en_content:
-        # Collect CN/EN section breaks to embed directly in keyword paragraphs (问题1/2修复)
-        cn_sb_config: dict = {}
-        en_sb_config: dict = {}
-        for fm in active_fm:
-            nm = fm["name"].strip()
-            if name0 and nm == name0:
-                cn_sb_config = fm.get("section_break", {})
-            elif name1 and nm == name1:
-                en_sb_config = fm.get("section_break", {})
+        # CN section break: taken directly from first front special (摘要 entry).
+        # EN section break: same config but without restart_page_number — the EN
+        # abstract page merely continues the same roman-numeral sequence.
+        cn_sb_config: dict = front_specials[0] if front_specials else {}
+        en_sb_raw = {k: v for k, v in cn_sb_config.items()
+                     if k != "restart_page_number"}
+        en_sb_config: dict = en_sb_raw if cn_sb_config else {}
 
         actions.append({
             "type":             "insert_abstract_with_keywords",
@@ -387,51 +398,26 @@ def generate(
             "en_content":       en_content,
             "cn_keywords":      cn_keywords,
             "en_keywords":      en_keywords,
-            "cn_title":         fm_names[0] if fm_names else "摘  要",
-            "en_title":         fm_names[1] if len(fm_names) > 1 else "Abstract",
+            "cn_title":         name0 or "摘  要",
+            "en_title":         name1 or "Abstract",
             "keyword_label_cn": "关键词",
             "keyword_label_en": "Keywords",
             "cn_section_break": _para_sb(cn_sb_config) if cn_sb_config else None,
             "en_section_break": _para_sb(en_sb_config) if en_sb_config else None,
         })
 
-    # 5c. Active front-matter section breaks; auto_generate_toc also emits TOC.
-    # CN/EN section breaks are already embedded in abstract keyword paragraphs,
-    # so skip those fm entries here to avoid consecutive section_breaks (blank page).
-    has_front_matter = bool(cn_content or en_content)
-    bssb_consumed = False
-    if has_front_matter:
-        for fm in active_fm:
-            nm = fm["name"].strip()
-            if name0 and nm == name0:
-                continue  # section break already embedded in CN keywords paragraph
-            if name1 and nm == name1:
-                continue  # section break already embedded in EN keywords paragraph
-            if fm.get("auto_generate_toc"):
-                # 普适修复：不在 TOC 前单独 emit section_break（否则与前置嵌入分节叠加产生空白页）。
-                # 改为在 generate_toc 后 emit 一个合并了 TOC header_refs 与
-                # body_start restart_page_number 的 section_break，body_start 不再单独 emit。
-                toc_sb = fm.get("section_break", {})
-                actions.append({"type": "add_heading", "text": fm["name"], "level": 1})
-                actions.append({"type": "generate_toc", "max_level": toc_level})
-                merged: dict = dict(toc_sb) if toc_sb else {}
-                if bssb and "restart_page_number" in bssb:
-                    merged["restart_page_number"] = bssb["restart_page_number"]
-                if merged:
-                    actions.append(_sb_action(merged))
-                bssb_consumed = True
-            else:
-                sb = fm.get("section_break", {})
-                if sb:
-                    actions.append(_sb_action(sb))
+    # 5c. TOC heading + TOC generation + section break.
+    # CN/EN section breaks are already embedded in the abstract keyword paragraphs,
+    # so we only emit TOC-related actions here to avoid consecutive section breaks
+    # that would produce a blank page.
+    if toc_special:
+        actions.append({"type": "add_heading", "text": toc_special["name"], "level": 1})
+        actions.append({"type": "generate_toc", "max_level": toc_level})
+        # The TOC section break carries restart_page_number=1 for body start.
+        actions.append(_sb_action(toc_special))
 
-    # 5d. Body-start section break (ends TOC section, restarts page at 1)
-    # 若 TOC 已在 5c 合并处理，则跳过。
-    if bssb and has_front_matter and not bssb_consumed:
-        actions.append(_sb_action(bssb))
-
-    # 5d. Body elements
-    body_sb_idx   = 0
+    # 5d. Body elements — every body h1 after the first gets a section break
+    #     that inherits the TOC section's header/footer/page layout.
     first_h1_seen = False
 
     for elem in body_elems:
@@ -439,16 +425,11 @@ def generate(
         data = elem["data"]
 
         if t == "h1":
-            # Every body h1 after the first needs a page/section break before it.
             if first_h1_seen:
-                if body_sb_idx < len(body_sbs):
-                    # Consume next section break from pool (sectPr defaults to
-                    # nextPage, so this also forces a new page).
-                    actions.append(_sb_action(body_sbs[body_sb_idx]))
-                    body_sb_idx += 1
+                if body_inh_sb:
+                    # Inherited layout from TOC special (no restart_page_number).
+                    actions.append(_sb_action(body_inh_sb))
                 elif pb_before_h1:
-                    # Pool exhausted but page break is required — use a simple
-                    # page break (no header/footer change).
                     actions.append({"type": "insert_page_break"})
             first_h1_seen = True
             actions.append({"type": "add_heading", "text": data, "level": 1})
@@ -483,6 +464,10 @@ def generate(
             a: dict = {"type": "insert_figure"}
             if isinstance(data, dict):
                 a.update({k: v for k, v in data.items()})
+            # Fill in width/height from hit_config defaults when not provided
+            fig_defs = cfg.get("figure_defaults", {})
+            if "width"  not in a: a["width"]  = fig_defs.get("width_pt",  400)
+            if "height" not in a: a["height"] = fig_defs.get("height_pt", 300)
             actions.append(a)
 
         elif t == "table":
@@ -491,6 +476,10 @@ def generate(
                 a.update({k: v for k, v in data.items()})
             elif isinstance(data, list):
                 a["data"] = data
+            # 若上一个 action 是正文段落，将其文本作为表格标题并移除
+            if (actions and actions[-1].get("type") == "add_paragraph"
+                    and not a.get("caption")):
+                a["caption"] = actions.pop()["text"]
             actions.append(a)
 
         elif t == "equation":
@@ -509,11 +498,7 @@ def generate(
 
         # Unknown types are silently skipped
 
-    # 5e. Final section break
-    if final_sb:
-        actions.append(_sb_action(final_sb))
-
-    # 5f. Strip trailing insert_section_break (avoids blank page at end)
+    # 5e. Strip trailing insert_section_break (avoids blank page at end)
     if actions and actions[-1]["type"] == "insert_section_break":
         actions.pop()
 
@@ -524,11 +509,11 @@ def generate(
         json.dump({"document": actions}, f, ensure_ascii=False, indent=2)
 
     print(f"[OK] {len(actions)} actions → {out.resolve()}")
-    print(f"     front matter sections  : {len(active_fm)} / {len(front_matter)} active")
-    print(f"     body section breaks    : {body_sb_idx} / {len(body_sbs)} consumed")
-    print(f"     body level-1 headings  : {sum(1 for e in body_elems if e['type'] == 'h1')}")
-    print(f"     abstract CN            : {bool(cn_content)} ({len(cn_keywords)} keywords)")
-    print(f"     abstract EN            : {bool(en_content)} ({len(en_keywords)} keywords)")
+    print(f"     front specials active   : {len(active_front)} / {len(front_specials)}")
+    print(f"     toc special             : {'yes' if toc_special else 'no'}")
+    print(f"     body level-1 headings   : {sum(1 for e in body_elems if e['type'] == 'h1')}")
+    print(f"     abstract CN             : {bool(cn_content)} ({len(cn_keywords)} keywords)")
+    print(f"     abstract EN             : {bool(en_content)} ({len(en_keywords)} keywords)")
 
 
 if __name__ == "__main__":

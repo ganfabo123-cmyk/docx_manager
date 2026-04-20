@@ -1,0 +1,179 @@
+{
+  "font_size_analysis": {
+    "total_groups": 15,
+    "groups_with_multiple_clusters": 1,
+    "details": [
+      {
+        "font_signature": "宋体|Times New Roman|24pt",
+        "cluster_count": 4,
+        "total_occurrences": 58,
+        "clusters": [
+          {
+            "style_key": "Style_002",
+            "style_name": "Cluster_2_sz24_both",
+            "occurrence_count": 31,
+            "layout_diff": "缩进498 | 行距150"
+          },
+          {
+            "style_key": "Style_004",
+            "style_name": "Cluster_4_sz24_center",
+            "occurrence_count": 14,
+            "layout_diff": "对齐center"
+          },
+          {
+            "style_key": "Style_005",
+            "style_name": "Cluster_5_sz24_both",
+            "occurrence_count": 12,
+            "layout_diff": "行距150"
+          },
+          {
+            "style_key": "Style_022",
+            "style_name": "Cluster_22_sz24_center",
+            "occurrence_count": 1,
+            "layout_diff": "行距162 | 对齐center"
+          }
+        ]
+      }
+    ]
+  },
+  "singleton_analysis": {
+    "total_singletons": 8,
+    "singletons": [
+      {
+        "style_key": "Style_019",
+        "style_name": "Cluster_19_sz28_center",
+        "para_index": 1,
+        "original_style": "12",
+        "fingerprint": {
+          "layout": {
+            "before": 240,
+            "jc": "center"
+          },
+          "font": {
+            "font_cn": "隶书",
+            "font_en": "隶书",
+            "size": 28
+          }
+        }
+      },
+      {
+        "style_key": "Style_019",
+        "style_name": "Cluster_19_sz28_center",
+        "para_index": 1,
+        "original_style": "12",
+        "fingerprint": {
+          "layout": {
+            "before": 240,
+            "jc": "center"
+          },
+          "font": {
+            "font_cn": "隶书",
+            "font_en": "隶书",
+            "size": 28
+          }
+        }
+      },
+      {
+        "style_key": "Style_020",
+        "style_name": "Cluster_20_sz22_both",
+        "para_index": 14,
+        "original_style": null,
+        "fingerprint": {
+          "layout": {},
+          "font": {
+            "font_cn": "楷体_GB2312",
+            "font_en": "楷体_GB2312",
+            "size": 22
+          }
+        }
+      },
+      {
+        "style_key": "Style_020",
+        "style_name": "Cluster_20_sz22_both",
+        "para_index": 14,
+        "original_style": null,
+        "fingerprint": {
+          "layout": {},
+          "font": {
+            "font_cn": "楷体_GB2312",
+            "font_en": "楷体_GB2312",
+            "size": 22
+          }
+        }
+      },
+      {
+        "style_key": "Style_021",
+        "style_name": "Cluster_21_sz16_both",
+        "para_index": 16,
+        "original_style": null,
+        "fingerprint": {
+          "layout": {
+            "line": 150
+          },
+          "font": {
+            "font_cn": "楷体_GB2312",
+            "font_en": "楷体_GB2312",
+            "size": 16
+          }
+        }
+      },
+      {
+        "style_key": "Style_021",
+        "style_name": "Cluster_21_sz16_both",
+        "para_index": 16,
+        "original_style": null,
+        "fingerprint": {
+          "layout": {
+            "line": 150
+          },
+          "font": {
+            "font_cn": "楷体_GB2312",
+            "font_en": "楷体_GB2312",
+            "size": 16
+          }
+        }
+      },
+      {
+        "style_key": "Style_022",
+        "style_name": "Cluster_22_sz24_center",
+        "para_index": 42,
+        "original_style": null,
+        "fingerprint": {
+          "layout": {
+            "line": 162,
+            "jc": "center"
+          },
+          "font": {
+            "font_cn": "宋体",
+            "font_en": "Times New Roman"
+          }
+        }
+      },
+      {
+        "style_key": "Style_022",
+        "style_name": "Cluster_22_sz24_center",
+        "para_index": 42,
+        "original_style": null,
+        "fingerprint": {
+          "layout": {
+            "line": 162,
+            "jc": "center"
+          },
+          "font": {
+            "font_cn": "宋体",
+            "font_en": "Times New Roman"
+          }
+        }
+      }
+    ]
+  },
+  "summary": {
+    "total_clusters": 18,
+    "total_paragraphs": 233,
+    "total_font_size_groups": 15,
+    "multi_cluster_groups": 1,
+    "singleton_clusters": 8,
+    "merge_candidates": 1,
+    "optimization_potential": "5.6%"
+  }
+}
