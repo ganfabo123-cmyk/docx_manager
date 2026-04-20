@@ -36,6 +36,42 @@ def open_image_property_panel(x: int, y: int) -> None:
     P.wait(3)
 
 
+def _set_align_center_ribbon() -> None:
+    """ribbon 对齐操作：alt+H+A+L → alt+H+A+C"""
+    P.hotkey('alt')
+    P.hotkey('H')
+    P.hotkey('A')
+    P.hotkey('L')
+    P.hotkey('alt')
+    P.hotkey('H')
+    P.hotkey('A')
+    P.hotkey('C')
+
+
+def _format_caption_line() -> None:
+    """选中图题行 → 居中对齐 → 段前距清零"""
+    P.hotkey('home')
+    P.hotkey('shift', 'end')
+    _set_align_center_ribbon()
+    P.hotkey('home')
+    P.hotkey('shift', 'end')
+    P.hotkey('alt')
+    P.hotkey('o')
+    P.hotkey('p')
+    P.hotkey('y')
+    P.hotkey('0')
+    P.hotkey('enter')
+
+
+def _clean_image_line(img_cx: int, img_cy: int) -> None:
+    """点击图片 → 左移 → 删两个幽灵字符 → 居中对齐"""
+    P.click(img_cx, img_cy)
+    P.hotkey('left')
+    P.hotkey('backspace')
+    P.hotkey('backspace')
+    _set_align_center_ribbon()
+
+
 def insert_image_after_paragraph(
     docx_path: str,
     anchor_text: str,
@@ -69,24 +105,7 @@ def insert_image_after_paragraph(
     P.hotkey('enter')
    # P.hotkey('ctrl', 'e')
     P.type_text(caption)
-    P.hotkey('home')
-    P.hotkey('shift','end')
-    P.hotkey('alt')
-    P.hotkey('H')
-    P.hotkey('A')
-    P.hotkey('L')
-    P.hotkey('alt')
-    P.hotkey('H')
-    P.hotkey('A')
-    P.hotkey('C')
-    P.hotkey('home')
-    P.hotkey('shift','end')
-    P.hotkey('alt')
-    P.hotkey('o')
-    P.hotkey('p')
-    P.hotkey('y')
-    P.hotkey('0')
-    P.hotkey('enter')
+    _format_caption_line()
     P.wait(0.5)
 
     print("→ pyautogui 定位图片")
@@ -101,18 +120,7 @@ def insert_image_after_paragraph(
         click_crop = False
     W.navigate_to_crop_inputs(img_width=HIT_DEFAULT_SINGLE_IMG_WIDTH, img_height=HIT_DEFAULT_SINGLE_IMG_HEIGHT,click_crop=click_crop)
     P.wait(0.5)
-    P.click(img_cx, img_cy)
-    P.hotkey('left')
-    P.hotkey('backspace')
-    P.hotkey('backspace')
-    P.hotkey('alt')
-    P.hotkey('H')
-    P.hotkey('A')
-    P.hotkey('L')
-    P.hotkey('alt')
-    P.hotkey('H')
-    P.hotkey('A')
-    P.hotkey('C')
+    _clean_image_line(img_cx, img_cy)
 
     if close_after:
         print("→ 保存关闭")
