@@ -3,3 +3,5 @@
 __pycache__/
 download/
 docx_manager/wps_ui/assets
+*.docx
+*.png
