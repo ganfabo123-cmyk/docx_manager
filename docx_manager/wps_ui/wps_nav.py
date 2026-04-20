@@ -232,13 +232,36 @@ def set_picture_size_via_panel(
 
 
 # ── 图片属性面板导航（模板匹配）─────────────────────────────────────────────
-
-def navigate_to_crop_inputs(confidence: float = 0.9, input_offset_right: int = 150, img_width: float = None, img_height: float = None, click_crop: bool = True) -> tuple[tuple[int,int], tuple[int,int]]:
+def navigate_to_crop_inputs(
+    confidence: float = 0.9,
+    img_width: float = None,
+    img_height: float = None,
+    crop_width: float = None,
+    crop_height: float = None,
+    offset_x: float = 0,
+    offset_y: float = 0,
+    click_crop: bool = True
+) -> None:
     """
-    在已打开的属性面板中，依次点击：
-      属性(包含图片) → 图片按钮 → 裁剪 → 宽度输入框 → 高度输入框
-    每步找到元素后，将其所在列区域向下延伸作为后续搜索范围，避免误匹配其他图片的同名控件。
-    返回 (宽度中心坐标, 高度中心坐标)，供后续输入使用。
+    在已打开的属性面板中，定位到图片 → 裁剪，然后使用 Alt+字母 快捷键修改各项参数。
+    
+    快捷键对照：
+        W - 图片位置宽度
+        H - 图片位置高度
+        I - 裁剪位置宽度
+        G - 裁剪位置高度
+        X - 图片位置偏移 X（需按两次 Alt+X 才能激活）
+        Y - 图片位置偏移 Y
+    
+    Args:
+        confidence: 图片识别置信度
+        img_width: 图片位置宽度值
+        img_height: 图片位置高度值
+        crop_width: 裁剪位置宽度值
+        crop_height: 裁剪位置高度值
+        offset_x: 图片位置偏移 X 值
+        offset_y: 图片位置偏移 Y 值
+        click_crop: 是否点击裁剪按钮
     """
     import pyautogui as _pag
 
@@ -249,78 +272,53 @@ def navigate_to_crop_inputs(confidence: float = 0.9, input_offset_right: int = 1
     )
     screen_w, screen_h = _pag.size()
     panel_region = (tab_left, tab_top, screen_w - tab_left, screen_h - tab_top)
-    _pag.click(tab_left + tab_w // 2, tab_top + tab_h // 2)
+    P.move(tab_left + tab_w // 2, tab_top + tab_h // 2)
     P.wait(0.3)
 
-    # Step 2-3: 在面板区域内依次点击
+    # Step 2-3: 点击图片按钮和裁剪按钮
     steps = ['panel_image_btn.png', 'panel_image_crop.png'] if click_crop else ['panel_image_btn.png']
     for filename in steps:
         print(f"→ 模板定位：{filename}")
         P.find_and_click_image(str(_ASSETS / filename), confidence=confidence, region=panel_region)
         P.wait(0.3)
 
-    print("→ 模板定位：宽度输入框")
-    wx, wy = P.find_and_click_image(
-        str(_ASSETS / 'panel_crop_width.png'), confidence=confidence, region=panel_region
-    )
-    width_pos = (wx + input_offset_right, wy)
-    P.move(*width_pos)
+    # 确保焦点在属性面板内
+    print("→ 准备使用快捷键修改参数...")
     P.wait(0.2)
-    if img_width:
-        P.click(*width_pos)
-        P.hotkey('ctrl','a')
-        P.type_text(img_width)
-    print("→ 模板定位：高度输入框")
-    hx, hy = P.find_and_click_image(
-        str(_ASSETS / 'panel_crop_height.png'), confidence=confidence, region=panel_region
-    )
-    height_pos = (hx + input_offset_right, hy)
-    P.move(*height_pos)
-    if img_height:
-        P.click(*height_pos)
-        P.hotkey('ctrl','a')
-        P.type_text(img_height)
 
-    # ── 裁剪位置区域：宽度 / 高度 ──────────────────────────────────────────
-    print("→ 模板定位：裁剪位置区域")
-    crop_left, crop_top, crop_w, crop_h = P.locate_image_box(
-        str(_ASSETS / 'panel_crop_area.png'), confidence=confidence, region=panel_region
-    )
-    crop_region = (crop_left, crop_top, crop_w + input_offset_right + 80, crop_h + 60)
+    # 快捷键映射：参数名 -> (Alt+字母, 值, 是否需要双击)
+    # 顺序：W H I G X Y
+    shortcuts = [
+        ('W', img_width, False),      # 图片位置宽度
+        ('H', img_height, False),     # 图片位置高度
+        ('I', crop_width, False),     # 裁剪位置宽度
+        ('G', crop_height, False),    # 裁剪位置高度
+        ('X', offset_x, True),        # 图片位置偏移 X（需要按两次）
+        ('Y', offset_y, False),       # 图片位置偏移 Y
+    ]
 
-    print("→ 模板定位：裁剪位置-宽度")
-    bwx, bwy = P.find_and_click_image(
-        str(_ASSETS / 'panel_crop_width_below.png'), confidence=confidence, region=crop_region
-    )
-    bwidth_pos = (bwx + input_offset_right, bwy)
-    P.click(*bwidth_pos)
-    
-    if img_width:
-        P.hotkey('ctrl', 'a')
-        P.type_text(img_width)
+    for letter, value, need_double in shortcuts:
+        if value is not None:
+            print(f"→ Alt+{letter} 设置值为: {value}")
+            
+            if need_double:
+                # 偏移 X 需要按两次 Alt+X 才能激活编辑
+                _pag.hotkey('alt', letter.lower())
+                P.wait(0.05)
+                _pag.hotkey('alt', letter.lower())
+                P.wait(0.1)
+            else:
+                _pag.hotkey('alt', letter.lower())
+                P.wait(0.1)
+            
+            # 全选并输入新值
+            _pag.hotkey('ctrl', 'a')
+            _pag.typewrite(str(value))
+            # 按 Enter 确认，防止数据丢失
+            _pag.press('enter')
+            P.wait(0.05)
 
-    print("→ 模板定位：裁剪位置-高度")
-    bhx, bhy = P.find_and_click_image(
-        str(_ASSETS / 'panel_crop_height_below.png'), confidence=confidence, region=crop_region
-    )
-    bheight_pos = (bhx + input_offset_right, bhy)
-    P.click(*bheight_pos)
-    
-    if img_height:
-        P.hotkey('ctrl', 'a')
-        P.type_text(img_height)
-
-    # ── 偏移 X / Y 归零 ────────────────────────────────────────────────────
-    for filename, label in [('panel_offset_X.png', 'X'), ('panel_offset_Y.png', 'Y')]:
-        print(f"→ 模板定位：偏移{label}")
-        ox, oy = P.find_and_click_image(
-            str(_ASSETS / filename), confidence=confidence, region=panel_region
-        )
-        P.click(ox + input_offset_right, oy)
-        P.hotkey('ctrl', 'a')
-        P.type_text('0')
-
-    return width_pos, height_pos
+    print("→ 所有参数设置完成")
 
 
 # ── 插入图片对话框 ─────────────────────────────────────────────────────────

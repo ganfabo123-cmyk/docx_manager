@@ -7,10 +7,10 @@ DOCX = r"D:\PythonProjects\docx_manager\docx_manager\docx_engine\outputs\output.
 
 if __name__ == '__main__':
     items = [
-        (r'D:\PythonProjects\docx_manager\ocr_debug.png', 'tu1'),
-        (r'D:\PythonProjects\docx_manager\ocr_debug.png', 'tu2'),
-        (r'D:\PythonProjects\docx_manager\ocr_debug.png', 'tu3'),
-        (r'D:\PythonProjects\docx_manager\ocr_debug.png', 'tu4'),
+        (r'D:\PythonProjects\docx_manager\image.png', 'tu1'),
+        (r'D:\PythonProjects\docx_manager\image.png', 'tu2'),
+        (r'D:\PythonProjects\docx_manager\image.png', 'tu3'),
+        (r'D:\PythonProjects\docx_manager\image.png', 'tu4'),
     ]
     insert_n_image_after_paragraph(
         docx_path=DOCX,
