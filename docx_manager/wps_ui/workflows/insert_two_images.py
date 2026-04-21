@@ -1,17 +1,17 @@
 """
-Layer 3 — 双图横排排版工作流。
+Layer 3 — 双图横排排版工作流（ArUco 锚定图版）。
+
+使用一张 ArUco 锚定图作为唯一 CV2 识别目标，
+用户图片全程通过 Tab / Down 键盘跳转操作，
+避免因图片内容/颜色/尺寸差异导致识别失败。
 
 输入：
-  docx_path   : 文档路径
-  anchor_text : 定位段落文字
-  image_path1 : 第一张图片绝对路径
-  caption1    : 第一张图题
-  image_path2 : 第二张图片绝对路径
-  caption2    : 第二张图题
-  caption_gap : 两图题之间的半角空格数（默认 8）
-
-图题排布：两图题同行，中间以 caption_gap 个半角空格分隔。
-定位方式：插入后用 OpenCV 模板匹配在屏幕上找到图片中心，无需占位 MARKER。
+  docx_path     : 文档路径
+  anchor_text   : 定位段落文字
+  anchor_image  : ArUco 锚定图绝对路径（仅用于 CV2 定位，写死测试）
+  images        : 用户图片路径列表
+  captions      : 每张图的子图题，与 images 等长
+  total_caption : 总图题
 """
 from .. import wps_nav as W
 from .. import primitives as P
@@ -20,132 +20,169 @@ HIT_DEFAULT_DOUBLE_IMG_WIDTH  = 6.99
 HIT_DEFAULT_DOUBLE_IMG_HEIGHT = 4.99
 
 
-def _find_image_center(image_path: str, threshold: float = 0.8) -> tuple[int, int]:
-    import cv2
-    import numpy as np
-    import mss
-
-    with mss.mss() as sct:
-        monitor = sct.monitors[1]
-        screen = np.array(sct.grab(monitor))
-    screen_gray = cv2.cvtColor(screen, cv2.COLOR_BGRA2GRAY)
-
-    template = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    if template is None:
-        raise RuntimeError(f"无法读取模板图片：{image_path}")
-
-    best_val, best_loc, best_scale = 0, None, 1.0
-    for scale in np.linspace(0.7, 1.3, 13):
-        h, w = template.shape
-        resized = cv2.resize(template, (max(1, int(w * scale)), max(1, int(h * scale))))
-        result = cv2.matchTemplate(screen_gray, resized, cv2.TM_CCOEFF_NORMED)
-        _, val, _, loc = cv2.minMaxLoc(result)
-        if val > best_val:
-            best_val, best_loc, best_scale = val, loc, scale
-
-    if best_val < threshold:
-        raise RuntimeError(f"屏幕上未找到图片（best={best_val:.3f}）：{image_path}")
-
-    th = int(template.shape[0] * best_scale)
-    tw = int(template.shape[1] * best_scale)
-    cx = best_loc[0] + tw // 2
-    cy = best_loc[1] + th // 2
-    print(f"   CV2 定位成功，图片中心 ({cx}, {cy})，置信度 {best_val:.3f}，缩放 {best_scale:.2f}")
-    return cx, cy
+def _locate_anchor_with_scroll(
+    anchor_image: str,
+    confidence: float = 0.7,
+    max_scrolls: int = 15,
+    scroll_amount: int = -3,
+) -> tuple[int, int]:
+    """屏幕上定位 ArUco 锚定图；找不到则向下滚动后重试。"""
+    import pyautogui
+    for _ in range(max_scrolls):
+        try:
+            cx, cy, _, _ = P._find_image_center_cv2(anchor_image, confidence=confidence)
+            return cx, cy
+        except RuntimeError:
+            pyautogui.scroll(scroll_amount)
+            P.wait(0.5)
+    raise RuntimeError(f"滚动 {max_scrolls} 次后仍未找到锚定图：{anchor_image}")
 
 
-def open_image_property_panel(x: int, y: int) -> None:
-    """右键点击图片 → 属性面板：右键 → O"""
-    P.right_click(x, y)
-    P.wait(0.4)
+def _open_property_panel() -> None:
+    """当前图片已被 Tab 选中时，通过键盘打开属性面板：Shift+F10 → O"""
+    import pyautogui
+    pyautogui.hotkey('shift', 'f10')
+    P.wait(0.2)
     P.press('o')
-    P.wait(3)
+    P.wait(0.5)
 
 
-def insert_two_images_after_paragraph(
+def _set_center_align() -> None:
+    """先左对齐再居中，确保任意初始格式都能正确居中。"""
+    P.hotkey('alt')
+    P.wait(0.1)
+    P.hotkey('A')
+    P.wait(0.1)
+    P.hotkey('L')
+    P.wait(0.1)
+    P.hotkey('alt')
+    P.wait(0.1)
+    P.hotkey('A')
+    P.wait(0.1)
+    P.hotkey('C')
+    P.wait(0.1)
+
+
+def _insert_image(path: str) -> None:
+    W.open_insert_picture_dialog()
+    W.input_file_path_confirm(path)
+    P.wait(0.3)
+    P.hotkey('right')  # 图片插入后处于选中态，right 移至图片后文本位置
+
+
+def insert_n_images_two_col(
     docx_path: str,
     anchor_text: str,
-    image_path1: str,
-    caption1: str,
-    image_path2: str,
-    caption2: str,
-    caption_gap: int = 8,
+    anchor_image: str,
+    images: list[str],
+    captions: list[str],
+    total_caption: str,
 ) -> None:
+    n = len(images)
+    num_rows = (n + 1) // 2
+    labels = [f"({chr(ord('a') + i)})" for i in range(n)]
+
+    # ── Phase 1: 插入所有内容 ──────────────────────────────────────────────
     W.open_doc(docx_path)
     W.goto_start()
-    P.wait(0.5)
+    P.wait(4)
 
-    print(f"→ 定位段落：{anchor_text!r}")
+    print(f"→ 定位锚定文本：{anchor_text!r}")
     W.find_text(anchor_text)
     W.goto_line_end()
-    P.wait(0.5)
 
-    W.newline()
-    W.newline()
-    P.press('up')
-    P.wait(0.5)
-
-    # ── 图1 插入 + 图题 ────────────────────────────────────────────────────
-    print("→ 插入图1")
-    W.open_insert_picture_dialog()
-    W.input_file_path_confirm(image_path1)
-    P.wait(0.5)
-
-    print(f"→ 写图1图题：{caption1!r}")
-    P.press('down')
-    P.hotkey('ctrl', 'e')
-    P.type_text(caption1)
-    P.wait(0.5)
-
-    print("→ OpenCV 定位图1")
-    img1_cx, img1_cy = _find_image_center(image_path1)
-    P.wait(0.5)
-
-    print("→ 调出属性面板，设置图1尺寸")
-    open_image_property_panel(img1_cx, img1_cy)
-    W.navigate_to_crop_inputs(img_width=HIT_DEFAULT_DOUBLE_IMG_WIDTH,
-                               img_height=HIT_DEFAULT_DOUBLE_IMG_HEIGHT)
-    P.wait(0.5)
-    P.click(img1_cx,img1_cy)
-    P.hotkey('left')
-    P.hotkey('backspace')
-    P.hotkey('ctrl','e')
-    P.wait(0.5)
-    # ── 图2 插入 + 图题（同行） ────────────────────────────────────────────
-    print("→ 回到图1行尾，插入图2")
-    P.click(img1_cx, img1_cy)
-    P.press('right')
-    P.wait(0.5)
-
-    print("→ 插入图2")
-    W.open_insert_picture_dialog()
-    W.input_file_path_confirm(image_path2)
-    P.wait(0.5)
-
-    print(f"→ 写图2图题（追加到同行）：{caption2!r}")
-    P.press('down')
-    P.press('end')
-    P.type_text(' ' * caption_gap)
-    P.type_text(caption2)
-    P.wait(0.5)
-
-    print("→ OpenCV 定位图2")
-    img2_cx, img2_cy = _find_image_center(image_path2)
-    P.wait(0.5)
-
-    print("→ 调出属性面板，设置图2尺寸")
-    open_image_property_panel(img2_cx, img2_cy)
-    W.navigate_to_crop_inputs(img_width=HIT_DEFAULT_DOUBLE_IMG_WIDTH,
-                               img_height=HIT_DEFAULT_DOUBLE_IMG_HEIGHT,
-                               click_crop=False)
-    P.wait(0.5)
+    print("→ 插入 ArUco 锚定图")
     P.hotkey('enter')
-    P.hotkey('left')
-    P.hotkey('backspace')
-    P.hotkey('backspace')
-    P.hotkey('space')
-    P.hotkey('space')
-    P.hotkey('space')
+    _insert_image(anchor_image)  # 插入后 cursor 在锚定图后
+
+    print(f"→ 插入 {n} 张用户图片（两列布局）")
+    for i in range(0, n, 2):
+        # 标签行
+        P.hotkey('enter')
+        P.type_text(labels[i])
+        if i + 1 < n:
+            P.type_text(labels[i + 1])
+        # 图片行
+        P.hotkey('enter')
+        _insert_image(images[i])
+        if i + 1 < n:
+            _insert_image(images[i + 1])
+
+    print("→ 插入子图题和总图题")
+    P.hotkey('enter')
+    for idx, cap in enumerate(captions):
+        P.type_text(f"{labels[idx]} {cap}")
+        P.hotkey('enter')
+    P.type_text(total_caption)
+    P.wait(0.3)
+
+    # ── Phase 2: 调整图片尺寸 ─────────────────────────────────────────────
+    print("→ Ctrl+F 定位锚定文本，准备调整图片尺寸")
+    W.find_text(anchor_text)
+    P.wait(0.5)
+
+    print("→ CV2 定位锚定图（自动向下滚动）")
+    anchor_cx, anchor_cy = _locate_anchor_with_scroll(anchor_image)
+    P.click(anchor_cx, anchor_cy)
+    P.wait(0.3)
+
+    print(f"→ Tab 逐图调整尺寸，共 {n} 张")
+    for i in range(n):
+        print(f"   图 {i + 1}/{n}")
+        P.hotkey('tab')
+        P.wait(0.3)
+        _open_property_panel()
+        W.navigate_to_crop_inputs(
+            img_width=HIT_DEFAULT_DOUBLE_IMG_WIDTH,
+            img_height=HIT_DEFAULT_DOUBLE_IMG_HEIGHT,
+            crop_width=HIT_DEFAULT_DOUBLE_IMG_WIDTH,
+            crop_height=HIT_DEFAULT_DOUBLE_IMG_HEIGHT,
+            click_crop=(i == 0),
+        )
+        P.wait(0.5)
+
+    # ── Phase 3: 调整居中对齐 ─────────────────────────────────────────────
+    print("→ 重新定位锚定图，准备调整居中")
+    W.find_text(anchor_text)
+    P.wait(0.5)
+    anchor_cx, anchor_cy = _locate_anchor_with_scroll(anchor_image)
+    P.click(anchor_cx, anchor_cy)
+    P.wait(0.3)
+
+    # Tab 一次跳到第一张用户图（奇数行首图）
+    P.hotkey('tab')
+    P.wait(0.3)
+
+    print(f"→ 对 {num_rows} 行图片调整居中")
+    for row in range(num_rows):
+        print(f"   行 {row + 1}/{num_rows}")
+        # 在两图之间加 4 个空格撑开间距，right 先移出图片选中态
+        P.hotkey('right')
+        P.type_text('    ')
+        # 选中整行（含两张图）
+        P.hotkey('home')
+        P.wait(0.1)
+        P.hotkey('shift', 'end')
+        P.wait(0.1)
+        _set_center_align()
+        # Tab 在对齐操作后失效，改用 Down 移到下一行图片
+        # 需按两次：第一次跳过标签行，第二次到图片行
+        if row < num_rows - 1:
+            P.hotkey('down')
+            P.wait(0.1)
+            P.hotkey('down')
+            P.wait(0.2)
+
+    # ── Phase 4: 图题居中 ─────────────────────────────────────────────────
+    print(f"→ 定位总图题：{total_caption!r}，调整居中")
+    W.find_text(total_caption)
+    P.wait(0.3)
+    P.hotkey('home')
+    P.wait(0.1)
+    P.hotkey('shift', 'end')
+    P.wait(0.1)
+    _set_center_align()
+
     print("→ 保存关闭")
     W.save_close()
     print("完成！")
