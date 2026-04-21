@@ -65,7 +65,9 @@ def insert_image_after_paragraph(
     image_path: str,
     caption: str,
     close_after: bool = True,
-    cnt: int = 0
+    cnt: int = 0,
+    width: float | None = None,
+    height: float | None = None,
 ) -> None:
     W.open_doc(docx_path)
     W.goto_start()
@@ -144,7 +146,9 @@ def insert_image_after_paragraph(
     click_crop = True
     if cnt > 0:
         click_crop = False
-    W.navigate_to_crop_inputs(img_width=HIT_DEFAULT_SINGLE_IMG_WIDTH, img_height=HIT_DEFAULT_SINGLE_IMG_HEIGHT,crop_width=HIT_DEFAULT_SINGLE_IMG_WIDTH,crop_height=HIT_DEFAULT_SINGLE_IMG_HEIGHT,click_crop=click_crop)
+    _w = width if width is not None else HIT_DEFAULT_SINGLE_IMG_WIDTH
+    _h = height if height is not None else HIT_DEFAULT_SINGLE_IMG_HEIGHT
+    W.navigate_to_crop_inputs(img_width=_w, img_height=_h, crop_width=_w, crop_height=_h, click_crop=click_crop)
     P.wait(0.5)
     P.click(img_cx, img_cy)
     P.wait(0.5)
@@ -186,13 +190,17 @@ def insert_image_after_paragraph(
 def insert_n_image_after_paragraph(
     docx_path: str,
     anchor_text: str,
-    items: list[tuple[str, str]],
+    items: list[tuple[str, str, float | None, float | None] | tuple[str, str]],
 ) -> None:
     """
-    items: [(image_path, caption), ...]
+    items: [(image_path, caption[, width, height]), ...]
+    width/height 可省略或传 None，省略时使用全局默认尺寸。
     第一轮用 anchor_text 定位，后续每轮用上一轮的 caption 作为 anchor。
     """
-    for i, (image_path, caption) in enumerate(items):
+    for i, item in enumerate(items):
+        image_path, caption = item[0], item[1]
+        width = item[2] if len(item) > 2 else None
+        height = item[3] if len(item) > 3 else None
         anchor = anchor_text if i == 0 else items[i - 1][1]
         is_last = (i == len(items) - 1)
         print(f"→ 第 {i+1}/{len(items)} 张，anchor={anchor!r}")
@@ -202,5 +210,7 @@ def insert_n_image_after_paragraph(
             image_path=image_path,
             caption=caption,
             close_after=is_last,
-            cnt=i
+            cnt=i,
+            width=width,
+            height=height,
         )
