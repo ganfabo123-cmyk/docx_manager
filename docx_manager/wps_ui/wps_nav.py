@@ -11,13 +11,13 @@ _ASSETS = Path(__file__).parent / 'assets'
 
 # ── 文档生命周期 ───────────────────────────────────────────────────────────
 
-def open_doc(path: str, wait_sec: float = 4.0) -> None:
+def open_doc(path: str, wait_sec: float = 4) -> None:
     os.startfile(path)
     P.wait(wait_sec)
 
 def save() -> None:
     P.hotkey('ctrl', 's')
-    P.wait(1.5)
+    P.wait(0.1)
 
 def close() -> None:
     P.hotkey('alt', 'f4')
@@ -38,9 +38,9 @@ def goto_end() -> None:
 def jump_next_section() -> None:
     """跳到下一节：Ctrl+G → Alt+T → Esc"""
     P.hotkey('ctrl', 'g')
-    P.wait(0.5)
+    P.wait(0.1)
     P.hotkey('alt', 't')
-    P.wait(0.3)
+    P.wait(0.1)
     P.press('escape')
 
 
@@ -48,12 +48,12 @@ def jump_next_section() -> None:
 
 def open_page_number_dialog() -> None:
     """Alt → P → N → U → N  打开页码格式对话框"""
-    P.press('alt');  P.wait(0.2)
+    P.press('alt');  P.wait(0.1)
     P.press('p')
     P.press('n')
     P.press('u')
     P.press('n')
-    P.wait(0.5)
+    P.wait(0.1)
 
 def page_dialog_move(down: int = 0, up: int = 0) -> None:
     """在对话框中用方向键选择样式"""
@@ -73,10 +73,10 @@ def confirm() -> None:
 def find_text(text: str) -> None:
     """Ctrl+F → 输入文本 → Enter → Esc（光标停在匹配处）"""
     P.hotkey('ctrl', 'f')
-    P.wait(0.5)
+    P.wait(0.1)
     P.type_text(text)
     P.press('return')
-    P.wait(0.3)
+    P.wait(0.1)
     P.press('escape')
 
 def goto_line_end() -> None:
@@ -134,18 +134,18 @@ def navigate_to_crop_inputs(
     screen_w, screen_h = _pag.size()
     panel_region = (tab_left, tab_top, screen_w - tab_left, screen_h - tab_top)
     P.move(tab_left + tab_w // 2, tab_top + tab_h // 2)
-    P.wait(0.3)
+    P.wait(0.1)
 
     # Step 2-3: 点击图片按钮和裁剪按钮
     steps = ['panel_image_btn.png', 'panel_image_crop.png'] if click_crop else ['panel_image_btn.png']
     for filename in steps:
         print(f"→ 模板定位：{filename}")
         P.find_and_click_image(str(_ASSETS / filename), confidence=confidence, region=panel_region)
-        P.wait(0.3)
+        P.wait(0.1)
 
     # 确保焦点在属性面板内
     print("→ 准备使用快捷键修改参数...")
-    P.wait(0.2)
+    P.wait(0.1)
 
     # 快捷键映射：参数名 -> (Alt+字母, 值, 是否需要双击)
     # 顺序：W H I G X Y
@@ -165,7 +165,7 @@ def navigate_to_crop_inputs(
             if need_double:
                 # 偏移 X 需要按两次 Alt+X 才能激活编辑
                 _pag.hotkey('alt', letter.lower())
-                P.wait(0.05)
+                P.wait(0.1)
                 _pag.hotkey('alt', letter.lower())
                 P.wait(0.1)
             else:
@@ -177,7 +177,7 @@ def navigate_to_crop_inputs(
             _pag.typewrite(str(value))
             # 按 Enter 确认，防止数据丢失
             _pag.press('enter')
-            P.wait(0.05)
+            P.wait(0.1)
 
     print("→ 所有参数设置完成")
 
@@ -186,11 +186,11 @@ def navigate_to_crop_inputs(
 
 def open_insert_picture_dialog() -> None:
     """Alt → N → P  打开插入图片对话框（WPS 插入选项卡）"""
-    P.press('alt');  P.wait(0.2)
+    P.press('alt');  P.wait(0.1)
     P.press('n')
     P.press('p')
     P.press('p')
-    P.wait(1.0)
+    P.wait(0.1)
 
 
 def input_file_path_confirm(path: str) -> None:
@@ -198,10 +198,10 @@ def input_file_path_confirm(path: str) -> None:
     import pyperclip
     pyperclip.copy(path)
     P.hotkey('ctrl', 'l')
-    P.wait(0.3)
+    P.wait(0.1)
     P.hotkey('ctrl', 'a')
     P.hotkey('ctrl', 'v')
-    P.wait(0.3)
+    P.wait(0.1)
     P.press('return')
-    P.wait(1.0)
+    P.wait(0.1)
     P.press('return')
