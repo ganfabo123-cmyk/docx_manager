@@ -19,6 +19,8 @@ W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 MATH_NS = "http://schemas.openxmlformats.org/officeDocument/2006/math"
 V_NS = "urn:schemas-microsoft-com:vml"
 
+_LABEL_RE = re.compile(r'\(\d+-\d+\)')
+
 
 class DocxParser:
     """DOCX文档样式解析器"""
@@ -294,47 +296,63 @@ class DocxParser:
                             traceback.print_exc()
         return None
     
+    def _extract_surrounding_text(self, paragraph: Paragraph, math_elem) -> tuple:
+        before_parts = []
+        after_parts = []
+        found = False
+
+        for child in paragraph._element:
+            if child is math_elem or math_elem in child.iter():
+                found = True
+                continue
+            text = "".join(t.text or "" for t in child.findall(f".//{{{W}}}t"))
+            if not text:
+                continue
+            if not found:
+                before_parts.append(text)
+            else:
+                after_parts.append(text)
+
+        text_before = "".join(before_parts).strip() or None
+        text_after = _LABEL_RE.sub("", "".join(after_parts)).strip() or None
+        return text_before, text_after
+
     def _parse_formula(self, paragraph: Paragraph) -> Optional[Dict[str, Any]]:
         omath_paras = paragraph._element.findall(".//" + f"{{{MATH_NS}}}oMathPara")
         
         for omath_para in omath_paras:
             try:
                 omml_str = ET.tostring(omath_para, encoding="unicode", method="xml")
-                
-                label = ""
-                text = paragraph.text.strip()
-                if text:
-                    label_match = re.search(r'\([^)]+\)', text)
-                    if label_match:
-                        label = label_match.group()
-                
-                return {
-                    "type": "formula",
-                    "label": label,
-                    "omml": omml_str
-                }
+
+                label_match = _LABEL_RE.search(paragraph.text)
+                label = label_match.group() if label_match else ""
+                text_before, text_after = self._extract_surrounding_text(paragraph, omath_para)
+
+                result = {"type": "formula", "label": label, "omml": omml_str}
+                if text_before:
+                    result["text_before"] = text_before
+                if text_after:
+                    result["text_after"] = text_after
+                return result
             except Exception as e:
                 print(f"解析公式时出错: {e}")
                 traceback.print_exc()
-        
+
         omaths = paragraph._element.findall(".//" + f"{{{MATH_NS}}}oMath")
         if omaths:
             try:
                 omml_str = ET.tostring(omaths[0], encoding="unicode", method="xml")
-                
-                label = ""
-                text = paragraph.text.strip()
-                if text:
-                    label_match = re.search(r'\([^)]+\)', text)
-                    if label_match:
-                        label = label_match.group()
-                
-                return {
-                    "type": "formula",
-                    "label": label,
-                    "omml": omml_str,
-                    "is_inline": True
-                }
+
+                label_match = _LABEL_RE.search(paragraph.text)
+                label = label_match.group() if label_match else ""
+                text_before, text_after = self._extract_surrounding_text(paragraph, omaths[0])
+
+                result = {"type": "formula", "label": label, "omml": omml_str, "is_inline": True}
+                if text_before:
+                    result["text_before"] = text_before
+                if text_after:
+                    result["text_after"] = text_after
+                return result
             except Exception as e:
                 print(f"解析公式时出错: {e}")
                 traceback.print_exc()
@@ -369,13 +387,10 @@ class DocxParser:
                                 ole_bytes = ole_part.blob
                                 base64_str = base64.b64encode(ole_bytes).decode('utf-8')
                                 
-                                label = ""
-                                text = paragraph.text.strip()
-                                if text:
-                                    label_match = re.search(r'\([^)]+\)', text)
-                                    if label_match:
-                                        label = label_match.group()
-                                
+                                label_match = _LABEL_RE.search(paragraph.text)
+                                label = label_match.group() if label_match else ""
+                                text_before, text_after = self._extract_surrounding_text(paragraph, obj)
+
                                 shape_elem = obj.find(".//" + f"{{{V_NS}}}shape")
                                 width_pt = None
                                 height_pt = None
@@ -410,14 +425,18 @@ class DocxParser:
                                     "ole_base64": base64_str,
                                     "prog_id": prog_id
                                 }
-                                
+
+                                if text_before:
+                                    result["text_before"] = text_before
+                                if text_after:
+                                    result["text_after"] = text_after
                                 if image_base64:
                                     result["image_base64"] = image_base64
                                 if width_pt is not None:
                                     result["width_pt"] = width_pt
                                 if height_pt is not None:
                                     result["height_pt"] = height_pt
-                                
+
                                 return result
                     except Exception as e:
                         print(f"解析OLE公式时出错: {e}")

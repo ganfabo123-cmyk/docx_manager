@@ -35,6 +35,7 @@ import shutil
 import traceback
 import uuid
 from pathlib import Path
+import sys
 
 import tempfile
 
@@ -46,7 +47,14 @@ from flask import Flask, jsonify, request, send_file, abort
 # ── Pipeline imports ───────────────────────────────────────────────────────────
 # Set CWD to project root so that relative-path defaults inside engine modules
 # (data/, templates/, sections_config/) resolve correctly.
-_BASE = Path(__file__).parent
+# ── 路径修正：让 `docx_manager` 包和 `engine` 子包都可以被找到 ─────────────────
+_BASE         = Path(__file__).parent          # docx_manager/docx_engine/
+_PROJECT_ROOT = _BASE.parent.parent            # hit-paper-helper/
+
+for _p in [str(_PROJECT_ROOT), str(_BASE)]:
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 os.chdir(_BASE)
 
 from engine.docx_parser      import DocxParser            # step 1
@@ -54,12 +62,20 @@ from engine                  import user_data_generator as udg  # step 2
 from engine                  import user_data_compiler  as udc  # step 3
 from engine.docx_compiler    import DocxCompiler          # step 4
 
+# ── WPS post-processing imports ────────────────────────────────────────────────
+from docx_manager.wps_ui.workflows.hit_footer       import apply_hit_page_numbers
+from docx_manager.wps_ui.workflows.insert_image     import insert_n_images_one_col
+from docx_manager.wps_ui.workflows.insert_two_images import insert_n_images_two_col
+
+
+
 # ── Configuration ──────────────────────────────────────────────────────────────
-_HIT_CONFIG   = str(_BASE / "sections_config" / "hit_config.json")
-_TEMPLATE_DIR = str(_BASE / "templates" / "hit-template")
-_EXTRACTION   = str(_BASE / "data" / "extraction.json")
-_OUTPUTS_DIR  = _BASE / "outputs"
+_HIT_CONFIG    = str(_BASE / "sections_config" / "hit_config.json")
+_TEMPLATE_DIR  = str(_BASE / "templates" / "hit-template")
+_EXTRACTION    = str(_BASE / "data" / "extraction.json")
+_OUTPUTS_DIR   = _BASE / "outputs"
 _OUTPUTS_DIR.mkdir(exist_ok=True)
+_ANCHOR_IMAGE  = str(_BASE.parent.parent / "anchor.png")   # ArUco 锚定图，服务端固定路径
 
 _MAX_UPLOAD_MB = 32
 _ALLOWED_EXT   = {".docx"}
@@ -79,6 +95,38 @@ log = logging.getLogger(__name__)
 
 def _allowed(filename: str) -> bool:
     return Path(filename).suffix.lower() in _ALLOWED_EXT
+
+
+def _get_output_docx(job_id: str) -> str | None:
+    """Return the output.docx path for a job_id, or None if invalid / not found."""
+    if not job_id or not all(c in "0123456789abcdef" for c in job_id):
+        return None
+    p = _OUTPUTS_DIR / job_id / "output.docx"
+    return str(p) if p.exists() else None
+
+
+def _lookup_deferred(job_id: str, captions: list[str]) -> tuple[list[dict], list[str]]:
+    """
+    Load deferred_images.json for job_id and return the subset matching captions
+    (in the order requested).  Also returns a list of captions that were not found.
+
+    Each returned item is the original deferred dict (contains file_path, anchor_text,
+    width, height, etc.).
+    """
+    p = _OUTPUTS_DIR / job_id / "deferred_images.json"
+    if not p.exists():
+        return [], captions[:]
+    with open(str(p), encoding="utf-8") as fh:
+        all_deferred: list[dict] = json.load(fh)
+
+    by_caption = {img["caption"]: img for img in all_deferred}
+    found, missing = [], []
+    for cap in captions:
+        if cap in by_caption:
+            found.append(by_caption[cap])
+        else:
+            missing.append(cap)
+    return found, missing
 
 
 def _refresh_ole_previews(docx_path: str) -> None:
@@ -122,7 +170,7 @@ def _refresh_ole_previews(docx_path: str) -> None:
         pythoncom.CoUninitialize()
 
 
-def _run_pipeline(input_docx: str, job_dir: Path) -> str:
+def _run_pipeline(input_docx: str, job_dir: Path) -> tuple[str, list[dict]]:
     """
     Execute all four pipeline stages for one job.
 
@@ -131,7 +179,9 @@ def _run_pipeline(input_docx: str, job_dir: Path) -> str:
         job_dir    : dedicated scratch directory for this job
 
     Returns:
-        Absolute path to the generated output .docx
+        (output_docx_path, deferred_images)
+        deferred_images — list of {index, anchor_text, caption} dicts (server-side
+        paths are stripped; clients use these to decide layout via /insert-image or /two-col)
     """
     full_parsed   = str(job_dir / "full_parsed.json")
     user_data     = str(job_dir / "user_data.json")
@@ -162,19 +212,32 @@ def _run_pipeline(input_docx: str, job_dir: Path) -> str:
     )
     log.info("      → %s", user_extract)
 
-    # ── Step 4: compile docx ──────────────────────────────────────────────────
+    # ── Step 4: compile docx (skip_images=True → images deferred for WPS UI) ──
     log.info("[4/5] Building output.docx …")
-    DocxCompiler(
+    compiler = DocxCompiler(
         extraction_path = user_extract,
         template_dir    = _TEMPLATE_DIR,
-    ).compile(output_path=output_docx)
-    log.info("      → %s", output_docx)
+    )
+    compiler.compile(output_path=output_docx, skip_images=True)
+    log.info("      → %s  (%d deferred images)", output_docx, len(compiler.deferred_images))
 
     # ── Step 5: refresh OLE previews ─────────────────────────────────────────
     log.info("[5/5] Refreshing OLE previews …")
-   # _refresh_ole_previews(output_docx)
+    # _refresh_ole_previews(output_docx)
 
-    return output_docx
+    deferred = compiler.deferred_images
+    with open(str(job_dir / "deferred_images.json"), "w", encoding="utf-8") as fh:
+        json.dump(deferred, fh, ensure_ascii=False, indent=2)
+
+    image_summary = [
+        {
+            "index":       i,
+            "anchor_text": img["anchor_text"],
+            "caption":     img["caption"],
+        }
+        for i, img in enumerate(deferred)
+    ]
+    return output_docx, image_summary
 
 
 # ── Routes ─────────────────────────────────────────────────────────────────────
@@ -264,17 +327,174 @@ def convert():
             pass
 
     try:
-        output_path = _run_pipeline(input_path, job_dir)
+        output_path, image_summary = _run_pipeline(input_path, job_dir)
     except Exception as exc:
         log.error("Job %s failed:\n%s", job_id, traceback.format_exc())
         shutil.rmtree(job_dir, ignore_errors=True)
         return jsonify({"status": "error", "message": str(exc)}), 500
 
-    log.info("Job %s complete → %s", job_id, output_path)
+    log.info("Job %s complete → %s  (%d images)", job_id, output_path, len(image_summary))
     return jsonify({
         "status":       "ok",
+        "job_id":       job_id,
         "download_url": f"/download/{job_id}",
+        "images":       image_summary,
     })
+
+
+@app.route("/footer", methods=["POST"])
+def footer():
+    """
+    Apply HIT page-number formatting to a compiled output.docx.
+
+    Body: {"job_id": "<hex>", "body_section": 4}
+    """
+    data         = request.json or {}
+    job_id       = data.get("job_id", "")
+    body_section = int(data.get("body_section", 4))
+
+    docx_path = _get_output_docx(job_id)
+    if not docx_path:
+        return jsonify({"status": "error", "message": "job not found"}), 404
+
+    try:
+        log.info("[footer] job=%s section=%d", job_id, body_section)
+        apply_hit_page_numbers(docx_path, body_section)
+        log.info("[footer] done")
+    except Exception as exc:
+        log.error("[footer] failed: %s", exc)
+        return jsonify({"status": "error", "message": str(exc)}), 500
+
+    return jsonify({"status": "ok", "download_url": f"/download/{job_id}"})
+
+
+@app.route("/insert-image", methods=["POST"])
+def insert_image():
+    """
+    Insert images (single-column layout) into a compiled output.docx.
+
+    The server resolves image file paths, dimensions, and default anchor_text from the
+    deferred_images saved during /convert.  The client only needs to name the captions.
+
+    Body:
+    {
+        "job_id":      "<hex>",
+        "captions":    ["图3-1 流程图", "图3-2 对比图"],
+        "anchor_text": "3.1 实验"    // optional — overrides the stored anchor_text
+    }
+    """
+    data               = request.json or {}
+    job_id             = data.get("job_id", "")
+    captions           = data.get("captions", [])
+    original_captions  = data.get("original_captions") or captions   # lookup key
+    anchor_text        = data.get("anchor_text") or None
+    chapter            = int(data.get("chapter", 1))
+    fig_start          = int(data.get("fig_start", 1))
+
+    if not captions:
+        return jsonify({"status": "error", "message": "captions required"}), 400
+    if len(original_captions) != len(captions):
+        return jsonify({"status": "error",
+                        "message": "original_captions length must match captions"}), 400
+
+    docx_path = _get_output_docx(job_id)
+    if not docx_path:
+        return jsonify({"status": "error", "message": "job not found"}), 404
+
+    imgs, missing = _lookup_deferred(job_id, original_captions)
+    if missing:
+        return jsonify({"status": "error",
+                        "message": f"captions not found in job: {missing}"}), 404
+
+    resolved_anchor = anchor_text or imgs[0]["anchor_text"]
+    images   = [img["file_path"] for img in imgs]
+    width    = imgs[0].get("width")  or None
+    height   = imgs[0].get("height") or None
+
+    try:
+        log.info("[insert-image] job=%s anchor=%r images=%d", job_id, resolved_anchor, len(images))
+        insert_n_images_one_col(
+            docx_path=docx_path,
+            anchor_text=resolved_anchor,
+            anchor_image=_ANCHOR_IMAGE,
+            images=images,
+            captions=captions,
+            chapter=chapter,
+            fig_start=fig_start,
+        )
+        log.info("[insert-image] done")
+    except Exception as exc:
+        log.error("[insert-image] failed: %s", exc)
+        return jsonify({"status": "error", "message": str(exc)}), 500
+
+    return jsonify({"status": "ok", "download_url": f"/download/{job_id}"})
+
+
+@app.route("/two-col", methods=["POST"])
+def two_col():
+    """
+    Insert images in a two-column layout in a compiled output.docx.
+
+    The server resolves image paths and anchor_text from the deferred_images saved
+    during /convert.  The client only needs captions (exactly 2) and optionally
+    overrides for anchor_text and total_caption.
+
+    Body:
+    {
+        "job_id":        "<hex>",
+        "captions":      ["图3-3 子图a描述", "图3-4 子图b描述"],
+        "anchor_text":   "3.3 误差分析",  // optional override
+        "total_caption": "图3-3和图3-4",  // optional — auto-generated if omitted
+        "debug":         false,
+        "phases":        [1, 2, 3, 4, 5]
+    }
+    """
+    data              = request.json or {}
+    job_id            = data.get("job_id", "")
+    captions          = data.get("captions", [])
+    original_captions = data.get("original_captions") or captions   # lookup key
+    anchor_text       = data.get("anchor_text") or None
+    total_caption     = data.get("total_caption") or None
+    debug             = bool(data.get("debug", False))
+    phases            = tuple(int(p) for p in data.get("phases", [1, 2, 3, 4, 5]))
+
+    if len(captions)%2 != 0:
+        return jsonify({"status": "error", "message": "captions must contain exactly 2 items"}), 400
+    if len(original_captions)%2 != 0:
+        return jsonify({"status": "error",
+                        "message": "original_captions must contain exactly 2 items"}), 400
+
+    docx_path = _get_output_docx(job_id)
+    if not docx_path:
+        return jsonify({"status": "error", "message": "job not found"}), 404
+
+    imgs, missing = _lookup_deferred(job_id, original_captions)
+    if missing:
+        return jsonify({"status": "error",
+                        "message": f"captions not found in job: {missing}"}), 404
+
+    resolved_anchor = anchor_text or imgs[0]["anchor_text"]
+    images          = [img["file_path"] for img in imgs]
+    resolved_total  = total_caption or f"{captions[0]}和{captions[1]}"
+
+    try:
+        log.info("[two-col] job=%s anchor=%r images=2", job_id, resolved_anchor)
+        insert_n_images_two_col(
+            docx_path=docx_path,
+            anchor_text=resolved_anchor,
+            anchor_image=_ANCHOR_IMAGE,
+            images=images,
+            captions=captions,
+            total_caption=resolved_total,
+            debug=debug,
+            run_phases=phases,
+        )
+        log.info("[two-col] done")
+    except Exception as exc:
+        log.error("[two-col] failed: %s", exc)
+        return jsonify({"status": "error", "message": str(exc)}), 500
+
+    return jsonify({"status": "ok", "download_url": f"/download/{job_id}"})
 
 
 @app.route("/download/<job_id>", methods=["GET"])

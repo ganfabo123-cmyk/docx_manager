@@ -151,6 +151,7 @@ def find_and_click_image(
     """
     cx, cy, w, h = _find_image_center_cv2(template_path, confidence, region)
     pyautogui.moveTo(cx, cy)
+    wait(1)
     if not move_only:
         pyautogui.click(cx, cy)
     wait()

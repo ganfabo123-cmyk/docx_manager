@@ -94,7 +94,7 @@ def capture_screen():
 
 # ── 图片属性面板导航（模板匹配）─────────────────────────────────────────────
 def navigate_to_crop_inputs(
-    confidence: float = 0.9,
+    confidence: float = 0.8,
     img_width: float = None,
     img_height: float = None,
     crop_width: float = None,
@@ -126,60 +126,100 @@ def navigate_to_crop_inputs(
     """
     import pyautogui as _pag
 
-    # Step 1: 全屏找属性选项卡，点击并锁定面板区域供后续复用
-    print("→ 模板定位：panel_tab_image")
-    tab_left, tab_top, tab_w, tab_h = P.locate_image_box(
-        str(_ASSETS / 'panel_tab_image.png'), confidence=confidence
-    )
-    screen_w, screen_h = _pag.size()
-    panel_region = (tab_left, tab_top, screen_w - tab_left, screen_h - tab_top)
-    P.move(tab_left + tab_w // 2, tab_top + tab_h // 2)
-    P.wait(0.1)
+    try:
+        # Step 1: 全屏找属性选项卡，点击并锁定面板区域供后续复用
+        print("→ 模板定位：panel_tab_image")
+        tab_left, tab_top, tab_w, tab_h = P.locate_image_box(
+            str(_ASSETS / 'panel_tab_image.png'), confidence=confidence
+        )
+        screen_w, screen_h = _pag.size()
+        panel_region = (tab_left, tab_top, screen_w - tab_left, screen_h - tab_top)
+        P.move(tab_left + tab_w // 2, tab_top + tab_h // 2)
+        P.wait(1)
 
-    # Step 2-3: 点击图片按钮和裁剪按钮
-    steps = ['panel_image_btn.png', 'panel_image_crop.png'] if click_crop else ['panel_image_btn.png']
-    for filename in steps:
-        print(f"→ 模板定位：{filename}")
-        P.find_and_click_image(str(_ASSETS / filename), confidence=confidence, region=panel_region)
+        # Step 2-3: 点击图片按钮和裁剪按钮
+        steps = ['panel_image_btn.png', 'panel_image_crop.png'] if click_crop else ['panel_image_btn.png']
+        for filename in steps:
+            print(f"→ 模板定位：{filename}")
+            P.find_and_click_image(str(_ASSETS / filename), confidence=confidence, region=panel_region)
+            P.wait(1)
+
+        # 确保焦点在属性面板内
+        print("→ 准备使用快捷键修改参数...")
         P.wait(0.1)
 
-    # 确保焦点在属性面板内
-    print("→ 准备使用快捷键修改参数...")
-    P.wait(0.1)
+        # 快捷键映射：参数名 -> (Alt+字母, 值, 是否需要双击)
+        # 顺序：W H I G X Y
+        shortcuts = [
+            ('W', img_width, False),      # 图片位置宽度
+            ('H', img_height, False),     # 图片位置高度
+            ('I', crop_width, False),     # 裁剪位置宽度
+            ('G', crop_height, False),    # 裁剪位置高度
+            ('X', offset_x, True),        # 图片位置偏移 X（需要按两次）
+            ('Y', offset_y, False),       # 图片位置偏移 Y
+        ]
 
-    # 快捷键映射：参数名 -> (Alt+字母, 值, 是否需要双击)
-    # 顺序：W H I G X Y
+        for letter, value, need_double in shortcuts:
+            if value is not None:
+                print(f"→ Alt+{letter} 设置值为: {value}")
+                
+                if need_double:
+                    # 偏移 X 需要按两次 Alt+X 才能激活编辑
+                    _pag.hotkey('alt', letter.lower())
+                    P.wait(0.1)
+                    _pag.hotkey('alt', letter.lower())
+                    P.wait(0.1)
+                else:
+                    _pag.hotkey('alt', letter.lower())
+                    P.wait(0.1)
+                
+                # 全选并输入新值
+                _pag.hotkey('ctrl', 'a')
+                _pag.typewrite(str(value))
+                # 按 Enter 确认，防止数据丢失
+                _pag.press('enter')
+                P.wait(0.1)
+
+        print("→ 所有参数设置完成")
+    except Exception as e:
+        raise e
+
+
+def set_image_size_by_shortcut(
+    img_width: float = None,
+    img_height: float = None,
+    crop_width: float = None,
+    crop_height: float = None,
+    offset_x: float = 0,
+    offset_y: float = 0,
+) -> None:
+    """
+    属性面板已停在图片大小界面时，直接用 Alt 快捷键填值，无需 CV2 重新定位。
+    快捷键同 navigate_to_crop_inputs：W/H=图片宽高，I/G=裁剪宽高，X/Y=偏移。
+    """
+    import pyautogui as _pag
     shortcuts = [
-        ('W', img_width, False),      # 图片位置宽度
-        ('H', img_height, False),     # 图片位置高度
-        ('I', crop_width, False),     # 裁剪位置宽度
-        ('G', crop_height, False),    # 裁剪位置高度
-        ('X', offset_x, True),        # 图片位置偏移 X（需要按两次）
-        ('Y', offset_y, False),       # 图片位置偏移 Y
+        ('w', img_width,   False),
+        ('h', img_height,  False),
+        ('i', crop_width,  False),
+        ('g', crop_height, False),
+        ('x', offset_x,    True),
+        ('y', offset_y,    False),
     ]
-
     for letter, value, need_double in shortcuts:
         if value is not None:
-            print(f"→ Alt+{letter} 设置值为: {value}")
-            
+            print(f"→ Alt+{letter.upper()} 设置值为: {value}")
             if need_double:
-                # 偏移 X 需要按两次 Alt+X 才能激活编辑
-                _pag.hotkey('alt', letter.lower())
+                _pag.hotkey('alt', letter)
                 P.wait(0.1)
-                _pag.hotkey('alt', letter.lower())
-                P.wait(0.1)
+                _pag.hotkey('alt', letter)
             else:
-                _pag.hotkey('alt', letter.lower())
-                P.wait(0.1)
-            
-            # 全选并输入新值
+                _pag.hotkey('alt', letter)
+            P.wait(0.1)
             _pag.hotkey('ctrl', 'a')
             _pag.typewrite(str(value))
-            # 按 Enter 确认，防止数据丢失
             _pag.press('enter')
             P.wait(0.1)
-
-    print("→ 所有参数设置完成")
 
 
 # ── 插入图片对话框 ─────────────────────────────────────────────────────────
@@ -202,6 +242,6 @@ def input_file_path_confirm(path: str) -> None:
     P.hotkey('ctrl', 'a')
     P.hotkey('ctrl', 'v')
     P.wait(0.1)
-    P.press('return')
+    P.press('enter')
     P.wait(0.1)
-    P.press('return')
+    P.press('enter')

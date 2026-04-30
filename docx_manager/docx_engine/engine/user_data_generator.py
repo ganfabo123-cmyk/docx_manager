@@ -113,14 +113,19 @@ def _normalize(raw: dict) -> dict:
         style   = raw.get("style", {})
         caption = raw.get("caption", style.get("caption", ""))
         if isinstance(content, dict):
-            # e.g. {"base64": "...", "caption": ""}
+            # docx_parser 格式: content = {"base64": "...", "caption": ""}
             data = dict(content)
             data.setdefault("caption", caption)
         else:
+            base64_val  = raw.get("base64", "")
             drawing_xml = raw.get("drawing_xml", style.get("drawing_xml", ""))
             if isinstance(content, str) and content and not drawing_xml:
                 drawing_xml = content
-            data = {"drawing_xml": drawing_xml, "caption": caption}
+            if base64_val:
+                # 顶层 base64 格式: {"type":"image","base64":"...","caption":"..."}
+                data = {"base64": base64_val, "caption": caption}
+            else:
+                data = {"drawing_xml": drawing_xml, "caption": caption}
         return {"type": "figure", "data": data}
 
     if typ == "equation":
@@ -130,7 +135,8 @@ def _normalize(raw: dict) -> dict:
         # (expression/suffix vs omml/ole_base64/image_base64/label) both work.
         data: dict = {}
         for key in ("expression", "suffix", "omml", "ole_base64",
-                    "image_base64", "label", "width_pt", "height_pt", "prog_id"):
+                    "image_base64", "label", "width_pt", "height_pt", "prog_id",
+                    "text_before", "text_after", "is_inline"):
             val = raw.get(key, style.get(key))
             if val is not None:
                 data[key] = val

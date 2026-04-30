@@ -1,7 +1,8 @@
 import argparse
 import json
 from docx_manager.wps_ui.workflows.hit_footer import apply_hit_page_numbers
-from docx_manager.wps_ui.workflows.insert_image import insert_n_image_after_paragraph
+from docx_manager.wps_ui.workflows.insert_image import insert_n_images_one_col
+from docx_manager.wps_ui.workflows.insert_two_images import insert_n_images_two_col
 
 
 def _parse_item(raw: list[str]) -> tuple:
@@ -56,10 +57,23 @@ def cmd_insert_image(args):
     else:
         raise SystemExit("请通过 --from-json 或 --item 提供图片信息")
 
-    insert_n_image_after_paragraph(
+    insert_n_images_one_col(
         docx_path=args.docx_path,
         anchor_text=anchor_text,
         items=items,
+    )
+
+
+def cmd_two_col(args):
+    insert_n_images_two_col(
+        docx_path=args.docx_path,
+        anchor_text=args.anchor_text,
+        anchor_image=args.anchor_image,
+        images=args.image,
+        captions=args.caption,
+        total_caption=args.total_caption,
+        debug=args.debug,
+        run_phases=tuple(args.phases),
     )
 
 
@@ -103,6 +117,18 @@ def main():
         help="一张图片：path caption [width height]，可重复",
     )
     p_img.set_defaults(func=cmd_insert_image)
+
+    # ── two-col 子命令 ─────────────────────────────────────────────────────────
+    p_two = sub.add_parser("two-col", help="两列图并排排版")
+    p_two.add_argument("docx_path", help="目标 .docx 文件路径")
+    p_two.add_argument("anchor_text", help="定位段落文字")
+    p_two.add_argument("--anchor-image", required=True, dest="anchor_image", metavar="PATH", help="定位图片路径")
+    p_two.add_argument("--image", nargs="+", required=True, metavar="PATH", help="子图路径，可传多个")
+    p_two.add_argument("--caption", nargs="+", required=True, metavar="TEXT", help="子图题，顺序与 --image 对应")
+    p_two.add_argument("--total-caption", required=True, dest="total_caption", metavar="TEXT", help="总图题")
+    p_two.add_argument("--debug", action="store_true", default=False, help="开启截图调试")
+    p_two.add_argument("--phases", nargs="+", type=int, default=[1, 2, 3, 4, 5], metavar="N", help="执行阶段，默认 1 2 3 4 5")
+    p_two.set_defaults(func=cmd_two_col)
 
     args = parser.parse_args()
     args.func(args)

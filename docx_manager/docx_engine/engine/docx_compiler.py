@@ -35,7 +35,7 @@ import sys
 import tempfile
 import zipfile
 from xml.etree import ElementTree as ET
-
+from pathlib import Path
 # ── Namespace registration ─────────────────────────────────────────────────────
 # Must happen before any ET.parse() / ET.tostring() call so prefixes are stable.
 
@@ -87,6 +87,10 @@ REL_TYPE_OLE = (
 V_NS = 'urn:schemas-microsoft-com:vml'
 O_NS = 'urn:schemas-microsoft-com:office:office'
 MC   = 'http://schemas.openxmlformats.org/markup-compatibility/2006'
+
+# HIT A4 page text-area width in twips (210mm − 2×25.4mm margins ≈ 159.2mm → 9072twips,
+# minus tblInd 138 twips used by the templates → effective ≈ 8296 twips).
+_TABLE_TEXT_WIDTH_TWIPS = 8296
 
 
 def _q(local: str) -> str:   return f'{{{W}}}{local}'
@@ -271,15 +275,32 @@ class DocxCompiler:
         self.extraction_path = extraction_path
         self._rid_counter    = 0   # next unused rId number
         self._shape_counter  = 1   # docPr id for inline images
+        self.deferred_images: list[dict] = []
 
     # ── Public API ─────────────────────────────────────────────────────────────
 
-    def compile(self, output_path: str = 'output.docx') -> str:
+    def compile(
+        self,
+        output_path: str = 'output.docx',
+        skip_images: bool = True,
+    ) -> str:
         """
         Build the .docx and write it to output_path.
 
+        skip_images:
+            When True, image elements are NOT written into the document XML.
+            Instead their info is collected into self.deferred_images so a
+            caller can insert them later via WPS UI automation.
+            Each entry: {anchor_text, caption, file_path, width, height, position}
+            file_path points to an image saved beside output_path in deferred_images/.
+            drawing_xml images (template-sourced) set file_path=None and
+            include a drawing_xml key instead.
+
         Returns the absolute path of the generated file.
         """
+        self.deferred_images = []
+        images_dir = str(Path(output_path).parent / 'deferred_images') if skip_images else None
+
         tmp_base = tempfile.mkdtemp(prefix='docx_compile_')
         work_dir = os.path.join(tmp_base, 'work')
         try:
@@ -287,11 +308,12 @@ class DocxCompiler:
             self._init_rid_counter(work_dir)
 
             print('[compiler] Rebuilding document.xml …')
-            stats = self._rebuild_document(work_dir)
+            stats = self._rebuild_document(work_dir, skip_images=skip_images, images_dir=images_dir)
             print(f'[compiler]   paragraphs : {stats["paragraphs"]}')
             print(f'[compiler]   tables     : {stats["tables"]}')
             print(f'[compiler]   raw_xml    : {stats["raw_xml"]}')
             print(f'[compiler]   images     : {stats["images"]}')
+            print(f'[compiler]   deferred   : {stats["deferred"]}')
             print(f'[compiler]   omath      : {stats["omath"]}')
             print(f'[compiler]   ole        : {stats["ole"]}')
             print(f'[compiler]   toc        : {stats["toc"]}')
@@ -308,6 +330,8 @@ class DocxCompiler:
 
         abs_out = os.path.abspath(output_path)
         print(f'[compiler] Done → {abs_out}')
+        if skip_images:
+            print(f'[compiler] Deferred images : {len(self.deferred_images)}')
         return abs_out
 
     # ── rId management ─────────────────────────────────────────────────────────
@@ -338,7 +362,12 @@ class DocxCompiler:
 
     # ── Document body reconstruction ───────────────────────────────────────────
 
-    def _rebuild_document(self, work_dir: str) -> dict:
+    def _rebuild_document(
+        self,
+        work_dir:   str,
+        skip_images: bool = True,
+        images_dir:  str | None = None,
+    ) -> dict:
         """
         Reconstruct word/document.xml entirely from extraction body_elements.
 
@@ -346,6 +375,11 @@ class DocxCompiler:
           • The root <w:document> element with all namespace declarations.
           • The structural XML of each table (tblPr, tblGrid, trPr, tcPr).
           • The body-level <w:sectPr> (appended last, unchanged).
+
+        skip_images / images_dir:
+            When skip_images=True, image elements are collected into
+            self.deferred_images instead of being written to the XML.
+            Base64 images are saved as files under images_dir.
         """
         doc_path = os.path.join(work_dir, 'word', 'document.xml')
 
@@ -364,14 +398,17 @@ class DocxCompiler:
         for child in list(body):
             body.remove(child)
 
-        stats = dict(paragraphs=0, tables=0, images=0, omath=0, ole=0, toc=0, raw_xml=0)
-        table_seq = 0  # counts tables seen in extraction order
+        stats = dict(paragraphs=0, tables=0, images=0, deferred=0, omath=0, ole=0, toc=0, raw_xml=0)
+        table_seq = 0       # counts tables seen in extraction order
+        last_para_text = "" # text of the most recent paragraph (used as image anchor)
+        img_file_seq = 0    # counter for deferred image filenames
 
         for elem in self.ext.get('body_elements', []):
             etype = elem.get('type')
 
             if etype == 'paragraph':
                 body.append(self._build_para(elem))
+                last_para_text = (elem.get('text') or '').strip()
                 stats['paragraphs'] += 1
 
             elif etype == 'raw_xml':
@@ -399,10 +436,49 @@ class DocxCompiler:
                 stats['tables'] += 1
 
             elif etype == 'image':
-                nodes = self._build_image_nodes(elem, work_dir)
-                for n in nodes:
-                    body.append(n)
-                stats['images'] += 1
+                if skip_images:
+                    record: dict = {
+                        'anchor_text': last_para_text,
+                        'caption':     elem.get('caption', ''),
+                        'width':       float(elem.get('width',  0) or 0),
+                        'height':      float(elem.get('height', 0) or 0),
+                        'position':    elem.get('position', 'center'),
+                        'file_path':   None,
+                        'drawing_xml': None,
+                    }
+                    drawing_xml = elem.get('drawing_xml')
+                    raw_b64     = elem.get('base64', '')
+                    if drawing_xml:
+                        # 从 work_dir/word/media/ 提取真实图片文件
+                        copied = self._copy_drawing_image(
+                            drawing_xml, work_dir, images_dir, img_file_seq
+                        )
+                        if copied:
+                            record['file_path'] = copied
+                            img_file_seq += 1
+                        else:
+                            record['drawing_xml'] = drawing_xml
+                    elif raw_b64:
+                        try:
+                            img_bytes = base64.b64decode(raw_b64, validate=True)
+                            suffix    = _image_suffix(img_bytes)
+                            if images_dir:
+                                os.makedirs(images_dir, exist_ok=True)
+                            save_dir  = images_dir or tempfile.gettempdir()
+                            file_path = os.path.join(save_dir, f'img_{img_file_seq:04d}.{suffix}')
+                            with open(file_path, 'wb') as fh:
+                                fh.write(img_bytes)
+                            record['file_path'] = os.path.abspath(file_path)
+                            img_file_seq += 1
+                        except Exception as exc:
+                            print(f'[compiler] deferred image save failed: {exc}')
+                    self.deferred_images.append(record)
+                    stats['deferred'] += 1
+                else:
+                    nodes = self._build_image_nodes(elem, work_dir)
+                    for n in nodes:
+                        body.append(n)
+                    stats['images'] += 1
 
             elif etype in ('omath', 'omathpara'):
                 body.append(self._build_omath_para(elem))
@@ -560,10 +636,14 @@ class DocxCompiler:
                     r.append(object_elem)
             else:
                 text = run.get('text') or ''
-                t = ET.SubElement(r, _q('t'))
-                t.text = text
-                if text and (text[0] == ' ' or text[-1] == ' '):
-                    t.set(XML_SPACE, 'preserve')
+                segments = text.split('\n')
+                for seg_i, seg in enumerate(segments):
+                    t = ET.SubElement(r, _q('t'))
+                    t.text = seg
+                    if seg and (seg[0] == ' ' or seg[-1] == ' '):
+                        t.set(XML_SPACE, 'preserve')
+                    if seg_i < len(segments) - 1:
+                        ET.SubElement(r, _q('br'))
 
         return p
 
@@ -692,6 +772,7 @@ class DocxCompiler:
 
             tbl.append(tr)
 
+        _rebalance_col_widths(tbl, ext_rows)
         return tbl
 
     # ── Image paragraph builder ────────────────────────────────────────────────
@@ -871,37 +952,29 @@ class DocxCompiler:
         """
         Build a paragraph containing an OLE embedded object (e.g. Equation.3).
 
-        Constructs the VML ``<v:shape>`` + ``<o:OLEObject>`` structure required
-        by Word/WPS to render the embedded object.  When the document is opened,
-        the OLE host (Equation Editor / MathType) renders the formula content
-        directly from the embedded binary.
-
-        Falls back to a plain-text placeholder only when the base64 payload
-        cannot be decoded (e.g. a sentinel string from DocxTools).
-
         Layout:
-          - With formula_index : tab-stop layout — center tab (4252 twips) pushes
+          - Inline (text_before or text_after present):
+              text_before run + OLE object run + text_after run, all in one paragraph.
+          - Block with formula_index: tab-stop layout — center tab (4252 twips) pushes
             the equation to the middle; right tab (8504 twips) pushes the index
-            number to the right margin.  Based on HIT A4 template margins
-            (left=right=1701, content width=8504 twips).
-          - Without formula_index: simple jc="center" paragraph.
-
-        Preview image:
-          - If elem contains ``image_base64`` (WMF bytes, base64-encoded), the image
-            is embedded in word/media/ and referenced via <v:imagedata> for a static
-            preview when the OLE host is inactive.
+            number to the right margin.
+          - Block without formula_index: simple jc="center" paragraph.
         """
         raw_b64       = elem.get('base64', '')
-        formula_index = (elem.get('formula') or '').strip()
+        formula_index = (elem.get('formula_index') or '').strip()
         width_pt      = float(elem.get('width_pt',  120))
         height_pt     = float(elem.get('height_pt',  30))
         prog_id       = elem.get('prog_id', 'Equation.3')
+        text_before   = (elem.get('text_before') or '').strip()
+        text_after    = (elem.get('text_after')  or '').strip()
+        is_inline     = bool(text_before or text_after or elem.get('is_inline'))
 
         try:
             ole_bytes = base64.b64decode(raw_b64, validate=True)
         except Exception:
-            label = f'[公式 {formula_index}]' if formula_index else '[OLE 对象]'
-            return _plain_para(label)
+            fallback_label = formula_index or '[OLE 对象]'
+            fallback_text  = f'{text_before}{fallback_label}{text_after}'.strip() or fallback_label
+            return _plain_para(fallback_text)
 
         ole_rid    = self._embed_ole(ole_bytes, work_dir)
         shape_id   = self._alloc_shape_id()
@@ -910,9 +983,15 @@ class DocxCompiler:
         p   = ET.Element(_q('p'))
         pPr = ET.SubElement(p, _q('pPr'))
 
-        if formula_index:
-            # Tab-stop layout: center tab centers the equation, right tab
-            # right-aligns the index number.
+        if is_inline:
+            # Inline: no special paragraph alignment; text runs surround the object.
+            if text_before:
+                r_before = ET.SubElement(p, _q('r'))
+                t_before = ET.SubElement(r_before, _q('t'))
+                t_before.text = text_before
+                t_before.set(XML_SPACE, 'preserve')
+        elif formula_index:
+            # Block with index: tab-stop layout.
             # HIT template: content width = 11906 - 1701×2 = 8504 twips.
             tabs_elem = ET.SubElement(pPr, _q('tabs'))
             tab_c = ET.SubElement(tabs_elem, _q('tab'))
@@ -921,8 +1000,6 @@ class DocxCompiler:
             tab_r = ET.SubElement(tabs_elem, _q('tab'))
             tab_r.set(_q('val'), 'right')
             tab_r.set(_q('pos'), '8504')
-
-            # Tab before OLE run — pushes equation to center
             r_tab1 = ET.SubElement(p, _q('r'))
             ET.SubElement(r_tab1, _q('tab'))
         else:
@@ -940,9 +1017,8 @@ class DocxCompiler:
         shape.set('type',    '#_x0000_t75')
         shape.set('style',   f'width:{width_pt}pt;height:{height_pt}pt')
         shape.set(f'{{{O_NS}}}ole', '')
-        shape.set('stroked', 'f')   # Fix: suppress default black border
+        shape.set('stroked', 'f')
 
-        # Optional WMF preview image (keeps static preview when OLE host inactive)
         img_b64 = elem.get('image_base64', '')
         if img_b64:
             try:
@@ -952,7 +1028,7 @@ class DocxCompiler:
                 imgdata.set(f'{{{R}}}id',       img_rid)
                 imgdata.set(f'{{{O_NS}}}title', '')
             except Exception:
-                pass  # preview is optional; skip silently on any error
+                pass
 
         ole_elem = ET.SubElement(obj, f'{{{O_NS}}}OLEObject')
         ole_elem.set('Type',       'Embed')
@@ -962,16 +1038,65 @@ class DocxCompiler:
         ole_elem.set('ObjectID',   f'_{shape_id}')
         ole_elem.set(f'{{{R}}}id', ole_rid)
 
-        if formula_index:
-            # Tab after OLE run — pushes index number to right margin
-            r_tab2 = ET.SubElement(p, _q('r'))
-            ET.SubElement(r_tab2, _q('tab'))
-
-            r_idx = ET.SubElement(p, _q('r'))
-            t_idx = ET.SubElement(r_idx, _q('t'))
-            t_idx.text = formula_index
+        if is_inline:
+            if text_after:
+                r_after = ET.SubElement(p, _q('r'))
+                t_after = ET.SubElement(r_after, _q('t'))
+                t_after.text = text_after
+                t_after.set(XML_SPACE, 'preserve')
+        else:
+            if formula_index:
+                r_tab2 = ET.SubElement(p, _q('r'))
+                ET.SubElement(r_tab2, _q('tab'))
+                r_idx = ET.SubElement(p, _q('r'))
+                t_idx = ET.SubElement(r_idx, _q('t'))
+                t_idx.text = formula_index
 
         return p
+
+    def _copy_drawing_image(
+        self,
+        drawing_xml: str,
+        work_dir:    str,
+        images_dir:  str | None,
+        seq:         int,
+    ) -> str | None:
+        """
+        Extract the image file referenced by drawing_xml from work_dir/word/media/
+        and copy it to images_dir.  Returns the absolute destination path, or None
+        on failure.
+        """
+        try:
+            # Find r:embed rId in the drawing XML
+            rid_match = re.search(r'r:embed="(rId\d+)"', drawing_xml)
+            if not rid_match:
+                return None
+            rid = rid_match.group(1)
+
+            # Look up the rId in document.xml.rels
+            rels_path = os.path.join(work_dir, 'word', '_rels', 'document.xml.rels')
+            rels_tree = ET.parse(rels_path)
+            target = None
+            for rel in rels_tree.getroot():
+                if rel.get('Id') == rid:
+                    target = rel.get('Target')  # e.g. "media/image1.tiff"
+                    break
+            if not target:
+                return None
+
+            src = os.path.join(work_dir, 'word', target)
+            if not os.path.exists(src):
+                return None
+
+            ext      = os.path.splitext(target)[1].lstrip('.') or 'png'
+            save_dir = images_dir or tempfile.gettempdir()
+            os.makedirs(save_dir, exist_ok=True)
+            dst = os.path.join(save_dir, f'img_{seq:04d}.{ext}')
+            shutil.copy2(src, dst)
+            return os.path.abspath(dst)
+        except Exception as exc:
+            print(f'[compiler] _copy_drawing_image failed: {exc}')
+            return None
 
     def _embed_ole(self, ole_bytes: bytes, work_dir: str) -> str:
         """Write OLE bytes to word/embeddings/ and register the relationship."""
@@ -998,33 +1123,61 @@ class DocxCompiler:
 
     def _build_omath_para(self, elem: dict) -> ET.Element:
         """
-        Build a <w:p> containing an Office Math (OMML) block.
+        Build a <w:p> containing an Office Math (OMML) block or inline formula.
 
-        If ``formula`` is a valid XML fragment it is embedded directly.
-        Plain-text formulas are wrapped in a minimal <m:r><m:t> element.
-        The formula index (e.g. "(4-1)") is appended as a plain run.
+        Inline (text_before or text_after present):
+            text_before run + <m:oMath> + text_after run in one paragraph.
+        Block:
+            <m:oMathPara><m:oMath>…</m:oMathPara> with optional formula_index run.
         """
         formula       = (elem.get('formula') or '').strip()
         formula_index = (elem.get('formula_index') or '').strip()
+        text_before   = (elem.get('text_before') or '').strip()
+        text_after    = (elem.get('text_after')  or '').strip()
+        is_inline     = bool(text_before or text_after or elem.get('is_inline'))
 
-        p         = ET.Element(_q('p'))
-        oMathPara = ET.SubElement(p, _qm('oMathPara'))
-        oMath     = ET.SubElement(oMathPara, _qm('oMath'))
+        p = ET.Element(_q('p'))
 
-        if formula.startswith('<'):
-            formula_elem = _parse_xml(formula)
-            if formula_elem is not None:
-                oMath.append(formula_elem)
+        if is_inline:
+            if text_before:
+                r_before = ET.SubElement(p, _q('r'))
+                t_before = ET.SubElement(r_before, _q('t'))
+                t_before.text = text_before
+                t_before.set(XML_SPACE, 'preserve')
+
+            oMath = ET.SubElement(p, _qm('oMath'))
+            if formula.startswith('<'):
+                formula_elem = _parse_xml(formula)
+                if formula_elem is not None:
+                    oMath.append(formula_elem)
+                else:
+                    _math_text(oMath, formula)
             else:
                 _math_text(oMath, formula)
-        else:
-            _math_text(oMath, formula)
 
-        if formula_index:
-            r = ET.SubElement(p, _q('r'))
-            t = ET.SubElement(r, _q('t'))
-            t.text = f'  {formula_index}'
-            t.set(XML_SPACE, 'preserve')
+            if text_after:
+                r_after = ET.SubElement(p, _q('r'))
+                t_after = ET.SubElement(r_after, _q('t'))
+                t_after.text = text_after
+                t_after.set(XML_SPACE, 'preserve')
+        else:
+            oMathPara = ET.SubElement(p, _qm('oMathPara'))
+            oMath     = ET.SubElement(oMathPara, _qm('oMath'))
+
+            if formula.startswith('<'):
+                formula_elem = _parse_xml(formula)
+                if formula_elem is not None:
+                    oMath.append(formula_elem)
+                else:
+                    _math_text(oMath, formula)
+            else:
+                _math_text(oMath, formula)
+
+            if formula_index:
+                r = ET.SubElement(p, _q('r'))
+                t = ET.SubElement(r, _q('t'))
+                t.text = f'  {formula_index}'
+                t.set(XML_SPACE, 'preserve')
 
         return p
 
@@ -1110,6 +1263,102 @@ class DocxCompiler:
 
 
 # ── Module-level structural helpers ───────────────────────────────────────────
+
+def _visual_width(s: str) -> int:
+    """CJK characters count as 2 units, everything else as 1."""
+    return sum(2 if '一' <= c <= '鿿' else 1 for c in s)
+
+
+def _max_line_width(cell_text: str) -> int:
+    """
+    Visual width of the widest 'virtual line' in a cell.
+
+    Two normalisation steps:
+    1. Splits on real newlines and literal \\n.
+    2. For mixed CJK+ASCII lines (Chinese academic table-header convention:
+       CJK label on one virtual line, ASCII/symbol unit on another),
+       treats the CJK portion and non-CJK portion as separate virtual lines
+       and returns the wider of the two.
+    """
+    text = (cell_text or '').replace('\\n', '\n')
+    lines = text.split('\n')
+    max_w = 0
+    for line in lines:
+        if not line:
+            continue
+        cjk_w = sum(2 for c in line if '一' <= c <= '鿿')
+        rest_w = sum(1 for c in line if not ('一' <= c <= '鿿'))
+        if cjk_w > 0 and rest_w > 0:
+            # Mixed CJK+ASCII: treat each part as a separate virtual line
+            w = max(cjk_w, rest_w)
+        else:
+            w = cjk_w or rest_w
+        if w > max_w:
+            max_w = w
+    return max_w or 1
+
+
+def _rebalance_col_widths(tbl: ET.Element, ext_rows: list) -> None:
+    """
+    Redistribute column widths proportionally by cell content.
+
+    Weight per column = max visual width of any line in any cell of that column.
+    Total width is fixed at _TABLE_TEXT_WIDTH_TWIPS.
+    Updates both <w:tblGrid> and every <w:tcPr>/<w:tcW> in-place.
+    """
+    if not ext_rows:
+        return
+    num_cols = max(len(row) for row in ext_rows)
+    if num_cols == 0:
+        return
+
+    weights = [0] * num_cols
+    for row in ext_rows:
+        for col_i, cell in enumerate(row):
+            if col_i >= num_cols:
+                break
+            col_w = _max_line_width(cell.get('text', ''))
+            if col_w > weights[col_i]:
+                weights[col_i] = col_w
+
+    total_weight = sum(weights) or num_cols
+    if total_weight == 0:
+        weights = [1] * num_cols
+        total_weight = num_cols
+
+    col_widths = [max(1, int(w / total_weight * _TABLE_TEXT_WIDTH_TWIPS)) for w in weights]
+    # Absorb rounding error into the last column
+    col_widths[-1] += _TABLE_TEXT_WIDTH_TWIPS - sum(col_widths)
+
+    # Rewrite <w:tblGrid>
+    tblPr   = tbl.find(_q('tblPr'))
+    tblGrid = tbl.find(_q('tblGrid'))
+    if tblGrid is None:
+        tblGrid = ET.Element(_q('tblGrid'))
+        insert_at = (list(tbl).index(tblPr) + 1) if tblPr is not None else 0
+        tbl.insert(insert_at, tblGrid)
+    else:
+        for gc in tblGrid.findall(_q('gridCol')):
+            tblGrid.remove(gc)
+    for w in col_widths:
+        gc = ET.SubElement(tblGrid, _q('gridCol'))
+        gc.set(_q('w'), str(w))
+
+    # Rewrite <w:tcPr>/<w:tcW> for every cell
+    for tr in tbl.findall(_q('tr')):
+        for col_i, tc in enumerate(tr.findall(_q('tc'))):
+            if col_i >= num_cols:
+                break
+            tcPr = tc.find(_q('tcPr'))
+            if tcPr is None:
+                tcPr = ET.Element(_q('tcPr'))
+                tc.insert(0, tcPr)
+            tcW = tcPr.find(_q('tcW'))
+            if tcW is None:
+                tcW = ET.SubElement(tcPr, _q('tcW'))
+            tcW.set(_q('w'),    str(col_widths[col_i]))
+            tcW.set(_q('type'), 'dxa')
+
 
 def _minimal_tbl() -> ET.Element:
     """Bare <w:tbl> with the minimum valid structure."""

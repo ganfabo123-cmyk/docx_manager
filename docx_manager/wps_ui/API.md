@@ -100,7 +100,7 @@
 | 函数 | 作用 |
 |------|------|
 | `insert_image_after_paragraph(docx_path, anchor_text, image_path, caption, close_after=True, cnt=0)` | 在 anchor_text 段落后插入单图+图题+设置尺寸；`close_after=False` 时只保存不关闭；`cnt>0` 时跳过属性面板裁剪tab点击 |
-| `insert_n_image_after_paragraph(docx_path, anchor_text, items)` | 批量单列插入，`items=[(image_path, caption), ...]`；第2轮起自动以上一轮 caption 为 anchor |
+| `insert_n_images_one_col(docx_path, anchor_text, items)` | 批量单列插入，`items=[(image_path, caption), ...]`；第2轮起自动以上一轮 caption 为 anchor |
 
 ---
 

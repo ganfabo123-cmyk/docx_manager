@@ -19,6 +19,26 @@ W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 MATH_NS = "http://schemas.openxmlformats.org/officeDocument/2006/math"
 V_NS = "urn:schemas-microsoft-com:vml"
 
+_LABEL_RE       = re.compile(r'\(\d+-\d+\)')
+_MODE1_RE       = re.compile(r'^图\s+\d+-\d+\s{2}')   # 图 X-X  内容（独立图题）
+_MODE2_RE       = re.compile(r'^\([a-zA-Z]\)\s')        # (n) 内容（子图题）
+_FIG_CAPTION_RE = re.compile(r'^图\s+\d+-\d+\s{2}|^\([a-zA-Z]\)\s')
+
+
+def _split_mode2(text: str) -> list[str]:
+    """将 '(a) xxx; (b) yyy' 等 Mode2 段落拆分为独立子图题列表。"""
+    markers = list(re.finditer(r'\([a-zA-Z]\)\s', text))
+    if not markers:
+        return [text]
+    result = []
+    for i, m in enumerate(markers):
+        start = m.start()
+        end = markers[i + 1].start() if i + 1 < len(markers) else len(text)
+        part = text[start:end].strip().rstrip(';').strip()
+        if part:
+            result.append(part)
+    return result
+
 
 class DocxParser:
     """DOCX文档样式解析器"""
@@ -142,30 +162,18 @@ class DocxParser:
         return style_info
     
     def _parse_paragraph(self, paragraph: Paragraph) -> Optional[Dict[str, Any]]:
+        """仅处理普通文本段落，公式与图片由 parse() 在上层分流。"""
         text = paragraph.text.strip()
-        style_info = self._get_paragraph_style(paragraph)
-        
-        formula_result = self._parse_formula(paragraph)
-        if formula_result:
-            return formula_result
-        
-        image_result = self._parse_image(paragraph)
-        if image_result:
-            return image_result
-        
         if not text:
             return None
-        
+        style_info = self._get_paragraph_style(paragraph)
         element_type = "body"
         if style_info["is_heading"]:
             element_type = f"heading{style_info['heading_level']}"
-        
         element_id = self._get_next_id()
-        
         citations = self._extract_superscript_citations(paragraph, element_id)
         if citations:
             self.citations.extend(citations)
-        
         return {
             "id": element_id,
             "type": element_type,
@@ -204,137 +212,136 @@ class DocxParser:
             "style": style_info
         }
     
-    def _parse_image(self, paragraph: Paragraph) -> Optional[Dict[str, Any]]:
+    def _parse_images(self, paragraph: Paragraph) -> list[dict]:
+        """提取段落内所有用户插入的内嵌图片，返回 image dict 列表。
+        只处理 wp:inline（嵌入型），跳过 wp:anchor（浮动/模板图）。
+        caption 留空，由 parse() 按全文序号填入。"""
+        results = []
         for run in paragraph.runs:
-            drawings = run._element.findall(".//" + qn("w:drawing"))
-            for drawing in drawings:
-                blips = drawing.findall(".//" + qn("a:blip"))
-                for blip in blips:
+            for drawing in run._element.findall(".//" + qn("w:drawing")):
+                inline = drawing.find(qn("wp:inline"))
+                if inline is None:
+                    continue  # 跳过浮动型锚点图
+                for blip in drawing.findall(".//" + qn("a:blip")):
                     embed_attr = blip.get(qn("r:embed"))
-                    if embed_attr:
-                        try:
-                            image_part = self.doc.part.related_parts.get(embed_attr)
-                            if image_part:
-                                image_bytes = image_part.blob
-                                ext = image_part.content_type.split('/')[-1]
-                                if ext == 'jpeg':
-                                    ext = 'jpg'
-                                base64_str = base64.b64encode(image_bytes).decode('utf-8')
-                                
-                                caption = paragraph.text.strip()
-                                
-                                width_emus = None
-                                inline = drawing.find(qn("wp:inline"))
-                                if inline is not None:
-                                    extent = inline.find(qn("wp:extent"))
-                                    if extent is not None:
-                                        cx = extent.get(qn("w:cx"))
-                                        if cx:
-                                            width_emus = int(cx)
-                                
-                                width_inches = None
-                                if width_emus:
-                                    width_inches = width_emus / 914400
-                                
-                                style_info = {
-                                    "style_name": "Image",
-                                    "format": ext,
-                                    "width_inches": width_inches
-                                }
-                                
-                                return {
-                                    "id": self._get_next_id(),
-                                    "type": "image",
-                                    "content": {
-                                        "base64": base64_str,
-                                        "caption": caption
-                                    },
-                                    "style": style_info
-                                }
-                        except Exception as e:
-                            print(f"解析图片时出错: {e}")
-                            traceback.print_exc()
-            
-            picts = run._element.findall(".//" + qn("w:pict"))
-            for pict in picts:
-                imagedatas = pict.findall(".//{" + V_NS + "}imagedata")
-                for imagedata in imagedatas:
-                    embed_attr = imagedata.get("{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id")
-                    if embed_attr:
-                        try:
-                            image_part = self.doc.part.related_parts.get(embed_attr)
-                            if image_part:
-                                image_bytes = image_part.blob
-                                ext = image_part.content_type.split('/')[-1]
-                                if ext == 'jpeg':
-                                    ext = 'jpg'
-                                if ext == 'x-wmf':
-                                    ext = 'wmf'
-                                base64_str = base64.b64encode(image_bytes).decode('utf-8')
-                                
-                                caption = paragraph.text.strip()
-                                
-                                style_info = {
-                                    "style_name": "Image",
-                                    "format": ext,
-                                    "width_inches": None
-                                }
-                                
-                                return {
-                                    "id": self._get_next_id(),
-                                    "type": "image",
-                                    "content": {
-                                        "base64": base64_str,
-                                        "caption": caption
-                                    },
-                                    "style": style_info
-                                }
-                        except Exception as e:
-                            print(f"解析VML图片时出错: {e}")
-                            traceback.print_exc()
-        return None
+                    if not embed_attr:
+                        continue
+                    try:
+                        image_part = self.doc.part.related_parts.get(embed_attr)
+                        if not image_part:
+                            continue
+                        image_bytes = image_part.blob
+                        ext = image_part.content_type.split('/')[-1]
+                        if ext == 'jpeg':
+                            ext = 'jpg'
+                        base64_str = base64.b64encode(image_bytes).decode('utf-8')
+                        width_inches = None
+                        extent = inline.find(qn("wp:extent"))
+                        if extent is not None:
+                            cx = extent.get("cx")
+                            if cx:
+                                width_inches = int(cx) / 914400
+                        results.append({
+                            "id": self._get_next_id(),
+                            "type": "image",
+                            "base64": base64_str,
+                            "caption": "",
+                            "width": width_inches,
+                            "height": width_inches,
+                            "position": "center",
+                        })
+                    except Exception as e:
+                        print(f"解析图片时出错: {e}")
+                        traceback.print_exc()
+            for pict in run._element.findall(".//" + qn("w:pict")):
+                for imagedata in pict.findall(".//{" + V_NS + "}imagedata"):
+                    embed_attr = imagedata.get(
+                        "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id"
+                    )
+                    if not embed_attr:
+                        continue
+                    try:
+                        image_part = self.doc.part.related_parts.get(embed_attr)
+                        if not image_part:
+                            continue
+                        image_bytes = image_part.blob
+                        ext = image_part.content_type.split('/')[-1]
+                        if ext == 'jpeg':
+                            ext = 'jpg'
+                        if ext in ('x-wmf', 'wmf'):
+                            continue  # WMF 几乎都是 OLE 公式预览，跳过
+                        base64_str = base64.b64encode(image_bytes).decode('utf-8')
+                        results.append({
+                            "id": self._get_next_id(),
+                            "type": "image",
+                            "base64": base64_str,
+                            "caption": "",
+                            "width": width_inches,
+                            "height": width_inches,
+                            "position": "center",
+                        })
+                    except Exception as e:
+                        print(f"解析VML图片时出错: {e}")
+                        traceback.print_exc()
+        return results
     
+    def _extract_surrounding_text(self, paragraph: Paragraph, math_elem) -> tuple:
+        before_parts = []
+        after_parts = []
+        found = False
+
+        for child in paragraph._element:
+            if child is math_elem or math_elem in child.iter():
+                found = True
+                continue
+            text = "".join(t.text or "" for t in child.findall(f".//{{{W}}}t"))
+            if not text:
+                continue
+            if not found:
+                before_parts.append(text)
+            else:
+                after_parts.append(text)
+
+        text_before = "".join(before_parts).strip() or None
+        text_after = _LABEL_RE.sub("", "".join(after_parts)).strip() or None
+        return text_before, text_after
+
     def _parse_formula(self, paragraph: Paragraph) -> Optional[Dict[str, Any]]:
         omath_paras = paragraph._element.findall(".//" + f"{{{MATH_NS}}}oMathPara")
         
         for omath_para in omath_paras:
             try:
                 omml_str = ET.tostring(omath_para, encoding="unicode", method="xml")
-                
-                label = ""
-                text = paragraph.text.strip()
-                if text:
-                    label_match = re.search(r'\([^)]+\)', text)
-                    if label_match:
-                        label = label_match.group()
-                
-                return {
-                    "type": "formula",
-                    "label": label,
-                    "omml": omml_str
-                }
+
+                label_match = _LABEL_RE.search(paragraph.text)
+                label = label_match.group() if label_match else ""
+                text_before, text_after = self._extract_surrounding_text(paragraph, omath_para)
+
+                result = {"type": "formula", "label": label, "omml": omml_str}
+                if text_before:
+                    result["text_before"] = text_before
+                if text_after:
+                    result["text_after"] = text_after
+                return result
             except Exception as e:
                 print(f"解析公式时出错: {e}")
                 traceback.print_exc()
-        
+
         omaths = paragraph._element.findall(".//" + f"{{{MATH_NS}}}oMath")
         if omaths:
             try:
                 omml_str = ET.tostring(omaths[0], encoding="unicode", method="xml")
-                
-                label = ""
-                text = paragraph.text.strip()
-                if text:
-                    label_match = re.search(r'\([^)]+\)', text)
-                    if label_match:
-                        label = label_match.group()
-                
-                return {
-                    "type": "formula",
-                    "label": label,
-                    "omml": omml_str,
-                    "is_inline": True
-                }
+
+                label_match = _LABEL_RE.search(paragraph.text)
+                label = label_match.group() if label_match else ""
+                text_before, text_after = self._extract_surrounding_text(paragraph, omaths[0])
+
+                result = {"type": "formula", "label": label, "omml": omml_str, "is_inline": True}
+                if text_before:
+                    result["text_before"] = text_before
+                if text_after:
+                    result["text_after"] = text_after
+                return result
             except Exception as e:
                 print(f"解析公式时出错: {e}")
                 traceback.print_exc()
@@ -369,13 +376,10 @@ class DocxParser:
                                 ole_bytes = ole_part.blob
                                 base64_str = base64.b64encode(ole_bytes).decode('utf-8')
                                 
-                                label = ""
-                                text = paragraph.text.strip()
-                                if text:
-                                    label_match = re.search(r'\([^)]+\)', text)
-                                    if label_match:
-                                        label = label_match.group()
-                                
+                                label_match = _LABEL_RE.search(paragraph.text)
+                                label = label_match.group() if label_match else ""
+                                text_before, text_after = self._extract_surrounding_text(paragraph, obj)
+
                                 shape_elem = obj.find(".//" + f"{{{V_NS}}}shape")
                                 width_pt = None
                                 height_pt = None
@@ -410,14 +414,18 @@ class DocxParser:
                                     "ole_base64": base64_str,
                                     "prog_id": prog_id
                                 }
-                                
+
+                                if text_before:
+                                    result["text_before"] = text_before
+                                if text_after:
+                                    result["text_after"] = text_after
                                 if image_base64:
                                     result["image_base64"] = image_base64
                                 if width_pt is not None:
                                     result["width_pt"] = width_pt
                                 if height_pt is not None:
                                     result["height_pt"] = height_pt
-                                
+
                                 return result
                     except Exception as e:
                         print(f"解析OLE公式时出错: {e}")
@@ -425,21 +433,86 @@ class DocxParser:
         
         return None
     
+    def _prescan_captions(self) -> tuple[list[str], set[int]]:
+        """全文预扫描，收集所有可匹配图题的段落。
+
+        规则：
+          Mode 2  (n) xxx          → 子图题，按 (字母) 拆分为独立条目后收录
+          Mode 1  图 X-X  xxx      → 独立图题，收录
+          Mode 1 紧跟 Mode 2 之后  → 总图题，不收录（保留为正文）
+        空段落不重置状态机。
+        返回：(有序图题列表, 需跳过的 body 子元素索引集合)
+        """
+        captions: list[str] = []
+        skip_indices: set[int] = set()   # body 子元素的位置索引，与 id() 无关
+        prev_mode2 = False
+
+        body_children = list(self.doc.element.body)
+        for idx, element in enumerate(body_children):
+            if element.tag != f"{{{W}}}p":
+                prev_mode2 = False
+                continue
+            text = Paragraph(element, self.doc).text.strip()
+            if not text:
+                continue  # 空段落不改变状态
+
+            if _MODE2_RE.match(text):
+                captions.extend(_split_mode2(text))   # 拆分后逐条收录
+                skip_indices.add(idx)
+                prev_mode2 = True
+            elif _MODE1_RE.match(text):
+                if not prev_mode2:
+                    captions.append(text)
+                    skip_indices.add(idx)
+                # prev_mode2=True 时：总图题，不收录，不跳过（保留为正文）
+                prev_mode2 = False
+            else:
+                prev_mode2 = False
+
+        return captions, skip_indices
+
     def parse(self) -> List[Dict[str, Any]]:
         self.elements = []
         self.citations = []
-        
-        for element in self.doc.element.body:
+
+        # Phase 1: 全文预扫描图题
+        captions, caption_skip_indices = self._prescan_captions()
+        caption_cursor = 0
+
+        # Phase 2: 主循环，用索引判断跳过（避免 lxml proxy id() 不稳定的问题）
+        body_children = list(self.doc.element.body)
+        for idx, element in enumerate(body_children):
+            if idx in caption_skip_indices:
+                continue
+
             if element.tag == f"{{{W}}}p":
                 paragraph = Paragraph(element, self.doc)
+
+                formula_result = self._parse_formula(paragraph)
+                if formula_result:
+                    self.elements.append(formula_result)
+                    continue
+
+                images = self._parse_images(paragraph)
+                if images:
+                    for img in images:
+                        img['caption'] = (
+                            captions[caption_cursor]
+                            if caption_cursor < len(captions)
+                            else ""
+                        )
+                        caption_cursor += 1
+                        self.elements.append(img)
+                    continue
+
                 result = self._parse_paragraph(paragraph)
                 if result:
                     self.elements.append(result)
+
             elif element.tag == f"{{{W}}}tbl":
                 table = Table(element, self.doc.element.body)
-                result = self._parse_table(table)
-                self.elements.append(result)
-        
+                self.elements.append(self._parse_table(table))
+
         return self.elements
     
     def get_citations(self) -> List[Dict[str, Any]]:

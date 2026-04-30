@@ -5,3 +5,4 @@ download/
 docx_manager/wps_ui/assets
 *.docx
 *.png
+docx_manager/docx_engine/outputs/*

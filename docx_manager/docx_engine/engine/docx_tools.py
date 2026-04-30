@@ -622,10 +622,13 @@ def insert_equation(
     omml:         Optional[str]   = None,   # OMML XML fragment → omath 模式
     ole_base64:   Optional[str]   = None,   # OLE 二进制 base64 → ole 模式
     image_base64: Optional[str]   = None,   # OLE 预览图 base64（可选，暂存备用）
-    label:        Optional[str]   = None,   # 无法渲染时的占位文字
+    label:        Optional[str]   = None,   # 公式编号，如 "(1-1)"；OLE 无法渲染时作占位文字
     width_pt:     Optional[float] = None,   # OLE 显示宽度（点）
     height_pt:    Optional[float] = None,   # OLE 显示高度（点）
     prog_id:      Optional[str]   = None,   # OLE ProgID（默认 Equation.3）
+    text_before:  Optional[str]   = None,   # 公式前的行内文字，如 "式中"
+    text_after:   Optional[str]   = None,   # 公式后的行内文字，如 "——粒子直径（m）；"
+    is_inline:    Optional[bool]  = None,   # True → 行内公式（嵌入正文句子中）
 ) -> None:
     """
     插入公式 body_element。
@@ -638,6 +641,10 @@ def insert_equation(
     suffix          : 公式编号, 如 "(4-1)"
     suffix_position : "right"    → 编号紧跟公式同行
                       "new_line" → 编号另起一行
+    text_before / text_after:
+        行内公式时公式前后的文字片段，由 docx_compiler 拼入同一段落。
+    is_inline:
+        True 时编译器将公式嵌入文本段落；False/None 时按独立居中公式行排版。
     """
     # ── 自动推断 category ────────────────────────────────────────────────────────
     if ole_base64:
@@ -653,17 +660,24 @@ def insert_equation(
     else:  # ole
         formula = label or expression
 
+    # label 同时作为公式编号 suffix 的来源（当 suffix 未单独传入时）
+    resolved_suffix = suffix or label or ""
+
     elem: dict = {
         "index":           _next_idx(),
         "type":            category,
         "formula":         formula,
-        "formula_index":   suffix or "",
+        "formula_index":   resolved_suffix,
         "position":        position,
         "suffix_position": suffix_position,
     }
+    if is_inline:
+        elem["is_inline"] = True
+    if text_before:
+        elem["text_before"] = text_before
+    if text_after:
+        elem["text_after"] = text_after
     if category == "ole":
-        # base64 非空时编译器写入 word/embeddings/ 并渲染 OLE 对象；
-        # 空字符串时退回纯文本占位符。
         elem["base64"] = ole_base64 or ""
         elem["image_base64"] = image_base64 or ""
         if width_pt  is not None: elem["width_pt"]  = width_pt
