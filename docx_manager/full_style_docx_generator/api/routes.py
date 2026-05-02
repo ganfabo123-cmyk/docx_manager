@@ -627,3 +627,56 @@ def register_routes(app):
             print(f"❌ [CRITICAL ERROR] /text-to-docx 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    @app.route('/detect-formulas', methods=['GET'])
+    def detect_formulas():
+        print("\n" + "="*50)
+        print(f"🌐 [API IN] 收到请求: GET /detect-formulas")
+        try:
+            from core.formula.detector import detect_formula_blocks
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            json_path = os.path.join(data_dir, 'backfilled_styles.json')
+
+            if not os.path.exists(json_path):
+                print(f"❌ [ERROR] 找不到 backfilled_styles.json: {json_path}")
+                return jsonify({'error': 'No backfilled_styles.json found. Please run backfill-styles first.'}), 404
+
+            with open(json_path, 'r', encoding='utf-8') as f:
+                elements = json.load(f)
+
+            suspected = detect_formula_blocks(elements)
+            print(f"✅ [SUCCESS] 从 {len(elements)} 个元素中检测到 {len(suspected)} 个疑似公式块")
+            print("🏁 [API OUT] 请求处理成功返回 200")
+
+            return jsonify({'suspected_formulas': suspected, 'count': len(suspected)}), 200
+        except Exception as e:
+            print(f"❌ [CRITICAL ERROR] /detect-formulas 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    @app.route('/convert-formulas', methods=['POST'])
+    def convert_formulas():
+        print("\n" + "="*50)
+        print(f"🌐 [API IN] 收到请求: POST /convert-formulas")
+        try:
+            from core.formula.converter import convert_formula_list
+            data = request.json or {}
+            formula_items = data.get('formulas', [])
+
+            print(f"📦 [PAYLOAD] 接收到 {len(formula_items)} 个公式条目")
+
+            if not formula_items:
+                print("❌ [ERROR] 未提供 formulas 数据")
+                return jsonify({'error': 'No formulas provided'}), 400
+
+            results = convert_formula_list(formula_items)
+
+            failed = [r for r in results if r.get('error')]
+            print(f"✅ [SUCCESS] 转换完成: {len(results) - len(failed)} 成功, {len(failed)} 失败")
+            print("🏁 [API OUT] 请求处理成功返回 200")
+
+            return jsonify({'results': results, 'total': len(results), 'failed': len(failed)}), 200
+        except Exception as e:
+            print(f"❌ [CRITICAL ERROR] /convert-formulas 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500

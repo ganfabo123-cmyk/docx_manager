@@ -241,7 +241,6 @@ def _run_pipeline(input_docx: str, job_dir: Path) -> tuple[str, list[dict]]:
 
 
 # ── Routes ─────────────────────────────────────────────────────────────────────
-
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"})

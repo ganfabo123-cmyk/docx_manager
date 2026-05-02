@@ -3,7 +3,9 @@
     "allow": [
       "Bash(python *)",
       "Bash(conda run *)",
-      "Bash(conda env *)"
+      "Bash(conda env *)",
+      "PowerShell(New-Item *)",
+      "Bash(echo.)"
     ]
   }
 }
