@@ -22,7 +22,7 @@ _MATH_EXPRESSION = re.compile(
 
 
 def is_suspected_formula(content: str) -> bool:
-    if not content or not content.strip():
+    if not content or not isinstance(content,str) or not content.strip():
         return False
     return bool(
         _LATEX_COMMANDS.search(content)

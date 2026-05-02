@@ -5,7 +5,9 @@
       "Bash(conda run *)",
       "Bash(conda env *)",
       "PowerShell(New-Item *)",
-      "Bash(echo.)"
+      "Bash(echo.)",
+      "PowerShell(Start-Sleep -Seconds 3; Invoke-RestMethod -Uri \"http://localhost:5000/process-formulas\" -Method GET | ConvertTo-Json -Depth 10)",
+      "PowerShell(Start-Sleep -Seconds 4; Invoke-RestMethod -Uri \"http://localhost:5000/process-formulas\" -Method GET | ConvertTo-Json -Depth 10)"
     ]
   }
 }

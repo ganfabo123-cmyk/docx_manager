@@ -2,6 +2,8 @@
 
 ## 数据流总览
 
+### 方案 A：使用 hiagent 平台（原方案）
+
 ```
 backfilled_styles.json
         ↓
@@ -10,7 +12,7 @@ backfilled_styles.json
         ↓
 [客户端 hiagent Handler 1] 获取疑似公式
         ↓
-[客户端 LLM] 识别并提取公式内容（外部，非本模块）
+[客户端 LLM] 识别并提取公式内容
         ↓
 [客户端 hiagent Handler 2] 发送确认公式列表
         ↓
@@ -19,6 +21,36 @@ backfilled_styles.json
         ↓
 返回 omath 结果列表
 ```
+
+### 方案 B：使用 BaseAgent（当前方案）
+
+LLM 调用移至服务端，客户端只需触发一个路由，服务端完成全部三步。
+
+```
+backfilled_styles.json
+        ↓
+[服务端] GET /process-formulas
+  ├─ Step 1: 规则检测 → 疑似公式列表
+  │          detector.detect_formula_blocks()
+  │
+  ├─ Step 2: LLM 提取 → 确认公式列表
+  │          base_agent.call_structured(system, user, FormulaListResponse)
+  │          返回: [{id, text_before, latex_formula, text_after, label}, ...]
+  │
+  └─ Step 3: 转换 → omath
+             converter.convert_formula_list()
+        ↓
+返回: [{id, text_before, omath, text_after, label}, ...]
+```
+
+**与方案 A 的对比**：
+
+| | 方案 A (hiagent) | 方案 B (BaseAgent) |
+|--|--|--|
+| 客户端路由数 | 2 个 Handler | 0（仅触发） |
+| LLM 调用位置 | 客户端 | 服务端 |
+| 对外暴露接口 | `/detect-formulas` + `/convert-formulas` | `/process-formulas` |
+| 灵活性 | 受平台限制 | 可控模型/参数/重试 |
 
 ---
 
@@ -222,3 +254,5 @@ MathML (W3C 标准 XML)
 **XSL 文件位置**：`core/formula/assets/MML2OMML.XSL`（来源：Microsoft Office 安装目录）
 
 **XSLT 对象全局缓存**：`converter.py` 中 `_transform` 为模块级单例，首次调用时初始化，避免重复解析 XSL。
+
+

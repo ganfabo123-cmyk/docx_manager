@@ -635,11 +635,11 @@ def register_routes(app):
         try:
             from core.formula.detector import detect_formula_blocks
             data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
-            json_path = os.path.join(data_dir, 'backfilled_styles.json')
+            json_path = os.path.join(data_dir, 'parsed_blocks.json')
 
             if not os.path.exists(json_path):
-                print(f"❌ [ERROR] 找不到 backfilled_styles.json: {json_path}")
-                return jsonify({'error': 'No backfilled_styles.json found. Please run backfill-styles first.'}), 404
+                print(f"❌ [ERROR] 找不到 parsed_blocks.json: {json_path}")
+                return jsonify({'error': 'No parsed_blocks.json found. Please run backfill-styles first.'}), 404
 
             with open(json_path, 'r', encoding='utf-8') as f:
                 elements = json.load(f)
@@ -678,5 +678,125 @@ def register_routes(app):
             return jsonify({'results': results, 'total': len(results), 'failed': len(failed)}), 200
         except Exception as e:
             print(f"❌ [CRITICAL ERROR] /convert-formulas 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    @app.route('/process-formulas', methods=['GET'])
+    def process_formulas():
+        print("\n" + "="*50)
+        print(f"🌐 [API IN] 收到请求: GET /process-formulas")
+        try:
+            from core.formula.detector import detect_formula_blocks
+            from core.formula.converter import convert_formula_list
+            from core.formula.models import FormulaListResponse
+            from utils.base_agent import call_structured
+
+            # Step 1: 读取数据
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            json_path = os.path.join(data_dir, 'parsed_blocks.json')
+
+            if not os.path.exists(json_path):
+                print(f"❌ [ERROR] 找不到 parsed_blocks.json")
+                return jsonify({'error': 'No parsed_blocks.json found. Please run backfill-parsed_blocks first.'}), 404
+
+            with open(json_path, 'r', encoding='utf-8') as f:
+                elements = json.load(f).get("text_elements",[])
+
+            # Step 2: 规则检测疑似公式
+            suspected = detect_formula_blocks(elements)
+            print(f"🔍 [DETECT] 从 {len(elements)} 个元素中检测到 {len(suspected)} 个疑似公式块")
+
+            if not suspected:
+                print("✅ [SUCCESS] 未检测到公式，直接返回")
+                return jsonify({'results': []}), 200
+
+            # Step 3: LLM 提取确认公式
+            system_prompt = (
+                "你是一个数学公式提取器。你会收到一组文本元素（每个元素含 id 和 content），"
+                "任务是从中识别并提取数学公式，将其转换为标准 LaTeX 格式。\n\n"
+                "判断规则：\n"
+                "- 明确的数学表达式（含变量、运算符、等式）\n"
+                "- LaTeX 语法片段（如 \\frac、\\sum、\\int 等）\n"
+                "- 含数学符号的文本（∑ ∫ √ ± × ÷ ∞ 等）\n"
+                "- 上下标结构（x² a₁ 等）\n\n"
+                "不视为公式：纯自然语言描述、单独的数字或百分比、无意义符号。\n\n"
+                "提取规则：\n"
+                "- 行内公式：text_before 填公式前文本，latex_formula 填公式，text_after 填公式后文本，label 为空\n"
+                "- 块级公式：text_before 和 text_after 为空，label 填编号（如 (4-1)）或空，latex_formula 填公式本体\n"
+                "- 不含公式的元素不出现在输出中\n"
+                "- latex_formula 只写公式本体，不加 $ 符号"
+            )
+            user_prompt = json.dumps(suspected, ensure_ascii=False)
+
+            formula_response = call_structured(system_prompt, user_prompt, FormulaListResponse)
+            print(f"🤖 [LLM] 确认提取到 {len(formula_response.formulas)} 个公式")
+
+            if not formula_response.formulas:
+                print("✅ [SUCCESS] LLM 确认无有效公式")
+                return jsonify({'results': []}), 200
+
+            # Step 4: latex → omath
+            formula_dicts = [f.model_dump() for f in formula_response.formulas]
+            results = convert_formula_list(formula_dicts)
+
+            failed = [r for r in results if r.get('error')]
+            print(f"✅ [SUCCESS] omath 转换完成，{len(results) - len(failed)} 成功，{len(failed)} 失败")
+            print("🏁 [API OUT] 请求处理成功返回 200")
+
+            return jsonify({'results': results}), 200
+        except Exception as e:
+            print(f"❌ [CRITICAL ERROR] /process-formulas 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    @app.route('/backfill-formulas', methods=['POST'])
+    def backfill_formulas():
+        print("\n" + "="*50)
+        print(f"[API IN] POST /backfill-formulas")
+        try:
+            data = request.json or {}
+            results = data.get('results', [])
+
+            if not results:
+                return jsonify({'error': 'No results provided'}), 400
+
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            json_path = os.path.join(data_dir, 'backfilled_styles.json')
+
+            if not os.path.exists(json_path):
+                return jsonify({'error': 'No backfilled_styles.json found'}), 404
+
+            with open(json_path, 'r', encoding='utf-8') as f:
+                elements = json.load(f)
+
+            id_to_elem = {e.get('id'): e for e in elements}
+
+            updated = 0
+            for item in results:
+                elem_id = item.get('id')
+                if elem_id not in id_to_elem:
+                    continue
+                omath = item.get('omath', '')
+                if not omath:
+                    continue
+                text_before = item.get('text_before', '')
+                text_after = item.get('text_after', '')
+                formula_type = 'formula_inline' if (text_before or text_after) else 'formula_block'
+                id_to_elem[elem_id]['type'] = formula_type
+                id_to_elem[elem_id]['formula'] = {
+                    'text_before': text_before,
+                    'omath': omath,
+                    'text_after': text_after,
+                    'label': item.get('label', ''),
+                }
+                updated += 1
+
+            with open(json_path, 'w', encoding='utf-8') as f:
+                json.dump(elements, f, ensure_ascii=False, indent=2)
+
+            print(f"[SUCCESS] 回填完成，更新了 {updated} 个公式元素")
+            return jsonify({'updated': updated}), 200
+        except Exception as e:
+            print(f"[CRITICAL ERROR] /backfill-formulas 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
