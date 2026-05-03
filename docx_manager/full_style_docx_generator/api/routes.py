@@ -683,7 +683,7 @@ def register_routes(app):
         print(f"🌐 [API IN] 收到请求: GET /process-formulas")
         try:
             from core.formula.detector import detect_formula_blocks, merge_formula_blocks
-            from core.formula.converter import convert_formula_list
+            from core.formula.converter import convert_formula_list, scan_and_convert_dollar_inline
             from core.formula.models import FormulaListResponse
             from utils.base_agent import call_structured
 
@@ -698,14 +698,22 @@ def register_routes(app):
             with open(json_path, 'r', encoding='utf-8') as f:
                 elements = json.load(f).get("text_elements",[])
 
-            # Step 2: 合并 $$ 块内的多行片段，再规则检测疑似公式
+            # Step 2: 合并 $$ 块内的多行片段
             elements = merge_formula_blocks(elements)
+
+            # Step 2b: 直接转换 $...$ 行内公式，不走 LLM
+            dollar_results = scan_and_convert_dollar_inline(elements)
+            dollar_handled_ids = {r['id'] for r in dollar_results}
+            print(f"💲 [DOLLAR] 直接转换 $...$ 公式：{len(dollar_results)} 条，涉及 {len(dollar_handled_ids)} 个元素")
+
+            # Step 2c: 规则检测剩余疑似公式（排除已直接处理的元素）
             suspected = detect_formula_blocks(elements)
-            print(f"🔍 [DETECT] 从 {len(elements)} 个元素中检测到 {len(suspected)} 个疑似公式块")
+            suspected = [s for s in suspected if s['id'] not in dollar_handled_ids]
+            print(f"🔍 [DETECT] 从 {len(elements)} 个元素中检测到 {len(suspected)} 个待 LLM 处理的疑似公式块")
 
             if not suspected:
-                print("✅ [SUCCESS] 未检测到公式，直接返回")
-                return jsonify({'results': []}), 200
+                print("✅ [SUCCESS] 无需 LLM，仅返回 $...$ 直接转换结果")
+                return jsonify({'results': dollar_results}), 200
 
             # Step 3: LLM 提取确认公式（分批处理，每批 BATCH_SIZE 条）
             BATCH_SIZE = 7
@@ -739,15 +747,18 @@ def register_routes(app):
             print(f"🤖 [LLM] 共确认提取 {len(all_formulas)} 个公式")
 
             if not all_formulas:
-                print("✅ [SUCCESS] LLM 确认无有效公式")
-                return jsonify({'results': []}), 200
+                print("✅ [SUCCESS] LLM 确认无有效公式，仅返回 $...$ 直接转换结果")
+                return jsonify({'results': dollar_results}), 200
 
-            # Step 4: latex → omath
+            # Step 4: latex → omath（LLM 结果）
             formula_dicts = [f.model_dump() for f in all_formulas]
-            results = convert_formula_list(formula_dicts)
+            llm_results = convert_formula_list(formula_dicts)
 
-            failed = [r for r in results if r.get('error')]
-            print(f"✅ [SUCCESS] omath 转换完成，{len(results) - len(failed)} 成功，{len(failed)} 失败")
+            # 合并直接转换结果 + LLM 结果
+            results = dollar_results + llm_results
+
+            failed = [r for r in llm_results if r.get('error')]
+            print(f"✅ [SUCCESS] 合计 {len(results)} 条（$...$ 直接转换 {len(dollar_results)}，LLM {len(llm_results) - len(failed)} 成功 {len(failed)} 失败）")
             print("🏁 [API OUT] 请求处理成功返回 200")
 
             return jsonify({'results': results}), 200

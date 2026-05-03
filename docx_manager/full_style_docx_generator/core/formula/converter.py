@@ -1,6 +1,9 @@
+import re
 from pathlib import Path
 import latex2mathml.converter
 from lxml import etree
+
+_DOLLAR_INLINE = re.compile(r'\$([^$\n]+?)\$')
 
 _XSL_PATH = Path(__file__).parent / "assets" / "MML2OMML.XSL"
 _transform = None
@@ -20,6 +23,42 @@ def latex_to_omath(latex: str) -> str:
     transform = _get_transform()
     omml_doc = transform(mathml_doc)
     return etree.tostring(omml_doc, encoding="unicode")
+
+
+def scan_and_convert_dollar_inline(elements: list) -> list:
+    """扫描所有元素中的 $...$ 行内公式，直接转换，不经过 LLM。失败则跳过该公式。"""
+    results = []
+    for elem in elements:
+        content = elem.get('content', '')
+        matches = list(_DOLLAR_INLINE.finditer(content))
+        if not matches:
+            continue
+        segments = []
+        last_end = 0
+        for match in matches:
+            latex = match.group(1).strip()
+            omath = ''
+            try:
+                omath = latex_to_omath(latex)
+            except Exception:
+                pass
+            segments.append({
+                'text_before': content[last_end:match.start()],
+                'omath': omath,
+                'text_after': '',
+            })
+            last_end = match.end()
+        segments[-1]['text_after'] = content[last_end:]
+        elem_id = elem.get('id')
+        for seg in segments:
+            results.append({
+                'id': elem_id,
+                'text_before': seg['text_before'],
+                'omath': seg['omath'],
+                'text_after': seg['text_after'],
+                'label': '',
+            })
+    return results
 
 
 def convert_formula_list(formula_items: list) -> list:
