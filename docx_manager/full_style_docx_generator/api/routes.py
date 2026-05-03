@@ -949,8 +949,6 @@ def register_routes(app):
             data = request.json or {}                                                                                              
             results = data.get('results', [])                                                                                      
                                                                                                                                    
-            if not results:                                                                                                        
-                return jsonify({'error': 'No results provided'}), 400                                                              
                                                                                                                                    
             data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')                           
             full_json_path = os.path.join(data_dir, 'full_parsed.json')                                                            
