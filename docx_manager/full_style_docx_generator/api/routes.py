@@ -1051,12 +1051,15 @@ def register_routes(app):
 
             data = request.json or {}
             images_input = data.get('images', [])
+            user_instruction = data.get('user_instruction', '')
 
             if not images_input:
                 print("❌ [ERROR] 未提供 images 数据")
                 return jsonify({'error': 'No images provided'}), 400
 
             print(f"📦 [PAYLOAD] 接收到 {len(images_input)} 张图片")
+            if user_instruction:
+                print(f"📝 [PAYLOAD] user_instruction: {user_instruction[:100]}")
 
             processed_images = []
             for i, img in enumerate(images_input):
@@ -1099,7 +1102,7 @@ def register_routes(app):
             print(f"📂 [READ] 读取 {len(paragraphs)} 个段落")
 
             print(f"🤖 [LLM] 正在分析图片位置...")
-            groups = generate(processed_images, paragraphs)
+            groups = generate(processed_images, paragraphs, user_instruction)
             results = [g.model_dump() for g in groups]
 
             print(f"✅ [SUCCESS] 图片分组完成，共 {len(results)} 组")

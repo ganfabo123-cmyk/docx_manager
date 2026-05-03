@@ -39,7 +39,7 @@ def _filter_candidate_paragraphs(paragraphs: list, window: int = 1) -> list:
     ]
 
 
-def generate(images: list, paragraphs: list) -> List[ImageGroup]:
+def generate(images: list, paragraphs: list, user_instruction: str = "") -> List[ImageGroup]:
     from utils.base_agent import call_structured
 
     image_list = [
@@ -47,6 +47,12 @@ def generate(images: list, paragraphs: list) -> List[ImageGroup]:
         for i, img in enumerate(images)
     ]
     candidate_paragraphs = _filter_candidate_paragraphs(paragraphs)
+
+    instruction_block = (
+        f"\n\n【用户补充说明】\n{user_instruction.strip()}\n请优先遵循以上说明确定图片位置。"
+        if user_instruction and user_instruction.strip()
+        else ""
+    )
 
     system_prompt = (
         "你是一个学术文档图片定位助手。给定一组图片信息和文档段落（段落已预筛选，"
@@ -59,6 +65,7 @@ def generate(images: list, paragraphs: list) -> List[ImageGroup]:
         "   - 若图片已有非空 caption，直接使用原 caption\n"
         "   - 若 caption 为空，根据锚点段落内容推断图题，格式为 '图 X  简短描述'\n\n"
         "输出 groups 列表，每个 group 包含 image_indices、anchor_idx、captions。"
+        + instruction_block
     )
 
     user_prompt = json.dumps(
