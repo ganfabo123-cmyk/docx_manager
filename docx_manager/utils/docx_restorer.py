@@ -10,7 +10,9 @@ import copy
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 from docx import Document
-from docx.shared import Pt, Inches, Twips
+from docx.shared import Pt, Inches, Twips, Cm
+
+_DEFAULT_IMG_WIDTH_CM = 12.00
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
@@ -243,7 +245,7 @@ class DocxRestorer:
             if width_inches:
                 run.add_picture(image_stream, width=Inches(width_inches))
             else:
-                run.add_picture(image_stream)
+                run.add_picture(image_stream, width=Cm(_DEFAULT_IMG_WIDTH_CM))
             
             if caption:
                 caption_para = self.doc.add_paragraph()
