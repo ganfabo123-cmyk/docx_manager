@@ -269,35 +269,55 @@ class DocxRestorer:
         omml_str = formula.get("omath", "") or element.get("omml", "")
         label = formula.get("label", "") or element.get("label", "")
         is_inline = element.get("type") == "formula_inline"
-        
+
+        if is_inline:
+            try:
+                paragraph = self.doc.add_paragraph()
+                self._apply_paragraph_style(paragraph, element.get('style', {}))
+                text_before = formula.get('text_before', '')
+                text_after = formula.get('text_after', '')
+                if text_before:
+                    paragraph.add_run(text_before)
+                if omml_str:
+                    omml_elem = etree.fromstring(omml_str.encode())
+                    paragraph._p.append(omml_elem)
+                if text_after:
+                    paragraph.add_run(text_after)
+            except Exception as e:
+                print(f"还原行内公式时出错: {e}")
+                traceback.print_exc()
+                paragraph = self.doc.add_paragraph()
+                paragraph.add_run(element.get('content', '[行内公式还原失败]'))
+            return
+
         if omml_str:
             try:
                 omml_elem = etree.fromstring(omml_str.encode())
-                
+
                 p = OxmlElement("w:p")
                 pPr = OxmlElement("w:pPr")
                 p.append(pPr)
-                
+
                 jc = OxmlElement("w:jc")
                 jc.set(qn("w:val"), "center")
                 pPr.append(jc)
-                
+
                 p.append(omml_elem)
-                
+
                 if label:
                     run = OxmlElement("w:r")
                     t = OxmlElement("w:t")
                     t.text = f"    {label}"
                     run.append(t)
                     p.append(run)
-                
+
                 body = self.doc.element.body
                 sectPr = body.find(f"{{{W}}}sectPr")
                 if sectPr is not None:
                     sectPr.addprevious(p)
                 else:
                     body.append(p)
-                    
+
             except Exception as e:
                 print(f"还原公式时出错: {e}")
                 traceback.print_exc()
