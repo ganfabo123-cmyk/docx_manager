@@ -278,35 +278,46 @@
     "content": "涉及的优化算法及发展情况"
   },
   {
-    "id": "elem_90",
-    "content": "| 技术 | 核心思想 | 代表工作 |"
+    "content": "",
+    "style": {
+      "style_name": "Normal"
+    },
+    "type": "body"
   },
   {
-    "id": "elem_91",
-    "content": "|------|---------|---------|"
-  },
-  {
-    "id": "elem_92",
-    "content": "| LoRA | 用低秩矩阵 $A, B$ 近似权重更新 $\\Delta W = BA$，大幅减少可训练参数 | Hu et al., 2021 |",
-    "type": "formula_inline",
-    "formula": {
-      "text_before": "| LoRA | 用低秩矩阵 $A, B$ 近似权重更新 $\\Delta W = BA$，大幅减少可训练参数 | Hu et al., 2021 |",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>ΔW=BA</m:t></m:r></m:oMath>",
-      "text_after": "",
-      "label": ""
-    }
-  },
-  {
-    "id": "elem_93",
-    "content": "| 层跳过（Layer Skipping） | 推理时跳过部分层以减少计算量 | Early Exit, SkipDecode |"
-  },
-  {
-    "id": "elem_94",
-    "content": "| LoRA-Drop | 用 LoRA 补偿跳过层的误差，兼顾速度与质量 | 本文复现论文 |"
-  },
-  {
-    "id": "elem_95",
-    "content": "| 自适应缩放（方案 A） | 根据隐状态漂移动态调整 LoRA 补偿强度 | 本实验改进 |"
+    "content": [
+      [
+        "技术",
+        "核心思想",
+        "代表工作"
+      ],
+      [
+        "LoRA",
+        "用低秩矩阵 $A, B$ 近似权重更新 \\Delta W = BA，大幅减少可训练参数",
+        "Hu et al., 2021"
+      ],
+      [
+        "层跳过（Layer Skipping）",
+        "推理时跳过部分层以减少计算量",
+        "Early Exit, SkipDecode"
+      ],
+      [
+        "LoRA-Drop",
+        "用 LoRA 补偿跳过层的误差，兼顾速度与质量",
+        "本文复现论文"
+      ],
+      [
+        "自适应缩放（方案 A）",
+        "根据隐状态漂移动态调整 LoRA 补偿强度",
+        "本实验改进"
+      ]
+    ],
+    "style": {
+      "cols": 3,
+      "rows": 5,
+      "style_name": "Table"
+    },
+    "type": "table"
   },
   {
     "id": "elem_97",
@@ -337,60 +348,73 @@
     "content": "实验数据集及实验设置"
   },
   {
-    "id": "elem_109",
-    "content": "| 配置项 | 值 |"
+    "content": "",
+    "style": {
+      "style_name": "Normal"
+    },
+    "type": "body"
   },
   {
-    "id": "elem_110",
-    "content": "|--------|---|"
-  },
-  {
-    "id": "elem_111",
-    "content": "| 基座模型 | Qwen2.5-1.5B |"
-  },
-  {
-    "id": "elem_112",
-    "content": "| 数据集 | c4_demo（C4 语料小样本子集，LlamaFactory 内置） |"
-  },
-  {
-    "id": "elem_113",
-    "content": "| 训练类型 | 全参数预训练（finetuning_type: full） |"
-  },
-  {
-    "id": "elem_114",
-    "content": "| 批大小 | 1（梯度累积步数 8，等效 batch 8） |"
-  },
-  {
-    "id": "elem_115",
-    "content": "| 学习率 | 1e-5（cosine 调度，warmup 5%）|"
-  },
-  {
-    "id": "elem_116",
-    "content": "| 训练轮次 | 1 epoch（39 步）|"
-  },
-  {
-    "id": "elem_117",
-    "content": "| 序列长度 | 512 |"
-  },
-  {
-    "id": "elem_118",
-    "content": "| 精度 | bf16（训练）/ float16（推理）|"
-  },
-  {
-    "id": "elem_119",
-    "content": "| LoRA rank | 8，alpha=16 |"
-  },
-  {
-    "id": "elem_120",
-    "content": "| Drop cycle | 4（每 4 层设 1 个完整层）|"
-  },
-  {
-    "id": "elem_121",
-    "content": "| GPU | NVIDIA RTX 4060 Laptop 8GB |"
-  },
-  {
-    "id": "elem_122",
-    "content": "| 训练时长 | ~2.5 分钟/次 |"
+    "content": [
+      [
+        "配置项",
+        "值"
+      ],
+      [
+        "基座模型",
+        "Qwen2.5-1.5B"
+      ],
+      [
+        "数据集",
+        "c4_demo（C4 语料小样本子集，LlamaFactory 内置）"
+      ],
+      [
+        "训练类型",
+        "全参数预训练（finetuning_type: full）"
+      ],
+      [
+        "批大小",
+        "1（梯度累积步数 8，等效 batch 8）"
+      ],
+      [
+        "学习率",
+        "1e-5（cosine 调度，warmup 5%）"
+      ],
+      [
+        "训练轮次",
+        "1 epoch（39 步）"
+      ],
+      [
+        "序列长度",
+        "512"
+      ],
+      [
+        "精度",
+        "bf16（训练）/ float16（推理）"
+      ],
+      [
+        "LoRA rank",
+        "8，alpha=16"
+      ],
+      [
+        "Drop cycle",
+        "4（每 4 层设 1 个完整层）"
+      ],
+      [
+        "GPU",
+        "NVIDIA RTX 4060 Laptop 8GB"
+      ],
+      [
+        "训练时长",
+        "~2.5 分钟/次"
+      ]
+    ],
+    "style": {
+      "cols": 2,
+      "rows": 13,
+      "style_name": "Table"
+    },
+    "type": "table"
   },
   {
     "id": "elem_124",
@@ -401,20 +425,39 @@
     "content": "吞吐量对比（prompt: \"Hello, how are you?\"，生成 128 tokens）："
   },
   {
-    "id": "elem_128",
-    "content": "| 模型 | 吞吐量（tok/s） | GPU 显存 | 训练 Loss |"
+    "content": "",
+    "style": {
+      "style_name": "Normal"
+    },
+    "type": "body"
   },
   {
-    "id": "elem_129",
-    "content": "|------|----------------|---------|----------|"
-  },
-  {
-    "id": "elem_130",
-    "content": "| 原版（固定缩放） | 45.9 | 3.09 GB | ~7.33 |"
-  },
-  {
-    "id": "elem_131",
-    "content": "| 方案 A（自适应缩放） | 42.8 | 3.09 GB | ~7.33 |"
+    "content": [
+      [
+        "模型",
+        "吞吐量（tok/s）",
+        "GPU 显存",
+        "训练 Loss"
+      ],
+      [
+        "原版（固定缩放）",
+        "45.9",
+        "3.09 GB",
+        "~7.33"
+      ],
+      [
+        "方案 A（自适应缩放）",
+        "42.8",
+        "3.09 GB",
+        "~7.33"
+      ]
+    ],
+    "style": {
+      "cols": 4,
+      "rows": 3,
+      "style_name": "Table"
+    },
+    "type": "table"
   },
   {
     "id": "elem_133",

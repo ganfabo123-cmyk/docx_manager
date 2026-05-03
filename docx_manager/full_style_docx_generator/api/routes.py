@@ -749,6 +749,146 @@ def register_routes(app):
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
 
+    @app.route('/detect-tables', methods=['GET'])
+    def detect_tables():
+        print("\n" + "="*50)
+        print(f"🌐 [API IN] 收到请求: GET /detect-tables")
+        try:
+            from core.table.detector import detect_table_blocks
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            json_path = os.path.join(data_dir, 'parsed_blocks.json')
+
+            if not os.path.exists(json_path):
+                print(f"❌ [ERROR] 找不到 parsed_blocks.json: {json_path}")
+                return jsonify({'error': 'No parsed_blocks.json found. Please parse a file first.'}), 404
+
+            with open(json_path, 'r', encoding='utf-8') as f:
+                elements = json.load(f).get("text_elements", [])
+
+            suspected = detect_table_blocks(elements)
+            print(f"✅ [SUCCESS] 从 {len(elements)} 个元素中检测到 {len(suspected)} 个疑似表格块")
+            print("🏁 [API OUT] 请求处理成功返回 200")
+
+            return jsonify({'suspected_tables': suspected, 'count': len(suspected)}), 200
+        except Exception as e:
+            print(f"❌ [CRITICAL ERROR] /detect-tables 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    @app.route('/process-tables', methods=['GET'])
+    def process_tables():
+        print("\n" + "="*50)
+        print(f"🌐 [API IN] 收到请求: GET /process-tables")
+        try:
+            from core.table.detector import detect_table_blocks, group_table_blocks, is_table_title
+            from core.table.extractor import extract_table
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            json_path = os.path.join(data_dir, 'parsed_blocks.json')
+
+            if not os.path.exists(json_path):
+                print(f"❌ [ERROR] 找不到 parsed_blocks.json")
+                return jsonify({'error': 'No parsed_blocks.json found. Please parse a file first.'}), 404
+
+            with open(json_path, 'r', encoding='utf-8') as f:
+                elements = json.load(f).get("text_elements", [])
+
+            suspected = detect_table_blocks(elements)
+            print(f"🔍 [DETECT] 从 {len(elements)} 个元素中检测到 {len(suspected)} 个疑似表格行")
+
+            if not suspected:
+                print("✅ [SUCCESS] 未检测到表格，直接返回")
+                return jsonify({'results': []}), 200
+
+            groups = group_table_blocks(elements, suspected)
+            print(f"📊 [GROUP] 合并为 {len(groups)} 个表格组")
+
+            id_to_pos = {elem["id"]: i for i, elem in enumerate(elements)}
+
+            results = []
+            for group in groups:
+                ids = [item['id'] for item in group]
+                combined = "\n".join(item['content'] for item in group)
+
+                # 感知前置表题
+                existing_title = None
+                first_pos = id_to_pos.get(ids[0], -1)
+                if first_pos > 0:
+                    preceding = elements[first_pos - 1]
+                    if is_table_title(preceding.get("content", "")):
+                        existing_title = preceding["content"]
+                        print(f"📌 [TITLE] 检测到已有表题: {existing_title}")
+
+                print(f"🤖 [LLM] 正在处理表格组 {ids[0]}~{ids[-1]}（{len(ids)} 行）...")
+                blocks = extract_table(combined, existing_title=existing_title)
+                if blocks is None:
+                    print(f"⚠️  [SKIP] 模型判断该组非表格，跳过")
+                    continue
+                results.append({'ids': ids, 'blocks': blocks})
+
+            print(f"✅ [SUCCESS] 表格提取完成，共处理 {len(results)} 个表格")
+            print("🏁 [API OUT] 请求处理成功返回 200")
+
+            return jsonify({'results': results}), 200
+        except Exception as e:
+            print(f"❌ [CRITICAL ERROR] /process-tables 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    @app.route('/backfill-tables', methods=['POST'])
+    def backfill_tables():
+        print("\n" + "="*50)
+        print(f"🌐 [API IN] 收到请求: POST /backfill-tables")
+        try:
+            data = request.json or {}
+            results = data.get('results', [])
+
+            if not results:
+                return jsonify({'error': 'No results provided'}), 400
+
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            json_path = os.path.join(data_dir, 'backfilled_styles.json')
+
+            if not os.path.exists(json_path):
+                return jsonify({'error': 'No backfilled_styles.json found. Please run backfill-styles first.'}), 404
+
+            with open(json_path, 'r', encoding='utf-8') as f:
+                elements = json.load(f)
+
+            # ids[0] 替换为 blocks，ids[1:] 整行删除
+            first_id_to_blocks = {}
+            ids_to_drop = set()
+            for item in results:
+                ids = item.get('ids', [item.get('id')])  # 兼容旧单 id 格式
+                if not ids:
+                    continue
+                first_id_to_blocks[ids[0]] = item['blocks']
+                for extra_id in ids[1:]:
+                    ids_to_drop.add(extra_id)
+
+            new_elements = []
+            replaced = 0
+            for elem in elements:
+                elem_id = elem.get('id')
+                if elem_id in ids_to_drop:
+                    continue
+                elif elem_id in first_id_to_blocks:
+                    new_elements.extend(first_id_to_blocks[elem_id])
+                    replaced += 1
+                else:
+                    new_elements.append(elem)
+
+            with open(json_path, 'w', encoding='utf-8') as f:
+                json.dump(new_elements, f, ensure_ascii=False, indent=2)
+
+            print(f"✅ [SUCCESS] 表格回填完成，替换了 {replaced} 个表格，文档现共 {len(new_elements)} 个块")
+            print("🏁 [API OUT] 请求处理成功返回 200")
+
+            return jsonify({'replaced': replaced, 'total_blocks': len(new_elements)}), 200
+        except Exception as e:
+            print(f"❌ [CRITICAL ERROR] /backfill-tables 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
     @app.route('/backfill-formulas', methods=['POST'])
     def backfill_formulas():
         print("\n" + "="*50)
