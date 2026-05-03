@@ -1040,3 +1040,159 @@ def register_routes(app):
             print(f"[CRITICAL ERROR] /backfill-formulas 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    @app.route('/process-images', methods=['POST'])
+    def process_images():
+        print("\n" + "="*50)
+        print(f"🌐 [API IN] 收到请求: POST /process-images")
+        try:
+            import base64 as b64_module
+            from core.image.generator import generate
+
+            data = request.json or {}
+            images_input = data.get('images', [])
+
+            if not images_input:
+                print("❌ [ERROR] 未提供 images 数据")
+                return jsonify({'error': 'No images provided'}), 400
+
+            print(f"📦 [PAYLOAD] 接收到 {len(images_input)} 张图片")
+
+            processed_images = []
+            for i, img in enumerate(images_input):
+                if 'url' in img:
+                    print(f"⬇️  [ACTION] 下载图片 {i}: {img['url']}")
+                    resp = requests.get(img['url'], timeout=30)
+                    resp.raise_for_status()
+                    b64 = b64_module.b64encode(resp.content).decode('utf-8')
+                    processed_images.append({
+                        'base64': b64,
+                        'caption': img.get('caption', ''),
+                        'width': None,
+                        'height': None,
+                        'position': 'center',
+                    })
+                else:
+                    processed_images.append({
+                        'base64': img.get('base64', ''),
+                        'caption': img.get('caption', ''),
+                        'width': img.get('width'),
+                        'height': img.get('height'),
+                        'position': img.get('position', 'center'),
+                    })
+
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            os.makedirs(data_dir, exist_ok=True)
+
+            processed_path = os.path.join(data_dir, 'processed_images.json')
+            with open(processed_path, 'w', encoding='utf-8') as f:
+                json.dump(processed_images, f, ensure_ascii=False, indent=2)
+            print(f"💾 [SAVE] 图片数据已保存至: {processed_path}")
+
+            parsed_blocks_path = os.path.join(data_dir, 'parsed_blocks.json')
+            if not os.path.exists(parsed_blocks_path):
+                print(f"❌ [ERROR] 找不到 parsed_blocks.json")
+                return jsonify({'error': 'No parsed_blocks.json found. Please parse a file first.'}), 404
+
+            with open(parsed_blocks_path, 'r', encoding='utf-8') as f:
+                paragraphs = json.load(f).get('text_elements', [])
+            print(f"📂 [READ] 读取 {len(paragraphs)} 个段落")
+
+            print(f"🤖 [LLM] 正在分析图片位置...")
+            groups = generate(processed_images, paragraphs)
+            results = [g.model_dump() for g in groups]
+
+            print(f"✅ [SUCCESS] 图片分组完成，共 {len(results)} 组")
+            print("🏁 [API OUT] 请求处理成功返回 200")
+
+            return jsonify({'results': results}), 200
+        except Exception as e:
+            print(f"❌ [CRITICAL ERROR] /process-images 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
+    @app.route('/backfill-images', methods=['POST'])
+    def backfill_images():
+        print("\n" + "="*50)
+        print(f"🌐 [API IN] 收到请求: POST /backfill-images")
+        try:
+            data = request.json or {}
+            results = data.get('results', [])
+
+            if not results:
+                return jsonify({'error': 'No results provided'}), 400
+
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+
+            processed_path = os.path.join(data_dir, 'processed_images.json')
+            if not os.path.exists(processed_path):
+                return jsonify({'error': 'No processed_images.json found. Please run /process-images first.'}), 404
+            with open(processed_path, 'r', encoding='utf-8') as f:
+                processed_images = json.load(f)
+
+            parsed_blocks_path = os.path.join(data_dir, 'parsed_blocks.json')
+            if not os.path.exists(parsed_blocks_path):
+                return jsonify({'error': 'No parsed_blocks.json found.'}), 404
+            with open(parsed_blocks_path, 'r', encoding='utf-8') as f:
+                paragraphs = json.load(f).get('text_elements', [])
+
+            backfilled_path = os.path.join(data_dir, 'backfilled_styles.json')
+            if not os.path.exists(backfilled_path):
+                return jsonify({'error': 'No backfilled_styles.json found. Please run backfill-styles first.'}), 404
+            with open(backfilled_path, 'r', encoding='utf-8') as f:
+                elements = json.load(f)
+
+            id_to_pos = {e.get('id'): i for i, e in enumerate(elements)}
+
+            # 从后往前插入，避免插入位置偏移
+            sorted_results = sorted(results, key=lambda x: x.get('anchor_idx', 0), reverse=True)
+
+            inserted = 0
+            for group in sorted_results:
+                anchor_idx = group.get('anchor_idx', 0)
+                image_indices = group.get('image_indices', [])
+                captions = group.get('captions', [])
+
+                if anchor_idx >= len(paragraphs):
+                    print(f"⚠️  [WARN] anchor_idx={anchor_idx} 超出段落范围，跳过")
+                    continue
+
+                anchor_id = paragraphs[anchor_idx].get('id')
+                if not anchor_id or anchor_id not in id_to_pos:
+                    print(f"⚠️  [WARN] 锚点段落 id={anchor_id} 在 backfilled_styles 中不存在，跳过")
+                    continue
+
+                insert_pos = id_to_pos[anchor_id] + 1
+
+                new_elems = []
+                for order, img_idx in enumerate(image_indices):
+                    if img_idx >= len(processed_images):
+                        continue
+                    img = processed_images[img_idx]
+                    caption = captions[order] if order < len(captions) else ''
+                    new_elems.append({
+                        'id': f"img_{anchor_idx}_{img_idx}",
+                        'type': 'image',
+                        'base64': img.get('base64', ''),
+                        'caption': caption,
+                        'width': img.get('width'),
+                        'height': img.get('height'),
+                        'position': img.get('position', 'center'),
+                    })
+
+                elements[insert_pos:insert_pos] = new_elems
+                id_to_pos = {e.get('id'): i for i, e in enumerate(elements)}
+                inserted += len(new_elems)
+                print(f"📌 [INSERT] 在段落 {anchor_id} 后插入 {len(new_elems)} 张图片")
+
+            with open(backfilled_path, 'w', encoding='utf-8') as f:
+                json.dump(elements, f, ensure_ascii=False, indent=2)
+
+            print(f"✅ [SUCCESS] 图片回填完成，共插入 {inserted} 个图片元素")
+            print("🏁 [API OUT] 请求处理成功返回 200")
+
+            return jsonify({'inserted': inserted}), 200
+        except Exception as e:
+            print(f"❌ [CRITICAL ERROR] /backfill-images 运行异常: {e}")
+            traceback.print_exc()
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
