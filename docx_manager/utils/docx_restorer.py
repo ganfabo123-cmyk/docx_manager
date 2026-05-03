@@ -310,6 +310,33 @@ class DocxRestorer:
             paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
             paragraph.add_run(f"[公式] {label}")
     
+    def _restore_formula_inline_multi(self, element: Dict[str, Any]):
+        segments = element.get('formula_segments', [])
+        if not segments:
+            return
+        try:
+            paragraph = self.doc.add_paragraph()
+            self._apply_paragraph_style(paragraph, element.get('style', {}))
+            for i, seg in enumerate(segments):
+                text_before = seg.get('text_before', '')
+                omath_str = seg.get('omath', '')
+                text_after = seg.get('text_after', '')
+                if text_before:
+                    paragraph.add_run(text_before)
+                if omath_str:
+                    try:
+                        omath_elem = etree.fromstring(omath_str.encode())
+                        paragraph._p.append(omath_elem)
+                    except Exception as e:
+                        paragraph.add_run('[公式]')
+                if i == len(segments) - 1 and text_after:
+                    paragraph.add_run(text_after)
+        except Exception as e:
+            print(f"还原多行内公式时出错: {e}")
+            traceback.print_exc()
+            paragraph = self.doc.add_paragraph()
+            paragraph.add_run('[多行内公式还原失败]')
+
     def _restore_ole_formula(self, element: Dict[str, Any]):
         ole_base64 = element.get("ole_base64", "")
         image_base64 = element.get("image_base64", "")
@@ -491,6 +518,8 @@ class DocxRestorer:
                 self._restore_image(element)
             elif elem_type in ("formula", "formula_block", "formula_inline"):
                 self._restore_formula(element)
+            elif elem_type == "formula_inline_multi":
+                self._restore_formula_inline_multi(element)
             else:
                 self._restore_paragraph(element)
         

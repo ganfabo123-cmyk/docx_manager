@@ -711,7 +711,8 @@ def register_routes(app):
                 print("✅ [SUCCESS] 未检测到公式，直接返回")
                 return jsonify({'results': []}), 200
 
-            # Step 3: LLM 提取确认公式
+            # Step 3: LLM 提取确认公式（分批处理，每批 BATCH_SIZE 条）
+            BATCH_SIZE = 7
             system_prompt = (
                 "你是一个数学公式提取器。你会收到一组文本元素（每个元素含 id 和 content），"
                 "任务是从中识别并提取数学公式，将其转换为标准 LaTeX 格式。\n\n"
@@ -724,20 +725,29 @@ def register_routes(app):
                 "提取规则：\n"
                 "- 行内公式：text_before 填公式前文本，latex_formula 填公式，text_after 填公式后文本，label 为空\n"
                 "- 块级公式：text_before 和 text_after 为空，label 填编号（如 (4-1)）或空，latex_formula 填公式本体\n"
+                "- 若一个元素含多个行内公式，针对每个公式分别输出一条 FormulaItem（id 相同）；"
+                "  除最后一条外 text_after 留空，最后一条 text_after 填最后公式之后的全部剩余文本\n"
                 "- 不含公式的元素不出现在输出中\n"
                 "- latex_formula 只写公式本体，不加 $ 符号"
             )
-            user_prompt = json.dumps(suspected, ensure_ascii=False)
 
-            formula_response = call_structured(system_prompt, user_prompt, FormulaListResponse)
-            print(f"🤖 [LLM] 确认提取到 {len(formula_response.formulas)} 个公式")
+            all_formulas = []
+            total_batches = (len(suspected) + BATCH_SIZE - 1) // BATCH_SIZE
+            for i in range(0, len(suspected), BATCH_SIZE):
+                batch = suspected[i:i + BATCH_SIZE]
+                user_prompt = json.dumps(batch, ensure_ascii=False)
+                batch_response = call_structured(system_prompt, user_prompt, FormulaListResponse)
+                all_formulas.extend(batch_response.formulas)
+                print(f"🤖 [LLM] 批次 {i // BATCH_SIZE + 1}/{total_batches}：提取 {len(batch_response.formulas)} 个公式")
 
-            if not formula_response.formulas:
+            print(f"🤖 [LLM] 共确认提取 {len(all_formulas)} 个公式")
+
+            if not all_formulas:
                 print("✅ [SUCCESS] LLM 确认无有效公式")
                 return jsonify({'results': []}), 200
 
             # Step 4: latex → omath
-            formula_dicts = [f.model_dump() for f in formula_response.formulas]
+            formula_dicts = [f.model_dump() for f in all_formulas]
             results = convert_formula_list(formula_dicts)
 
             failed = [r for r in results if r.get('error')]
@@ -912,25 +922,44 @@ def register_routes(app):
 
             id_to_elem = {e.get('id'): e for e in elements}
 
-            updated = 0
+            # 按 id 分组，同一元素的多条公式聚合在一起
+            from collections import defaultdict
+            id_to_items = defaultdict(list)
             for item in results:
                 elem_id = item.get('id')
+                if elem_id and item.get('omath'):
+                    id_to_items[elem_id].append(item)
+
+            updated = 0
+            for elem_id, items in id_to_items.items():
                 if elem_id not in id_to_elem:
                     continue
-                omath = item.get('omath', '')
-                if not omath:
-                    continue
-                text_before = item.get('text_before', '')
-                text_after = item.get('text_after', '')
-                formula_type = 'formula_inline' if (text_before or text_after) else 'formula_block'
-                id_to_elem[elem_id]['type'] = formula_type
-                id_to_elem[elem_id]['formula'] = {
-                    'text_before': text_before,
-                    'omath': omath,
-                    'text_after': text_after,
-                    'label': item.get('label', ''),
-                }
+                if len(items) == 1:
+                    item = items[0]
+                    text_before = item.get('text_before', '')
+                    text_after = item.get('text_after', '')
+                    formula_type = 'formula_inline' if (text_before or text_after) else 'formula_block'
+                    id_to_elem[elem_id]['type'] = formula_type
+                    id_to_elem[elem_id]['formula'] = {
+                        'text_before': text_before,
+                        'omath': item.get('omath', ''),
+                        'text_after': text_after,
+                        'label': item.get('label', ''),
+                    }
+                else:
+                    id_to_elem[elem_id]['type'] = 'formula_inline_multi'
+                    id_to_elem[elem_id]['formula_segments'] = [
+                        {
+                            'text_before': it.get('text_before', ''),
+                            'omath': it.get('omath', ''),
+                            'text_after': it.get('text_after', ''),
+                        }
+                        for it in items
+                    ]
                 updated += 1
+
+            # 清理 $$ 残留元素
+            elements = [e for e in elements if e.get('content', '').strip() not in ('$$', '$')]
 
             with open(json_path, 'w', encoding='utf-8') as f:
                 json.dump(elements, f, ensure_ascii=False, indent=2)
