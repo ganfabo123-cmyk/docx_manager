@@ -1064,8 +1064,10 @@ def register_routes(app):
             processed_images = []
             for i, img in enumerate(images_input):
                 if 'url' in img:
-                    print(f"⬇️  [ACTION] 下载图片 {i}: {img['url']}")
-                    resp = requests.get(img['url'], timeout=30)
+                    raw_url = img['url']
+                    actual_url = raw_url.get('url', '') if isinstance(raw_url, dict) else raw_url
+                    print(f"⬇️  [ACTION] 下载图片 {i}: {actual_url}")
+                    resp = requests.get(actual_url, timeout=30)
                     resp.raise_for_status()
                     b64 = b64_module.b64encode(resp.content).decode('utf-8')
                     processed_images.append({
