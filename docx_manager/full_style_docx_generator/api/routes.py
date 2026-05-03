@@ -921,6 +921,10 @@ def register_routes(app):
             with open(json_path, 'r', encoding='utf-8') as f:
                 elements = json.load(f)
 
+            # 合并 $$ 块内的片段，删掉 elem_39/40/41 这类残留碎片
+            from core.formula.detector import merge_formula_blocks
+            elements = merge_formula_blocks(elements)
+
             id_to_elem = {e.get('id'): e for e in elements}
 
             # 按 id 分组，同一元素的多条公式聚合在一起
@@ -958,9 +962,6 @@ def register_routes(app):
                         for it in items
                     ]
                 updated += 1
-
-            # 清理 $$ 残留元素
-            elements = [e for e in elements if e.get('content', '').strip() not in ('$$', '$')]
 
             with open(json_path, 'w', encoding='utf-8') as f:
                 json.dump(elements, f, ensure_ascii=False, indent=2)
