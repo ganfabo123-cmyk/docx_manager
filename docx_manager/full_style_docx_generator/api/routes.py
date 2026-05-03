@@ -504,7 +504,8 @@ def register_routes(app):
         except Exception as e:
             print(f"❌ [CRITICAL ERROR] /restore-document 运行异常: {e}")
             traceback.print_exc()
-            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500    @app.route('/parse-text', methods=['POST'])
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
     @app.route('/parse-text', methods=['POST'])
     def parse_text():
         print("\n" + "="*50)

@@ -1,59 +1,39 @@
 import requests
-import json
-
-SERVER_URL = "http://localhost:5000"
 
 
-def test_process_formulas():
-    print("=" * 50)
-    print("调用 GET /process-formulas")
-    print("=" * 50)
+def handler(params):
+    server_url = params.get("server_url", "http://localhost:5000")
 
-    response = requests.get(f"{SERVER_URL}/process-formulas")
+    # Step 1: process-formulas
+    resp = requests.get(f"{server_url}/process-formulas")
+    if resp.status_code != 200:
+        return {"error": resp.text, "process_status": resp.status_code}
 
-    print(f"状态码: {response.status_code}")
+    results = resp.json().get("results", [])
 
-    if response.status_code != 200:
-        print(f"错误: {response.text}")
-        return []
+    summary = [
+        {
+            "id":          item.get("id"),
+            "text_before": item.get("text_before", ""),
+            "label":       item.get("label", ""),
+            "text_after":  item.get("text_after", ""),
+            "omath_len":   len(item.get("omath", "")),
+            "error":       item.get("error"),
+        }
+        for item in results
+    ]
 
-    data = response.json()
-    results = data.get("results", [])
+    # Step 2: backfill-formulas
+    backfill = None
+    if results:
+        bf_resp = requests.post(
+            f"{server_url}/backfill-formulas",
+            json={"results": results},
+        )
+        backfill = bf_resp.json()
 
-    print(f"共返回 {len(results)} 条公式结果\n")
-
-    for i, item in enumerate(results, 1):
-        print(f"--- [{i}] id: {item['id']} ---")
-        if item.get("text_before"):
-            print(f"  text_before : {item['text_before']}")
-        if item.get("label"):
-            print(f"  label       : {item['label']}")
-        if item.get("text_after"):
-            print(f"  text_after  : {item['text_after']}")
-        if item.get("error"):
-            print(f"  [ERROR]     : {item['error']}")
-        omath = item.get("omath", "")
-        print(f"  omath 长度  : {len(omath)} chars")
-        print(f"  omath 预览  : {omath[:120]}...")
-        print()
-
-    return results
-
-
-def test_backfill_formulas(results):
-    print("=" * 50)
-    print("调用 POST /backfill-formulas")
-    print("=" * 50)
-
-    response = requests.post(
-        f"{SERVER_URL}/backfill-formulas",
-        json={"results": results},
-    )
-    print(f"状态码: {response.status_code}")
-    print(response.json())
-
-
-if __name__ == "__main__":
-    formula_results = test_process_formulas()
-    if formula_results:
-        test_backfill_formulas(formula_results)
+    return {
+        "formula_count": len(results),
+        "formulas":      summary,
+        "backfill":      backfill,
+    }
