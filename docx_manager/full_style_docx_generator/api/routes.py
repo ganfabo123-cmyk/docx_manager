@@ -968,8 +968,6 @@ def register_routes(app):
 
             return jsonify({
                 'status': 'success',
-                'message': 'Styles backfilled successfully',
-                'data': updated_data
             }), 200
         except Exception as e:                                                                                                     
             print(f"❌ [CRITICAL ERROR] /backfill-short-blocks 运行异常: {e}")                                                     
