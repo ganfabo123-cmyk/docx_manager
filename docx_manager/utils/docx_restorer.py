@@ -222,27 +222,24 @@ class DocxRestorer:
                     cell.text = str(cell_text)
     
     def _restore_image(self, element: Dict[str, Any]):
-        content = element.get("content", {})
-        style = element.get("style", {})
-        
-        base64_str = content.get("base64", "")
-        caption = content.get("caption", "")
-        
+        base64_str = element.get("base64", "")
+        caption = element.get("caption", "")
+        width_inches = element.get("width")
+
         if not base64_str:
             paragraph = self.doc.add_paragraph()
             paragraph.add_run("[图片占位符]")
             return
-        
+
         try:
             image_bytes = base64.b64decode(base64_str)
             image_stream = io.BytesIO(image_bytes)
-            
+
             paragraph = self.doc.add_paragraph()
             paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            
+
             run = paragraph.add_run()
-            
-            width_inches = style.get("width_inches")
+
             if width_inches:
                 run.add_picture(image_stream, width=Inches(width_inches))
             else:
