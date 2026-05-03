@@ -1,4 +1,4 @@
-from flask import request, jsonify
+﻿from flask import request, jsonify
 from flask import request, jsonify, send_from_directory
 import time  # 顺便引入 time，用来生成防重名的文件名
 import traceback
@@ -963,11 +963,14 @@ def register_routes(app):
             with open(output_path, 'w', encoding='utf-8') as f:                                                                    
                 json.dump(updated_data, f, ensure_ascii=False, indent=2)                                                           
                                                                                                                                    
-            heading_count = sum(1 for e in updated_data if e.get('type', '').startswith('heading'))                                
-            print(f"✅ [SUCCESS] 短文本块回填完成，标记了 {heading_count} 个标题，已保存至: {output_path}")                        
-            print("🏁 [API OUT] 请求处理成功返回 200")                                                                             
-                                                                                                                                   
-            return jsonify({'status': 'success', 'heading_count': heading_count}), 200                                             
+            print(f"[SUCCESS] 短文本块回填完成，已保存至:: {output_path}")
+            print("[API OUT]  请求处理成功返回 200")
+
+            return jsonify({
+                'status': 'success',
+                'message': 'Styles backfilled successfully',
+                'data': updated_data
+            }), 200
         except Exception as e:                                                                                                     
             print(f"❌ [CRITICAL ERROR] /backfill-short-blocks 运行异常: {e}")                                                     
             traceback.print_exc()                                                                                                  
@@ -1044,4 +1047,3 @@ def register_routes(app):
             print(f"[CRITICAL ERROR] /backfill-formulas 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
-        
