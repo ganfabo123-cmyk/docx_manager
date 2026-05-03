@@ -900,7 +900,79 @@ def register_routes(app):
             print(f"❌ [CRITICAL ERROR] /backfill-tables 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
-
+        
+    @app.route('/process-short-blocks', methods=['GET'])                                                                           
+    def process_short_blocks():                                                                                                           
+        print("\n" + "="*50)                                                                                                       
+        print(f"🌐 [API IN] 收到请求: GET /process-short-blocks")                                                                  
+        try:                                                                                                                       
+            from core.short_block.classifier import classify_short_blocks                                                          
+                                                                                                                                   
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')                           
+            json_path = os.path.join(data_dir, 'parsed_blocks.json')                                                               
+                                                                                                                                   
+            if not os.path.exists(json_path):                                                                                      
+                print(f"❌ [ERROR] 找不到 parsed_blocks.json: {json_path}")                                                        
+                return jsonify({'error': 'No parsed_blocks.json found. Please parse a file first.'}), 404                          
+                                                                                                                                   
+            with open(json_path, 'r', encoding='utf-8') as f:                                                                      
+                blocks = json.load(f).get("text_elements", [])                                                                     
+                                                                                                                                   
+            short_blocks = identify_short_blocks(blocks)                                                                           
+            print(f"🔍 [DETECT] 从 {len(blocks)} 个元素中识别到 {len(short_blocks)} 个短文本块")                                   
+                                                                                                                                   
+            if not short_blocks:                                                                                                   
+                print("✅ [SUCCESS] 未检测到短文本块，直接返回")                                                                   
+                return jsonify({'results': []}), 200                                                                               
+                                                                                                                                   
+            results = classify_short_blocks(short_blocks)                                                                          
+            print(f"🤖 [LLM] 共分类 {len(results)} 个短文本块")                                                                    
+            print("🏁 [API OUT] 请求处理成功返回 200")                                                                             
+                                                                                                                                   
+            return jsonify({'results': results}), 200                                                                              
+        except Exception as e:                                                                                                     
+            print(f"❌ [CRITICAL ERROR] /process-short-blocks 运行异常: {e}")                                                      
+            traceback.print_exc()                                                                                                  
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500                                            
+                                                                                                                                   
+    @app.route('/backfill-short-blocks', methods=['POST'])                                                                         
+    def backfill_short_blocks():                                                                                                   
+        print("\n" + "="*50)                                                                                                       
+        print(f"🌐 [API IN] 收到请求: POST /backfill-short-blocks")                                                                
+        try:                                                                                                                       
+            data = request.json or {}                                                                                              
+            results = data.get('results', [])                                                                                      
+                                                                                                                                   
+            if not results:                                                                                                        
+                return jsonify({'error': 'No results provided'}), 400                                                              
+                                                                                                                                   
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')                           
+            full_json_path = os.path.join(data_dir, 'full_parsed.json')                                                            
+                                                                                                                                   
+            if not os.path.exists(full_json_path):                                                                                 
+                print(f"❌ [ERROR] 找不到 full_parsed.json: {full_json_path}")                                                     
+                return jsonify({'error': 'No full_parsed.json found. Please parse a file first.'}), 404                            
+                                                                                                                                   
+            with open(full_json_path, 'r', encoding='utf-8') as f:                                                                 
+                full_data = json.load(f)                                                                                           
+                                                                                                                                   
+            from utils.docx_style_backfill import backfill_styles                                                                  
+            updated_data = backfill_styles(results, full_data)                                                                     
+                                                                                                                                   
+            output_path = os.path.join(data_dir, 'backfilled_styles.json')                                                         
+            with open(output_path, 'w', encoding='utf-8') as f:                                                                    
+                json.dump(updated_data, f, ensure_ascii=False, indent=2)                                                           
+                                                                                                                                   
+            heading_count = sum(1 for e in updated_data if e.get('type', '').startswith('heading'))                                
+            print(f"✅ [SUCCESS] 短文本块回填完成，标记了 {heading_count} 个标题，已保存至: {output_path}")                        
+            print("🏁 [API OUT] 请求处理成功返回 200")                                                                             
+                                                                                                                                   
+            return jsonify({'status': 'success', 'heading_count': heading_count}), 200                                             
+        except Exception as e:                                                                                                     
+            print(f"❌ [CRITICAL ERROR] /backfill-short-blocks 运行异常: {e}")                                                     
+            traceback.print_exc()                                                                                                  
+            return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500                                            
+                                                                                            
     @app.route('/backfill-formulas', methods=['POST'])
     def backfill_formulas():
         print("\n" + "="*50)
@@ -972,3 +1044,4 @@ def register_routes(app):
             print(f"[CRITICAL ERROR] /backfill-formulas 运行异常: {e}")
             traceback.print_exc()
             return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+        
