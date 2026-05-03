@@ -438,19 +438,14 @@ def register_routes(app):
         print("\n" + "="*50)
         print(f"🌐 [API IN] 收到请求: POST /restore-document")
         try:
-            data = request.json or {}
-            json_data = data.get('data', [])
             
-            if json_data:
-                print(f"📦 [PAYLOAD] 接收到直接传入的 data，长度: {len(json_data)}")
-            else:
-                print("⚠️ [WARN] 未收到 data 参数，尝试读取本地 backfilled_styles.json...")
-                data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
-                json_path = os.path.join(data_dir, 'backfilled_styles.json')
-                if os.path.exists(json_path):
-                    with open(json_path, 'r', encoding='utf-8') as f:
-                        json_data = json.load(f)
-                    print(f"📂 [READ] 成功从本地读取数据，长度: {len(json_data)}")
+            print("⚠️ [WARN] 未收到 data 参数，尝试读取本地 backfilled_styles.json...")
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            json_path = os.path.join(data_dir, 'backfilled_styles.json')
+            if os.path.exists(json_path):
+                with open(json_path, 'r', encoding='utf-8') as f:
+                    json_data = json.load(f)
+                print(f"📂 [READ] 成功从本地读取数据，长度: {len(json_data)}")
             
             if not json_data:
                 print("❌ [ERROR] 既没有传入数据，也没有找到本地数据")
