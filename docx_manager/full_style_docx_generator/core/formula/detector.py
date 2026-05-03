@@ -33,6 +33,32 @@ def is_suspected_formula(content: str) -> bool:
     )
 
 
+def merge_formula_blocks(elements: list) -> list:
+    """将 $$ ... $$ 之间的多个片段合并为一个元素，id 取第一个片段的 id。"""
+    result = []
+    i = 0
+    while i < len(elements):
+        content = elements[i].get('content', '').strip()
+        if content == '$$':
+            j = i + 1
+            fragments = []
+            while j < len(elements):
+                if elements[j].get('content', '').strip() == '$$':
+                    break
+                fragments.append(elements[j])
+                j += 1
+            if fragments:
+                result.append({
+                    **fragments[0],
+                    'content': '\n'.join(f.get('content', '') for f in fragments),
+                })
+            i = j + 1
+        else:
+            result.append(elements[i])
+            i += 1
+    return result
+
+
 def detect_formula_blocks(elements: list) -> list:
     return [
         {"id": elem["id"], "content": elem["content"]}

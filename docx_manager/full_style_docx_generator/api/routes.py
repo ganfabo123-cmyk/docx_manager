@@ -687,7 +687,7 @@ def register_routes(app):
         print("\n" + "="*50)
         print(f"🌐 [API IN] 收到请求: GET /process-formulas")
         try:
-            from core.formula.detector import detect_formula_blocks
+            from core.formula.detector import detect_formula_blocks, merge_formula_blocks
             from core.formula.converter import convert_formula_list
             from core.formula.models import FormulaListResponse
             from utils.base_agent import call_structured
@@ -703,7 +703,8 @@ def register_routes(app):
             with open(json_path, 'r', encoding='utf-8') as f:
                 elements = json.load(f).get("text_elements",[])
 
-            # Step 2: 规则检测疑似公式
+            # Step 2: 合并 $$ 块内的多行片段，再规则检测疑似公式
+            elements = merge_formula_blocks(elements)
             suspected = detect_formula_blocks(elements)
             print(f"🔍 [DETECT] 从 {len(elements)} 个元素中检测到 {len(suspected)} 个疑似公式块")
 
