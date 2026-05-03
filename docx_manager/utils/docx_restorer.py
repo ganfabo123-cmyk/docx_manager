@@ -266,9 +266,10 @@ class DocxRestorer:
             self._restore_ole_formula(element)
             return
         
-        omml_str = element.get("omml", "")
-        label = element.get("label", "")
-        is_inline = element.get("is_inline", False)
+        formula = element.get("formula", {})
+        omml_str = formula.get("omath", "") or element.get("omml", "")
+        label = formula.get("label", "") or element.get("label", "")
+        is_inline = element.get("type") == "formula_inline"
         
         if omml_str:
             try:
@@ -488,7 +489,7 @@ class DocxRestorer:
                 self._restore_table(element)
             elif elem_type == "image":
                 self._restore_image(element)
-            elif elem_type == "formula":
+            elif elem_type in ("formula", "formula_block", "formula_inline"):
                 self._restore_formula(element)
             else:
                 self._restore_paragraph(element)
