@@ -36,6 +36,13 @@ import tempfile
 import zipfile
 from xml.etree import ElementTree as ET
 from pathlib import Path
+from pydantic import BaseModel
+
+try:
+    from . import base_agent as ba
+except ImportError:
+    import base_agent as ba  # type: ignore
+
 # ── Namespace registration ─────────────────────────────────────────────────────
 # Must happen before any ET.parse() / ET.tostring() call so prefixes are stable.
 
@@ -399,16 +406,31 @@ class DocxCompiler:
             body.remove(child)
 
         stats = dict(paragraphs=0, tables=0, images=0, deferred=0, omath=0, ole=0, toc=0, raw_xml=0)
-        table_seq = 0       # counts tables seen in extraction order
-        last_para_text = "" # text of the most recent paragraph (used as image anchor)
-        img_file_seq = 0    # counter for deferred image filenames
+        table_seq = 0
+        img_file_seq = 0
 
-        for elem in self.ext.get('body_elements', []):
+        body_elements_list = self.ext.get('body_elements', [])
+        all_para_texts = [
+            (e.get('text') or '').strip()
+            for e in body_elements_list
+            if e.get('type') == 'paragraph'
+        ]
+        # When deferring images, suppress caption paragraphs that duplicate the
+        # image element's own caption field (inserted by docx_tools.insert_figure).
+        captions_to_suppress: set[str] = {
+            (e.get('caption') or '').strip()
+            for e in body_elements_list
+            if e.get('type') == 'image' and (e.get('caption') or '').strip()
+        } if skip_images else set()
+
+        for elem_idx, elem in enumerate(body_elements_list):
             etype = elem.get('type')
 
             if etype == 'paragraph':
+                para_text = (elem.get('text') or '').strip()
+                if para_text and para_text in captions_to_suppress:
+                    continue
                 body.append(self._build_para(elem))
-                last_para_text = (elem.get('text') or '').strip()
                 stats['paragraphs'] += 1
 
             elif etype == 'raw_xml':
@@ -437,9 +459,14 @@ class DocxCompiler:
 
             elif etype == 'image':
                 if skip_images:
+                    _caption, _anchor = _select_image_meta(
+                        _collect_context_texts(body_elements_list, elem_idx),
+                        elem.get('caption', ''),
+                        all_para_texts,
+                    )
                     record: dict = {
-                        'anchor_text': last_para_text,
-                        'caption':     elem.get('caption', ''),
+                        'anchor_text': _anchor,
+                        'caption':     _caption,
                         'width':       float(elem.get('width',  0) or 0),
                         'height':      float(elem.get('height', 0) or 0),
                         'position':    elem.get('position', 'center'),
@@ -1394,6 +1421,73 @@ def _math_text(oMath: ET.Element, text: str) -> None:
     mr = ET.SubElement(oMath, f'{{{M}}}r')
     mt = ET.SubElement(mr,    f'{{{M}}}t')
     mt.text = text
+
+
+# ── Image meta helpers ─────────────────────────────────────────────────────────
+
+class _ImageMeta(BaseModel):
+    caption: str
+    anchor_text: str
+
+
+def _collect_context_texts(
+    body_elements: list[dict],
+    img_idx: int,
+    window: int = 5,
+) -> list[str]:
+    texts: list[str] = []
+    start = max(0, img_idx - window)
+    end   = min(len(body_elements), img_idx + window + 1)
+    for i in range(start, end):
+        if i == img_idx:
+            continue
+        elem = body_elements[i]
+        if elem.get('type') == 'paragraph':
+            text = (elem.get('text') or '').strip()
+            if text:
+                texts.append(text)
+    return texts
+
+
+def _select_image_meta(
+    context_texts: list[str],
+    existing_caption: str,
+    all_para_texts: list[str],
+) -> tuple[str, str]:
+    system_prompt = "你是一名学术论文排版助手，负责从文档上下文中识别图片的图题和引用锚点文本。"
+
+    ctx_lines = '\n'.join(f'[{i + 1}] {t}' for i, t in enumerate(context_texts))
+    cap_hint  = f'\n已知该图的图题为："{existing_caption}"。' if existing_caption else ''
+
+    user_prompt = (
+        f"以下是文档中某张图片前后的文本段落（共 {len(context_texts)} 条）：\n"
+        f"{ctx_lines}"
+        f"{cap_hint}\n\n"
+        "请完成以下两项任务：\n"
+        "1. caption：为该图提供一个规范的中文图题（如已知图题则原样返回，否则根据上下文生成，格式如'图X-X xxx示意图'）。\n"
+        "2. anchor_text：从以上段落中选出明确引用了该图的那句原文（例如含"如图X-X所示"、"见图X-X"等字样）。\n"
+        "   - anchor_text 必须从以上段落中原文选取，不得改写或虚构。\n"
+        "   - 如果没有任何段落明确引用了该图，anchor_text 返回空字符串。"
+    )
+
+    try:
+        meta = ba.call_structured(system_prompt, user_prompt, _ImageMeta)
+        caption     = (meta.caption     or existing_caption or '').strip()
+        anchor_text = (meta.anchor_text or '').strip()
+
+        # 层 1 — 落地校验：anchor_text 必须是某个上下文文本的子串
+        if anchor_text and not any(anchor_text in t for t in context_texts):
+            anchor_text = ''
+
+        # 层 2 — 唯一性校验：anchor_text 在全文段落中必须恰好出现一次
+        if anchor_text:
+            if sum(1 for t in all_para_texts if anchor_text in t) != 1:
+                anchor_text = ''
+
+        return caption, anchor_text
+    except Exception as exc:
+        print(f'[compiler] image meta LLM call failed: {exc}')
+        return existing_caption, ''
 
 
 # ── Entry point ────────────────────────────────────────────────────────────────
