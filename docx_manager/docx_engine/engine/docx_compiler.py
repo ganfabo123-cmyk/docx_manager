@@ -459,19 +459,21 @@ class DocxCompiler:
 
             elif etype == 'image':
                 if skip_images:
-                    _caption, _anchor = _select_image_meta(
-                        _collect_context_texts(body_elements_list, elem_idx),
-                        elem.get('caption', ''),
+                    _after   = _collect_after_texts(body_elements_list, elem_idx)
+                    _caption = _generate_caption_llm(_after, elem.get('caption', ''))
+                    _anchor  = _generate_anchor_llm(
+                        _collect_before_texts(body_elements_list, elem_idx),
                         all_para_texts,
                     )
                     record: dict = {
-                        'anchor_text': _anchor,
-                        'caption':     _caption,
-                        'width':       float(elem.get('width',  0) or 0),
-                        'height':      float(elem.get('height', 0) or 0),
-                        'position':    elem.get('position', 'center'),
-                        'file_path':   None,
-                        'drawing_xml': None,
+                        'anchor_text':  _anchor,
+                        'caption':      _caption,
+                        '_after_texts': _after,
+                        'width':        float(elem.get('width',  0) or 0),
+                        'height':       float(elem.get('height', 0) or 0),
+                        'position':     elem.get('position', 'center'),
+                        'file_path':    None,
+                        'drawing_xml':  None,
                     }
                     drawing_xml = elem.get('drawing_xml')
                     raw_b64     = elem.get('base64', '')
@@ -517,6 +519,11 @@ class DocxCompiler:
 
             # Other tags (bookmarkEnd, etc.) are internal Word markers with no
             # content stored in extraction — skip them safely.
+
+        if skip_images and self.deferred_images:
+            _deduplicate_captions(self.deferred_images)
+            for _rec in self.deferred_images:
+                _rec.pop('_after_texts', None)
 
         # The body-level sectPr is not fully stored in extraction.json
         # (only header_refs, footer_refs, page_size are captured — not the
@@ -1425,22 +1432,17 @@ def _math_text(oMath: ET.Element, text: str) -> None:
 
 # ── Image meta helpers ─────────────────────────────────────────────────────────
 
-class _ImageMeta(BaseModel):
-    caption: str
-    anchor_text: str
+class _CaptionList(BaseModel):
+    captions: list[str]
 
 
-def _collect_context_texts(
+def _collect_before_texts(
     body_elements: list[dict],
     img_idx: int,
     window: int = 5,
 ) -> list[str]:
     texts: list[str] = []
-    start = max(0, img_idx - window)
-    end   = min(len(body_elements), img_idx + window + 1)
-    for i in range(start, end):
-        if i == img_idx:
-            continue
+    for i in range(max(0, img_idx - window), img_idx):
         elem = body_elements[i]
         if elem.get('type') == 'paragraph':
             text = (elem.get('text') or '').strip()
@@ -1449,46 +1451,100 @@ def _collect_context_texts(
     return texts
 
 
-def _select_image_meta(
-    context_texts: list[str],
-    existing_caption: str,
-    all_para_texts: list[str],
-) -> tuple[str, str]:
-    system_prompt = "你是一名学术论文排版助手，负责从文档上下文中识别图片的图题和引用锚点文本。"
+def _collect_after_texts(
+    body_elements: list[dict],
+    img_idx: int,
+    window: int = 5,
+) -> list[str]:
+    texts: list[str] = []
+    for i in range(img_idx + 1, min(len(body_elements), img_idx + window + 1)):
+        elem = body_elements[i]
+        if elem.get('type') == 'paragraph':
+            text = (elem.get('text') or '').strip()
+            if text:
+                texts.append(text)
+    return texts
 
-    ctx_lines = '\n'.join(f'[{i + 1}] {t}' for i, t in enumerate(context_texts))
-    cap_hint  = f'\n已知该图的图题为："{existing_caption}"。' if existing_caption else ''
 
-    user_prompt = (
-        f"以下是文档中某张图片前后的文本段落（共 {len(context_texts)} 条）：\n"
-        f"{ctx_lines}"
-        f"{cap_hint}\n\n"
-        "请完成以下两项任务：\n"
-        "1. caption：为该图提供一个规范的中文图题（如已知图题则原样返回，否则根据上下文生成，格式如'图X-X xxx示意图'）。\n"
-        "2. anchor_text：从以上段落中选一段作为图片的插入定位点。\n"
-        "   - 选择最靠近图片位置、有实质内容的段落原文，避免纯符号或单个标点。\n"
-        "   - anchor_text 必须从以上段落中原文选取，不得改写或虚构。\n"
-        "   - 如果所有段落均为无意义内容（如纯符号），anchor_text 返回空字符串。"
-    )
-
+def _generate_caption_llm(after_texts: list[str], existing_caption: str) -> str:
+    system_prompt = "你是一名学术论文排版助手，擅长为图片添加规范的中文图题。"
+    cap_hint = f'已知该图的图题为："{existing_caption}"，' if existing_caption else ''
+    if after_texts:
+        ctx = '\n'.join(f'[{i + 1}] {t}' for i, t in enumerate(after_texts))
+        user_prompt = (
+            f"以下是文档中某张图片之后的文本段落：\n{ctx}\n\n"
+            f"{cap_hint}请根据上下文为这张图片提供一个规范的中文图题（格式如'图X-X xxx示意图'）。"
+            "如上下文中已有明确图题则直接提取，否则根据语义生成。只返回图题文本，不要任何解释。"
+        )
+    else:
+        user_prompt = (
+            f"{cap_hint}文档中有一张图片，没有可参考的上下文。"
+            "请为其生成一个通用的中文图题（如'示意图'）。只返回图题文本，不要任何解释。"
+        )
     try:
-        meta = ba.call_structured(system_prompt, user_prompt, _ImageMeta)
-        caption     = (meta.caption     or existing_caption or '').strip()
-        anchor_text = (meta.anchor_text or '').strip()
-
-        # 层 1 — 落地校验：anchor_text 必须是某个上下文文本的子串
-        if anchor_text and not any(anchor_text in t for t in context_texts):
-            anchor_text = ''
-
-        # 层 2 — 唯一性校验：anchor_text 在全文段落中必须恰好出现一次
-        if anchor_text:
-            if sum(1 for t in all_para_texts if anchor_text in t) != 1:
-                anchor_text = ''
-
-        return caption, anchor_text
+        return ba.call(system_prompt, user_prompt).strip() or existing_caption or '示意图'
     except Exception as exc:
-        print(f'[compiler] image meta LLM call failed: {exc}')
-        return existing_caption, ''
+        print(f'[compiler] caption LLM call failed: {exc}')
+        return existing_caption or '示意图'
+
+
+def _generate_anchor_llm(before_texts: list[str], all_para_texts: list[str]) -> str:
+    if not before_texts:
+        return ''
+    system_prompt = "你是一名学术论文排版助手。"
+    ctx = '\n'.join(f'[{i + 1}] {t}' for i, t in enumerate(before_texts))
+    user_prompt = (
+        f"以下是文档中某张图片之前的文本段落：\n{ctx}\n\n"
+        "请从中选一段作为图片的插入定位点。\n"
+        "选择最靠近图片位置、有实质内容的段落原文，避免纯符号或单个标点。\n"
+        "必须从以上段落中原文选取，不得改写或虚构。\n"
+        "如果所有段落均为无意义内容，返回空字符串。\n"
+        "只返回所选段落的原文，不要任何解释。"
+    )
+    try:
+        anchor_text = ba.call(system_prompt, user_prompt).strip()
+        # 落地校验：必须是 before_texts 某条的子串
+        if anchor_text and not any(anchor_text in t for t in before_texts):
+            anchor_text = ''
+        # 唯一性校验：在全文段落中恰好出现一次
+        if anchor_text and sum(1 for t in all_para_texts if anchor_text in t) != 1:
+            anchor_text = ''
+        return anchor_text
+    except Exception as exc:
+        print(f'[compiler] anchor LLM call failed: {exc}')
+        return ''
+
+
+def _deduplicate_captions(records: list[dict]) -> None:
+    from collections import defaultdict
+    groups: dict[str, list[int]] = defaultdict(list)
+    for i, rec in enumerate(records):
+        cap = (rec.get('caption') or '').strip()
+        if cap:
+            groups[cap].append(i)
+
+    for cap, indices in groups.items():
+        if len(indices) <= 1:
+            continue
+        ctx_parts = []
+        for rank, idx in enumerate(indices, 1):
+            after_texts = records[idx].get('_after_texts') or []
+            ctx = '\n'.join(f'  - {t}' for t in after_texts) or '  （无上下文）'
+            ctx_parts.append(f"图片{rank}（当前图题：{cap}）\n后文：\n{ctx}")
+        system_prompt = "你是一名学术论文排版助手。"
+        user_prompt = (
+            f"以下 {len(indices)} 张图片的图题完全相同，请根据各自后文上下文将它们改写为不重复的图题。\n\n"
+            + '\n\n'.join(ctx_parts) + '\n\n'
+            f"要求：按顺序为每张图片输出一个新图题，格式如'图X-X xxx示意图'，"
+            f"共 {len(indices)} 个，每个图题单独一项。"
+        )
+        try:
+            result = ba.call_structured(system_prompt, user_prompt, _CaptionList)
+            for rank, idx in enumerate(indices):
+                if rank < len(result.captions) and result.captions[rank].strip():
+                    records[idx]['caption'] = result.captions[rank].strip()
+        except Exception as exc:
+            print(f'[compiler] caption dedup LLM call failed: {exc}')
 
 
 # ── Entry point ────────────────────────────────────────────────────────────────
