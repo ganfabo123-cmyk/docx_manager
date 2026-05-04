@@ -44,7 +44,7 @@ from pydantic import BaseModel
 import pythoncom
 import win32com.client as win32
 import requests as http_requests
-from flask import Flask, jsonify, request, send_file, abort
+from flask import Flask, jsonify, request, send_file, abort, Response, stream_with_context
 
 # ── Pipeline imports ───────────────────────────────────────────────────────────
 # Set CWD to project root so that relative-path defaults inside engine modules
@@ -529,26 +529,20 @@ def two_col():
 @app.route("/plan-layout", methods=["POST"])
 def plan_layout():
     """
-    Plan image layout via LLM, then immediately execute all insertions in order.
-    fig_start is auto-incremented across groups so figure numbers stay sequential.
+    Plan image layout via LLM, then stream execution results group by group.
+    Each NDJSON line is one of:
+      {"status": "planned",  "groups": [...], "total": N}
+      {"status": "progress", "group_index": N, "layout": "...", "captions": [...]}
+      {"status": "ok",       "download_url": "/download/<job_id>"}
+      {"status": "error",    "message": "..."}
 
     Body:
     {
         "job_id":           "<hex>",
         "user_instruction": "把图3-1和图3-2并排放，其他单独放",
         "captions":         ["图3-1 流程图", "图3-2 对比图", "图3-3 结果图"],
-        "chapter":          3,       // optional, default 1
-        "fig_start":        1        // optional, default 1
-    }
-
-    Response:
-    {
-        "status":       "ok",
-        "download_url": "/download/<job_id>",
-        "groups": [
-            {"layout": "one_col", "captions": ["图3-1 流程图"]},
-            {"layout": "two_col", "captions": ["图3-2 对比图", "图3-3 结果图"]}
-        ]
+        "chapter":          3,
+        "fig_start":        1
     }
     """
     data        = request.json or {}
@@ -565,7 +559,7 @@ def plan_layout():
     if not docx_path:
         return jsonify({"status": "error", "message": "job not found"}), 404
 
-    # ── Step 1: plan layout ────────────────────────────────────────────────────
+    # ── Plan groups (sync, before streaming starts) ────────────────────────────
     if not instruction:
         groups = _default_layout(captions)
     else:
@@ -598,56 +592,62 @@ def plan_layout():
 
     log.info("[plan-layout] job=%s groups=%d", job_id, len(groups))
 
-    # ── Step 2: execute insertions in order ───────────────────────────────────
-    fig_counter = fig_start
-    for idx, group in enumerate(groups):
-        group_captions = group["captions"]
-        imgs, missing  = _lookup_deferred(job_id, group_captions)
-        if missing:
-            return jsonify({
-                "status":  "error",
-                "message": f"group {idx}: captions not found in job: {missing}",
-            }), 404
+    # ── Stream execution ───────────────────────────────────────────────────────
+    def generate():
+        yield json.dumps({"status": "planned", "groups": groups,
+                          "total": len(groups)}) + "\n"
 
-        anchor  = imgs[0]["anchor_text"]
-        images  = [img["file_path"] for img in imgs]
-        layout  = group["layout"]
+        fig_counter = fig_start
+        for idx, group in enumerate(groups):
+            group_captions = group["captions"]
+            imgs, missing  = _lookup_deferred(job_id, group_captions)
+            if missing:
+                yield json.dumps({"status": "error",
+                                  "message": f"group {idx}: captions not found: {missing}"}) + "\n"
+                return
 
-        try:
-            if layout == "one_col":
-                log.info("[plan-layout] group %d one_col anchor=%r fig=%d",
-                         idx, anchor, fig_counter)
-                insert_n_images_one_col(
-                    docx_path=docx_path,
-                    anchor_text=anchor,
-                    anchor_image=_ANCHOR_IMAGE,
-                    images=images,
-                    captions=group_captions,
-                    chapter=chapter,
-                    fig_start=fig_counter,
-                )
-            else:  # two_col
-                total_caption = f"{group_captions[0]}和{group_captions[1]}"
-                log.info("[plan-layout] group %d two_col anchor=%r", idx, anchor)
-                insert_n_images_two_col(
-                    docx_path=docx_path,
-                    anchor_text=anchor,
-                    anchor_image=_ANCHOR_IMAGE,
-                    images=images,
-                    captions=group_captions,
-                    total_caption=total_caption,
-                )
-        except Exception as exc:
-            log.error("[plan-layout] group %d failed: %s", idx, exc)
-            return jsonify({"status": "error", "message": str(exc)}), 500
+            anchor = imgs[0]["anchor_text"]
+            images = [img["file_path"] for img in imgs]
+            layout = group["layout"]
 
-        fig_counter += len(group_captions)
+            try:
+                if layout == "one_col":
+                    log.info("[plan-layout] group %d one_col anchor=%r fig=%d",
+                             idx, anchor, fig_counter)
+                    insert_n_images_one_col(
+                        docx_path=docx_path,
+                        anchor_text=anchor,
+                        anchor_image=_ANCHOR_IMAGE,
+                        images=images,
+                        captions=group_captions,
+                        chapter=chapter,
+                        fig_start=fig_counter,
+                    )
+                else:  # two_col
+                    total_caption = f"{group_captions[0]}和{group_captions[1]}"
+                    log.info("[plan-layout] group %d two_col anchor=%r", idx, anchor)
+                    insert_n_images_two_col(
+                        docx_path=docx_path,
+                        anchor_text=anchor,
+                        anchor_image=_ANCHOR_IMAGE,
+                        images=images,
+                        captions=group_captions,
+                        total_caption=total_caption,
+                    )
+            except Exception as exc:
+                log.error("[plan-layout] group %d failed: %s", idx, exc)
+                yield json.dumps({"status": "error", "message": str(exc)}) + "\n"
+                return
 
-    return jsonify({
-        "status":       "ok",
-        "download_url": f"/download/{job_id}",
-        "groups":       groups,
-    })
+            fig_counter += len(group_captions)
+            yield json.dumps({"status": "progress", "group_index": idx,
+                              "layout": layout,
+                              "captions": group_captions}) + "\n"
+
+        yield json.dumps({"status": "ok",
+                          "download_url": f"/download/{job_id}"}) + "\n"
+
+    return Response(stream_with_context(generate()), mimetype="application/x-ndjson")
 
 
 @app.route("/download/<job_id>", methods=["GET"])

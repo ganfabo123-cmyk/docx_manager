@@ -113,14 +113,14 @@ def _generate_caption(context_texts: list[str]) -> str:
         ctx = '\n'.join(f'- {t}' for t in context_texts)
         user_prompt = (
             f"以下是文档中某张图片前后的文本段落：\n{ctx}\n\n"
-            "请根据上下文为这张图片起一个简洁的中文图题（格式如"图X-X xxx示意图"）。"
+            "请根据上下文为这张图片起一个简洁的中文图题（格式如'图X-X xxx示意图'）。"
             "如果上下文中已有明确的图题描述则直接提取，否则根据语义自行命名。"
             "只返回图题文本，不要任何解释。"
         )
     else:
         user_prompt = (
             "文档中有一张没有标题的图片，且没有可参考的上下文。"
-            "请为其生成一个通用的中文图题（如"示意图"）。只返回图题文本，不要任何解释。"
+            "请为其生成一个通用的中文图题（如'示意图'）。只返回图题文本，不要任何解释。"
         )
     try:
         return ba.call(system_prompt, user_prompt).strip()
