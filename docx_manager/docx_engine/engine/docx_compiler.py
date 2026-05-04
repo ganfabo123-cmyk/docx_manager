@@ -1488,31 +1488,56 @@ def _generate_caption_llm(after_texts: list[str], existing_caption: str) -> str:
         return existing_caption or '示意图'
 
 
+# 纯符号/标点文本识别：匹配全由空白、CJK 标点、省略号、ASCII 标点组成的字符串
+_SYMBOL_RE = re.compile(
+    r'^[\s　'
+    r'。，、；：！？'   # 。，、；：！？
+    r'…—–·'                      # …—–·
+    r'．（）［］'                # ．（）［］
+    r'「」『』【】'          # 「」『』【】
+    r'‘’“”'                      # ''""
+    r'\.,:;!?\-\*\#\(\)\[\]\|/\\@\$\%\^&~`'         # ASCII 标点
+    r']+$'
+)
+
+
+def _is_meaningful_text(text: str) -> bool:
+    stripped = (text or '').strip()
+    return bool(stripped) and not _SYMBOL_RE.match(stripped)
+
+
+class _AnchorIndex(BaseModel):
+    index: int  # 1-based index into the provided list; 0 = none suitable
+
+
 def _generate_anchor_llm(before_texts: list[str], all_para_texts: list[str]) -> str:
-    if not before_texts:
+    meaningful = [t for t in before_texts if _is_meaningful_text(t)]
+    if not meaningful:
         return ''
+
+    def _unique(t: str) -> bool:
+        return sum(1 for p in all_para_texts if t in p) == 1
+
     system_prompt = "你是一名学术论文排版助手。"
-    ctx = '\n'.join(f'[{i + 1}] {t}' for i, t in enumerate(before_texts))
+    ctx = '\n'.join(f'[{i + 1}] {t}' for i, t in enumerate(meaningful))
     user_prompt = (
         f"以下是文档中某张图片之前的文本段落：\n{ctx}\n\n"
-        "请从中选一段作为图片的插入定位点。\n"
-        "选择最靠近图片位置、有实质内容的段落原文，避免纯符号或单个标点。\n"
-        "必须从以上段落中原文选取，不得改写或虚构。\n"
-        "如果所有段落均为无意义内容，返回空字符串。\n"
-        "只返回所选段落的原文，不要任何解释。"
+        "请选出最靠近图片位置、最适合作为插入定位点的段落编号（方括号内的数字）。\n"
+        "只返回编号，不要任何解释。如果没有合适的段落，返回 0。"
     )
     try:
-        anchor_text = ba.call(system_prompt, user_prompt).strip()
-        # 落地校验：必须是 before_texts 某条的子串
-        if anchor_text and not any(anchor_text in t for t in before_texts):
-            anchor_text = ''
-        # 唯一性校验：在全文段落中恰好出现一次
-        if anchor_text and sum(1 for t in all_para_texts if anchor_text in t) != 1:
-            anchor_text = ''
-        return anchor_text
+        result = ba.call_structured(system_prompt, user_prompt, _AnchorIndex)
+        idx = result.index
+        if 1 <= idx <= len(meaningful) and _unique(meaningful[idx - 1]):
+            return meaningful[idx - 1]
     except Exception as exc:
         print(f'[compiler] anchor LLM call failed: {exc}')
-        return ''
+
+    # Fallback：从最近的有意义段落里找第一个在全文唯一的
+    for t in reversed(meaningful):
+        if _unique(t):
+            return t
+    return ''
 
 
 def _deduplicate_captions(records: list[dict]) -> None:
