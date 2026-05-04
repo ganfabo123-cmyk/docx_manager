@@ -225,13 +225,8 @@ def set_image_size_by_shortcut(
 # ── 插入图片对话框 ─────────────────────────────────────────────────────────
 
 def open_insert_picture_dialog() -> None:
-    """Alt → N → P  打开插入图片对话框（WPS 插入选项卡）"""
-    P.press('alt');  P.wait(0.1)
-    P.press('n')
-    P.wait(0.1)
-    P.press('p')
-    P.wait(0.1)
-    P.press('p')
+    """Ctrl+M  打开插入图片对话框（自定义快捷键）"""
+    P.hotkey('ctrl', 'm')
     P.wait(0.1)
 
 
