@@ -36,4 +36,5 @@ def handler(params):
         "download_url": BASE_URL + data["download_url"],
         "images":       images,
         "image_count":  len(images),
+        "captions":     [img["caption"] for img in images],
     }
