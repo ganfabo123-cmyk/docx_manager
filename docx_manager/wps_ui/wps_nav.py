@@ -228,7 +228,9 @@ def open_insert_picture_dialog() -> None:
     """Alt → N → P  打开插入图片对话框（WPS 插入选项卡）"""
     P.press('alt');  P.wait(0.1)
     P.press('n')
+    P.wait(0.1)
     P.press('p')
+    P.wait(0.1)
     P.press('p')
     P.wait(0.1)
 
@@ -240,6 +242,7 @@ def input_file_path_confirm(path: str) -> None:
     P.hotkey('ctrl', 'l')
     P.wait(0.1)
     P.hotkey('ctrl', 'a')
+    P.wait(0.1)
     P.hotkey('ctrl', 'v')
     P.wait(0.1)
     P.press('enter')
