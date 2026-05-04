@@ -26,8 +26,10 @@ from pathlib import Path
 
 try:
     from . import docx_tools as dt
+    from . import base_agent as ba
 except:
     import docx_tools as dt
+    import base_agent as ba
 # ── Paths ──────────────────────────────────────────────────────────────────────
 _BASE          = Path(__file__).parent.parent
 _EXTRACTION    = _BASE / "data" / "extraction.json"
@@ -90,6 +92,67 @@ def _derive_sections(body_elements: list[dict]) -> list[dict]:
     return sections
 
 
+def _collect_context(body_elements: list[dict], idx: int, window: int = 5) -> list[str]:
+    texts: list[str] = []
+    start = max(0, idx - window)
+    end   = min(len(body_elements), idx + window + 1)
+    for i in range(start, end):
+        if i == idx:
+            continue
+        elem = body_elements[i]
+        if elem.get('type') == 'paragraph':
+            text = (elem.get('text') or '').strip()
+            if text:
+                texts.append(text)
+    return texts
+
+
+def _generate_caption(context_texts: list[str]) -> str:
+    system_prompt = "你是一名学术论文排版助手，擅长为图片添加规范的中文图题。"
+    if context_texts:
+        ctx = '\n'.join(f'- {t}' for t in context_texts)
+        user_prompt = (
+            f"以下是文档中某张图片前后的文本段落：\n{ctx}\n\n"
+            "请根据上下文为这张图片起一个简洁的中文图题（格式如"图X-X xxx示意图"）。"
+            "如果上下文中已有明确的图题描述则直接提取，否则根据语义自行命名。"
+            "只返回图题文本，不要任何解释。"
+        )
+    else:
+        user_prompt = (
+            "文档中有一张没有标题的图片，且没有可参考的上下文。"
+            "请为其生成一个通用的中文图题（如"示意图"）。只返回图题文本，不要任何解释。"
+        )
+    try:
+        return ba.call(system_prompt, user_prompt).strip()
+    except Exception as exc:
+        print(f"[WARN] caption LLM call failed: {exc}")
+        return "示意图"
+
+
+def fill_missing_captions(body_elements: list[dict]) -> None:
+    """为 caption 为空的 image 元素调用 LLM 补全，并在其后插入 caption 段落。"""
+    i = 0
+    while i < len(body_elements):
+        elem = body_elements[i]
+        if elem.get('type') == 'image' and not elem.get('caption'):
+            context  = _collect_context(body_elements, i)
+            caption  = _generate_caption(context)
+            elem['caption'] = caption
+            cap_para = {
+                "index":         -1,
+                "type":          "paragraph",
+                "style":         None,
+                "text":          caption,
+                "runs":          [dt._mk_run(caption, dt._CAPTION_RPR)],
+                "pPr":           dt._CAPTION_PPR,
+                "section_break": None,
+            }
+            body_elements.insert(i + 1, cap_para)
+            i += 2
+        else:
+            i += 1
+
+
 def compile_user_data(
     user_data_path: str = "data/mock_user_data.json",
     output_path:    str = "data/user_extraction.json",
@@ -133,6 +196,7 @@ def compile_user_data(
             skipped += 1
 
     body_elements = dt.get_document()
+    fill_missing_captions(body_elements)
 
     # ── Assemble output JSON ───────────────────────────────────────────────────
     scaffold = _load_extraction_scaffold()
