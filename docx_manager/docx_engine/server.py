@@ -35,9 +35,11 @@ import shutil
 import traceback
 import uuid
 from pathlib import Path
+from typing import Literal
 import sys
 
 import tempfile
+from pydantic import BaseModel
 
 import pythoncom
 import win32com.client as win32
@@ -61,6 +63,7 @@ from engine.docx_parser      import DocxParser            # step 1
 from engine                  import user_data_generator as udg  # step 2
 from engine                  import user_data_compiler  as udc  # step 3
 from engine.docx_compiler    import DocxCompiler          # step 4
+from engine                  import base_agent as ba
 
 # ── WPS post-processing imports ────────────────────────────────────────────────
 from docx_manager.wps_ui.workflows.hit_footer       import apply_hit_page_numbers
@@ -79,6 +82,33 @@ _ANCHOR_IMAGE  = str(_BASE.parent.parent / "anchor.png")   # ArUco 锚定图，�
 
 _MAX_UPLOAD_MB = 32
 _ALLOWED_EXT   = {".docx"}
+
+# ── Layout planning models ─────────────────────────────────────────────────────
+
+class _ImageGroup(BaseModel):
+    layout:   Literal["one_col", "two_col"]
+    captions: list[str]
+
+class _LayoutDecision(BaseModel):
+    groups: list[_ImageGroup]
+
+
+def _default_layout(captions: list[str]) -> list[dict]:
+    """Fallback: every image gets its own single-column group."""
+    return [{"layout": "one_col", "captions": [c]} for c in captions]
+
+
+def _validate_layout(decision: _LayoutDecision, captions: list[str]) -> bool:
+    """Check that all captions appear exactly once and group sizes are valid."""
+    assigned: list[str] = []
+    for g in decision.groups:
+        if g.layout == "two_col" and len(g.captions) != 2:
+            return False
+        if g.layout == "one_col" and len(g.captions) != 1:
+            return False
+        assigned.extend(g.captions)
+    return sorted(assigned) == sorted(captions)
+
 
 # ── Flask app ──────────────────────────────────────────────────────────────────
 app = Flask(__name__)
@@ -494,6 +524,130 @@ def two_col():
         return jsonify({"status": "error", "message": str(exc)}), 500
 
     return jsonify({"status": "ok", "download_url": f"/download/{job_id}"})
+
+
+@app.route("/plan-layout", methods=["POST"])
+def plan_layout():
+    """
+    Plan image layout via LLM, then immediately execute all insertions in order.
+    fig_start is auto-incremented across groups so figure numbers stay sequential.
+
+    Body:
+    {
+        "job_id":           "<hex>",
+        "user_instruction": "把图3-1和图3-2并排放，其他单独放",
+        "captions":         ["图3-1 流程图", "图3-2 对比图", "图3-3 结果图"],
+        "chapter":          3,       // optional, default 1
+        "fig_start":        1        // optional, default 1
+    }
+
+    Response:
+    {
+        "status":       "ok",
+        "download_url": "/download/<job_id>",
+        "groups": [
+            {"layout": "one_col", "captions": ["图3-1 流程图"]},
+            {"layout": "two_col", "captions": ["图3-2 对比图", "图3-3 结果图"]}
+        ]
+    }
+    """
+    data        = request.json or {}
+    job_id      = data.get("job_id", "")
+    instruction = (data.get("user_instruction") or "").strip()
+    captions    = data.get("captions", [])
+    chapter     = int(data.get("chapter",   1))
+    fig_start   = int(data.get("fig_start", 1))
+
+    if not captions:
+        return jsonify({"status": "error", "message": "captions required"}), 400
+
+    docx_path = _get_output_docx(job_id)
+    if not docx_path:
+        return jsonify({"status": "error", "message": "job not found"}), 404
+
+    # ── Step 1: plan layout ────────────────────────────────────────────────────
+    if not instruction:
+        groups = _default_layout(captions)
+    else:
+        caption_list = "\n".join(f"{i + 1}. {c}" for i, c in enumerate(captions))
+        system_prompt = (
+            "你是一名学术论文排版助手。根据用户说明将图片分组并指定排版方式。\n"
+            "规则：\n"
+            "- one_col（单列）：每组恰好 1 张图片，居中独占一行\n"
+            "- two_col（双列）：每组恰好 2 张图片，左右并排\n"
+            "- 每张图片必须出现在且仅出现在一个组中\n"
+            "- 用户未提及的图片默认归入 one_col 单独一组"
+        )
+        user_prompt = (
+            f"图片列表：\n{caption_list}\n\n"
+            f"用户排版说明：{instruction}\n\n"
+            "请按要求输出分组结果。"
+        )
+        try:
+            decision: _LayoutDecision = ba.call_structured(
+                system_prompt, user_prompt, _LayoutDecision
+            )
+            if not _validate_layout(decision, captions):
+                log.warning("[plan-layout] LLM output failed validation — using default")
+                groups = _default_layout(captions)
+            else:
+                groups = [g.model_dump() for g in decision.groups]
+        except Exception as exc:
+            log.warning("[plan-layout] LLM call failed (%s) — using default", exc)
+            groups = _default_layout(captions)
+
+    log.info("[plan-layout] job=%s groups=%d", job_id, len(groups))
+
+    # ── Step 2: execute insertions in order ───────────────────────────────────
+    fig_counter = fig_start
+    for idx, group in enumerate(groups):
+        group_captions = group["captions"]
+        imgs, missing  = _lookup_deferred(job_id, group_captions)
+        if missing:
+            return jsonify({
+                "status":  "error",
+                "message": f"group {idx}: captions not found in job: {missing}",
+            }), 404
+
+        anchor  = imgs[0]["anchor_text"]
+        images  = [img["file_path"] for img in imgs]
+        layout  = group["layout"]
+
+        try:
+            if layout == "one_col":
+                log.info("[plan-layout] group %d one_col anchor=%r fig=%d",
+                         idx, anchor, fig_counter)
+                insert_n_images_one_col(
+                    docx_path=docx_path,
+                    anchor_text=anchor,
+                    anchor_image=_ANCHOR_IMAGE,
+                    images=images,
+                    captions=group_captions,
+                    chapter=chapter,
+                    fig_start=fig_counter,
+                )
+            else:  # two_col
+                total_caption = f"{group_captions[0]}和{group_captions[1]}"
+                log.info("[plan-layout] group %d two_col anchor=%r", idx, anchor)
+                insert_n_images_two_col(
+                    docx_path=docx_path,
+                    anchor_text=anchor,
+                    anchor_image=_ANCHOR_IMAGE,
+                    images=images,
+                    captions=group_captions,
+                    total_caption=total_caption,
+                )
+        except Exception as exc:
+            log.error("[plan-layout] group %d failed: %s", idx, exc)
+            return jsonify({"status": "error", "message": str(exc)}), 500
+
+        fig_counter += len(group_captions)
+
+    return jsonify({
+        "status":       "ok",
+        "download_url": f"/download/{job_id}",
+        "groups":       groups,
+    })
 
 
 @app.route("/download/<job_id>", methods=["GET"])
