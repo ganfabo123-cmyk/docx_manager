@@ -1078,7 +1078,12 @@ def register_routes(app):
                     print(f"⬇️  [ACTION] 下载图片 {i}: {actual_url}")
                     resp = requests.get(actual_url, timeout=30)
                     resp.raise_for_status()
-                    b64 = b64_module.b64encode(resp.content).decode('utf-8')
+                    content_type = resp.headers.get('Content-Type', '')
+                    if not content_type.startswith('image/'):
+                        print(f"⚠️  [WARN] 图片 {i} 响应类型非图片 ({content_type})，跳过，将显示占位符")
+                        b64 = ''
+                    else:
+                        b64 = b64_module.b64encode(resp.content).decode('utf-8')
                     processed_images.append({
                         'base64': b64,
                         'caption': img.get('caption', ''),

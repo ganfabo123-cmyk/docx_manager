@@ -234,8 +234,12 @@ class DocxRestorer:
             return
 
         try:
+            from PIL import Image as PILImage
             image_bytes = base64.b64decode(base64_str)
-            image_stream = io.BytesIO(image_bytes)
+            pil_img = PILImage.open(io.BytesIO(image_bytes))
+            image_stream = io.BytesIO()
+            pil_img.save(image_stream, format='PNG')
+            image_stream.seek(0)
 
             paragraph = self.doc.add_paragraph()
             paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
