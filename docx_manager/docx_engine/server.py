@@ -612,6 +612,8 @@ def plan_layout():
                 groups = _default_layout(captions)
 
     if not groups:
+        if _groups_file.exists():
+            return jsonify({"status": "ok", "download_url": f"/download/{job_id}"})
         return jsonify({"status": "error", "message": "no groups to process"}), 400
 
     log.info("[plan-layout] job=%s groups_remaining=%d fig_start=%d",
