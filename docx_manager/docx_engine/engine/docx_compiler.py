@@ -251,6 +251,13 @@ def _wrap_in_mc_choice(drawing_elem: ET.Element) -> ET.Element:
     return alt
 
 
+# ── Abstract heading detection result ─────────────────────────────────────────
+
+class AbstractCheckResult(BaseModel):
+    has_abstract_cn: bool  # 是否存在"摘要"一级标题
+    has_abstract_en: bool  # 是否存在"Abstract"一级标题
+
+
 # ── Main compiler ──────────────────────────────────────────────────────────────
 
 class DocxCompiler:
@@ -283,6 +290,9 @@ class DocxCompiler:
         self._rid_counter    = 0   # next unused rId number
         self._shape_counter  = 1   # docPr id for inline images
         self.deferred_images: list[dict] = []
+        self.abstract_check: AbstractCheckResult = AbstractCheckResult(
+            has_abstract_cn=False, has_abstract_en=False
+        )
 
     # ── Public API ─────────────────────────────────────────────────────────────
 
@@ -335,11 +345,43 @@ class DocxCompiler:
         finally:
             shutil.rmtree(tmp_base, ignore_errors=True)
 
+        self.abstract_check = self.check_abstract_headings()
+
         abs_out = os.path.abspath(output_path)
         print(f'[compiler] Done → {abs_out}')
         if skip_images:
             print(f'[compiler] Deferred images : {len(self.deferred_images)}')
         return abs_out
+
+    # ── Abstract heading detection ─────────────────────────────────────────────
+
+    def check_abstract_headings(self) -> AbstractCheckResult:
+        """
+        Extract all h1 texts (style == "2") and ask the LLM whether
+        "摘要" and "Abstract" appear among them.
+        """
+        h1_texts = [
+            e.get('text', '')
+            for e in self.ext.get('body_elements', [])
+            if e.get('type') == 'paragraph' and e.get('style') == '2'
+        ]
+        if not h1_texts:
+            return AbstractCheckResult(has_abstract_cn=False, has_abstract_en=False)
+
+        heading_list = '\n'.join(f'- {t}' for t in h1_texts)
+        return ba.call_structured(
+            system_prompt=(
+                '你是一个文档结构分析助手，只负责判断一级标题列表中是否包含特定标题。'
+                '标题文字可能含有全角空格或多余空格，请做模糊匹配。'
+            ),
+            user_prompt=(
+                f'以下是文档的全部一级标题：\n{heading_list}\n\n'
+                '请判断：\n'
+                '1. 其中是否包含中文摘要标题（"摘要"或含有"摘要"的变体）？\n'
+                '2. 其中是否包含英文摘要标题（"Abstract"或含有"Abstract"的变体）？'
+            ),
+            response_model=AbstractCheckResult,
+        )
 
     # ── rId management ─────────────────────────────────────────────────────────
 
@@ -1200,20 +1242,25 @@ class DocxCompiler:
                 t_after.text = text_after
                 t_after.set(XML_SPACE, 'preserve')
         else:
-            oMathPara = ET.SubElement(p, _qm('oMathPara'))
-
             if formula.startswith('<'):
                 formula_elem = _parse_xml(formula)
                 if formula_elem is not None:
-                    if _tag(formula_elem) == 'oMath':
+                    ftag = _tag(formula_elem)
+                    if ftag == 'oMathPara':
+                        p.append(formula_elem)
+                    elif ftag == 'oMath':
+                        oMathPara = ET.SubElement(p, _qm('oMathPara'))
                         oMathPara.append(formula_elem)
                     else:
+                        oMathPara = ET.SubElement(p, _qm('oMathPara'))
                         oMath = ET.SubElement(oMathPara, _qm('oMath'))
                         oMath.append(formula_elem)
                 else:
+                    oMathPara = ET.SubElement(p, _qm('oMathPara'))
                     oMath = ET.SubElement(oMathPara, _qm('oMath'))
                     _math_text(oMath, formula)
             else:
+                oMathPara = ET.SubElement(p, _qm('oMathPara'))
                 oMath = ET.SubElement(oMathPara, _qm('oMath'))
                 _math_text(oMath, formula)
 

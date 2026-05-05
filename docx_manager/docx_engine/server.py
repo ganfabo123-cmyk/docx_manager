@@ -67,7 +67,7 @@ from engine.docx_compiler    import DocxCompiler          # step 4
 from engine                  import base_agent as ba
 
 # ── WPS post-processing imports ────────────────────────────────────────────────
-from docx_manager.wps_ui.workflows.hit_footer       import apply_hit_page_numbers
+from docx_manager.wps_ui.workflows.hit_footer       import apply_hit_page_numbers,apply_page_numbers
 from docx_manager.wps_ui.workflows.insert_image     import insert_n_images_one_col
 from docx_manager.wps_ui.workflows.insert_two_images import insert_n_images_two_col
 from wps_com.insert_image import (
@@ -283,7 +283,7 @@ def _run_pipeline(input_docx: str, job_dir: Path) -> tuple[str, list[dict]]:
         }
         for i, img in enumerate(deferred)
     ]
-    return output_docx, image_summary
+    return output_docx, image_summary, compiler.abstract_check.model_dump()
 
 
 # ── Routes ─────────────────────────────────────────────────────────────────────
@@ -372,7 +372,7 @@ def convert():
             pass
 
     try:
-        output_path, image_summary = _run_pipeline(input_path, job_dir)
+        output_path, image_summary, abstract_check = _run_pipeline(input_path, job_dir)
     except Exception as exc:
         log.error("Job %s failed:\n%s", job_id, traceback.format_exc())
         shutil.rmtree(job_dir, ignore_errors=True)
@@ -380,10 +380,11 @@ def convert():
 
     log.info("Job %s complete → %s  (%d images)", job_id, output_path, len(image_summary))
     return jsonify({
-        "status":       "ok",
-        "job_id":       job_id,
-        "download_url": f"/download/{job_id}",
-        "images":       image_summary,
+        "status":         "ok",
+        "job_id":         job_id,
+        "download_url":   f"/download/{job_id}",
+        "images":         image_summary,
+        "abstract_check": abstract_check,
     })
 
 
@@ -397,14 +398,18 @@ def footer():
     data         = request.json or {}
     job_id       = data.get("job_id", "")
     body_section = int(data.get("body_section", 4))
+    mode         = data.get("mode", "hit")
 
     docx_path = _get_output_docx(job_id)
     if not docx_path:
         return jsonify({"status": "error", "message": "job not found"}), 404
 
     try:
-        log.info("[footer] job=%s section=%d", job_id, body_section)
-        apply_hit_page_numbers(docx_path, body_section)
+        log.info("[footer] job=%s section=%d mode=%s", job_id, body_section, mode)
+        if mode == "alt":
+            apply_page_numbers(docx_path)
+        else:
+            apply_hit_page_numbers(docx_path, body_section)
         log.info("[footer] done")
     except Exception as exc:
         log.error("[footer] failed: %s", exc)

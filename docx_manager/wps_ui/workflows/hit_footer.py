@@ -51,3 +51,24 @@ def apply_hit_page_numbers(docx_path: str, body_section: int = 4) -> None:
     print("→ 保存关闭")
     W.save_close()
     print("完成！")
+
+
+
+def apply_page_numbers(docx_path: str) -> None:
+    """
+    完整工作流：
+      1. 打开文档，跳到开头
+      2. 全文设大写罗马
+      3. 跳到正文节（绪论）
+      4. 正文节及以后覆盖为 dash-arabic
+      5. 保存关闭
+    """
+    W.open_doc(docx_path)
+    W.goto_start()
+
+    print("→ 全文起设 dash-arabic")
+    set_dash_arabic_from_here()
+
+    print("→ 保存关闭")
+    W.save_close()
+    print("完成！")
