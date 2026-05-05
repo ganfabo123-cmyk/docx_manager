@@ -67,6 +67,10 @@ def _new_para_after(doc, after_idx: int) -> int:
 def _fmt(para, *, center: bool = True, indent: float = 0, keep_next: bool = False) -> None:
     """一次性设置段落对齐、首行缩进、左缩进、与下段同页。"""
     para.Alignment = _WD_ALIGN_CENTER if center else 0
+    # 先清字符单位缩进（WPS 段落对话框"特殊格式→度量值"对应 firstLineChars）
+    # 再清 points 单位缩进，两套都清才能保证"特殊格式=无"
+    para.Format.CharacterUnitFirstLineIndent = 0
+    para.Format.CharacterUnitLeftIndent = 0
     para.Format.FirstLineIndent = indent
     para.Format.LeftIndent = 0
     para.Format.RightIndent = 0
