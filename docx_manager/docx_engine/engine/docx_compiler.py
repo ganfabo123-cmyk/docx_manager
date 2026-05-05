@@ -1179,14 +1179,19 @@ class DocxCompiler:
                 t_before.text = text_before
                 t_before.set(XML_SPACE, 'preserve')
 
-            oMath = ET.SubElement(p, _qm('oMath'))
             if formula.startswith('<'):
                 formula_elem = _parse_xml(formula)
                 if formula_elem is not None:
-                    oMath.append(formula_elem)
+                    if _tag(formula_elem) == 'oMath':
+                        p.append(formula_elem)
+                    else:
+                        oMath = ET.SubElement(p, _qm('oMath'))
+                        oMath.append(formula_elem)
                 else:
+                    oMath = ET.SubElement(p, _qm('oMath'))
                     _math_text(oMath, formula)
             else:
+                oMath = ET.SubElement(p, _qm('oMath'))
                 _math_text(oMath, formula)
 
             if text_after:
@@ -1196,15 +1201,20 @@ class DocxCompiler:
                 t_after.set(XML_SPACE, 'preserve')
         else:
             oMathPara = ET.SubElement(p, _qm('oMathPara'))
-            oMath     = ET.SubElement(oMathPara, _qm('oMath'))
 
             if formula.startswith('<'):
                 formula_elem = _parse_xml(formula)
                 if formula_elem is not None:
-                    oMath.append(formula_elem)
+                    if _tag(formula_elem) == 'oMath':
+                        oMathPara.append(formula_elem)
+                    else:
+                        oMath = ET.SubElement(oMathPara, _qm('oMath'))
+                        oMath.append(formula_elem)
                 else:
+                    oMath = ET.SubElement(oMathPara, _qm('oMath'))
                     _math_text(oMath, formula)
             else:
+                oMath = ET.SubElement(oMathPara, _qm('oMath'))
                 _math_text(oMath, formula)
 
             if formula_index:
