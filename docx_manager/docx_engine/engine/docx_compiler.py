@@ -324,6 +324,9 @@ class DocxCompiler:
             shutil.copytree(self.template_dir, work_dir)
             self._init_rid_counter(work_dir)
 
+            self.abstract_check = self.check_abstract_headings()
+            print(f'[compiler] Abstract check: cn={self.abstract_check.has_abstract_cn} en={self.abstract_check.has_abstract_en}')
+
             print('[compiler] Rebuilding document.xml …')
             stats = self._rebuild_document(work_dir, skip_images=skip_images, images_dir=images_dir)
             print(f'[compiler]   paragraphs : {stats["paragraphs"]}')
@@ -344,8 +347,6 @@ class DocxCompiler:
             _pack_docx(work_dir, output_path)
         finally:
             shutil.rmtree(tmp_base, ignore_errors=True)
-
-        self.abstract_check = self.check_abstract_headings()
 
         abs_out = os.path.abspath(output_path)
         print(f'[compiler] Done → {abs_out}')
@@ -488,8 +489,11 @@ class DocxCompiler:
                 stats['raw_xml'] += 1
 
             elif etype == 'toc':
-                body.append(self._build_toc_para(elem))
-                stats['toc'] += 1
+                if self.abstract_check.has_abstract_cn or self.abstract_check.has_abstract_en:
+                    body.append(self._build_toc_para(elem))
+                    stats['toc'] += 1
+                else:
+                    print('[compiler] TOC skipped: no abstract heading detected')
 
             elif etype == 'table':
                 tmpl_tbl = (
