@@ -758,5 +758,3 @@ def download(job_id: str):
         mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     )
 
-
-

@@ -32,8 +32,10 @@ def _cm(cm: float) -> float:
 def _get_app(visible: bool = False):
     try:
         import win32com.client as wc
+        import pythoncom
     except ImportError:
         sys.exit('[ERROR] pywin32 未安装: pip install pywin32')
+    pythoncom.CoInitialize()
     for prog_id in ['Kwps.Application', 'Word.Application']:
         try:
             app = wc.Dispatch(prog_id)
@@ -156,6 +158,7 @@ def insert_n_images_one_col(
     captions = _normalize_captions(captions, chapter, fig_start)
     n = len(images)
 
+    import pythoncom
     app = _get_app(visible)
     try:
         doc = app.Documents.Open(abs_path)
@@ -193,6 +196,8 @@ def insert_n_images_one_col(
             app.Quit()
         except Exception:
             pass
+        pythoncom.CoUninitialize()
+        pythoncom.CoUninitialize()
 
 
 def insert_n_images_two_col(
@@ -218,6 +223,7 @@ def insert_n_images_two_col(
         height        : 单张图片高度（厘米），默认 4.99
         visible       : 是否显示 WPS 窗口（调试用）
     """
+    import pythoncom
     abs_path = os.path.abspath(docx_path)
     w_pt, h_pt = _cm(width), _cm(height)
     n = len(images)
@@ -278,3 +284,4 @@ def insert_n_images_two_col(
             app.Quit()
         except Exception:
             pass
+        pythoncom.CoUninitialize()
