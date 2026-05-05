@@ -371,14 +371,16 @@ class DocxCompiler:
         heading_list = '\n'.join(f'- {t}' for t in h1_texts)
         return ba.call_structured(
             system_prompt=(
-                '你是一个文档结构分析助手，只负责判断一级标题列表中是否包含特定标题。'
-                '标题文字可能含有全角空格或多余空格，请做模糊匹配。'
+                '你是一个严格的字符串匹配工具，只做精确匹配，不做任何语义推断或联想。'
             ),
             user_prompt=(
-                f'以下是文档的全部一级标题：\n{heading_list}\n\n'
-                '请判断：\n'
-                '1. 其中是否包含中文摘要标题（"摘要"或含有"摘要"的变体）？\n'
-                '2. 其中是否包含英文摘要标题（"Abstract"或含有"Abstract"的变体）？'
+                f'以下是文档的全部一级标题（每行一条）：\n{heading_list}\n\n'
+                '判断规则（必须严格遵守）：\n'
+                '- has_abstract_cn：将某条标题去掉所有空格（含全角空格）后，'
+                '结果恰好等于"摘要"，才为 true。否则为 false。\n'
+                '- has_abstract_en：将某条标题去掉所有空格后，忽略大小写，'
+                '结果恰好等于"abstract"，才为 true（即 Abstract / ABSTRACT / abstract 均算匹配）。否则为 false。\n'
+                '不得根据语义、上下文或相似词进行联想。列表中找不到精确匹配就返回 false。'
             ),
             response_model=AbstractCheckResult,
         )
