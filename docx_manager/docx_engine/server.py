@@ -529,125 +529,146 @@ def two_col():
 @app.route("/plan-layout", methods=["POST"])
 def plan_layout():
     """
-    Plan image layout via LLM, then stream execution results group by group.
-    Each NDJSON line is one of:
-      {"status": "planned",  "groups": [...], "total": N}
-      {"status": "progress", "group_index": N, "layout": "...", "captions": [...]}
-      {"status": "ok",       "download_url": "/download/<job_id>"}
-      {"status": "error",    "message": "..."}
+    Execute ONE image-layout group per call to avoid client timeouts.
+
+    First call: provide captions (+ optional user_instruction) — server plans
+    all groups via LLM and executes the first one.
+
+    Subsequent calls: provide groups (the remaining_groups from the previous
+    response) — server executes groups[0] directly, no LLM involved.
 
     Body:
     {
         "job_id":           "<hex>",
-        "user_instruction": "把图3-1和图3-2并排放，其他单独放",
-        "captions":         ["图3-1 流程图", "图3-2 对比图", "图3-3 结果图"],
+        "user_instruction": "把图3-1和图3-2并排放，其他单独放",  // first call only
+        "captions":         ["图3-1 流程图", "图3-2 对比图"],     // first call only
+        "groups":           [...],   // subsequent calls: remaining_groups from last response
         "chapter":          3,
-        "fig_start":        1
+        "fig_start":        1        // pass fig_next from the previous response each time
     }
+
+    Response (more groups remain):
+      {"status": "progress", "executed": {"layout": "...", "captions": [...]},
+       "remaining_groups": [...], "fig_next": N, "download_url": "/download/<job_id>"}
+
+    Response (last group done):
+      {"status": "ok", "download_url": "/download/<job_id>"}
+
+    Response (error):
+      {"status": "error", "message": "..."}
     """
     data        = request.json or {}
     job_id      = data.get("job_id", "")
     instruction = (data.get("user_instruction") or "").strip()
     captions    = data.get("captions", [])
+    groups      = data.get("groups")          # None if client didn't pass it
     chapter     = int(data.get("chapter",   1))
     fig_start   = int(data.get("fig_start", 1))
-
-    if not captions:
-        return jsonify({"status": "error", "message": "captions required"}), 400
 
     docx_path = _get_output_docx(job_id)
     if not docx_path:
         return jsonify({"status": "error", "message": "job not found"}), 404
 
-    # ── Plan groups (sync, before streaming starts) ────────────────────────────
-    if not instruction:
-        groups = _default_layout(captions)
-    else:
-        caption_list = "\n".join(f"{i + 1}. {c}" for i, c in enumerate(captions))
-        system_prompt = (
-            "你是一名学术论文排版助手。根据用户说明将图片分组并指定排版方式。\n"
-            "规则：\n"
-            "- one_col（单列）：每组恰好 1 张图片，居中独占一行\n"
-            "- two_col（双列）：每组恰好 2 张图片，左右并排\n"
-            "- 每张图片必须出现在且仅出现在一个组中\n"
-            "- 用户未提及的图片默认归入 one_col 单独一组"
-        )
-        user_prompt = (
-            f"图片列表：\n{caption_list}\n\n"
-            f"用户排版说明：{instruction}\n\n"
-            "请按要求输出分组结果。"
-        )
-        try:
-            decision: _LayoutDecision = ba.call_structured(
-                system_prompt, user_prompt, _LayoutDecision
-            )
-            if not _validate_layout(decision, captions):
-                log.warning("[plan-layout] LLM output failed validation — using default")
-                groups = _default_layout(captions)
-            else:
-                groups = [g.model_dump() for g in decision.groups]
-        except Exception as exc:
-            log.warning("[plan-layout] LLM call failed (%s) — using default", exc)
+    _groups_file = _OUTPUTS_DIR / job_id / "layout_groups.json"
+
+    # ── Resolve groups ─────────────────────────────────────────────────────────
+    # Priority: client-supplied > server-saved > plan from scratch
+    if groups is None:
+        if _groups_file.exists():
+            with open(str(_groups_file), encoding="utf-8") as fh:
+                groups = json.load(fh)
+            log.info("[plan-layout] loaded %d groups from saved state", len(groups))
+        elif not captions:
+            return jsonify({"status": "error",
+                            "message": "captions required on first call"}), 400
+        elif not instruction:
             groups = _default_layout(captions)
-
-    log.info("[plan-layout] job=%s groups=%d", job_id, len(groups))
-
-    # ── Stream execution ───────────────────────────────────────────────────────
-    def generate():
-        yield json.dumps({"status": "planned", "groups": groups,
-                          "total": len(groups)}) + "\n"
-
-        fig_counter = fig_start
-        for idx, group in enumerate(groups):
-            group_captions = group["captions"]
-            imgs, missing  = _lookup_deferred(job_id, group_captions)
-            if missing:
-                yield json.dumps({"status": "error",
-                                  "message": f"group {idx}: captions not found: {missing}"}) + "\n"
-                return
-
-            anchor = imgs[0]["anchor_text"]
-            images = [img["file_path"] for img in imgs]
-            layout = group["layout"]
-
+        else:
+            caption_list = "\n".join(f"{i + 1}. {c}" for i, c in enumerate(captions))
+            system_prompt = (
+                "你是一名学术论文排版助手。根据用户说明将图片分组并指定排版方式。\n"
+                "规则：\n"
+                "- one_col（单列）：每组恰好 1 张图片，居中独占一行\n"
+                "- two_col（双列）：每组恰好 2 张图片，左右并排\n"
+                "- 每张图片必须出现在且仅出现在一个组中\n"
+                "- 用户未提及的图片默认归入 one_col 单独一组"
+            )
+            user_prompt = (
+                f"图片列表：\n{caption_list}\n\n"
+                f"用户排版说明：{instruction}\n\n"
+                "请按要求输出分组结果。"
+            )
             try:
-                if layout == "one_col":
-                    log.info("[plan-layout] group %d one_col anchor=%r fig=%d",
-                             idx, anchor, fig_counter)
-                    insert_n_images_one_col(
-                        docx_path=docx_path,
-                        anchor_text=anchor,
-                        anchor_image=_ANCHOR_IMAGE,
-                        images=images,
-                        captions=group_captions,
-                        chapter=chapter,
-                        fig_start=fig_counter,
-                    )
-                else:  # two_col
-                    total_caption = f"{group_captions[0]}和{group_captions[1]}"
-                    log.info("[plan-layout] group %d two_col anchor=%r", idx, anchor)
-                    insert_n_images_two_col(
-                        docx_path=docx_path,
-                        anchor_text=anchor,
-                        anchor_image=_ANCHOR_IMAGE,
-                        images=images,
-                        captions=group_captions,
-                        total_caption=total_caption,
-                    )
+                decision: _LayoutDecision = ba.call_structured(
+                    system_prompt, user_prompt, _LayoutDecision
+                )
+                if not _validate_layout(decision, captions):
+                    log.warning("[plan-layout] LLM output failed validation — using default")
+                    groups = _default_layout(captions)
+                else:
+                    groups = [g.model_dump() for g in decision.groups]
             except Exception as exc:
-                log.error("[plan-layout] group %d failed: %s", idx, exc)
-                yield json.dumps({"status": "error", "message": str(exc)}) + "\n"
-                return
+                log.warning("[plan-layout] LLM call failed (%s) — using default", exc)
+                groups = _default_layout(captions)
 
-            fig_counter += len(group_captions)
-            yield json.dumps({"status": "progress", "group_index": idx,
-                              "layout": layout,
-                              "captions": group_captions}) + "\n"
+    if not groups:
+        return jsonify({"status": "error", "message": "no groups to process"}), 400
 
-        yield json.dumps({"status": "ok",
-                          "download_url": f"/download/{job_id}"}) + "\n"
+    log.info("[plan-layout] job=%s groups_remaining=%d fig_start=%d",
+             job_id, len(groups), fig_start)
 
-    return Response(stream_with_context(generate()), mimetype="application/x-ndjson")
+    # ── Execute the first group only ───────────────────────────────────────────
+    group          = groups[0]
+    remaining      = groups[1:]
+    group_captions = group["captions"]
+    layout         = group["layout"]
+
+    imgs, missing = _lookup_deferred(job_id, group_captions)
+    if missing:
+        return jsonify({"status": "error",
+                        "message": f"captions not found: {missing}"}), 404
+
+    anchor = imgs[0]["anchor_text"]
+    images = [img["file_path"] for img in imgs]
+
+    try:
+        if layout == "one_col":
+            log.info("[plan-layout] one_col anchor=%r fig=%d", anchor, fig_start)
+            insert_n_images_one_col(
+                docx_path=docx_path,
+                anchor_text=anchor,
+                anchor_image=_ANCHOR_IMAGE,
+                images=images,
+                captions=group_captions,
+                chapter=chapter,
+                fig_start=fig_start,
+            )
+        else:  # two_col
+            total_caption = f"{group_captions[0]}和{group_captions[1]}"
+            log.info("[plan-layout] two_col anchor=%r", anchor)
+            insert_n_images_two_col(
+                docx_path=docx_path,
+                anchor_text=anchor,
+                anchor_image=_ANCHOR_IMAGE,
+                images=images,
+                captions=group_captions,
+                total_caption=total_caption,
+            )
+    except Exception as exc:
+        log.error("[plan-layout] failed: %s", exc)
+        return jsonify({"status": "error", "message": str(exc)}), 500
+
+    # ── Persist remaining groups so client doesn't have to carry state ────────
+    with open(str(_groups_file), "w", encoding="utf-8") as fh:
+        json.dump(remaining, fh, ensure_ascii=False)
+
+    return jsonify({
+        "status":           "ok" if not remaining else "progress",
+        "executed":         {"layout": layout, "captions": group_captions},
+        "remaining_groups": remaining,
+        "fig_next":         fig_start + len(group_captions),
+        "download_url":     f"/download/{job_id}",
+    })
 
 
 @app.route("/download/<job_id>", methods=["GET"])
@@ -669,8 +690,4 @@ def download(job_id: str):
     )
 
 
-# ── Direct invocation (use main.py instead) ────────────────────────────────────
 
-if __name__ == "__main__":
-    import main
-    main.main()
