@@ -70,6 +70,10 @@ from engine                  import base_agent as ba
 from docx_manager.wps_ui.workflows.hit_footer       import apply_hit_page_numbers
 from docx_manager.wps_ui.workflows.insert_image     import insert_n_images_one_col
 from docx_manager.wps_ui.workflows.insert_two_images import insert_n_images_two_col
+from wps_com.insert_image import (
+    insert_n_images_one_col as _com_one_col,
+    insert_n_images_two_col as _com_two_col,
+)
 
 
 
@@ -576,6 +580,7 @@ def plan_layout():
     groups      = data.get("groups")          # None if client didn't pass it
     chapter     = int(data.get("chapter",   1))
     fig_start   = int(data.get("fig_start", 1))
+    use_com     = bool(data.get("use_com", False))
 
     docx_path = _get_output_docx(job_id)
     if not docx_path:
@@ -633,7 +638,55 @@ def plan_layout():
         log.info("[plan-layout] job=%s groups_remaining=%d fig_start=%d",
                  job_id, len(groups), fig_start)
 
-        # ── Execute the first group only ───────────────────────────────────────────
+        # ── COM 模式：一次性处理所有组 ────────────────────────────────────────────────
+        if use_com:
+            cur_fig = fig_start
+            try:
+                for g in groups:
+                    g_captions = g["captions"]
+                    g_layout   = g["layout"]
+
+                    g_imgs, g_missing = _lookup_deferred(job_id, g_captions)
+                    if g_missing:
+                        return jsonify({"status": "error",
+                                        "message": f"captions not found: {g_missing}"}), 404
+
+                    g_anchor = g_imgs[0]["anchor_text"]
+                    g_images = [img["file_path"] for img in g_imgs]
+
+                    if g_layout == "one_col":
+                        log.info("[plan-layout/com] one_col anchor=%r fig=%d", g_anchor, cur_fig)
+                        _com_one_col(
+                            docx_path=docx_path,
+                            anchor_text=g_anchor,
+                            images=g_images,
+                            captions=g_captions,
+                            chapter=chapter,
+                            fig_start=cur_fig,
+                        )
+                    else:  # two_col
+                        total_caption = f"{g_captions[0]}和{g_captions[1]}"
+                        log.info("[plan-layout/com] two_col anchor=%r", g_anchor)
+                        _com_two_col(
+                            docx_path=docx_path,
+                            anchor_text=g_anchor,
+                            images=g_images,
+                            captions=g_captions,
+                            total_caption=total_caption,
+                        )
+
+                    cur_fig += len(g_captions)
+
+            except Exception as exc:
+                log.error("[plan-layout/com] failed: %s", exc)
+                return jsonify({"status": "error", "message": str(exc)}), 500
+
+            if _groups_file.exists():
+                _groups_file.unlink()
+
+            return jsonify({"status": "ok", "download_url": f"/download/{job_id}"})
+
+        # ── UI 模式：每次只处理第一组，客户端轮询 ────────────────────────────────────
         group          = groups[0]
         remaining      = groups[1:]
         group_captions = group["captions"]
