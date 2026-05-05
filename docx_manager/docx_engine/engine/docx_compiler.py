@@ -327,6 +327,15 @@ class DocxCompiler:
             self.abstract_check = self.check_abstract_headings()
             print(f'[compiler] Abstract check: cn={self.abstract_check.has_abstract_cn} en={self.abstract_check.has_abstract_en}')
 
+            if not (self.abstract_check.has_abstract_cn or self.abstract_check.has_abstract_en):
+                before = len(self.ext.get('body_elements', []))
+                self.ext['body_elements'] = [
+                    e for e in self.ext.get('body_elements', [])
+                    if e.get('type') != 'toc'
+                ]
+                after = len(self.ext.get('body_elements', []))
+                print(f'[compiler] TOC removed from body_elements ({before - after} element(s) dropped)')
+
             print('[compiler] Rebuilding document.xml …')
             stats = self._rebuild_document(work_dir, skip_images=skip_images, images_dir=images_dir)
             print(f'[compiler]   paragraphs : {stats["paragraphs"]}')
@@ -489,11 +498,8 @@ class DocxCompiler:
                 stats['raw_xml'] += 1
 
             elif etype == 'toc':
-                if self.abstract_check.has_abstract_cn or self.abstract_check.has_abstract_en:
-                    body.append(self._build_toc_para(elem))
-                    stats['toc'] += 1
-                else:
-                    print('[compiler] TOC skipped: no abstract heading detected')
+                body.append(self._build_toc_para(elem))
+                stats['toc'] += 1
 
             elif etype == 'table':
                 tmpl_tbl = (
