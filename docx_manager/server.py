@@ -342,7 +342,7 @@ def create_app(default_output_path=None): # 1. 允许传入默认输出路径
                 item_value = item.get('value', '')
                 
                 # 检测是否遇到'参考文献'标题
-                if item_type == 'heading1' and item_value == '参考文献':
+                if item_type == 'heading1' and '参考文献' in item_value:
                     found_references = True
                     continue
                 

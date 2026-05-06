@@ -271,6 +271,7 @@ _REF_PPR = _ppr(
     _pstyle("1"),
     _ADJ_RIGHT,
     _SNAP_GRID,
+    _jc("left"),
     _spacing(
         after=0,  # structural: suppress spacing between consecutive reference entries
         line=_ref_l.get("line", 150) * 2,
