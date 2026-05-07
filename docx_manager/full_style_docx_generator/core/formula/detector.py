@@ -65,3 +65,23 @@ def detect_formula_blocks(elements: list) -> list:
         for elem in elements
         if is_suspected_formula(elem.get("content", ""))
     ]
+
+
+def detect_formula_cells_in_tables(elements: list) -> list:
+    """
+    扫描 table 类型元素的每个字符串单元格，返回疑似含公式的单元格。
+    id 编码为 '{elem_id}__r{row}__c{col}'，以便回填时定位。
+    """
+    results = []
+    for elem in elements:
+        if elem.get('type') != 'table':
+            continue
+        elem_id = elem.get('id', '')
+        for row_idx, row in enumerate(elem.get('content', [])):
+            for col_idx, cell in enumerate(row):
+                if isinstance(cell, str) and is_suspected_formula(cell):
+                    results.append({
+                        'id': f"{elem_id}__r{row_idx}__c{col_idx}",
+                        'content': cell,
+                    })
+    return results

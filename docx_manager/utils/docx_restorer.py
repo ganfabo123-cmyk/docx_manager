@@ -218,10 +218,23 @@ class DocxRestorer:
         table.style = "Table Grid"
         
         for row_idx, row_data in enumerate(content):
-            for col_idx, cell_text in enumerate(row_data):
+            for col_idx, cell_content in enumerate(row_data):
                 if col_idx < cols:
                     cell = table.rows[row_idx].cells[col_idx]
-                    cell.text = str(cell_text)
+                    if isinstance(cell_content, dict) and cell_content.get('omath'):
+                        paragraph = cell.paragraphs[0]
+                        paragraph.clear()
+                        if cell_content.get('text_before'):
+                            paragraph.add_run(cell_content['text_before'])
+                        try:
+                            omath_elem = etree.fromstring(cell_content['omath'].encode())
+                            paragraph._p.append(omath_elem)
+                        except Exception:
+                            paragraph.add_run('[公式]')
+                        if cell_content.get('text_after'):
+                            paragraph.add_run(cell_content['text_after'])
+                    else:
+                        cell.text = str(cell_content)
     
     def _restore_image(self, element: Dict[str, Any]):
         base64_str = element.get("base64", "")

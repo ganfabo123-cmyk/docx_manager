@@ -682,7 +682,7 @@ def register_routes(app):
         print("\n" + "="*50)
         print(f"🌐 [API IN] 收到请求: GET /process-formulas")
         try:
-            from core.formula.detector import detect_formula_blocks, merge_formula_blocks
+            from core.formula.detector import detect_formula_blocks, merge_formula_blocks, detect_formula_cells_in_tables
             from core.formula.converter import convert_formula_list, scan_and_convert_dollar_inline
             from core.formula.models import FormulaListResponse
             from utils.base_agent import call_structured
@@ -759,6 +759,37 @@ def register_routes(app):
 
             failed = [r for r in llm_results if r.get('error')]
             print(f"✅ [SUCCESS] 合计 {len(results)} 条（$...$ 直接转换 {len(dollar_results)}，LLM {len(llm_results) - len(failed)} 成功 {len(failed)} 失败）")
+
+            # Step 5: 处理表格单元格内的公式（读 backfilled_styles.json）
+            backfilled_path = os.path.join(data_dir, 'backfilled_styles.json')
+            if os.path.exists(backfilled_path):
+                with open(backfilled_path, 'r', encoding='utf-8') as f:
+                    backfilled_elements = json.load(f)
+
+                table_cells = detect_formula_cells_in_tables(backfilled_elements)
+                print(f"📐 [TABLE] 从表格中检测到 {len(table_cells)} 个疑似公式单元格")
+
+                if table_cells:
+                    # $...$ 直接转换
+                    table_dollar_results = scan_and_convert_dollar_inline(table_cells)
+                    table_dollar_ids = {r['id'] for r in table_dollar_results}
+                    table_remaining = [c for c in table_cells if c['id'] not in table_dollar_ids]
+
+                    # LLM 批次提取剩余单元格
+                    table_llm_results = []
+                    if table_remaining:
+                        total_batches = (len(table_remaining) + BATCH_SIZE - 1) // BATCH_SIZE
+                        for i in range(0, len(table_remaining), BATCH_SIZE):
+                            batch = table_remaining[i:i + BATCH_SIZE]
+                            user_prompt = json.dumps(batch, ensure_ascii=False)
+                            batch_response = call_structured(system_prompt, user_prompt, FormulaListResponse)
+                            batch_dicts = [f.model_dump() for f in batch_response.formulas]
+                            table_llm_results.extend(convert_formula_list(batch_dicts))
+                            print(f"🤖 [TABLE-LLM] 批次 {i // BATCH_SIZE + 1}/{total_batches}：{len(batch_response.formulas)} 个")
+
+                    results = results + table_dollar_results + table_llm_results
+                    print(f"📐 [TABLE] 表格公式处理完毕：$直接转换 {len(table_dollar_results)}，LLM {len(table_llm_results)}")
+
             print("🏁 [API OUT] 请求处理成功返回 200")
 
             return jsonify({'results': results}), 200
@@ -1005,12 +1036,39 @@ def register_routes(app):
             id_to_elem = {e.get('id'): e for e in elements}
 
             # 按 id 分组，同一元素的多条公式聚合在一起
+            import re as _re
             from collections import defaultdict
+            _TABLE_CELL_RE = _re.compile(r'^(.+)__r(\d+)__c(\d+)$')
+
             id_to_items = defaultdict(list)
+            table_cell_items = []
             for item in results:
-                elem_id = item.get('id')
-                if elem_id and item.get('omath'):
-                    id_to_items[elem_id].append(item)
+                raw_id = item.get('id', '')
+                if not raw_id or not item.get('omath'):
+                    continue
+                if _TABLE_CELL_RE.match(raw_id):
+                    table_cell_items.append(item)
+                else:
+                    id_to_items[raw_id].append(item)
+
+            # 回填表格单元格公式
+            table_updated = 0
+            for item in table_cell_items:
+                m = _TABLE_CELL_RE.match(item['id'])
+                if not m:
+                    continue
+                elem_id, row_idx, col_idx = m.group(1), int(m.group(2)), int(m.group(3))
+                if elem_id not in id_to_elem:
+                    continue
+                elem = id_to_elem[elem_id]
+                content = elem.get('content', [])
+                if row_idx < len(content) and col_idx < len(content[row_idx]):
+                    content[row_idx][col_idx] = {
+                        'text_before': item.get('text_before', ''),
+                        'omath': item.get('omath', ''),
+                        'text_after': item.get('text_after', ''),
+                    }
+                    table_updated += 1
 
             updated = 0
             for elem_id, items in id_to_items.items():
@@ -1043,8 +1101,8 @@ def register_routes(app):
             with open(json_path, 'w', encoding='utf-8') as f:
                 json.dump(elements, f, ensure_ascii=False, indent=2)
 
-            print(f"[SUCCESS] 回填完成，更新了 {updated} 个公式元素")
-            return jsonify({'updated': updated}), 200
+            print(f"[SUCCESS] 回填完成，更新了 {updated} 个段落公式元素，{table_updated} 个表格单元格公式")
+            return jsonify({'updated': updated, 'table_cell_updated': table_updated}), 200
         except Exception as e:
             print(f"[CRITICAL ERROR] /backfill-formulas 运行异常: {e}")
             traceback.print_exc()
