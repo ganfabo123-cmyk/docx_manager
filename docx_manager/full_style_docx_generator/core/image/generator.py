@@ -1,9 +1,10 @@
 import re
 import json
 from typing import List, Optional, Tuple
-from .models import ImageDescription, ImageGroup, ImageGroupingResponse, HeadingSectionResponse, ImageGroupPlacement
+from .models import ImageDescription, ImageGroup, ImageGroupingResponse, HeadingSectionResponse, ImageGroupPlacement, CaptionListResponse
 
 _FIG_REF_RE = re.compile(r'图\s*[\d一二三四五六七八九十]|如图|图示|下图|上图|见图|参见图')
+_FRONT_MATTER_RE = re.compile(r'^(abstract|目\s*录|摘\s*要|contents)$', re.IGNORECASE)
 _MAX_PARA_LEN = 200
 _HEADING_TYPES = {'heading1', 'heading2', 'heading3', 'heading', 'title'}
 
@@ -135,6 +136,27 @@ def _describe_image(image: dict) -> ImageDescription:
     return call_structured_with_image(system_prompt, user_prompt, image.get('base64', ''), ImageDescription)
 
 
+def _strip_caption_prefixes(descriptions: List[ImageDescription]) -> None:
+    """
+    批量清洗 suggested_caption：剥除任何图号前缀（图1-1/图  /Figure 1 等），
+    原地更新为纯描述文字，保证后续 _assign_figure_numbers 可直接拼接。
+    """
+    from utils.base_agent import call_structured
+
+    raw = [d.suggested_caption for d in descriptions]
+    system_prompt = (
+        "你是一个文本清洗助手。将每条图题去掉开头的图号前缀，只保留描述内容。\n"
+        "前缀形式多样，如：'图1-1 '、'图  '、'图：'、'Figure 1: ' 等，全部去掉。\n"
+        "输出 captions 列表，与输入等长，顺序一致，每项只含纯描述文字。"
+    )
+    user_prompt = json.dumps(raw, ensure_ascii=False)
+    response = call_structured(system_prompt, user_prompt, CaptionListResponse)
+
+    for i, desc in enumerate(descriptions):
+        if i < len(response.captions):
+            desc.suggested_caption = response.captions[i].strip()
+
+
 def _group_images(descriptions: List[ImageDescription], user_instruction: str = "") -> List[List[int]]:
     """
     Stage 2：纯文本模型根据描述分组。
@@ -237,6 +259,58 @@ def _place_group(
     )
 
 
+def _get_body_heading1s(structured_elements: list) -> list:
+    """返回正文区域的 heading1 列表（跳过 Abstract/目录/摘要 等前言性标题）。"""
+    all_h1 = [e for e in structured_elements if e.get('type') == 'heading1']
+    last_front = -1
+    for i, h in enumerate(all_h1):
+        if _FRONT_MATTER_RE.match(h.get('content', '').strip()):
+            last_front = i
+    return all_h1[last_front + 1:]
+
+
+def _assign_figure_numbers(
+    result: List['ImageGroup'],
+    paragraphs: list,
+    structured_elements: list,
+) -> None:
+    """
+    原地替换每个 ImageGroup.captions 的图号前缀（图\\s* → 图X-Y ）。
+    章号 = 正文第 N 个 heading1（N 从 1 起）。
+    序号 = 同章内按 anchor_idx 升序排列后的出现顺序（从 1 起）。
+    """
+    se_id_to_pos = {e['id']: i for i, e in enumerate(structured_elements) if 'id' in e}
+    body_h1 = _get_body_heading1s(structured_elements)
+    body_h1_id_to_chapter = {h['id']: idx + 1 for idx, h in enumerate(body_h1)}
+    body_h1_ids_set = set(body_h1_id_to_chapter)
+
+    def _chapter_of(anchor_idx: int) -> Optional[int]:
+        para = paragraphs[anchor_idx] if anchor_idx < len(paragraphs) else None
+        if para is None:
+            return None
+        se_pos = se_id_to_pos.get(para.get('id'))
+        if se_pos is None:
+            return None
+        for i in range(se_pos, -1, -1):
+            eid = structured_elements[i].get('id')
+            if eid in body_h1_ids_set:
+                return body_h1_id_to_chapter[eid]
+        return None
+
+    # 按文档顺序（anchor_idx 升序）分配章内序号
+    ordered = sorted(range(len(result)), key=lambda i: result[i].anchor_idx)
+    chapter_counter: dict[int, int] = {}
+    for i in ordered:
+        group = result[i]
+        chapter = _chapter_of(group.anchor_idx)
+        if chapter is None:
+            continue
+        chapter_counter[chapter] = chapter_counter.get(chapter, 0) + 1
+        fig_num = chapter_counter[chapter]
+        prefix = f"图{chapter}-{fig_num} "
+        group.captions = [f"{prefix}{cap}" for cap in group.captions]
+
+
 def generate(
     images: list,
     paragraphs: list,
@@ -254,6 +328,10 @@ def generate(
     descriptions = [_describe_image(img) for img in images]
     print(f"[image.generator] Stage 1 完成：{len(descriptions)} 张图片描述已生成")
 
+    # Stage 1.5: 清洗图题前缀，保证 suggested_caption 为纯描述
+    _strip_caption_prefixes(descriptions)
+    print(f"[image.generator] Stage 1.5 完成：图题前缀已清洗")
+
     # Stage 2: 纯文本分组（1-based 展示，内部转回 0-based）
     groups = _group_images(descriptions, user_instruction)
     print(f"[image.generator] Stage 2 完成：分为 {len(groups)} 组")
@@ -266,5 +344,9 @@ def generate(
         except Exception as e:
             print(f"[image.generator] 图片组 {g} 定位失败，跳过: {e}")
     print(f"[image.generator] Stage 3 完成：{len(result)}/{len(groups)} 组定位成功")
+
+    if structured_elements:
+        _assign_figure_numbers(result, paragraphs, structured_elements)
+        print(f"[image.generator] 图号分配完成")
 
     return result

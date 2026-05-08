@@ -7,7 +7,7 @@ class ImageDescription(BaseModel):
     topic_summary: str = Field(description="一句话主题摘要，用于分组判断")
     main_content: str = Field(description="图片内容的完整描述（2-4句），用于段落定位")
     key_concepts: List[str] = Field(description="图中出现的技术关键词/方法名，用于精准匹配段落")
-    suggested_caption: str = Field(description="推荐图题，格式为'图  简短描述'（图号留空）")
+    suggested_caption: str = Field(description="推荐图题，任意格式，后续会被清洗为纯描述")
 
 
 class ImageGroupingResponse(BaseModel):
@@ -26,3 +26,7 @@ class HeadingSectionResponse(BaseModel):
 
 class ImageGroupPlacement(BaseModel):
     anchor_idx: int = Field(description="图片组插入位置：从候选段落列表中选一个段落的 index 值，图片插入在该段落之后")
+
+
+class CaptionListResponse(BaseModel):
+    captions: List[str] = Field(description="清洗后的纯描述列表，与输入等长，不含任何图号前缀")

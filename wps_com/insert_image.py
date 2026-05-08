@@ -250,7 +250,7 @@ def insert_n_images_two_col(
 
             label_idx = _new_para_after(doc, after)
             doc.Paragraphs(label_idx).Range.InsertBefore(label_text)
-            _fmt(doc.Paragraphs(label_idx), center=True, indent=0, keep_next=True)
+            _fmt(doc.Paragraphs(label_idx), center=False, indent=0, keep_next=True)
             after = label_idx
 
             # 图片行：两张内嵌图片在同一段落

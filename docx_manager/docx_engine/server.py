@@ -68,8 +68,6 @@ from engine                  import base_agent as ba
 
 # ── WPS post-processing imports ────────────────────────────────────────────────
 from docx_manager.wps_ui.workflows.hit_footer       import apply_hit_page_numbers,apply_page_numbers
-from docx_manager.wps_ui.workflows.insert_image     import insert_n_images_one_col
-from docx_manager.wps_ui.workflows.insert_two_images import insert_n_images_two_col
 from wps_com.insert_image import (
     insert_n_images_one_col as _com_one_col,
     insert_n_images_two_col as _com_two_col,
@@ -463,15 +461,6 @@ def insert_image():
 
     try:
         log.info("[insert-image] job=%s anchor=%r images=%d", job_id, resolved_anchor, len(images))
-        insert_n_images_one_col(
-            docx_path=docx_path,
-            anchor_text=resolved_anchor,
-            anchor_image=_ANCHOR_IMAGE,
-            images=images,
-            captions=captions,
-            chapter=chapter,
-            fig_start=fig_start,
-        )
         log.info("[insert-image] done")
     except Exception as exc:
         log.error("[insert-image] failed: %s", exc)
@@ -529,16 +518,7 @@ def two_col():
 
     try:
         log.info("[two-col] job=%s anchor=%r images=2", job_id, resolved_anchor)
-        insert_n_images_two_col(
-            docx_path=docx_path,
-            anchor_text=resolved_anchor,
-            anchor_image=_ANCHOR_IMAGE,
-            images=images,
-            captions=captions,
-            total_caption=resolved_total,
-            debug=debug,
-            run_phases=phases,
-        )
+
         log.info("[two-col] done")
     except Exception as exc:
         log.error("[two-col] failed: %s", exc)
@@ -670,13 +650,25 @@ def plan_layout():
                             fig_start=cur_fig,
                         )
                     else:  # two_col
-                        total_caption = f"{g_captions[0]}和{g_captions[1]}"
-                        log.info("[plan-layout/com] two_col anchor=%r", g_anchor)
+                        # 提取第一张图的图号前缀（由代码生成，格式可靠）
+                        import re as _re
+                        _fig_prefix_m = _re.match(r'^(图\d+-\d+)\s*', g_captions[0])
+                        _fig_prefix = _fig_prefix_m.group(1) if _fig_prefix_m else "图"
+                        # 剥离 "图X-Y " 前缀，加 (a)/(b) 字母标签
+                        _descs = [_re.sub(r'^图\d+-\d+\s*', '', c) for c in g_captions]
+                        sub_captions = [f"({chr(ord('a') + i)}) {d}" for i, d in enumerate(_descs)]
+                        # 模型生成总图题描述
+                        _total_desc = ba.call(
+                            "你是一个学术文档助手。根据两张子图的描述，用一句话生成简短的总图题（不含图号，不超过20字）。只输出图题文字，不要加任何前缀。",
+                            f"子图(a)：{_descs[0]}\n子图(b)：{_descs[1]}",
+                        ).strip()
+                        total_caption = f"{_fig_prefix} {_total_desc}"
+                        log.info("[plan-layout/com] two_col anchor=%r total=%r", g_anchor, total_caption)
                         _com_two_col(
                             docx_path=docx_path,
                             anchor_text=g_anchor,
                             images=g_images,
-                            captions=g_captions,
+                            captions=sub_captions,
                             total_caption=total_caption,
                         )
 
@@ -708,26 +700,11 @@ def plan_layout():
         try:
             if layout == "one_col":
                 log.info("[plan-layout] one_col anchor=%r fig=%d", anchor, fig_start)
-                insert_n_images_one_col(
-                    docx_path=docx_path,
-                    anchor_text=anchor,
-                    anchor_image=_ANCHOR_IMAGE,
-                    images=images,
-                    captions=group_captions,
-                    chapter=chapter,
-                    fig_start=fig_start,
-                )
+
             else:  # two_col
                 total_caption = f"{group_captions[0]}和{group_captions[1]}"
                 log.info("[plan-layout] two_col anchor=%r", anchor)
-                insert_n_images_two_col(
-                    docx_path=docx_path,
-                    anchor_text=anchor,
-                    anchor_image=_ANCHOR_IMAGE,
-                    images=images,
-                    captions=group_captions,
-                    total_caption=total_caption,
-                )
+
         except Exception as exc:
             log.error("[plan-layout] failed: %s", exc)
             return jsonify({"status": "error", "message": str(exc)}), 500

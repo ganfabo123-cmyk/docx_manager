@@ -7,3 +7,4 @@ docx_manager/wps_ui/assets
 *.png
 docx_manager/docx_engine/outputs/*
 *.json
+logs/*
