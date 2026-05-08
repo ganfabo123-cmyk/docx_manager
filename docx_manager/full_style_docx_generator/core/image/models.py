@@ -22,3 +22,7 @@ class ImageGroup(BaseModel):
 
 class HeadingSectionResponse(BaseModel):
     heading_id: str = Field(description="最适合放置该图片组的章节标题的 id 字符串")
+
+
+class ImageGroupPlacement(BaseModel):
+    anchor_idx: int = Field(description="图片组插入位置：从候选段落列表中选一个段落的 index 值，图片插入在该段落之后")

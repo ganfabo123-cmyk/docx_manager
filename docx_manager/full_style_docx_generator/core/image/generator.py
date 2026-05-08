@@ -1,7 +1,7 @@
 import re
 import json
 from typing import List, Optional, Tuple
-from .models import ImageDescription, ImageGroup, ImageGroupingResponse, HeadingSectionResponse
+from .models import ImageDescription, ImageGroup, ImageGroupingResponse, HeadingSectionResponse, ImageGroupPlacement
 
 _FIG_REF_RE = re.compile(r'图\s*[\d一二三四五六七八九十]|如图|图示|下图|上图|见图|参见图')
 _MAX_PARA_LEN = 200
@@ -44,17 +44,30 @@ def _filter_candidate_paragraphs(
     ], False
 
 
-def _select_section_by_heading(image_list: list, headings: list) -> Optional[str]:
+def _select_section_by_heading(
+    image_list: list,
+    headings: list,
+    user_instruction: str = "",
+) -> Optional[str]:
     """
     第一跳：让 LLM 从标题列表中选出最适合放置该图片组的章节，返回 heading id。
     失败时返回 None，由调用方降级处理。
+    图片编号在 image_list 中为 1-based（image_number 字段）。
     """
     from utils.base_agent import call_structured
 
+    instruction_hint = (
+        f"\n【用户说明】{user_instruction.strip()}\n"
+        "图片编号从1开始，请根据用户说明优先确定图片所属章节，再结合图片内容判断。"
+        if user_instruction and user_instruction.strip()
+        else ""
+    )
+
     system_prompt = (
         "你是一个学术文档图片定位助手。根据图片描述，从文档标题列表中选出最适合放置该图片组的章节。\n"
-        "选择标准：图片内容与该章节主题最相关，图片应插入在该章节的正文中。\n"
+        "选择标准：优先遵循用户说明；其次看图片内容与章节主题是否相关。\n"
         "输出选中标题的 heading_id（即标题的 id 字段）。"
+        + instruction_hint
     )
     user_prompt = json.dumps(
         {"images": image_list, "headings": headings},
@@ -78,7 +91,6 @@ def _get_section_paragraphs(
     第二跳的候选段落：从 structured_elements 中定位 heading_id 所在位置，
     取到下一个标题之前的所有元素，再从 paragraphs 中筛出对应的段落（保留原始 index）。
     """
-    # 找到标题在 structured_elements 中的位置
     heading_pos = next(
         (i for i, e in enumerate(structured_elements) if e.get('id') == heading_id),
         None,
@@ -86,24 +98,20 @@ def _get_section_paragraphs(
     if heading_pos is None:
         return [{"index": i, "content": p.get("content", "")[:_MAX_PARA_LEN]} for i, p in enumerate(paragraphs)]
 
-    # 找到下一个标题位置
     next_heading_pos = next(
         (i for i in range(heading_pos + 1, len(structured_elements))
          if structured_elements[i].get('type', '') in _HEADING_TYPES),
         len(structured_elements),
     )
 
-    # 该章节内的元素 id 集合（含标题本身，方便锚点落在标题上）
     section_ids = {e['id'] for e in structured_elements[heading_pos:next_heading_pos]}
 
-    # 从 paragraphs 中筛出属于该章节的段落，保留原始 index
     result = [
         {"index": i, "content": p.get("content", "")[:_MAX_PARA_LEN]}
         for i, p in enumerate(paragraphs)
         if p.get('id') in section_ids
     ]
 
-    # 若章节内没有匹配到任何段落（数据不一致），降级返回全文
     if not result:
         return [{"index": i, "content": p.get("content", "")[:_MAX_PARA_LEN]} for i, p in enumerate(paragraphs)]
 
@@ -128,12 +136,15 @@ def _describe_image(image: dict) -> ImageDescription:
 
 
 def _group_images(descriptions: List[ImageDescription], user_instruction: str = "") -> List[List[int]]:
-    """Stage 2：纯文本模型根据描述分组，不需要看图片。"""
+    """
+    Stage 2：纯文本模型根据描述分组。
+    图片以 1-based 编号展示给 LLM（image_number 字段），输出后转回 0-based。
+    """
     from utils.base_agent import call_structured
 
     desc_list = [
         {
-            "index": i,
+            "image_number": i + 1,  # 1-based，与用户说的"第一张图"对齐
             "figure_type": d.figure_type,
             "topic_summary": d.topic_summary,
         }
@@ -150,15 +161,17 @@ def _group_images(descriptions: List[ImageDescription], user_instruction: str = 
 
     system_prompt = (
         "你是一个文档图片分组助手。根据图片类型和主题摘要，将相关联的图片分为同一组。\n"
+        "图片编号从1开始（image_number 字段）。\n"
         "分组原则：同一实验/同一方法/同一章节的图片归为一组；不相关的各自单独成组。\n"
         "每张图片只能出现在一个组中，所有图片必须被分配。\n"
-        "输出 groups 列表，每个元素是该组图片的 index 列表。"
+        "输出 groups 列表，每个子列表填写该组图片的 image_number（1-based）。"
         + grouping_note
     )
     user_prompt = json.dumps(desc_list, ensure_ascii=False)
 
     response = call_structured(system_prompt, user_prompt, ImageGroupingResponse)
-    return response.groups
+    # 转回 0-based
+    return [[num - 1 for num in group] for group in response.groups]
 
 
 def _place_group(
@@ -167,16 +180,21 @@ def _place_group(
     paragraphs: list,
     instruction_note: str = "",
     structured_elements: Optional[list] = None,
+    user_instruction: str = "",
 ) -> ImageGroup:
-    """Stage 3：纯文本模型为单个图片组确定锚点段落和图题。"""
+    """
+    Stage 3：确定单个图片组的插入位置。
+    LLM 只输出 anchor_idx，image_indices 和 captions 直接从已有数据填充。
+    图片以 1-based image_number 展示给 LLM。
+    """
     from utils.base_agent import call_structured
 
+    # 图片信息用 1-based image_number 展示，避免与用户"第X张图"错位
     image_list = [
         {
-            "index": idx,
+            "image_number": idx + 1,
             "main_content": descriptions[idx].main_content,
             "key_concepts": descriptions[idx].key_concepts,
-            "suggested_caption": descriptions[idx].suggested_caption,
         }
         for idx in image_indices
     ]
@@ -185,24 +203,24 @@ def _place_group(
     candidate_paragraphs, is_fallback = _filter_candidate_paragraphs(paragraphs, all_concepts)
 
     if is_fallback and structured_elements:
+        # 只发 id + content，去掉 type 等冗余字段
         headings = [
-            {"id": e["id"], "type": e.get("type", ""), "content": e.get("content", "")[:80]}
+            {"id": e["id"], "content": e.get("content", "")[:80]}
             for e in structured_elements
             if e.get("type", "") in _HEADING_TYPES
         ]
         if headings:
             print(f"[image.generator] 关键词未命中，启动两阶段定位（{len(headings)} 个标题）")
-            heading_id = _select_section_by_heading(image_list, headings)
+            heading_id = _select_section_by_heading(image_list, headings, user_instruction)
             if heading_id:
                 candidate_paragraphs = _get_section_paragraphs(heading_id, paragraphs, structured_elements)
                 print(f"[image.generator] 选中标题 {heading_id}，章节内候选段落 {len(candidate_paragraphs)} 个")
 
     system_prompt = (
-        "你是一个学术文档图片定位助手。根据图片描述和候选段落，确定这组图片的插入位置和图题。\n\n"
-        "1. anchor_idx：图片组插入在该段落之后，填写段落的 index 值\n"
-        "   优先找引用 key_concepts 关键词或描述图片内容的段落\n"
-        "2. captions：每张图片一个图题，优先使用 suggested_caption，可根据上下文微调\n"
-        "3. image_indices：保持传入顺序不变"
+        "你是一个学术文档图片定位助手。根据图片描述和候选段落，确定这组图片的插入位置。\n\n"
+        "从候选段落中选一个段落，图片组将插入在该段落之后。\n"
+        "输出该段落的 index 值（anchor_idx）。\n"
+        "优先找引用 key_concepts 关键词或描述图片内容的段落。"
         + instruction_note
     )
     user_prompt = json.dumps(
@@ -210,7 +228,13 @@ def _place_group(
         ensure_ascii=False,
     )
 
-    return call_structured(system_prompt, user_prompt, ImageGroup)
+    placement = call_structured(system_prompt, user_prompt, ImageGroupPlacement)
+
+    return ImageGroup(
+        image_indices=image_indices,
+        anchor_idx=placement.anchor_idx,
+        captions=[descriptions[idx].suggested_caption for idx in image_indices],
+    )
 
 
 def generate(
@@ -220,7 +244,8 @@ def generate(
     structured_elements: Optional[list] = None,
 ) -> List[ImageGroup]:
     instruction_note = (
-        f"\n\n【用户补充说明】\n{user_instruction.strip()}\n请优先遵循以上说明确定图片位置。"
+        f"\n\n【用户补充说明】\n{user_instruction.strip()}\n"
+        "图片编号从1开始，请优先遵循以上说明确定图片位置。"
         if user_instruction and user_instruction.strip()
         else ""
     )
@@ -229,15 +254,17 @@ def generate(
     descriptions = [_describe_image(img) for img in images]
     print(f"[image.generator] Stage 1 完成：{len(descriptions)} 张图片描述已生成")
 
-    # Stage 2: 纯文本分组
+    # Stage 2: 纯文本分组（1-based 展示，内部转回 0-based）
     groups = _group_images(descriptions, user_instruction)
     print(f"[image.generator] Stage 2 完成：分为 {len(groups)} 组")
 
-    # Stage 3: 逐组定位
-    result = [
-        _place_group(g, descriptions, paragraphs, instruction_note, structured_elements)
-        for g in groups
-    ]
-    print(f"[image.generator] Stage 3 完成：所有组定位完毕")
+    # Stage 3: 逐组定位（只让 LLM 输出 anchor_idx）
+    result = []
+    for g in groups:
+        try:
+            result.append(_place_group(g, descriptions, paragraphs, instruction_note, structured_elements, user_instruction))
+        except Exception as e:
+            print(f"[image.generator] 图片组 {g} 定位失败，跳过: {e}")
+    print(f"[image.generator] Stage 3 完成：{len(result)}/{len(groups)} 组定位成功")
 
     return result
