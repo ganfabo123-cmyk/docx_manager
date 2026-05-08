@@ -11,6 +11,7 @@ from .. import wps_nav as W
 def set_roman_upper_from_here() -> None:
     """从当前节开始：大写罗马，应用本节及以后"""
     W.open_page_number_dialog()
+    W.page_dialog_move(up=10)           # 先复位：10次上确保回到阿拉伯数字初始状态
     W.page_dialog_move(down=3)          # 3次下 = 大写罗马
     W.page_dialog_apply_this_section_onward()
     W.confirm()
@@ -19,7 +20,8 @@ def set_roman_upper_from_here() -> None:
 def set_dash_arabic_from_here() -> None:
     """从当前节开始：dash-arabic，应用本节及以后"""
     W.open_page_number_dialog()
-    W.page_dialog_move(up=1)            # 1次上 = dash-arabic
+    W.page_dialog_move(up=10)           # 先复位：10次上确保回到阿拉伯数字初始状态
+    W.page_dialog_move(down=1)          # 1次下 = dash-arabic（以阿拉伯数字为基准）
     W.page_dialog_apply_this_section_onward()
     W.confirm()
 

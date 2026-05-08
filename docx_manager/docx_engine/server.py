@@ -72,6 +72,10 @@ from wps_com.insert_image import (
     insert_n_images_one_col as _com_one_col,
     insert_n_images_two_col as _com_two_col,
 )
+from wps_com.header import (
+    clear_all_headers as _com_clear_headers,
+    set_all_headers   as _com_set_headers,
+)
 
 
 
@@ -406,8 +410,12 @@ def footer():
         log.info("[footer] job=%s section=%d mode=%s", job_id, body_section, mode)
         if mode == "alt":
             apply_page_numbers(docx_path)
+            log.info("[footer] clearing headers")
+            _com_clear_headers(docx_path)
         else:
             apply_hit_page_numbers(docx_path, body_section)
+            log.info("[footer] setting headers")
+            _com_set_headers(docx_path, "哈尔滨工业大学本科综合设计（论文）")
         log.info("[footer] done")
     except Exception as exc:
         log.error("[footer] failed: %s", exc)

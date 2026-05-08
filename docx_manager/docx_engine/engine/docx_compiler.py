@@ -506,10 +506,8 @@ class DocxCompiler:
                 if skip_images:
                     _after   = _collect_after_texts(body_elements_list, elem_idx)
                     _caption = _generate_caption_llm(_after, elem.get('caption', ''))
-                    _anchor  = _generate_anchor_llm(
-                        _collect_before_texts(body_elements_list, elem_idx),
-                        all_para_texts,
-                    )
+                    _before  = _collect_before_texts(body_elements_list, elem_idx)
+                    _anchor  = _before[-1] if _before else ''
                     record: dict = {
                         'anchor_text':  _anchor,
                         'caption':      _caption,
@@ -1496,6 +1494,10 @@ class _CaptionList(BaseModel):
     captions: list[str]
 
 
+class _CaptionCheck(BaseModel):
+    is_caption: bool
+
+
 def _collect_before_texts(
     body_elements: list[dict],
     img_idx: int,
@@ -1527,25 +1529,44 @@ def _collect_after_texts(
 
 
 def _generate_caption_llm(after_texts: list[str], existing_caption: str) -> str:
+    # 上游已有图题，直接复用，不重新生成
+    if existing_caption.strip():
+        return existing_caption.strip()
+
     system_prompt = "你是一名学术论文排版助手，擅长为图片添加规范的中文图题。"
-    cap_hint = f'已知该图的图题为："{existing_caption}"，' if existing_caption else ''
+
+    # 取紧邻下一个元素，先判断它是否本身就是图题
+    next_text = after_texts[0].strip() if after_texts else ''
+    if next_text:
+        check_prompt = (
+            f"文档中有一张图片，其后紧跟的文本为：\"{next_text}\"\n\n"
+            "请判断这段文本是否可以直接作为这张图片的图题（图题通常以'图X-X'开头）。\n"
+            "如果可以，is_caption=true，caption 字段填入该文本；\n"
+            "如果不可以，is_caption=false，caption 字段留空。"
+        )
+        try:
+            result = ba.call_structured(system_prompt, check_prompt, _CaptionCheck)
+            if result.is_caption:
+                return next_text
+        except Exception as exc:
+            print(f'[compiler] caption check LLM call failed: {exc}')
+
+    # 候选文本不是图题，根据上下文生成
     if after_texts:
         ctx = '\n'.join(f'[{i + 1}] {t}' for i, t in enumerate(after_texts))
         user_prompt = (
             f"以下是文档中某张图片之后的文本段落：\n{ctx}\n\n"
-            f"{cap_hint}请根据上下文为这张图片提供一个规范的中文图题（格式如'图X-X xxx示意图'）。"
-            "如上下文中已有明确图题则直接提取，否则根据语义生成。只返回图题文本，不要任何解释。"
+            "请根据上下文为这张图片提供一个规范的中文图题（格式如'图X-X xxx示意图'）。"
+            "只返回图题文本，不要任何解释。"
         )
     else:
-        user_prompt = (
-            f"{cap_hint}文档中有一张图片，没有可参考的上下文。"
-            "请为其生成一个通用的中文图题（如'示意图'）。只返回图题文本，不要任何解释。"
-        )
+        user_prompt = "文档中有一张图片，没有可参考的上下文。请为其生成一个通用的中文图题（如'示意图'）。只返回图题文本，不要任何解释。"
+
     try:
-        return ba.call(system_prompt, user_prompt).strip() or existing_caption or '示意图'
+        return ba.call(system_prompt, user_prompt).strip() or '示意图'
     except Exception as exc:
         print(f'[compiler] caption LLM call failed: {exc}')
-        return existing_caption or '示意图'
+        return '示意图'
 
 
 # 纯符号/标点文本识别：匹配全由空白、CJK 标点、省略号、ASCII 标点组成的字符串
