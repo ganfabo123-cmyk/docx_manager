@@ -31,6 +31,7 @@ Usage
 import json
 import logging
 import os
+from datetime import datetime
 import shutil
 import threading
 import traceback
@@ -132,9 +133,18 @@ def _validate_layout(decision: _LayoutDecision, captions: list[str]) -> bool:
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = _MAX_UPLOAD_MB * 1024 * 1024
 
+_LOG_DIR = _PROJECT_ROOT / "logs"
+_LOG_DIR.mkdir(exist_ok=True)
+_log_file = _LOG_DIR / datetime.now().strftime("%Y%m%d_%H%M") / "server.log"
+_log_file.parent.mkdir(exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
+    format="%(asctime)s [%(levelname)s] %(name)s %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler(_log_file, encoding="utf-8"),
+    ],
 )
 log = logging.getLogger(__name__)
 

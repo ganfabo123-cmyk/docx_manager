@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 from pathlib import Path
@@ -6,6 +7,8 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from pydantic import BaseModel
 import instructor
+
+log = logging.getLogger('llm')
 
 load_dotenv(Path(__file__).parent.parent.parent / '.env')
 
@@ -49,6 +52,8 @@ def _strip_thinking(text: str) -> str:
 
 
 def call(system_prompt: str, user_prompt: str) -> str:
+    log.debug('[call] system: %s', system_prompt)
+    log.debug('[call] user: %s', user_prompt)
     response = _get_raw_client().chat.completions.create(
         model=os.getenv('LLM_MODEL'),
         messages=[
@@ -57,11 +62,17 @@ def call(system_prompt: str, user_prompt: str) -> str:
         ],
         extra_body={'enable_thinking': False},
     )
-    return _strip_thinking(response.choices[0].message.content)
+    result = _strip_thinking(response.choices[0].message.content)
+    u = response.usage
+    log.info('[call] response: %s | tokens: prompt=%s completion=%s total=%s',
+             result, u.prompt_tokens, u.completion_tokens, u.total_tokens)
+    return result
 
 
 def call_structured(system_prompt: str, user_prompt: str, response_model: Type[T]) -> T:
-    return _get_instructor_client().chat.completions.create(
+    log.debug('[call_structured] system: %s', system_prompt)
+    log.debug('[call_structured] user: %s', user_prompt)
+    result, completion = _get_instructor_client().chat.completions.create_with_completion(
         model=os.getenv('LLM_MODEL'),
         messages=[
             {'role': 'system', 'content': system_prompt},
@@ -70,6 +81,10 @@ def call_structured(system_prompt: str, user_prompt: str, response_model: Type[T
         response_model=response_model,
         extra_body={'enable_thinking': False},
     )
+    u = completion.usage
+    log.info('[call_structured] response: %s | tokens: prompt=%s completion=%s total=%s',
+             result, u.prompt_tokens, u.completion_tokens, u.total_tokens)
+    return result
 
 
 def call_structured_with_image(
@@ -78,7 +93,9 @@ def call_structured_with_image(
     base64_str: str,
     response_model: Type[T],
 ) -> T:
-    return _get_vl_instructor_client().chat.completions.create(
+    log.debug('[call_structured_with_image] system: %s', system_prompt)
+    log.debug('[call_structured_with_image] user: %s', user_prompt)
+    result, completion = _get_vl_instructor_client().chat.completions.create_with_completion(
         model=os.getenv('LLM_VL_NODEL'),
         messages=[
             {'role': 'system', 'content': system_prompt},
@@ -96,3 +113,7 @@ def call_structured_with_image(
         response_model=response_model,
         extra_body={'enable_thinking': False},
     )
+    u = completion.usage
+    log.info('[call_structured_with_image] response: %s | tokens: prompt=%s completion=%s total=%s',
+             result, u.prompt_tokens, u.completion_tokens, u.total_tokens)
+    return result
