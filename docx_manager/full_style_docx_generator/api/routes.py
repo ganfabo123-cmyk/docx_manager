@@ -943,27 +943,29 @@ def register_routes(app):
         print("\n" + "="*50)                                                                                                       
         print(f"🌐 [API IN] 收到请求: GET /process-short-blocks")                                                                  
         try:                                                                                                                       
-            from core.short_block.classifier import classify_short_blocks                                                          
-                                                                                                                                   
-            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')                           
-            json_path = os.path.join(data_dir, 'parsed_blocks.json')                                                               
-                                                                                                                                   
-            if not os.path.exists(json_path):                                                                                      
-                print(f"❌ [ERROR] 找不到 parsed_blocks.json: {json_path}")                                                        
-                return jsonify({'error': 'No parsed_blocks.json found. Please parse a file first.'}), 404                          
-                                                                                                                                   
-            with open(json_path, 'r', encoding='utf-8') as f:                                                                      
-                blocks = json.load(f).get("text_elements", [])                                                                     
-                                                                                                                                   
-            short_blocks = identify_short_blocks(blocks)                                                                           
-            print(f"🔍 [DETECT] 从 {len(blocks)} 个元素中识别到 {len(short_blocks)} 个短文本块")                                   
-                                                                                                                                   
-            if not short_blocks:                                                                                                   
-                print("✅ [SUCCESS] 未检测到短文本块，直接返回")                                                                   
-                return jsonify({'results': []}), 200                                                                               
-                                                                                                                                   
-            results = classify_short_blocks(short_blocks)                                                                          
-            print(f"🤖 [LLM] 共分类 {len(results)} 个短文本块")                                                                    
+            from core.short_block.classifier import classify_short_blocks, normalize_heading_structure
+
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            json_path = os.path.join(data_dir, 'parsed_blocks.json')
+
+            if not os.path.exists(json_path):
+                print(f"❌ [ERROR] 找不到 parsed_blocks.json: {json_path}")
+                return jsonify({'error': 'No parsed_blocks.json found. Please parse a file first.'}), 404
+
+            with open(json_path, 'r', encoding='utf-8') as f:
+                blocks = json.load(f).get("text_elements", [])
+
+            short_blocks = identify_short_blocks(blocks)
+            print(f"🔍 [DETECT] 从 {len(blocks)} 个元素中识别到 {len(short_blocks)} 个短文本块")
+
+            if not short_blocks:
+                print("✅ [SUCCESS] 未检测到短文本块，直接返回")
+                return jsonify({'results': []}), 200
+
+            results = classify_short_blocks(short_blocks)
+            print(f"🤖 [LLM] 共分类 {len(results)} 个短文本块")
+            results = normalize_heading_structure(results)
+            print(f"✅ [NORM] 标题结构校正完成")                                                                    
             print("🏁 [API OUT] 请求处理成功返回 200")                                                                             
                                                                                                                                    
             return jsonify({'results': results}), 200                                                                              

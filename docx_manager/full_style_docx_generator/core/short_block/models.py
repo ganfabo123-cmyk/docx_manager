@@ -9,3 +9,12 @@ class ShortBlockItem(BaseModel):
 
 class ShortBlockListResponse(BaseModel):
     items: List[ShortBlockItem]
+
+
+class HeadingCorrectionItem(BaseModel):
+    id: str
+    corrected_type: Literal["heading1", "heading2", "heading3"]
+
+
+class HeadingCorrectionResponse(BaseModel):
+    items: List[HeadingCorrectionItem]
