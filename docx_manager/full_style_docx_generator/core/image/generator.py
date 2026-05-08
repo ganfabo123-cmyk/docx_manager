@@ -61,7 +61,7 @@ def _describe_image(image: dict) -> ImageDescription:
     return call_structured_with_image(system_prompt, user_prompt, image.get('base64', ''), ImageDescription)
 
 
-def _group_images(descriptions: List[ImageDescription]) -> List[List[int]]:
+def _group_images(descriptions: List[ImageDescription], user_instruction: str = "") -> List[List[int]]:
     """Stage 2：纯文本模型根据描述分组，不需要看图片。"""
     from utils.base_agent import call_structured
 
@@ -74,11 +74,20 @@ def _group_images(descriptions: List[ImageDescription]) -> List[List[int]]:
         for i, d in enumerate(descriptions)
     ]
 
+    grouping_note = (
+        f"\n\n【用户补充说明】\n{user_instruction.strip()}\n"
+        "请从以上说明中提取与图片分组相关的指令（如哪些图应合并、哪些图应拆分等），"
+        "优先遵循这些分组要求；与分组无关的内容忽略。"
+        if user_instruction and user_instruction.strip()
+        else ""
+    )
+
     system_prompt = (
         "你是一个文档图片分组助手。根据图片类型和主题摘要，将相关联的图片分为同一组。\n"
         "分组原则：同一实验/同一方法/同一章节的图片归为一组；不相关的各自单独成组。\n"
         "每张图片只能出现在一个组中，所有图片必须被分配。\n"
         "输出 groups 列表，每个元素是该组图片的 index 列表。"
+        + grouping_note
     )
     user_prompt = json.dumps(desc_list, ensure_ascii=False)
 
@@ -136,7 +145,7 @@ def generate(images: list, paragraphs: list, user_instruction: str = "") -> List
     print(f"[image.generator] Stage 1 完成：{len(descriptions)} 张图片描述已生成")
 
     # Stage 2: 纯文本分组
-    groups = _group_images(descriptions)
+    groups = _group_images(descriptions, user_instruction)
     print(f"[image.generator] Stage 2 完成：分为 {len(groups)} 组")
 
     # Stage 3: 逐组定位
