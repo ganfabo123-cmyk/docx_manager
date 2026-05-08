@@ -1,5 +1,7 @@
 import os
 import re
+import json
+import datetime
 from pathlib import Path
 from typing import TypeVar, Type
 from dotenv import load_dotenv
@@ -14,6 +16,42 @@ T = TypeVar('T', bound=BaseModel)
 _raw_client: OpenAI | None = None
 _instructor_client = None
 _vl_instructor_client = None
+
+_LOG_DIR = Path(__file__).parent.parent.parent / 'logs'
+
+
+def _log_llm_call(
+    func_name: str,
+    system_prompt: str,
+    user_prompt: str,
+    response_text: str,
+    usage: dict,
+) -> None:
+    try:
+        _LOG_DIR.mkdir(exist_ok=True)
+        log_path = _LOG_DIR / f"llm_{datetime.date.today().isoformat()}.jsonl"
+        entry = {
+            "ts": datetime.datetime.now().isoformat(timespec="seconds"),
+            "func": func_name,
+            "system_prompt": system_prompt,
+            "user_prompt": user_prompt,
+            "response": response_text,
+            "usage": usage,
+        }
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception as e:
+        print(f"[LLM LOG WARN] 日志写入失败: {e}")
+
+
+def _extract_usage(usage_obj) -> dict:
+    if usage_obj is None:
+        return {}
+    return {
+        "prompt_tokens": getattr(usage_obj, "prompt_tokens", None),
+        "completion_tokens": getattr(usage_obj, "completion_tokens", None),
+        "total_tokens": getattr(usage_obj, "total_tokens", None),
+    }
 
 
 def _get_raw_client() -> OpenAI:
@@ -57,11 +95,13 @@ def call(system_prompt: str, user_prompt: str) -> str:
         ],
         extra_body={'enable_thinking': False},
     )
-    return _strip_thinking(response.choices[0].message.content)
+    text = _strip_thinking(response.choices[0].message.content)
+    _log_llm_call("call", system_prompt, user_prompt, text, _extract_usage(response.usage))
+    return text
 
 
 def call_structured(system_prompt: str, user_prompt: str, response_model: Type[T]) -> T:
-    return _get_instructor_client().chat.completions.create(
+    model_result, completion = _get_instructor_client().chat.completions.create_with_completion(
         model=os.getenv('LLM_MODEL'),
         messages=[
             {'role': 'system', 'content': system_prompt},
@@ -70,6 +110,14 @@ def call_structured(system_prompt: str, user_prompt: str, response_model: Type[T
         response_model=response_model,
         extra_body={'enable_thinking': False},
     )
+    _log_llm_call(
+        "call_structured",
+        system_prompt,
+        user_prompt,
+        model_result.model_dump_json(ensure_ascii=False) if hasattr(model_result, "model_dump_json") else str(model_result),
+        _extract_usage(getattr(completion, "usage", None)),
+    )
+    return model_result
 
 
 def call_structured_with_image(
@@ -78,7 +126,7 @@ def call_structured_with_image(
     base64_str: str,
     response_model: Type[T],
 ) -> T:
-    return _get_vl_instructor_client().chat.completions.create(
+    model_result, completion = _get_vl_instructor_client().chat.completions.create_with_completion(
         model=os.getenv('LLM_VL_NODEL'),
         messages=[
             {'role': 'system', 'content': system_prompt},
@@ -96,3 +144,11 @@ def call_structured_with_image(
         response_model=response_model,
         extra_body={'enable_thinking': False},
     )
+    _log_llm_call(
+        "call_structured_with_image",
+        system_prompt,
+        f"[image base64 omitted] {user_prompt}",
+        model_result.model_dump_json(ensure_ascii=False) if hasattr(model_result, "model_dump_json") else str(model_result),
+        _extract_usage(getattr(completion, "usage", None)),
+    )
+    return model_result
