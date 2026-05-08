@@ -138,12 +138,19 @@ _LOG_DIR.mkdir(exist_ok=True)
 _log_file = _LOG_DIR / datetime.now().strftime("%Y%m%d_%H%M") / "server.log"
 _log_file.parent.mkdir(exist_ok=True)
 
+
+class _FlushFileHandler(logging.FileHandler):
+    def emit(self, record):
+        super().emit(record)
+        self.flush()
+
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s %(message)s",
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler(_log_file, encoding="utf-8"),
+        _FlushFileHandler(_log_file, encoding="utf-8"),
     ],
 )
 log = logging.getLogger(__name__)
