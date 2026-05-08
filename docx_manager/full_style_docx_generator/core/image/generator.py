@@ -305,10 +305,12 @@ def _assign_figure_numbers(
         chapter = _chapter_of(group.anchor_idx)
         if chapter is None:
             continue
-        chapter_counter[chapter] = chapter_counter.get(chapter, 0) + 1
-        fig_num = chapter_counter[chapter]
-        prefix = f"图{chapter}-{fig_num} "
-        group.captions = [f"{prefix}{cap}" for cap in group.captions]
+        new_captions = []
+        for cap in group.captions:
+            chapter_counter[chapter] = chapter_counter.get(chapter, 0) + 1
+            fig_num = chapter_counter[chapter]
+            new_captions.append(f"图{chapter}-{fig_num} {cap}")
+        group.captions = new_captions
 
 
 def generate(
