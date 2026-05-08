@@ -1,0 +1,25 @@
+func: call_structured
+ts: 2026-05-08T10:55:26
+usage: {'prompt_tokens': 11523, 'completion_tokens': 51, 'total_tokens': 11574}
+
+--- system_prompt ---
+你是一个学术文档图片定位助手。根据图片描述和候选段落，确定这组图片的插入位置和图题。
+
+1. anchor_idx：图片组插入在该段落之后，填写段落的 index 值
+   优先找引用 key_concepts 关键词或描述图片内容的段落
+2. captions：每张图片一个图题，优先使用 suggested_caption，可根据上下文微调
+3. image_indices：保持传入顺序不变
+
+【用户补充说明】
+第一个图片放到正文第一章,剩余两个图片分为一组且加入到后面的实验章节
+请优先遵循以上说明确定图片位置。
+
+--- user_prompt total: 23035 chars ---
+user_prompt is JSON, keys: ['images', 'paragraphs']
+  images: list of 1 items
+    first item: {"index": 0, "main_content": "图中呈现从Time t到Time t+3四个时间序列的系统框架，各时间点包含L₁至Lₙ层级模块；绿色模块代表Active状态，蓝色代表Deactive状态；虚线箭头标注'Reuse from previous times'，体现不同时间点间数据的重用与状态传递逻辑", "key_concepts": ["Active", "Deactiv
+  paragraphs: list of 300 items
+    first item: {"index": 0, "content": "摘  要"}
+
+--- response ---
+{"image_indices":[0],"anchor_idx":0,"captions":["图 多时间序列系统状态与数据重用框架示意图"]}

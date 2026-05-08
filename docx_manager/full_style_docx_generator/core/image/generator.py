@@ -1,21 +1,21 @@
 import re
 import json
-from typing import List
-from .models import ImageDescription, ImageGroup, ImageGroupingResponse
+from typing import List, Optional, Tuple
+from .models import ImageDescription, ImageGroup, ImageGroupingResponse, HeadingSectionResponse
 
 _FIG_REF_RE = re.compile(r'图\s*[\d一二三四五六七八九十]|如图|图示|下图|上图|见图|参见图')
 _MAX_PARA_LEN = 200
+_HEADING_TYPES = {'heading1', 'heading2', 'heading3', 'heading', 'title'}
 
 
 def _filter_candidate_paragraphs(
     paragraphs: list,
     extra_keywords: List[str] = None,
     window: int = 1,
-) -> list:
+) -> Tuple[list, bool]:
     """
-    返回含图片引用关键词（或 extra_keywords）的段落及前后 window 个上下文段落。
+    返回含图片引用关键词的段落及前后 window 个上下文段落，同时返回是否触发了兜底。
     保留原始 index，使 LLM 输出的 anchor_idx 可直接用于 backfill 查找。
-    若无任何命中，退为返回全部段落（降级兜底）。
     """
     n = len(paragraphs)
     candidate_indices: set[int] = set()
@@ -25,7 +25,7 @@ def _filter_candidate_paragraphs(
         escaped = [re.escape(kw) for kw in extra_keywords if len(kw) >= 2]
         if escaped:
             patterns.extend(escaped)
-    combined_re = re.compile('|'.join(patterns))
+    combined_re = re.compile('|'.join(patterns), re.IGNORECASE)
 
     for i, p in enumerate(paragraphs):
         if combined_re.search(p.get('content', '')):
@@ -36,12 +36,78 @@ def _filter_candidate_paragraphs(
         return [
             {"index": i, "content": p.get("content", "")[:_MAX_PARA_LEN]}
             for i, p in enumerate(paragraphs)
-        ]
+        ], True  # is_fallback=True
 
     return [
         {"index": i, "content": paragraphs[i].get("content", "")[:_MAX_PARA_LEN]}
         for i in sorted(candidate_indices)
+    ], False
+
+
+def _select_section_by_heading(image_list: list, headings: list) -> Optional[str]:
+    """
+    第一跳：让 LLM 从标题列表中选出最适合放置该图片组的章节，返回 heading id。
+    失败时返回 None，由调用方降级处理。
+    """
+    from utils.base_agent import call_structured
+
+    system_prompt = (
+        "你是一个学术文档图片定位助手。根据图片描述，从文档标题列表中选出最适合放置该图片组的章节。\n"
+        "选择标准：图片内容与该章节主题最相关，图片应插入在该章节的正文中。\n"
+        "输出选中标题的 heading_id（即标题的 id 字段）。"
+    )
+    user_prompt = json.dumps(
+        {"images": image_list, "headings": headings},
+        ensure_ascii=False,
+    )
+
+    try:
+        response = call_structured(system_prompt, user_prompt, HeadingSectionResponse)
+        return response.heading_id
+    except Exception as e:
+        print(f"[image.generator] 标题选择失败，降级为全文搜索: {e}")
+        return None
+
+
+def _get_section_paragraphs(
+    heading_id: str,
+    paragraphs: list,
+    structured_elements: list,
+) -> list:
+    """
+    第二跳的候选段落：从 structured_elements 中定位 heading_id 所在位置，
+    取到下一个标题之前的所有元素，再从 paragraphs 中筛出对应的段落（保留原始 index）。
+    """
+    # 找到标题在 structured_elements 中的位置
+    heading_pos = next(
+        (i for i, e in enumerate(structured_elements) if e.get('id') == heading_id),
+        None,
+    )
+    if heading_pos is None:
+        return [{"index": i, "content": p.get("content", "")[:_MAX_PARA_LEN]} for i, p in enumerate(paragraphs)]
+
+    # 找到下一个标题位置
+    next_heading_pos = next(
+        (i for i in range(heading_pos + 1, len(structured_elements))
+         if structured_elements[i].get('type', '') in _HEADING_TYPES),
+        len(structured_elements),
+    )
+
+    # 该章节内的元素 id 集合（含标题本身，方便锚点落在标题上）
+    section_ids = {e['id'] for e in structured_elements[heading_pos:next_heading_pos]}
+
+    # 从 paragraphs 中筛出属于该章节的段落，保留原始 index
+    result = [
+        {"index": i, "content": p.get("content", "")[:_MAX_PARA_LEN]}
+        for i, p in enumerate(paragraphs)
+        if p.get('id') in section_ids
     ]
+
+    # 若章节内没有匹配到任何段落（数据不一致），降级返回全文
+    if not result:
+        return [{"index": i, "content": p.get("content", "")[:_MAX_PARA_LEN]} for i, p in enumerate(paragraphs)]
+
+    return result
 
 
 def _describe_image(image: dict) -> ImageDescription:
@@ -100,6 +166,7 @@ def _place_group(
     descriptions: List[ImageDescription],
     paragraphs: list,
     instruction_note: str = "",
+    structured_elements: Optional[list] = None,
 ) -> ImageGroup:
     """Stage 3：纯文本模型为单个图片组确定锚点段落和图题。"""
     from utils.base_agent import call_structured
@@ -115,7 +182,20 @@ def _place_group(
     ]
 
     all_concepts = [kw for idx in image_indices for kw in descriptions[idx].key_concepts]
-    candidate_paragraphs = _filter_candidate_paragraphs(paragraphs, all_concepts)
+    candidate_paragraphs, is_fallback = _filter_candidate_paragraphs(paragraphs, all_concepts)
+
+    if is_fallback and structured_elements:
+        headings = [
+            {"id": e["id"], "type": e.get("type", ""), "content": e.get("content", "")[:80]}
+            for e in structured_elements
+            if e.get("type", "") in _HEADING_TYPES
+        ]
+        if headings:
+            print(f"[image.generator] 关键词未命中，启动两阶段定位（{len(headings)} 个标题）")
+            heading_id = _select_section_by_heading(image_list, headings)
+            if heading_id:
+                candidate_paragraphs = _get_section_paragraphs(heading_id, paragraphs, structured_elements)
+                print(f"[image.generator] 选中标题 {heading_id}，章节内候选段落 {len(candidate_paragraphs)} 个")
 
     system_prompt = (
         "你是一个学术文档图片定位助手。根据图片描述和候选段落，确定这组图片的插入位置和图题。\n\n"
@@ -133,7 +213,12 @@ def _place_group(
     return call_structured(system_prompt, user_prompt, ImageGroup)
 
 
-def generate(images: list, paragraphs: list, user_instruction: str = "") -> List[ImageGroup]:
+def generate(
+    images: list,
+    paragraphs: list,
+    user_instruction: str = "",
+    structured_elements: Optional[list] = None,
+) -> List[ImageGroup]:
     instruction_note = (
         f"\n\n【用户补充说明】\n{user_instruction.strip()}\n请优先遵循以上说明确定图片位置。"
         if user_instruction and user_instruction.strip()
@@ -149,7 +234,10 @@ def generate(images: list, paragraphs: list, user_instruction: str = "") -> List
     print(f"[image.generator] Stage 2 完成：分为 {len(groups)} 组")
 
     # Stage 3: 逐组定位
-    result = [_place_group(g, descriptions, paragraphs, instruction_note) for g in groups]
+    result = [
+        _place_group(g, descriptions, paragraphs, instruction_note, structured_elements)
+        for g in groups
+    ]
     print(f"[image.generator] Stage 3 完成：所有组定位完毕")
 
     return result

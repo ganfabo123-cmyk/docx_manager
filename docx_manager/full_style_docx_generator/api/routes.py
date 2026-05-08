@@ -1177,8 +1177,18 @@ def register_routes(app):
                 paragraphs = json.load(f).get('text_elements', [])
             print(f"📂 [READ] 读取 {len(paragraphs)} 个段落")
 
+            structured_elements = None
+            backfilled_path = os.path.join(data_dir, 'backfilled_styles.json')
+            if os.path.exists(backfilled_path):
+                with open(backfilled_path, 'r', encoding='utf-8') as f:
+                    structured_elements = json.load(f)
+                heading_count = sum(1 for e in structured_elements if e.get('type', '') in {'heading1', 'heading2', 'heading3', 'heading', 'title'})
+                print(f"📂 [READ] 读取结构化元素 {len(structured_elements)} 个（其中标题 {heading_count} 个）")
+            else:
+                print("⚠️  [WARN] backfilled_styles.json 不存在，两阶段定位不可用")
+
             print(f"🤖 [LLM] 正在分析图片位置...")
-            groups = generate(processed_images, paragraphs, user_instruction)
+            groups = generate(processed_images, paragraphs, user_instruction, structured_elements)
             results = [g.model_dump() for g in groups]
 
             print(f"✅ [SUCCESS] 图片分组完成，共 {len(results)} 组")
