@@ -418,7 +418,7 @@ def footer():
 
     try:
         log.info("[footer] job=%s section=%d mode=%s", job_id, body_section, mode)
-        if mode == "alt":
+        if mode == "hit":
             apply_page_numbers(docx_path)
             log.info("[footer] clearing headers")
             _com_clear_headers(docx_path)
