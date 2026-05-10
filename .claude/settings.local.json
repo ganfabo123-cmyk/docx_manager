@@ -10,7 +10,9 @@
       "PowerShell(Start-Sleep -Seconds 4; Invoke-RestMethod -Uri \"http://localhost:5000/process-formulas\" -Method GET | ConvertTo-Json -Depth 10)",
       "PowerShell(Get-ChildItem -Path \"D:\\\\PycharmProjects\\\\hit-paper-helper\\\\docx_manager\\\\full_style_docx_generator\\\\core\" -Recurse | ForEach-Object { $_.FullName })",
       "PowerShell(Get-ChildItem -Path \"D:\\\\PycharmProjects\\\\hit-paper-helper\\\\docx_manager\\\\full_style_docx_generator\\\\core\\\\formula\" -Recurse | Where-Object { $_.Extension -ne '.pyc' } | Select-Object FullName, Length)",
-      "Bash(Out-File -FilePath D:\\\\PycharmProjects\\\\hit-paper-helper\\\\logs\\\\line66_dump.txt -Encoding utf8)"
+      "Bash(Out-File -FilePath D:\\\\PycharmProjects\\\\hit-paper-helper\\\\logs\\\\line66_dump.txt -Encoding utf8)",
+      "Bash(pip show *)",
+      "Bash(del D:\\\\tmp_omml_debug.txt D:\\\\tmp_omml_fixed.txt)"
     ]
   }
 }

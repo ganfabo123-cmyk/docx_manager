@@ -1,4 +1,5 @@
-import logging
+import datetime
+import json
 import os
 import re
 from pathlib import Path
@@ -8,7 +9,41 @@ from openai import OpenAI
 from pydantic import BaseModel
 import instructor
 
-log = logging.getLogger('llm')
+_LOG_DIR = Path(__file__).parent.parent.parent.parent / 'logs'
+
+
+def _log_llm_call(
+    func_name: str,
+    system_prompt: str,
+    user_prompt: str,
+    response_text: str,
+    usage: dict,
+) -> None:
+    try:
+        _LOG_DIR.mkdir(exist_ok=True)
+        log_path = _LOG_DIR / f"llm_{datetime.date.today().isoformat()}.jsonl"
+        entry = {
+            "ts": datetime.datetime.now().isoformat(timespec="seconds"),
+            "func": func_name,
+            "system_prompt": system_prompt,
+            "user_prompt": user_prompt,
+            "response": response_text,
+            "usage": usage,
+        }
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception as e:
+        print(f"[LLM LOG WARN] 日志写入失败: {e}")
+
+
+def _extract_usage(usage_obj) -> dict:
+    if usage_obj is None:
+        return {}
+    return {
+        "prompt_tokens": getattr(usage_obj, "prompt_tokens", None),
+        "completion_tokens": getattr(usage_obj, "completion_tokens", None),
+        "total_tokens": getattr(usage_obj, "total_tokens", None),
+    }
 
 load_dotenv(Path(__file__).parent.parent.parent / '.env')
 
@@ -52,8 +87,6 @@ def _strip_thinking(text: str) -> str:
 
 
 def call(system_prompt: str, user_prompt: str) -> str:
-    log.debug('[call] system: %s', system_prompt)
-    log.debug('[call] user: %s', user_prompt)
     response = _get_raw_client().chat.completions.create(
         model=os.getenv('LLM_MODEL'),
         messages=[
@@ -63,15 +96,11 @@ def call(system_prompt: str, user_prompt: str) -> str:
         extra_body={'enable_thinking': False},
     )
     result = _strip_thinking(response.choices[0].message.content)
-    u = response.usage
-    log.info('[call] response: %s | tokens: prompt=%s completion=%s total=%s',
-             result, u.prompt_tokens, u.completion_tokens, u.total_tokens)
+    _log_llm_call("call", system_prompt, user_prompt, result, _extract_usage(response.usage))
     return result
 
 
 def call_structured(system_prompt: str, user_prompt: str, response_model: Type[T]) -> T:
-    log.debug('[call_structured] system: %s', system_prompt)
-    log.debug('[call_structured] user: %s', user_prompt)
     result, completion = _get_instructor_client().chat.completions.create_with_completion(
         model=os.getenv('LLM_MODEL'),
         messages=[
@@ -81,9 +110,13 @@ def call_structured(system_prompt: str, user_prompt: str, response_model: Type[T
         response_model=response_model,
         extra_body={'enable_thinking': False},
     )
-    u = completion.usage
-    log.info('[call_structured] response: %s | tokens: prompt=%s completion=%s total=%s',
-             result, u.prompt_tokens, u.completion_tokens, u.total_tokens)
+    _log_llm_call(
+        "call_structured",
+        system_prompt,
+        user_prompt,
+        result.model_dump_json(ensure_ascii=False) if hasattr(result, "model_dump_json") else str(result),
+        _extract_usage(getattr(completion, "usage", None)),
+    )
     return result
 
 
@@ -93,8 +126,6 @@ def call_structured_with_image(
     base64_str: str,
     response_model: Type[T],
 ) -> T:
-    log.debug('[call_structured_with_image] system: %s', system_prompt)
-    log.debug('[call_structured_with_image] user: %s', user_prompt)
     result, completion = _get_vl_instructor_client().chat.completions.create_with_completion(
         model=os.getenv('LLM_VL_NODEL'),
         messages=[
@@ -113,7 +144,11 @@ def call_structured_with_image(
         response_model=response_model,
         extra_body={'enable_thinking': False},
     )
-    u = completion.usage
-    log.info('[call_structured_with_image] response: %s | tokens: prompt=%s completion=%s total=%s',
-             result, u.prompt_tokens, u.completion_tokens, u.total_tokens)
+    _log_llm_call(
+        "call_structured_with_image",
+        system_prompt,
+        f"[image base64 omitted] {user_prompt}",
+        result.model_dump_json(ensure_ascii=False) if hasattr(result, "model_dump_json") else str(result),
+        _extract_usage(getattr(completion, "usage", None)),
+    )
     return result
