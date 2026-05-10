@@ -10,6 +10,37 @@ _transform = None
 
 _M_NS = "http://schemas.openxmlformats.org/officeDocument/2006/math"
 
+# --- LaTeX preprocessor: repairs common LLM extraction errors ---
+_GREEK_CMDS = (
+    r"alpha|beta|gamma|delta|epsilon|varepsilon|zeta|eta|theta|vartheta|"
+    r"iota|kappa|lambda|mu|nu|xi|varpi|pi|varrho|rho|varsigma|sigma|"
+    r"tau|upsilon|varphi|phi|chi|psi|omega|"
+    r"Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|"
+    r"Mu|Nu|Xi|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega"
+)
+# \alphal → \alpha_l  (LLM drops the _ between Greek command and subscript letter)
+_RE_GREEK_MERGE = re.compile(rf'\\({_GREEK_CMDS})([a-zA-Z])')
+
+_SINGLE_ARG_CMDS = (
+    r"widehat|widetilde|overrightarrow|overleftarrow|overline|underline|"
+    r"overbrace|underbrace|hat|tilde|bar|vec|dot|ddot|acute|grave|breve|"
+    r"check|text|mathrm|mathbf|mathit|mathbb|mathcal|sqrt|boldsymbol"
+)
+# \hat{h}{l-1} → \hat{h}_{l-1}  (LLM drops _ after a single-argument command)
+_RE_SINGLE_ARG_SUB = re.compile(
+    rf'(\\(?:{_SINGLE_ARG_CMDS})\{{[^{{}}]+\}})\{{'
+)
+# h{l-1} → h_{l-1}  (LLM drops _ before subscript braces on a plain identifier)
+_RE_PLAIN_ID_SUB = re.compile(r'(?<![\\a-zA-Z0-9_^])([a-zA-Z0-9])\{')
+
+
+def _preprocess_latex(latex: str) -> str:
+    # 2026-05-10: normalise broken LaTeX from LLM before passing to latex2mathml
+    latex = _RE_GREEK_MERGE.sub(r'\\\1_\2', latex)
+    latex = _RE_SINGLE_ARG_SUB.sub(r'\1_{', latex)
+    latex = _RE_PLAIN_ID_SUB.sub(r'\1_{', latex)
+    return latex
+
 
 def _get_transform():
     global _transform
@@ -66,6 +97,7 @@ def _fix_script_delimiters(root):
 
 
 def latex_to_omath(latex: str) -> str:
+    latex = _preprocess_latex(latex)
     mathml_str = latex2mathml.converter.convert(latex)
     mathml_doc = etree.fromstring(mathml_str.encode("utf-8"))
     transform = _get_transform()
