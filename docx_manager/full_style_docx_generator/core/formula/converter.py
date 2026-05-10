@@ -29,17 +29,20 @@ def _fix_script_delimiters(root):
         t.text = text
         return r
 
-    def get_bracket_chars(d_elem):
+    def get_delimiter_info(d_elem):
         dPr = d_elem.find(f"{{{_M_NS}}}dPr")
-        beg, end = "(", ")"
+        beg, end, sep = "(", ")", ""
         if dPr is not None:
             b = dPr.find(f"{{{_M_NS}}}begChr")
             e = dPr.find(f"{{{_M_NS}}}endChr")
+            s = dPr.find(f"{{{_M_NS}}}sepChr")
             if b is not None:
                 beg = b.get(f"{{{_M_NS}}}val", "(")
             if e is not None:
                 end = e.get(f"{{{_M_NS}}}val", ")")
-        return beg, end
+            if s is not None:
+                sep = s.get(f"{{{_M_NS}}}val", "")
+        return beg, end, sep
 
     for tag in [f"{{{_M_NS}}}sup", f"{{{_M_NS}}}sub"]:
         for script_elem in root.iter(tag):
@@ -48,10 +51,14 @@ def _fix_script_delimiters(root):
                 if c.tag == f"{{{_M_NS}}}d"
             ]
             for i, d_elem in reversed(to_replace):
-                beg, end = get_bracket_chars(d_elem)
+                beg, end, sep = get_delimiter_info(d_elem)
+                # 2026-05-10: 多组 <m:e> 之间需插入 sepChr（如 (t-k) 中的 −），否则分隔符丢失
+                e_groups = [list(e_child) for e_child in d_elem.findall(f"{{{_M_NS}}}e")]
                 content = []
-                for e_child in d_elem.findall(f"{{{_M_NS}}}e"):
-                    content.extend(list(e_child))
+                for gi, group in enumerate(e_groups):
+                    content.extend(group)
+                    if gi < len(e_groups) - 1 and sep:
+                        content.append(make_run(sep))
                 script_elem.remove(d_elem)
                 new_elems = ([make_run(beg)] if beg else []) + content + ([make_run(end)] if end else [])
                 for j, elem in enumerate(new_elems):
