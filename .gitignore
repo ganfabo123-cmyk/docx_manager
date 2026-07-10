@@ -8,3 +8,5 @@ docx_manager/wps_ui/assets
 docx_manager/docx_engine/outputs/*
 *.json
 logs/*
+count_script_word.py
+replace_ppt_color.py

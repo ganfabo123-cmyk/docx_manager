@@ -12,7 +12,10 @@
       "PowerShell(Get-ChildItem -Path \"D:\\\\PycharmProjects\\\\hit-paper-helper\\\\docx_manager\\\\full_style_docx_generator\\\\core\\\\formula\" -Recurse | Where-Object { $_.Extension -ne '.pyc' } | Select-Object FullName, Length)",
       "Bash(Out-File -FilePath D:\\\\PycharmProjects\\\\hit-paper-helper\\\\logs\\\\line66_dump.txt -Encoding utf8)",
       "Bash(pip show *)",
-      "Bash(del D:\\\\tmp_omml_debug.txt D:\\\\tmp_omml_fixed.txt)"
+      "Bash(del D:\\\\tmp_omml_debug.txt D:\\\\tmp_omml_fixed.txt)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }

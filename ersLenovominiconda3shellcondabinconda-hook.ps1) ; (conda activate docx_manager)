@@ -1,0 +1,185 @@
+[33me83169b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmy-feature[m[33m, [m[1;31morigin/server-feature[m[33m)[m fix(file_parser): docx 路径 markdown 清理不彻底的问题
+[33m75a56cd[m feat(wps_ui): 页码配置完成后延迟关闭 WPS
+[33mf95f416[m fix(wps_ui): 打开文档后立即最大化，延长页码对话框按键间隔
+[33m0ee386b[m[33m ([m[1;31morigin/my-feature[m[33m)[m fix(my-feature):the formula bug,llm error
+[33mbe7781d[m fix(my-feature):the formula bug,m:e
+[33m718dfa5[m fix(my-feature):the formula bug
+[33m6c7d7e5[m fix(my-feature):增加同组图片不同前缀
+[33m9a2d7e4[m fix(my-feature):修改日志缓冲
+[33mfd4d606[m feature(my-feature)调换footer模式顺序
+[33me3fc39e[m feature(my-feature)增加server日志记录
+[33mac73b6f[m fix(my-feature):修复页码复位逻辑、新增页眉管理、修复图题重复抑制失配
+[33medb809e[m opt(my-feature):优化图片题目
+[33m9606a41[m opt(my-feature):优化图片插入
+[33ma8ba10c[m opt(my-feature):image insert
+[33mf78a22d[m feature(my-feature):add llm log
+[33m2cb7a05[m feature(my-feature):opt figure insert
+[33m316b56e[m feature(my-feature):opt short block detect
+[33m2a74b01[m rm(my-feature):toc rm
+[33mf7b3d9a[m opt(my-feature): reference
+[33mfc14a1e[m fix(my-feature):clear toc
+[33md485b65[m fix(my-feature):maxsize window
+[33m590371a[m fix(my-feature):rm addition toc
+[33m7f06a78[m fix(my-feature):abstract prompt
+[33ma715e8f[m fix(my-feature):omath
+[33m096189c[m fix(my-feature):omath
+[33m476eb5a[m fix(my-feature):fix-com
+[33m6a7dfe0[m fix(my-feature):image2com
+[33m405c423[m fix(my-feature):image2com
+[33mf0443a3[m fix(my-feature):image2com
+[33me285c4e[m fix(my-feature):image
+[33m74c52f0[m fix(my-feature):image
+[33m9d4c219[m fix(my-feature):image
+[33mb0a3448[m fix(my-feature):image
+[33m877ee39[m fix(my-feature):image
+[33m8e1c8a9[m fix(my-feature):image
+[33m5d8e43a[m opt(my-feature):image insert
+[33m29086f4[m fix(my-feature):image
+[33m432bfe8[m optimize the server
+[33m6fb1884[m optimize the server
+[33m41d1456[m feature(my-feature):add missing caption of graph
+[33md577db9[m opt(my-feature):image insert
+[33m8525d41[m stash(my-feature)
+[33md0c97e7[m fix(my-feature):formula
+[33m92827bb[m fix(my-feature):short-block
+[33m057bcdd[m fix(my-feature):formula
+[33m1d95021[m fix(my-feature):image insertion
+[33m631b2c4[m feature(image-insert)
+[33me83dee5[m fix(my-feature):image insertion
+[33mc8713cd[m fix(my-feature):image insertion
+[33m9c4e0dd[m feature(image-insert)
+[33m65e9c13[m fix(my-feature)
+[33m91b8191[m fix(my-feature)
+[33m5727c1b[m fix(my-feature):short blocks bugs
+[33m8e5e0cf[m feature(my-feature):add short-blocks detect
+[33m70d8a6a[m fix(my-feature):formula bugs
+[33m5c1f61b[m fix(my-feature):formula bugs
+[33md841001[m fix(my-feature):formula bugs
+[33mf2723f9[m fix(my-feature):restorer can not show formula
+[33m7f58c4e[m rm(*.json)
+[33m7faa1df[m fix(my-feature)
+[33mf66512d[m feature(my-feature):表格润色
+[33m7682a2f[m 完成公式润色
+[33m41392cb[m feature(my-feature):add formula generated
+[33m776aae4[m feature(my-server):完成图片排版,页码排版后端
+[33mfb71d98[m feat(my-feature):重构两列图排版
+[33m0611c84[m Merge branch 'server-feature' of github.com:ganfabo123-cmyk/docx_manager into my-feature
+[33m7b72c7d[m stash
+[33mc4a9511[m feat:优化代码
+[33m07e3551[m feat(my-feature):为图/页码设计cli命令
+[33m57ce14b[m Merge branch 'server-feature' of github.com:ganfabo123-cmyk/docx_manager into my-feature
+[33m9c57682[m stash
+[33mc7788c8[m clear png and docx
+[33mc3f428f[m clear png and docx
+[33m227d09e[m clear assets in origin
+[33m50fe568[m server could run the one col
+[33m1be7e3f[m stase
+[33m9b21875[m feature:change2opencv
+[33m311f8d8[m 合并远程，但保留本地代码完全不变
+[33m0304e65[m 单列排版
+[33m37eb7fc[m 提供数据
+[33m14e8b48[m 单列排版完成(已合并)
+[33mad88a88[m 单列排版完成
+[33m991c9a4[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m411114d[m 提交数据
+[33mde8ef6e[m 即将测试双列排版
+[33m6db43c2[m[33m ([m[1;31morigin/wpsui[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/backup/main-before-force[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m 单列多图排版已完成
+[33m51c5d82[m ocr could find XXXXX
+[33m7c29f77[m one single graph
+[33m4b96c26[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33me40a17b[m 修复已知问题
+[33m9e92ca3[m 修复docx engine空白页,参考文献缩进,公式不显示的问题
+[33m9976d45[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m038b351[m 增加下载后格式转换
+[33m6bac3f8[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33mf4177b6[m 简化get
+[33m493e0f3[m Merge branches 'main' and 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m16b382a[m 降低SSL安全等级
+[33mcb939f7[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m3966555[m 绕过ssl配置验证
+[33m6ee063b[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m0d33f33[m 优化路由
+[33m976d844[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m074f4cb[m server
+[33mb263188[m 增加新的基于底层xml进行解析的引擎
+[33meb6ce48[m 测试
+[33mfc1be68[m 增加ole渲染方式
+[33m223ae9f[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m75ec4ad[m 增加公式全局接口
+[33m8d714fc[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m7ce0e4b[m 优化helper的公式显示
+[33m6102758[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager into server
+[33m75a250b[m remove pyc
+[33m7bdbb18[m remove .pyc
+[33m3f582dd[m remove .pyc
+[33m81d08c1[m remove untrack file
+[33md3ee6f6[m remove untracked files
+[33m2f6eabc[m 修改gitignore
+[33m18a179c[m 修复generator的引用错误
+[33me96b44d[m 扩展txt解析编码
+[33mfcd14ab[m 优化路由
+[33m6831d3c[m 优化下载路由
+[33m5b38a82[m 优化下载路由
+[33m9d58d32[m 优化route调试信息
+[33m3d0838d[m Merge branch 'main' of github.com:ganfabo123-cmyk/docx_manager
+[33ma0085a7[m correct styles docx 完成
+[33ma1e05e2[m 增加样式解析模块
+[33m96b8e7e[m server commit
+[33m1f14ace[m 改成documentbuilder
+[33m1fcaeef[m 改成documentbuilder
+[33mda8293c[m 修改doc转换工具
+[33m5eacf5b[m 增加断点调试
+[33m2ef4b50[m 增加断点调试
+[33mc8598cb[m 增加断点调试
+[33m47261ed[m 增加断点调试
+[33m866b41f[m 增加断点调试
+[33mea2d514[m 增加断点调试
+[33m6493ed1[m 增加断点调试
+[33m2011a54[m 修复参考文献错误
+[33m8fca939[m 修复参考文献,目录等问题
+[33m0d43383[m 修复已知问题
+[33m0239275[m 修复已知问题
+[33mb77f620[m 修复已知问题
+[33m87785ba[m 优化citations生成
+[33m9a8f2fa[m 修复参考文献未解析问题
+[33m6023cba[m 修复参考文献错误问题
+[33m94c73e3[m 优化项目结构
+[33mdc6a9f4[m 优化项目结构
+[33mf498d9c[m 优化下载路由
+[33mada6898[m 优化下载路由
+[33me1954d6[m 修复错误
+[33m199dbc9[m 修复错误
+[33maa57d9a[m 修复错误
+[33m788dbc9[m 优化generate-去除print
+[33m52efdf5[m 优化generate
+[33mea9e13b[m 优化generate路由
+[33m057eb98[m 优化generate路由
+[33m53ded5d[m 优化citations
+[33mad68bfb[m 路由加入traceback
+[33mfda2603[m 优化save
+[33m7f81255[m 优化save
+[33mb7b427a[m 优化save
+[33m94ba5fc[m 优化save路由
+[33m401b842[m 增加save数据打印
+[33m5909d94[m 修复save路径
+[33mcc657ae[m 优化save以及download路由
+[33mf78ba83[m 减少无关路由
+[33med3cfaf[m 增加save路径打印
+[33m927ad62[m 增加save路径打印
+[33m83c980c[m 去除pyc文件
+[33md162154[m 完善citations生成
+[33mbb809d6[m 增加仅文献和正文的文档解析结果返回
+[33m8213bfd[m 增加仅文献和正文的文档解析结果返回
+[33m56d6568[m ignore pycache
+[33mdf82e86[m 增加save路由
+[33m039a646[m 完成标准样式格式修改服务端代码
+[33mb839ac6[m 优化图解析
+[33ma9bc3a6[m 优化解析结果,增加元素间关系
+[33md1a5cca[m 改变数据发送格式,直接json dump
+[33m4b7cecb[m 加入发送数据调试
+[33m0b5e0d7[m docx_send加入doc2docx转换
+[33mdda32d6[m docx_send加入堆栈调试
+[33me7f2359[m 增加解析docx方法
+[33meba191b[m add readme
+[33m7f650f7[m 提交至服务器
+[33m9e712d8[m 3/13-15:22,第一次完全测试
