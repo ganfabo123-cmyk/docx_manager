@@ -26,14 +26,14 @@ def set_dash_arabic_from_here() -> None:
     W.confirm()
 
 
-def apply_hit_page_numbers(docx_path: str, body_section: int = 4) -> None:
+def apply_hit_page_numbers(docx_path: str, body_section: int = 4, close_delay: float = 2.0) -> None:
     """
     完整工作流：
       1. 打开文档，跳到开头
       2. 全文设大写罗马
       3. 跳到正文节（绪论）
       4. 正文节及以后覆盖为 dash-arabic
-      5. 保存关闭
+      5. 保存，延迟 close_delay 秒后关闭
     """
     W.open_doc(docx_path)
     W.goto_start()
@@ -50,20 +50,20 @@ def apply_hit_page_numbers(docx_path: str, body_section: int = 4) -> None:
     print("→ 正文节起设 dash-arabic")
     set_dash_arabic_from_here()
 
-    print("→ 保存关闭")
-    W.save_close()
+    print(f"→ 保存，{close_delay}s 后关闭")
+    W.save_close(close_delay)
     print("完成！")
 
 
 
-def apply_page_numbers(docx_path: str) -> None:
+def apply_page_numbers(docx_path: str, close_delay: float = 2.0) -> None:
     """
     完整工作流：
       1. 打开文档，跳到开头
       2. 全文设大写罗马
       3. 跳到正文节（绪论）
       4. 正文节及以后覆盖为 dash-arabic
-      5. 保存关闭
+      5. 保存，延迟 close_delay 秒后关闭
     """
     W.open_doc(docx_path)
     W.goto_start()
@@ -71,6 +71,6 @@ def apply_page_numbers(docx_path: str) -> None:
     print("→ 全文起设 dash-arabic")
     set_dash_arabic_from_here()
 
-    print("→ 保存关闭")
-    W.save_close()
+    print(f"→ 保存，{close_delay}s 后关闭")
+    W.save_close(close_delay)
     print("完成！")

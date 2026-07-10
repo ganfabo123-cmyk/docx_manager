@@ -23,8 +23,9 @@ def save() -> None:
 def close() -> None:
     P.hotkey('alt', 'f4')
 
-def save_close() -> None:
+def save_close(delay_before_close: float = 2.0) -> None:
     save()
+    P.wait(delay_before_close)
     close()
 
 
