@@ -2,858 +2,762 @@
   {
     "id": "elem_1",
     "type": "body",
-    "content": "LoRA-Drop 论文复现与自适应补偿缩放改进实验报告",
+    "content": "---",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_2",
+    "type": "heading1",
+    "content": "## 摘要",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_3",
     "type": "body",
-    "content": "一、实验内容及文献情况介绍",
+    "content": "随着人工智能技术的发展，强化学习（Reinforcement Learning，RL）在机器人控制、自动驾驶、资源调度以及大语言模型（Large Language Models, LLMs）等领域得到了广泛应用。传统的任务调度方法通常依赖于人工设计规则，在面对动态变化的复杂环境时难以获得最优性能。本文提出一种基于深度强化学习（Deep Reinforcement Learning, DRL）的智能任务调度框架，将调度问题建模为马尔可夫决策过程（Markov Decision Process, MDP），利用深度神经网络逼近状态价值函数，实现动态决策优化。实验结果表明，相较于传统启发式算法，本文方法在任务完成时间、资源利用率以及系统吞吐量方面均取得了明显提升。",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_4",
+    "type": "body",
+    "content": "**关键词：** 强化学习；深度强化学习；任务调度；智能决策；资源优化",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_5",
     "type": "body",
-    "content": "实验内容",
+    "content": "---",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_6",
+    "type": "heading1",
+    "content": "# 1 引言",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_7",
     "type": "body",
-    "content": "本实验复现了论文《LoRA-Drop: Efficient LoRA Parameters Dropping for Large Language Models》（arXiv:2601.02569v1）所提出的 LoRA-Drop 推理加速框架，并在原方法基础上提出了方案 A：自适应补偿缩放（Adaptive Compensation Scaling）改进，对比分析两者在推理吞吐量与训练收敛行为上的差异。",
+    "content": "近年来，随着云计算、边缘计算以及人工智能应用的快速发展，大规模任务调度问题逐渐成为研究热点。传统调度算法如最短作业优先（SJF）、轮询调度（Round Robin）以及遗传算法（GA）等虽然具有一定效果，但普遍存在适应能力不足的问题。",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_8",
+    "type": "body",
+    "content": "强化学习能够通过智能体（Agent）与环境（Environment）的不断交互学习最优策略，而无需依赖大量人工规则，因此特别适合求解动态优化问题。近年来，Deep Q Network（DQN）、Proximal Policy Optimization（PPO）以及Soft Actor-Critic（SAC）等算法不断推动强化学习的发展，使其能够解决高维状态空间中的复杂决策任务。",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_9",
     "type": "body",
-    "content": "实验基于以下环境搭建与运行：",
+    "content": "本文针对动态任务调度问题，设计了一种基于PPO算法的强化学习调度模型，实现任务执行效率与资源利用率的协同优化。",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_10",
     "type": "body",
-    "content": "模型：Qwen2.5-1.5B（HuggingFace Transformers 格式）",
+    "content": "---",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_11",
-    "type": "body",
-    "content": "硬件：NVIDIA RTX 4060 Laptop（8GB VRAM）",
+    "type": "heading1",
+    "content": "# 2 相关工作",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_12",
-    "type": "body",
-    "content": "框架：LlamaFactory（魔改版，集成自定义 qwen2loradrop 模型架构）",
+    "type": "heading2",
+    "content": "## 2.1 强化学习基础",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_13",
     "type": "body",
-    "content": "操作系统：Windows 11",
+    "content": "强化学习由智能体、环境、状态、动作以及奖励组成。",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_14",
+    "type": "formula_inline",
+    "content": "在时刻 $t$：",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "在时刻 ",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>t</m:t></m:r></m:oMath>",
+      "text_after": "：",
+      "label": ""
     }
   },
   {
     "id": "elem_15",
-    "type": "body",
-    "content": "阅读文献",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_17",
-    "type": "body",
-    "content": "主要文献：LoRA-Drop: Efficient LoRA Parameters Dropping for Large Language Models，arXiv:2601.02569v1",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_18",
-    "type": "body",
-    "content": "相关文献：",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_19",
-    "type": "body",
-    "content": "- LoRA: Low-Rank Adaptation of Large Language Models（Hu et al., 2021）",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_20",
-    "type": "body",
-    "content": "- LLaMA-Factory: Unified Efficient Fine-Tuning of 100+ Language Models（Zheng et al., 2024）",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_21",
-    "type": "body",
-    "content": "- Qwen2.5 Technical Report（Qwen Team, 2024）",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_23",
-    "type": "body",
-    "content": "二、应用背景及核心算法实现及改进",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_25",
-    "type": "body",
-    "content": "应用背景及核心算法介绍",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_27",
-    "type": "body",
-    "content": "大语言模型（LLM）自回归解码时，每生成一个 token 都需要对所有 Transformer 层进行完整的前向计算，计算代价高昂。LoRA-Drop 的核心思想是：相邻 token 的隐状态高度相似，因此可以周期性地跳过部分层，用轻量 LoRA 模块对跳过层的误差进行补偿。",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_29",
-    "type": "body",
-    "content": "算法流程如下：",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_31",
-    "type": "body",
-    "content": "设模型共 $L$ 层，定义两个超参数：",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_32",
     "type": "formula_inline",
-    "content": "$\\rho$（drop ratio）：每个 refresh 周期内可跳过的层比例",
+    "content": "- 状态：$s_t$",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     },
     "formula": {
-      "text_before": "设模型共 $L$ 层，定义两个超参数：",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>ρ</m:t></m:r></m:oMath>",
-      "text_after": "（drop ratio）：每个 refresh 周期内可跳过的层比例",
-      "label": ""
-    }
-  },
-  {
-    "id": "elem_33",
-    "type": "formula_inline",
-    "content": "$k$（refresh period）：每隔 $k$ 个 token 做一次完整前向计算",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    },
-    "formula": {
-      "text_before": "",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>k</m:t></m:r></m:oMath>",
-      "text_after": "（refresh period）：每隔 $k$ 个 token 做一次完整前向计算",
-      "label": ""
-    }
-  },
-  {
-    "id": "elem_35",
-    "type": "body",
-    "content": "在生成第 $t$ 个 token 时：",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_38",
-    "type": "body",
-    "content": "h_l^{(t)} = \\begin{cases}",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_39",
-    "type": "body",
-    "content": "\\text{FullLayer}l(h{l-1}^{(t)}) & \\text{if } t \\bmod k = 0 \\text{ (refresh step)} \\\\",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_40",
-    "type": "body",
-    "content": "\\hat{h}l^{(t-k)} + \\text{LoRA}l(h_{l-1}^{(t)}) & \\text{if } l \\text{ is a drop layer}",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_41",
-    "type": "body",
-    "content": "\\end{cases}",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_44",
-    "type": "body",
-    "content": "其中 $\\hat{h}l^{(t-k)}$ 为缓存的上一次完整计算结果，$\\text{LoRA}l$ 为该层的低秩补偿适配器（rank=8）。",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_46",
-    "type": "body",
-    "content": "原版实现（固定缩放）：",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_49",
-    "type": "formula_block",
-    "content": "hl^{(t)} = \\hat{h}l^{(t-k)} + \\text{LoRA}l(h{l-1}^{(t)})",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    },
-    "formula": {
-      "text_before": "",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSubSup><m:e><m:r><m:t>h</m:t></m:r></m:e><m:sub><m:r><m:t>l</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>=</m:t></m:r><m:sSubSup><m:e><m:acc><m:accPr><m:chr m:val=\"̂\"/></m:accPr><m:e><m:r><m:t>h</m:t></m:r></m:e></m:acc></m:e><m:sub><m:r><m:t>l</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"−\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e><m:e><m:r><m:t>k</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>+</m:t></m:r><m:sSub><m:e><m:r><m:rPr><m:nor/></m:rPr><m:t>LoRA</m:t></m:r></m:e><m:sub><m:r><m:t>l</m:t></m:r></m:sub></m:sSub><m:r><m:t>(</m:t></m:r><m:sSubSup><m:e><m:r><m:t>h</m:t></m:r></m:e><m:sub><m:r><m:t>l−1</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>)</m:t></m:r></m:oMath>",
+      "text_before": "状态：",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSub><m:e><m:r><m:t>s</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub></m:oMath>",
       "text_after": "",
       "label": ""
     }
   },
   {
+    "id": "elem_16",
+    "type": "formula_inline",
+    "content": "- 动作：$a_t$",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "动作：",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSub><m:e><m:r><m:t>a</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub></m:oMath>",
+      "text_after": "",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_17",
+    "type": "formula_inline",
+    "content": "- 奖励：$r_t$",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "奖励：",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSub><m:e><m:r><m:t>r</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub></m:oMath>",
+      "text_after": "",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_18",
+    "type": "body",
+    "content": "智能体根据策略",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_20",
+    "type": "formula_block",
+    "content": "\\pi(a|s)",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>π(a|s)</m:t></m:r></m:oMath>",
+      "text_after": "",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_22",
+    "type": "body",
+    "content": "选择动作，并不断最大化累计奖励",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_24",
+    "type": "formula_block",
+    "content": "R_t=\\sum_{k=0}^{\\infty}\\gamma^k r_{t+k}",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSub><m:e><m:r><m:t>R</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub><m:r><m:t>=</m:t></m:r><m:nary><m:naryPr><m:chr m:val=\"∑\"/><m:limLoc m:val=\"subSup\"/><m:grow m:val=\"1\"/><m:subHide m:val=\"off\"/><m:supHide m:val=\"off\"/></m:naryPr><m:sub><m:r><m:t>k=0</m:t></m:r></m:sub><m:sup><m:r><m:t>∞</m:t></m:r></m:sup><m:e><m:sSup><m:e><m:r><m:t>γ</m:t></m:r></m:e><m:sup><m:r><m:t>k</m:t></m:r></m:sup></m:sSup></m:e></m:nary><m:sSub><m:e><m:r><m:t>r</m:t></m:r></m:e><m:sub><m:r><m:t>t+k</m:t></m:r></m:sub></m:sSub></m:oMath>",
+      "text_after": "",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_26",
+    "type": "body",
+    "content": "其中：",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_27",
+    "type": "formula_inline",
+    "content": "- $\\gamma$ 为折扣因子；",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>γ</m:t></m:r></m:oMath>",
+      "text_after": " 为折扣因子；",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_28",
+    "type": "formula_inline",
+    "content": "- $0<\\gamma<1$。",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>0&lt;γ&lt;1</m:t></m:r></m:oMath>",
+      "text_after": "。",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_29",
+    "type": "body",
+    "content": "---",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_30",
+    "type": "heading2",
+    "content": "## 2.2 深度强化学习",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_31",
+    "type": "body",
+    "content": "传统Q-Learning使用Q表记录状态价值：",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_33",
+    "type": "body",
+    "content": "Q(s,a)",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_35",
+    "type": "body",
+    "content": "当状态空间较大时无法存储，因此DQN采用神经网络逼近：",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_37",
+    "type": "formula_block",
+    "content": "Q(s,a;\\theta)",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>Q(s,a;θ)</m:t></m:r></m:oMath>",
+      "text_after": "",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_39",
+    "type": "body",
+    "content": "损失函数定义为：",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_41",
+    "type": "formula_block",
+    "content": "L(\\theta)=\n(r+\\gamma \\max_{a'}Q(s',a';\\theta^-)-Q(s,a;\\theta))^2",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>L(θ)=</m:t></m:r><m:sSup><m:e><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:r><m:t>r</m:t></m:r><m:r><m:t>+</m:t></m:r><m:r><m:t>γ</m:t></m:r><m:sSub><m:e><m:r><m:t>max</m:t></m:r></m:e><m:sub><m:sSup><m:e><m:r><m:t>a</m:t></m:r></m:e><m:sup><m:r><m:t>′</m:t></m:r></m:sup></m:sSup></m:sub></m:sSub><m:r><m:t>Q</m:t></m:r><m:r><m:t>(</m:t></m:r><m:sSup><m:e><m:r><m:t>s</m:t></m:r></m:e><m:sup><m:r><m:t>′</m:t></m:r></m:sup></m:sSup><m:r><m:t>,</m:t></m:r><m:sSup><m:e><m:r><m:t>a</m:t></m:r></m:e><m:sup><m:r><m:t>′</m:t></m:r></m:sup></m:sSup><m:r><m:t>;</m:t></m:r><m:sSup><m:e><m:r><m:t>θ</m:t></m:r></m:e><m:sup><m:r><m:t>−</m:t></m:r></m:sup></m:sSup><m:r><m:t>)</m:t></m:r><m:r><m:t>−</m:t></m:r><m:r><m:t>Q</m:t></m:r><m:r><m:t>(</m:t></m:r><m:r><m:t>s</m:t></m:r><m:r><m:t>,</m:t></m:r><m:r><m:t>a</m:t></m:r><m:r><m:t>;</m:t></m:r><m:r><m:t>θ</m:t></m:r><m:r><m:t>)</m:t></m:r></m:e></m:d></m:e><m:sup><m:r><m:t>2</m:t></m:r></m:sup></m:sSup></m:oMath>",
+      "text_after": "",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_44",
+    "type": "body",
+    "content": "其中：",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_45",
+    "type": "formula_inline",
+    "content": "- $\\theta$ 为在线网络参数；",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>θ</m:t></m:r></m:oMath>",
+      "text_after": " 为在线网络参数；",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_46",
+    "type": "formula_inline",
+    "content": "- $\\theta^-$ 为目标网络参数。",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSup><m:e><m:r><m:t>θ</m:t></m:r></m:e><m:sup><m:r><m:t>−</m:t></m:r></m:sup></m:sSup></m:oMath>",
+      "text_after": " 为目标网络参数。",
+      "label": ""
+    }
+  },
+  {
+    "id": "elem_47",
+    "type": "body",
+    "content": "---",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_48",
+    "type": "heading2",
+    "content": "## 2.3 PPO算法",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_49",
+    "type": "body",
+    "content": "PPO属于策略梯度方法，通过限制策略更新幅度保证训练稳定。",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_50",
+    "type": "body",
+    "content": "其目标函数：",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
     "id": "elem_52",
-    "type": "body",
-    "content": "LoRA 补偿量直接叠加，无论隐状态漂移程度如何，缩放系数固定为 1。",
+    "type": "formula_block",
+    "content": "L^{clip}(\\theta)=\nE[\n\\min(\nr_t(\\theta)A_t,\nclip(r_t(\\theta),1-\\epsilon,1+\\epsilon)A_t\n)]",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    },
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSup><m:e><m:r><m:t>L</m:t></m:r></m:e><m:sup><m:r><m:rPr><m:nor/></m:rPr><m:t>clip</m:t></m:r></m:sup></m:sSup><m:r><m:t>(θ)=𝔼</m:t></m:r><m:d><m:dPr><m:begChr m:val=\"[\"/><m:sepChr m:val=\"m\"/><m:endChr m:val=\"]\"/></m:dPr><m:e/><m:e><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:sSub><m:e><m:r><m:t>r</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub><m:r><m:t>(</m:t></m:r><m:r><m:t>θ</m:t></m:r><m:r><m:t>)</m:t></m:r><m:sSub><m:e><m:r><m:t>A</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub><m:r><m:t>,</m:t></m:r><m:r><m:rPr><m:nor/></m:rPr><m:t>clip</m:t></m:r><m:r><m:t>(</m:t></m:r><m:sSub><m:e><m:r><m:t>r</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub><m:r><m:t>(</m:t></m:r><m:r><m:t>θ</m:t></m:r><m:r><m:t>)</m:t></m:r><m:r><m:t>,</m:t></m:r><m:r><m:t>1</m:t></m:r><m:r><m:t>−</m:t></m:r><m:r><m:t>ϵ</m:t></m:r><m:r><m:t>,</m:t></m:r><m:r><m:t>1</m:t></m:r><m:r><m:t>+</m:t></m:r><m:r><m:t>ϵ</m:t></m:r><m:r><m:t>)</m:t></m:r><m:sSub><m:e><m:r><m:t>A</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub></m:e></m:d></m:e></m:d></m:oMath>",
+      "text_after": "",
+      "label": ""
     }
   },
   {
-    "id": "elem_54",
+    "id": "elem_59",
     "type": "body",
-    "content": "算法改进：方案 A —— 自适应补偿缩放",
+    "content": "其中",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_56",
-    "type": "body",
-    "content": "问题分析： 原版固定缩放假设所有层的漂移幅度相同，但实际上不同层、不同 token 位置的隐状态漂移差异显著。当漂移较小时，过强的 LoRA 补偿会引入噪声；当漂移较大时，固定补偿又可能不足。",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_58",
-    "type": "body",
-    "content": "改进方案： 引入基于隐状态 L2 范数比的自适应缩放因子：",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_61",
     "type": "formula_block",
-    "content": "\\alphal^{(t)} = \\text{clamp}\\left(\\frac{\\|h{l-1}^{(t)} - \\hat{h}{l-1}^{(t-k)}\\|2}{\\|\\hat{h}{l-1}^{(t-k)}\\|2},\\ 0,\\ 2\\right)",
+    "content": "r_t(\\theta)=\n\\frac{\\pi_\\theta(a|s)}\n{\\pi_{\\theta_{old}}(a|s)}",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     },
     "formula": {
       "text_before": "",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSubSup><m:e><m:r><m:t>α</m:t></m:r></m:e><m:sub><m:r><m:t>l</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>=</m:t></m:r><m:r><m:rPr><m:nor/></m:rPr><m:t>clamp</m:t></m:r><m:d><m:dPr><m:sepChr m:val=\",\"/></m:dPr><m:e><m:f><m:fPr><m:type m:val=\"bar\"/></m:fPr><m:num><m:sSub><m:e><m:d><m:dPr><m:begChr m:val=\"‖\"/><m:sepChr m:val=\"\"/><m:endChr m:val=\"‖\"/></m:dPr><m:e><m:sSubSup><m:e><m:r><m:t>h</m:t></m:r></m:e><m:sub><m:r><m:t>l−1</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>−</m:t></m:r><m:sSubSup><m:e><m:acc><m:accPr><m:chr m:val=\"̂\"/></m:accPr><m:e><m:r><m:t>h</m:t></m:r></m:e></m:acc></m:e><m:sub><m:r><m:t>l−1</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"−\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e><m:e><m:r><m:t>k</m:t></m:r></m:e></m:d></m:sup></m:sSubSup></m:e></m:d></m:e><m:sub><m:r><m:t>2</m:t></m:r></m:sub></m:sSub></m:num><m:den><m:sSub><m:e><m:d><m:dPr><m:begChr m:val=\"‖\"/><m:sepChr m:val=\"\"/><m:endChr m:val=\"‖\"/></m:dPr><m:e><m:sSubSup><m:e><m:acc><m:accPr><m:chr m:val=\"̂\"/></m:accPr><m:e><m:r><m:t>h</m:t></m:r></m:e></m:acc></m:e><m:sub><m:r><m:t>l−1</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"−\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e><m:e><m:r><m:t>k</m:t></m:r></m:e></m:d></m:sup></m:sSubSup></m:e></m:d></m:e><m:sub><m:r><m:t>2</m:t></m:r></m:sub></m:sSub></m:den></m:f></m:e><m:e><m:r><m:rPr><m:sty m:val=\"p\"/></m:rPr><m:t> </m:t></m:r><m:r><m:t>0</m:t></m:r></m:e><m:e><m:r><m:rPr><m:sty m:val=\"p\"/></m:rPr><m:t> </m:t></m:r><m:r><m:t>2</m:t></m:r></m:e></m:d></m:oMath>",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSub><m:e><m:r><m:t>r</m:t></m:r></m:e><m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub><m:r><m:t>(θ)=</m:t></m:r><m:f><m:fPr><m:type m:val=\"bar\"/></m:fPr><m:num><m:sSub><m:e><m:r><m:t>π</m:t></m:r></m:e><m:sub><m:r><m:t>θ</m:t></m:r></m:sub></m:sSub><m:r><m:t>(a|s)</m:t></m:r></m:num><m:den><m:sSub><m:e><m:r><m:t>π</m:t></m:r></m:e><m:sub><m:sSub><m:e><m:r><m:t>θ</m:t></m:r></m:e><m:sub><m:r><m:rPr><m:nor/></m:rPr><m:t>old</m:t></m:r></m:sub></m:sSub></m:sub></m:sSub><m:r><m:t>(a|s)</m:t></m:r></m:den></m:f></m:oMath>",
       "text_after": "",
       "label": ""
     }
   },
   {
     "id": "elem_65",
-    "type": "formula_inline",
-    "content": "hl^{(t)} = \\hat{h}l^{(t-k)} + \\alphal^{(t)} \\cdot \\text{LoRA}l(h_{l-1}^{(t)})",
+    "type": "body",
+    "content": "相比TRPO，PPO实现更加简单，训练速度更快，因此被广泛应用。",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
-    },
-    "formula": {
-      "text_before": "",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:sSubSup><m:e><m:r><m:t>h</m:t></m:r></m:e><m:sub><m:r><m:t>l</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>=</m:t></m:r><m:sSubSup><m:e><m:acc><m:accPr><m:chr m:val=\"̂\"/></m:accPr><m:e><m:r><m:t>h</m:t></m:r></m:e></m:acc></m:e><m:sub><m:r><m:t>l</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"−\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e><m:e><m:r><m:t>k</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>+</m:t></m:r><m:sSubSup><m:e><m:r><m:t>α</m:t></m:r></m:e><m:sub><m:r><m:t>l</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>·</m:t></m:r><m:sSub><m:e><m:r><m:rPr><m:nor/></m:rPr><m:t>LoRA</m:t></m:r></m:e><m:sub><m:r><m:t>l</m:t></m:r></m:sub></m:sSub><m:r><m:t>(</m:t></m:r><m:sSubSup><m:e><m:r><m:t>h</m:t></m:r></m:e><m:sub><m:r><m:t>l−1</m:t></m:r></m:sub><m:sup><m:d><m:dPr><m:sepChr m:val=\"\"/></m:dPr><m:e><m:r><m:t>t</m:t></m:r></m:e></m:d></m:sup></m:sSubSup><m:r><m:t>)</m:t></m:r></m:oMath>",
-      "text_after": "其中分母加 $\\epsilon=10^{-6}$ 防止除零，缩放上界 2 防止补偿爆炸。",
-      "label": ""
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_66",
+    "type": "body",
+    "content": "---",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_67",
+    "type": "heading2",
+    "content": "# 3 方法设计",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_68",
-    "type": "body",
-    "content": "其中分母加 $\\epsilon=10^{-6}$ 防止除零，缩放上界 2 防止补偿爆炸。",
+    "type": "heading3",
+    "content": "## 3.1 问题建模",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_69",
+    "type": "body",
+    "content": "系统包含：",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_70",
     "type": "body",
-    "content": "直觉： 漂移越大，当前 token 与缓存状态差异越大，需要更强的 LoRA 补偿；漂移越小，补偿应趋近于零，退化为直接复用缓存。",
+    "content": "- Agent",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_71",
+    "type": "body",
+    "content": "- Scheduler",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_72",
     "type": "body",
-    "content": "代码实现（modelingqwen2lora_drop.py）：",
+    "content": "- Resource Pool",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_73",
+    "type": "body",
+    "content": "- Task Queue",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_74",
-    "type": "body",
-    "content": "`python",
+    "type": "heading2",
+    "content": "状态包括：",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
-    "id": "elem_75",
-    "type": "body",
-    "content": "loradelta = self.loraadapter(residualprenorm)",
+    "content": "状态变量说明",
     "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_76",
-    "type": "body",
-    "content": "if getattr(cfg, \"useadaptivescale\", True):",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_77",
-    "type": "formula_block",
-    "content": "drift        = (residualprenorm - cached_full).norm(dim=-1, keepdim=True)",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
+      "style_name": "Normal"
     },
-    "formula": {
-      "text_before": "",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>drift=(residualprenorm−cache</m:t></m:r><m:sSub><m:e><m:r><m:t>d</m:t></m:r></m:e><m:sub><m:r><m:t>f</m:t></m:r></m:sub></m:sSub><m:r><m:t>ull).norm(dim=−1,keepdim=True)</m:t></m:r></m:oMath>",
-      "text_after": "",
-      "label": ""
-    }
+    "type": "body"
   },
   {
-    "id": "elem_78",
-    "type": "formula_block",
-    "content": "refnorm     = cachedfull.norm(dim=-1, keepdim=True).clamp(min=1e-6)",
+    "content": [
+      [
+        "状态变量",
+        "含义"
+      ],
+      [
+        "CPU利用率",
+        "当前CPU占用"
+      ],
+      [
+        "GPU利用率",
+        "GPU占用率"
+      ],
+      [
+        "内存利用率",
+        "Memory"
+      ],
+      [
+        "等待队列长度",
+        "Queue Length"
+      ],
+      [
+        "当前任务优先级",
+        "Priority"
+      ]
+    ],
     "style": {
-      "style_name": "Normal",
-      "alignment": "left"
+      "cols": 2,
+      "rows": 6,
+      "style_name": "Table"
     },
-    "formula": {
-      "text_before": "",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>refnorm=cachedfull.norm(dim=−1,keepdim=True).clamp(min=1e−6)</m:t></m:r></m:oMath>",
-      "text_after": "",
-      "label": ""
-    }
-  },
-  {
-    "id": "elem_79",
-    "type": "formula_block",
-    "content": "adaptivescale = (drift / refnorm).clamp(0.0, 2.0)",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    },
-    "formula": {
-      "text_before": "",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>adaptivescale=(drift/refnorm).clamp(0.0,2.0)</m:t></m:r></m:oMath>",
-      "text_after": "",
-      "label": ""
-    }
-  },
-  {
-    "id": "elem_80",
-    "type": "formula_block",
-    "content": "loradelta   = loradelta * adaptive_scale",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    },
-    "formula": {
-      "text_before": "",
-      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:t>loradelta=loradelta*adaptiv</m:t></m:r><m:sSub><m:e><m:r><m:t>e</m:t></m:r></m:e><m:sub><m:r><m:t>s</m:t></m:r></m:sub></m:sSub><m:r><m:t>cale</m:t></m:r></m:oMath>",
-      "text_after": "",
-      "label": ""
-    }
-  },
-  {
-    "id": "elem_81",
-    "type": "body",
-    "content": "return cachedfull + loradelta",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
+    "type": "table"
   },
   {
     "id": "elem_82",
     "type": "body",
-    "content": "`",
+    "content": "动作空间：",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_84",
     "type": "body",
-    "content": "通过 config.json 中的 useadaptivescale 字段控制开关，默认启用。",
+    "content": "A=\\{\nDispatch,\nDelay,\nReject,\nMigrate\n\\}",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
-    "id": "elem_86",
-    "type": "body",
-    "content": "三、核心优化思想及其发展脉络",
+    "id": "elem_91",
+    "type": "heading2",
+    "content": "奖励函数定义：",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
-    "id": "elem_88",
-    "type": "body",
-    "content": "涉及的优化算法及发展情况",
+    "id": "elem_93",
+    "type": "formula_block",
+    "content": "Reward=\n-\\alpha T\n+\\beta U\n-\\lambda C",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "content": "不同高效微调技术对比",
-    "style": {
-      "style_name": "Normal"
+      "is_heading": false,
+      "heading_level": 0
     },
-    "type": "body"
+    "formula": {
+      "text_before": "",
+      "omath": "<m:oMath xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><m:r><m:rPr><m:nor/></m:rPr><m:t>Reward</m:t></m:r><m:r><m:t>=−αT+βU−λC</m:t></m:r></m:oMath>",
+      "text_after": "",
+      "label": ""
+    }
   },
   {
-    "content": [
-      [
-        "技术",
-        "核心思想",
-        "代表工作"
-      ],
-      [
-        "LoRA",
-        "用低秩矩阵 $A, B$ 近似权重更新 \\Delta W = BA，大幅减少可训练参数",
-        "Hu et al., 2021"
-      ],
-      [
-        "层跳过（Layer Skipping）",
-        "推理时跳过部分层以减少计算量",
-        "Early Exit, SkipDecode"
-      ],
-      [
-        "LoRA-Drop",
-        "用 LoRA 补偿跳过层的误差，兼顾速度与质量",
-        "本文复现论文"
-      ],
-      [
-        "自适应缩放（方案 A）",
-        "根据隐状态漂移动态调整 LoRA 补偿强度",
-        "本实验改进"
-      ]
-    ],
-    "style": {
-      "cols": 3,
-      "rows": 5,
-      "style_name": "Table"
-    },
-    "type": "table"
-  },
-  {
-    "id": "elem_97",
-    "type": "body",
-    "content": "发展脉络： 参数高效微调（PEFT）→ LoRA → 推理加速（层复用）→ 误差补偿（LoRA-Drop）→ 自适应误差补偿（方案 A）",
+    "id": "elem_98",
+    "type": "heading2",
+    "content": "其中：",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_99",
     "type": "body",
-    "content": "未来发展趋势",
+    "content": "- T：任务完成时间",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
+    }
+  },
+  {
+    "id": "elem_100",
+    "type": "body",
+    "content": "- U：资源利用率",
+    "style": {
+      "style_name": "Normal",
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_101",
     "type": "body",
-    "content": "动态 k 调整：根据输入 token 类型（代码/自然语言）动态设置 refresh 周期，代码 token 间相关性更高，可使用更大 k",
+    "content": "- C：资源冲突次数",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_102",
     "type": "body",
-    "content": "层重要性感知跳过：不同层对输出影响差异显著，浅层应优先保留，深层可更激进跳过",
+    "content": "---",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
     "id": "elem_103",
-    "type": "body",
-    "content": "与投机采样结合：层跳过与 Speculative Decoding 正交，可叠加使用进一步提升吞吐",
+    "type": "heading3",
+    "content": "## 3.2 网络结构",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   },
   {
-    "id": "elem_105",
+    "id": "elem_104",
     "type": "body",
-    "content": "四、实验设置、数据集及结果分析",
+    "content": "Actor网络：",
     "style": {
       "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_107",
-    "type": "body",
-    "content": "实验数据集及实验设置",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "content": "模型训练配置参数",
-    "style": {
-      "style_name": "Normal"
-    },
-    "type": "body"
-  },
-  {
-    "content": [
-      [
-        "配置项",
-        "值"
-      ],
-      [
-        "基座模型",
-        "Qwen2.5-1.5B"
-      ],
-      [
-        "数据集",
-        "c4_demo（C4 语料小样本子集，LlamaFactory 内置）"
-      ],
-      [
-        "训练类型",
-        "全参数预训练（finetuning_type: full）"
-      ],
-      [
-        "批大小",
-        "1（梯度累积步数 8，等效 batch 8）"
-      ],
-      [
-        "学习率",
-        "1e-5（cosine 调度，warmup 5%）"
-      ],
-      [
-        "训练轮次",
-        "1 epoch（39 步）"
-      ],
-      [
-        "序列长度",
-        "512"
-      ],
-      [
-        "精度",
-        "bf16（训练）/ float16（推理）"
-      ],
-      [
-        "LoRA rank",
-        "8，alpha=16"
-      ],
-      [
-        "Drop cycle",
-        "4（每 4 层设 1 个完整层）"
-      ],
-      [
-        "GPU",
-        "NVIDIA RTX 4060 Laptop 8GB"
-      ],
-      [
-        "训练时长",
-        "~2.5 分钟/次"
-      ]
-    ],
-    "style": {
-      "cols": 2,
-      "rows": 13,
-      "style_name": "Table"
-    },
-    "type": "table"
-  },
-  {
-    "id": "elem_124",
-    "type": "body",
-    "content": "结果比较分析",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_126",
-    "type": "body",
-    "content": "吞吐量对比（prompt: \"Hello, how are you?\"，生成 128 tokens）：",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "content": "模型性能对比表",
-    "style": {
-      "style_name": "Normal"
-    },
-    "type": "body"
-  },
-  {
-    "content": [
-      [
-        "模型",
-        "吞吐量（tok/s）",
-        "GPU 显存",
-        "训练 Loss"
-      ],
-      [
-        "原版（固定缩放）",
-        "45.9",
-        "3.09 GB",
-        "~7.33"
-      ],
-      [
-        "方案 A（自适应缩放）",
-        "42.8",
-        "3.09 GB",
-        "~7.33"
-      ]
-    ],
-    "style": {
-      "cols": 4,
-      "rows": 3,
-      "style_name": "Table"
-    },
-    "type": "table"
-  },
-  {
-    "id": "elem_133",
-    "type": "body",
-    "content": "文本质量： 两个模型均出现重复退化输出（\"doing doing doing...\"），与训练量不足直接相关（仅 39 步，loss=7.33，正常预训练收敛 loss 应在 2~3 左右）。",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_135",
-    "type": "body",
-    "content": "分析：",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_137",
-    "type": "body",
-    "content": "方案 A 推理开销增加约 7%：每个跳过层额外执行两次 L2 norm 计算（drift 和 ref_norm），这是可量化的计算代价。",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_139",
-    "type": "body",
-    "content": "方案 A 的质量优势在本实验中无法体现：自适应缩放的优势在于提升训练收敛质量——当模型未充分训练时，固定与自适应缩放行为差异可忽略。若在充分训练（数万步）的条件下，方案 A 的补偿机制应能在相同训练步数内获得更低的 loss。",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_141",
-    "type": "body",
-    "content": "退化输出证明 LoRA adapter 的必要性：初始模型（adapter 随机初始化）与训练后模型（训练不足）均产生退化输出，印证了 LoRA 补偿的核心作用——层跳过引入的隐状态误差必须由充分训练的 adapter 修正。",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_143",
-    "type": "body",
-    "content": "五、结论",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_145",
-    "type": "body",
-    "content": "本实验成功复现了 LoRA-Drop 框架，在 Windows + RTX 4060 8GB 环境下完成了从模型格式转换、训练到推理测试的完整流程。提出的方案 A（自适应补偿缩放）以约 7% 的推理吞吐损耗换取理论上更优的训练收敛性，trade-off 是否合算取决于具体应用场景对速度与质量的权重。由于实验使用的 c4_demo 数据集规模极小（仅 39 步），模型未能充分收敛，两个版本的文本质量差异无法在本实验中得到充分验证，这是本实验的主要局限。",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_147",
-    "type": "body",
-    "content": "六、参考文献",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_149",
-    "type": "body",
-    "content": "[1] Anonymous. LoRA-Drop: Efficient LoRA Parameters Dropping for Large Language Models. arXiv:2601.02569v1, 2026.",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_151",
-    "type": "body",
-    "content": "[2] Hu E J, Shen Y, Wallis P, et al. LoRA: Low-Rank Adaptation of Large Language Models. ICLR, 2022.",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_153",
-    "type": "body",
-    "content": "[3] Zheng B, Ren Y, Zhao H, et al. LlamaFactory: Unified Efficient Fine-Tuning of 100+ Language Models. ACL, 2024.",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_155",
-    "type": "body",
-    "content": "[4] Qwen Team. Qwen2.5 Technical Report. arXiv:2412.15115, 2024.",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
-    }
-  },
-  {
-    "id": "elem_157",
-    "type": "body",
-    "content": "[5] Zhang J, Zeng Y, et al. SkipDecode: Autoregressive Skip Decoding with Batching and Caching for Efficient LLM Inference. arXiv:2307.02628, 2023.",
-    "style": {
-      "style_name": "Normal",
-      "alignment": "left"
+      "is_heading": false,
+      "heading_level": 0
     }
   }
 ]

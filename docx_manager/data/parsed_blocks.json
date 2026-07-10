@@ -2,155 +2,239 @@
   "text_elements": [
     {
       "id": "elem_1",
-      "content": "LoRA-Drop 论文复现与自适应补偿缩放改进实验报告"
+      "content": ""
+    },
+    {
+      "id": "elem_2",
+      "content": "摘要"
     },
     {
       "id": "elem_3",
-      "content": "一、实验内容及文献情况介绍"
+      "content": "随着人工智能技术的发展，强化学习（Reinforcement Learning，RL）在机器人控制、自动驾驶、资源调度以及大语言模型（Large Language Models, LLMs）等领域得到了广泛应用。传统的任务调度方法通常依赖于人工设计规则，在面对动态变化的复杂环境时难以获得最优性能。本文提出一种基于深度强化学习（Deep Reinforcement Learning, DRL）的智能任务调度框架，将调度问题建模为马尔可夫决策过程（Markov Decision Process, MDP），利用深度神经网络逼近状态价值函数，实现动态决策优化。实验结果表明，相较于传统启发式算法，本文方法在任务完成时间、资源利用率以及系统吞吐量方面均取得了明显提升。"
+    },
+    {
+      "id": "elem_4",
+      "content": "关键词： 强化学习；深度强化学习；任务调度；智能决策；资源优化"
     },
     {
       "id": "elem_5",
-      "content": "实验内容"
+      "content": ""
+    },
+    {
+      "id": "elem_6",
+      "content": "1 引言"
     },
     {
       "id": "elem_7",
-      "content": "本实验复现了论文《LoRA-Drop: Efficient LoRA Parameters Dropping for Large Language Models》（arXiv:2601.02569v1）所提出的 LoRA-Drop 推理加速框架，并在原方法基础上提出了方案 A：自适应补偿缩放（Adaptive Compensation Scaling）改进，对比分析两者在推理吞吐量与训练收敛行为上的差异。"
+      "content": "近年来，随着云计算、边缘计算以及人工智能应用的快速发展，大规模任务调度问题逐渐成为研究热点。传统调度算法如最短作业优先（SJF）、轮询调度（Round Robin）以及遗传算法（GA）等虽然具有一定效果，但普遍存在适应能力不足的问题。"
+    },
+    {
+      "id": "elem_8",
+      "content": "强化学习能够通过智能体（Agent）与环境（Environment）的不断交互学习最优策略，而无需依赖大量人工规则，因此特别适合求解动态优化问题。近年来，Deep Q Network（DQN）、Proximal Policy Optimization（PPO）以及Soft Actor-Critic（SAC）等算法不断推动强化学习的发展，使其能够解决高维状态空间中的复杂决策任务。"
     },
     {
       "id": "elem_9",
-      "content": "实验基于以下环境搭建与运行："
+      "content": "本文针对动态任务调度问题，设计了一种基于PPO算法的强化学习调度模型，实现任务执行效率与资源利用率的协同优化。"
     },
     {
       "id": "elem_10",
-      "content": "模型：Qwen2.5-1.5B（HuggingFace Transformers 格式）"
+      "content": ""
     },
     {
       "id": "elem_11",
-      "content": "硬件：NVIDIA RTX 4060 Laptop（8GB VRAM）"
+      "content": "2 相关工作"
     },
     {
       "id": "elem_12",
-      "content": "框架：LlamaFactory（魔改版，集成自定义 qwen2loradrop 模型架构）"
+      "content": "2.1 强化学习基础"
     },
     {
       "id": "elem_13",
-      "content": "操作系统：Windows 11"
+      "content": "强化学习由智能体、环境、状态、动作以及奖励组成。"
+    },
+    {
+      "id": "elem_14",
+      "content": "在时刻 $t$："
     },
     {
       "id": "elem_15",
-      "content": "阅读文献"
+      "content": "状态：$s_t$"
+    },
+    {
+      "id": "elem_16",
+      "content": "动作：$a_t$"
     },
     {
       "id": "elem_17",
-      "content": "主要文献：LoRA-Drop: Efficient LoRA Parameters Dropping for Large Language Models，arXiv:2601.02569v1"
+      "content": "奖励：$r_t$"
     },
     {
       "id": "elem_18",
-      "content": "相关文献："
+      "content": "智能体根据策略"
     },
     {
       "id": "elem_19",
-      "content": "- LoRA: Low-Rank Adaptation of Large Language Models（Hu et al., 2021）"
-    },
-    {
-      "id": "elem_20",
-      "content": "- LLaMA-Factory: Unified Efficient Fine-Tuning of 100+ Language Models（Zheng et al., 2024）"
-    },
-    {
-      "id": "elem_21",
-      "content": "- Qwen2.5 Technical Report（Qwen Team, 2024）"
-    },
-    {
-      "id": "elem_23",
-      "content": "二、应用背景及核心算法实现及改进"
-    },
-    {
-      "id": "elem_25",
-      "content": "应用背景及核心算法介绍"
-    },
-    {
-      "id": "elem_27",
-      "content": "大语言模型（LLM）自回归解码时，每生成一个 token 都需要对所有 Transformer 层进行完整的前向计算，计算代价高昂。LoRA-Drop 的核心思想是：相邻 token 的隐状态高度相似，因此可以周期性地跳过部分层，用轻量 LoRA 模块对跳过层的误差进行补偿。"
-    },
-    {
-      "id": "elem_29",
-      "content": "算法流程如下："
-    },
-    {
-      "id": "elem_31",
-      "content": "设模型共 $L$ 层，定义两个超参数："
-    },
-    {
-      "id": "elem_32",
-      "content": "$\\rho$（drop ratio）：每个 refresh 周期内可跳过的层比例"
-    },
-    {
-      "id": "elem_33",
-      "content": "$k$（refresh period）：每隔 $k$ 个 token 做一次完整前向计算"
-    },
-    {
-      "id": "elem_35",
-      "content": "在生成第 $t$ 个 token 时："
-    },
-    {
-      "id": "elem_37",
       "content": "$$"
     },
     {
+      "id": "elem_20",
+      "content": "\\pi(a|s)"
+    },
+    {
+      "id": "elem_21",
+      "content": "$$"
+    },
+    {
+      "id": "elem_22",
+      "content": "选择动作，并不断最大化累计奖励"
+    },
+    {
+      "id": "elem_23",
+      "content": "$$"
+    },
+    {
+      "id": "elem_24",
+      "content": "Rt=\\sum{k=0}^{\\infty}\\gamma^k r_{t+k}"
+    },
+    {
+      "id": "elem_25",
+      "content": "$$"
+    },
+    {
+      "id": "elem_26",
+      "content": "其中："
+    },
+    {
+      "id": "elem_27",
+      "content": "$\\gamma$ 为折扣因子；"
+    },
+    {
+      "id": "elem_28",
+      "content": "$0<\\gamma<1$。"
+    },
+    {
+      "id": "elem_29",
+      "content": ""
+    },
+    {
+      "id": "elem_30",
+      "content": "2.2 深度强化学习"
+    },
+    {
+      "id": "elem_31",
+      "content": "传统Q-Learning使用Q表记录状态价值："
+    },
+    {
+      "id": "elem_32",
+      "content": "$$"
+    },
+    {
+      "id": "elem_33",
+      "content": "Q(s,a)"
+    },
+    {
+      "id": "elem_34",
+      "content": "$$"
+    },
+    {
+      "id": "elem_35",
+      "content": "当状态空间较大时无法存储，因此DQN采用神经网络逼近："
+    },
+    {
+      "id": "elem_36",
+      "content": "$$"
+    },
+    {
+      "id": "elem_37",
+      "content": "Q(s,a;\\theta)"
+    },
+    {
       "id": "elem_38",
-      "content": "h_l^{(t)} = \\begin{cases}"
+      "content": "$$"
     },
     {
       "id": "elem_39",
-      "content": "\\text{FullLayer}l(h{l-1}^{(t)}) & \\text{if } t \\bmod k = 0 \\text{ (refresh step)} \\\\"
+      "content": "损失函数定义为："
     },
     {
       "id": "elem_40",
-      "content": "\\hat{h}l^{(t-k)} + \\text{LoRA}l(h_{l-1}^{(t)}) & \\text{if } l \\text{ is a drop layer}"
+      "content": "$$"
     },
     {
       "id": "elem_41",
-      "content": "\\end{cases}"
+      "content": "L(\\theta)="
     },
     {
       "id": "elem_42",
+      "content": "(r+\\gamma \\max_{a'}Q(s',a';\\theta^-)-Q(s,a;\\theta))^2"
+    },
+    {
+      "id": "elem_43",
       "content": "$$"
     },
     {
       "id": "elem_44",
-      "content": "其中 $\\hat{h}l^{(t-k)}$ 为缓存的上一次完整计算结果，$\\text{LoRA}l$ 为该层的低秩补偿适配器（rank=8）。"
+      "content": "其中："
+    },
+    {
+      "id": "elem_45",
+      "content": "$\\theta$ 为在线网络参数；"
     },
     {
       "id": "elem_46",
-      "content": "原版实现（固定缩放）："
+      "content": "$\\theta^-$ 为目标网络参数。"
+    },
+    {
+      "id": "elem_47",
+      "content": ""
     },
     {
       "id": "elem_48",
-      "content": "$$"
+      "content": "2.3 PPO算法"
     },
     {
       "id": "elem_49",
-      "content": "hl^{(t)} = \\hat{h}l^{(t-k)} + \\text{LoRA}l(h{l-1}^{(t)})"
+      "content": "PPO属于策略梯度方法，通过限制策略更新幅度保证训练稳定。"
     },
     {
       "id": "elem_50",
+      "content": "其目标函数："
+    },
+    {
+      "id": "elem_51",
       "content": "$$"
     },
     {
       "id": "elem_52",
-      "content": "LoRA 补偿量直接叠加，无论隐状态漂移程度如何，缩放系数固定为 1。"
+      "content": "L^{clip}(\\theta)="
+    },
+    {
+      "id": "elem_53",
+      "content": "E["
     },
     {
       "id": "elem_54",
-      "content": "算法改进：方案 A —— 自适应补偿缩放"
+      "content": "\\min("
+    },
+    {
+      "id": "elem_55",
+      "content": "rt(\\theta)At,"
     },
     {
       "id": "elem_56",
-      "content": "问题分析： 原版固定缩放假设所有层的漂移幅度相同，但实际上不同层、不同 token 位置的隐状态漂移差异显著。当漂移较小时，过强的 LoRA 补偿会引入噪声；当漂移较大时，固定补偿又可能不足。"
+      "content": "clip(rt(\\theta),1-\\epsilon,1+\\epsilon)At"
+    },
+    {
+      "id": "elem_57",
+      "content": ")]"
     },
     {
       "id": "elem_58",
-      "content": "改进方案： 引入基于隐状态 L2 范数比的自适应缩放因子："
+      "content": "$$"
+    },
+    {
+      "id": "elem_59",
+      "content": "其中"
     },
     {
       "id": "elem_60",
@@ -158,11 +242,15 @@
     },
     {
       "id": "elem_61",
-      "content": "\\alphal^{(t)} = \\text{clamp}\\left(\\frac{\\|h{l-1}^{(t)} - \\hat{h}{l-1}^{(t-k)}\\|2}{\\|\\hat{h}{l-1}^{(t-k)}\\|2},\\ 0,\\ 2\\right)"
+      "content": "r_t(\\theta)="
     },
     {
       "id": "elem_62",
-      "content": "$$"
+      "content": "\\frac{\\pi_\\theta(a|s)}"
+    },
+    {
+      "id": "elem_63",
+      "content": "{\\pi{\\theta{old}}(a|s)}"
     },
     {
       "id": "elem_64",
@@ -170,255 +258,163 @@
     },
     {
       "id": "elem_65",
-      "content": "hl^{(t)} = \\hat{h}l^{(t-k)} + \\alphal^{(t)} \\cdot \\text{LoRA}l(h_{l-1}^{(t)})"
+      "content": "相比TRPO，PPO实现更加简单，训练速度更快，因此被广泛应用。"
     },
     {
       "id": "elem_66",
-      "content": "$$"
+      "content": ""
+    },
+    {
+      "id": "elem_67",
+      "content": "3 方法设计"
     },
     {
       "id": "elem_68",
-      "content": "其中分母加 $\\epsilon=10^{-6}$ 防止除零，缩放上界 2 防止补偿爆炸。"
+      "content": "3.1 问题建模"
+    },
+    {
+      "id": "elem_69",
+      "content": "系统包含："
     },
     {
       "id": "elem_70",
-      "content": "直觉： 漂移越大，当前 token 与缓存状态差异越大，需要更强的 LoRA 补偿；漂移越小，补偿应趋近于零，退化为直接复用缓存。"
+      "content": "Agent"
+    },
+    {
+      "id": "elem_71",
+      "content": "Scheduler"
     },
     {
       "id": "elem_72",
-      "content": "代码实现（modelingqwen2lora_drop.py）："
+      "content": "Resource Pool"
+    },
+    {
+      "id": "elem_73",
+      "content": "Task Queue"
     },
     {
       "id": "elem_74",
-      "content": "`python"
+      "content": "状态包括："
     },
     {
       "id": "elem_75",
-      "content": "loradelta = self.loraadapter(residualprenorm)"
+      "content": "| 状态变量 | 含义 |"
     },
     {
       "id": "elem_76",
-      "content": "if getattr(cfg, \"useadaptivescale\", True):"
+      "content": "|-----------|------|"
     },
     {
       "id": "elem_77",
-      "content": "drift        = (residualprenorm - cached_full).norm(dim=-1, keepdim=True)"
+      "content": "| CPU利用率 | 当前CPU占用 |"
     },
     {
       "id": "elem_78",
-      "content": "refnorm     = cachedfull.norm(dim=-1, keepdim=True).clamp(min=1e-6)"
+      "content": "| GPU利用率 | GPU占用率 |"
     },
     {
       "id": "elem_79",
-      "content": "adaptivescale = (drift / refnorm).clamp(0.0, 2.0)"
+      "content": "| 内存利用率 | Memory |"
     },
     {
       "id": "elem_80",
-      "content": "loradelta   = loradelta * adaptive_scale"
+      "content": "| 等待队列长度 | Queue Length |"
     },
     {
       "id": "elem_81",
-      "content": "return cachedfull + loradelta"
+      "content": "| 当前任务优先级 | Priority |"
     },
     {
       "id": "elem_82",
-      "content": "`"
+      "content": "动作空间："
+    },
+    {
+      "id": "elem_83",
+      "content": "$$"
     },
     {
       "id": "elem_84",
-      "content": "通过 config.json 中的 useadaptivescale 字段控制开关，默认启用。"
+      "content": "A=\\{"
+    },
+    {
+      "id": "elem_85",
+      "content": "Dispatch,"
     },
     {
       "id": "elem_86",
-      "content": "三、核心优化思想及其发展脉络"
+      "content": "Delay,"
+    },
+    {
+      "id": "elem_87",
+      "content": "Reject,"
     },
     {
       "id": "elem_88",
-      "content": "涉及的优化算法及发展情况"
+      "content": "Migrate"
+    },
+    {
+      "id": "elem_89",
+      "content": "\\}"
     },
     {
       "id": "elem_90",
-      "content": "| 技术 | 核心思想 | 代表工作 |"
+      "content": "$$"
     },
     {
       "id": "elem_91",
-      "content": "|------|---------|---------|"
+      "content": "奖励函数定义："
     },
     {
       "id": "elem_92",
-      "content": "| LoRA | 用低秩矩阵 $A, B$ 近似权重更新 $\\Delta W = BA$，大幅减少可训练参数 | Hu et al., 2021 |"
+      "content": "$$"
     },
     {
       "id": "elem_93",
-      "content": "| 层跳过（Layer Skipping） | 推理时跳过部分层以减少计算量 | Early Exit, SkipDecode |"
+      "content": "Reward="
     },
     {
       "id": "elem_94",
-      "content": "| LoRA-Drop | 用 LoRA 补偿跳过层的误差，兼顾速度与质量 | 本文复现论文 |"
+      "content": "-\\alpha T"
     },
     {
       "id": "elem_95",
-      "content": "| 自适应缩放（方案 A） | 根据隐状态漂移动态调整 LoRA 补偿强度 | 本实验改进 |"
+      "content": "+\\beta U"
+    },
+    {
+      "id": "elem_96",
+      "content": "-\\lambda C"
     },
     {
       "id": "elem_97",
-      "content": "发展脉络： 参数高效微调（PEFT）→ LoRA → 推理加速（层复用）→ 误差补偿（LoRA-Drop）→ 自适应误差补偿（方案 A）"
+      "content": "$$"
+    },
+    {
+      "id": "elem_98",
+      "content": "其中："
     },
     {
       "id": "elem_99",
-      "content": "未来发展趋势"
+      "content": "T：任务完成时间"
+    },
+    {
+      "id": "elem_100",
+      "content": "U：资源利用率"
     },
     {
       "id": "elem_101",
-      "content": "动态 k 调整：根据输入 token 类型（代码/自然语言）动态设置 refresh 周期，代码 token 间相关性更高，可使用更大 k"
+      "content": "C：资源冲突次数"
     },
     {
       "id": "elem_102",
-      "content": "层重要性感知跳过：不同层对输出影响差异显著，浅层应优先保留，深层可更激进跳过"
+      "content": ""
     },
     {
       "id": "elem_103",
-      "content": "与投机采样结合：层跳过与 Speculative Decoding 正交，可叠加使用进一步提升吞吐"
+      "content": "3.2 网络结构"
     },
     {
-      "id": "elem_105",
-      "content": "四、实验设置、数据集及结果分析"
-    },
-    {
-      "id": "elem_107",
-      "content": "实验数据集及实验设置"
-    },
-    {
-      "id": "elem_109",
-      "content": "| 配置项 | 值 |"
-    },
-    {
-      "id": "elem_110",
-      "content": "|--------|---|"
-    },
-    {
-      "id": "elem_111",
-      "content": "| 基座模型 | Qwen2.5-1.5B |"
-    },
-    {
-      "id": "elem_112",
-      "content": "| 数据集 | c4_demo（C4 语料小样本子集，LlamaFactory 内置） |"
-    },
-    {
-      "id": "elem_113",
-      "content": "| 训练类型 | 全参数预训练（finetuning_type: full） |"
-    },
-    {
-      "id": "elem_114",
-      "content": "| 批大小 | 1（梯度累积步数 8，等效 batch 8） |"
-    },
-    {
-      "id": "elem_115",
-      "content": "| 学习率 | 1e-5（cosine 调度，warmup 5%）|"
-    },
-    {
-      "id": "elem_116",
-      "content": "| 训练轮次 | 1 epoch（39 步）|"
-    },
-    {
-      "id": "elem_117",
-      "content": "| 序列长度 | 512 |"
-    },
-    {
-      "id": "elem_118",
-      "content": "| 精度 | bf16（训练）/ float16（推理）|"
-    },
-    {
-      "id": "elem_119",
-      "content": "| LoRA rank | 8，alpha=16 |"
-    },
-    {
-      "id": "elem_120",
-      "content": "| Drop cycle | 4（每 4 层设 1 个完整层）|"
-    },
-    {
-      "id": "elem_121",
-      "content": "| GPU | NVIDIA RTX 4060 Laptop 8GB |"
-    },
-    {
-      "id": "elem_122",
-      "content": "| 训练时长 | ~2.5 分钟/次 |"
-    },
-    {
-      "id": "elem_124",
-      "content": "结果比较分析"
-    },
-    {
-      "id": "elem_126",
-      "content": "吞吐量对比（prompt: \"Hello, how are you?\"，生成 128 tokens）："
-    },
-    {
-      "id": "elem_128",
-      "content": "| 模型 | 吞吐量（tok/s） | GPU 显存 | 训练 Loss |"
-    },
-    {
-      "id": "elem_129",
-      "content": "|------|----------------|---------|----------|"
-    },
-    {
-      "id": "elem_130",
-      "content": "| 原版（固定缩放） | 45.9 | 3.09 GB | ~7.33 |"
-    },
-    {
-      "id": "elem_131",
-      "content": "| 方案 A（自适应缩放） | 42.8 | 3.09 GB | ~7.33 |"
-    },
-    {
-      "id": "elem_133",
-      "content": "文本质量： 两个模型均出现重复退化输出（\"doing doing doing...\"），与训练量不足直接相关（仅 39 步，loss=7.33，正常预训练收敛 loss 应在 2~3 左右）。"
-    },
-    {
-      "id": "elem_135",
-      "content": "分析："
-    },
-    {
-      "id": "elem_137",
-      "content": "方案 A 推理开销增加约 7%：每个跳过层额外执行两次 L2 norm 计算（drift 和 ref_norm），这是可量化的计算代价。"
-    },
-    {
-      "id": "elem_139",
-      "content": "方案 A 的质量优势在本实验中无法体现：自适应缩放的优势在于提升训练收敛质量——当模型未充分训练时，固定与自适应缩放行为差异可忽略。若在充分训练（数万步）的条件下，方案 A 的补偿机制应能在相同训练步数内获得更低的 loss。"
-    },
-    {
-      "id": "elem_141",
-      "content": "退化输出证明 LoRA adapter 的必要性：初始模型（adapter 随机初始化）与训练后模型（训练不足）均产生退化输出，印证了 LoRA 补偿的核心作用——层跳过引入的隐状态误差必须由充分训练的 adapter 修正。"
-    },
-    {
-      "id": "elem_143",
-      "content": "五、结论"
-    },
-    {
-      "id": "elem_145",
-      "content": "本实验成功复现了 LoRA-Drop 框架，在 Windows + RTX 4060 8GB 环境下完成了从模型格式转换、训练到推理测试的完整流程。提出的方案 A（自适应补偿缩放）以约 7% 的推理吞吐损耗换取理论上更优的训练收敛性，trade-off 是否合算取决于具体应用场景对速度与质量的权重。由于实验使用的 c4_demo 数据集规模极小（仅 39 步），模型未能充分收敛，两个版本的文本质量差异无法在本实验中得到充分验证，这是本实验的主要局限。"
-    },
-    {
-      "id": "elem_147",
-      "content": "六、参考文献"
-    },
-    {
-      "id": "elem_149",
-      "content": "[1] Anonymous. LoRA-Drop: Efficient LoRA Parameters Dropping for Large Language Models. arXiv:2601.02569v1, 2026."
-    },
-    {
-      "id": "elem_151",
-      "content": "[2] Hu E J, Shen Y, Wallis P, et al. LoRA: Low-Rank Adaptation of Large Language Models. ICLR, 2022."
-    },
-    {
-      "id": "elem_153",
-      "content": "[3] Zheng B, Ren Y, Zhao H, et al. LlamaFactory: Unified Efficient Fine-Tuning of 100+ Language Models. ACL, 2024."
-    },
-    {
-      "id": "elem_155",
-      "content": "[4] Qwen Team. Qwen2.5 Technical Report. arXiv:2412.15115, 2024."
-    },
-    {
-      "id": "elem_157",
-      "content": "[5] Zhang J, Zeng Y, et al. SkipDecode: Autoregressive Skip Decoding with Batching and Caching for Efficient LLM Inference. arXiv:2307.02628, 2023."
+      "id": "elem_104",
+      "content": "Actor网络："
     }
   ]
 }
