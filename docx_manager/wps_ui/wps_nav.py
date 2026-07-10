@@ -14,6 +14,7 @@ _ASSETS = Path(__file__).parent / 'assets'
 def open_doc(path: str, wait_sec: float = 4) -> None:
     os.startfile(path)
     P.wait(wait_sec)
+    maximize_window()
 
 def save() -> None:
     P.hotkey('ctrl', 's')
@@ -49,7 +50,7 @@ def jump_next_section() -> None:
 def maximize_window() -> None:
     """Win+↑ 最大化当前窗口，确保 ribbon 完整展开后再操作快捷键"""
     P.hotkey('win', 'up')
-    P.wait(0.8)
+    P.wait(1.5)
 
 
 # ── 页码对话框 ─────────────────────────────────────────────────────────────
@@ -57,15 +58,15 @@ def maximize_window() -> None:
 def open_page_number_dialog() -> None:
     """Alt → P → N → U → N  打开页码格式对话框（需全屏，否则 N/U 会打入文档）"""
     maximize_window()
-    P.press('alt');  P.wait(0.1)
+    P.press('alt');  P.wait(0.3)
     P.press('p')
-    P.wait(0.1)
+    P.wait(0.3)
     P.press('n')
-    P.wait(0.1)
+    P.wait(0.3)
     P.press('u')
-    P.wait(0.1)
+    P.wait(0.3)
     P.press('n')
-    P.wait(0.1)
+    P.wait(0.3)
 
 def page_dialog_move(down: int = 0, up: int = 0) -> None:
     """在对话框中用方向键选择样式"""
