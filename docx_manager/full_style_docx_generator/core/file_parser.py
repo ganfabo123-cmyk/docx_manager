@@ -18,16 +18,29 @@ from utils.docx_style_backfill import backfill_styles
 from utils.docx_restorer import DocxRestorer
 
 
+# Word 自动更正会把 markdown 里的 ASCII 符号替换成排版符号（--/- -> 破折号，直引号 -> 弯引号），
+# 导致下面按 ASCII 字符写的正则匹配不到，这里先转换回来再清理
+_TYPOGRAPHIC_TO_ASCII = str.maketrans({
+    '—': '-',   # — em dash
+    '–': '-',   # – en dash
+    '‘': "'",   # ' 左单引号
+    '’': "'",   # ' 右单引号
+    '“': '"',   # " 左双引号
+    '”': '"',   # " 右双引号
+})
+
+
 def remove_markdown_symbols(text: str) -> str:
     """
     去除文本中的 Markdown 符号
-    
+
     Args:
         text: 包含 Markdown 符号的文本
-    
+
     Returns:
         去除 Markdown 符号后的纯文本
     """
+    text = text.translate(_TYPOGRAPHIC_TO_ASCII)
     text = re.sub(r'^#{1,6}\s+', '', text, flags=re.MULTILINE)
     text = re.sub(r'\*\*(.+?)\*\*', r'\1', text)
     text = re.sub(r'\*(.+?)\*', r'\1', text)
@@ -45,6 +58,35 @@ def remove_markdown_symbols(text: str) -> str:
     text = re.sub(r'\n{3,}', '\n\n', text)
     
     return text.strip()
+
+
+def strip_cross_paragraph_code_fences(text_elements: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    docx 按段落（paragraph）拆成独立 element，一个 ``` 代码块的起止 ``` 标记
+    可能分处两个不同 element，remove_markdown_symbols 逐 element 处理时匹配不到。
+    这里先在整个 element 列表里找到成对的 ``` 起止 element，把中间（含起止）的
+    element 整体剔除——跟纯文本路径里 remove_markdown_symbols 直接删掉整个代码块的行为保持一致。
+
+    Args:
+        text_elements: [{"id": ..., "content": ...}, ...]
+
+    Returns:
+        剔除代码块 element 后的列表
+    """
+    result = []
+    i, n = 0, len(text_elements)
+    while i < n:
+        content = (text_elements[i].get('content') or '').strip()
+        if content.startswith('```'):
+            j = i + 1
+            while j < n and (text_elements[j].get('content') or '').strip() != '```':
+                j += 1
+            if j < n:
+                i = j + 1  # 跳过起止 ``` 之间（含）的所有 element
+                continue
+        result.append(text_elements[i])
+        i += 1
+    return result
 
 
 def parse_text_to_elements(text: str, remove_md: bool = True) -> List[Dict[str, Any]]:
@@ -226,12 +268,13 @@ def extract_text_from_parsed_json(json_path: str, output_path: str = None, remov
             elements = json.load(f)
         
         text_elements = extract_text_elements(elements)
-        
+
         if remove_md:
+            text_elements = strip_cross_paragraph_code_fences(text_elements)
             for elem in text_elements:
                 if 'content' in elem:
                     elem['content'] = remove_markdown_symbols(elem['content'])
-        
+
         if output_path:
             result = {"text_elements": text_elements}
             Path(output_path).write_text(
@@ -336,6 +379,7 @@ def parse_file(file_path: str, output_json_path: str = None, remove_md: bool = T
             if elements:
                 text_elements = extract_text_elements(elements)
                 if remove_md:
+                    text_elements = strip_cross_paragraph_code_fences(text_elements)
                     for elem in text_elements:
                         if 'content' in elem:
                             elem['content'] = remove_markdown_symbols(elem['content'])
