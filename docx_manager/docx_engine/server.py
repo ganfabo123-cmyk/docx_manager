@@ -78,6 +78,9 @@ from wps_com.header import (
     set_all_headers   as _com_set_headers,
 )
 
+# 页码功能（pyautogui 模拟按键操作 WPS）太不稳定，先全部禁用
+PAGE_NUMBER_FEATURE_ENABLED = False
+
 
 
 # ── Configuration ──────────────────────────────────────────────────────────────
@@ -422,6 +425,10 @@ def footer():
     docx_path = _get_output_docx(job_id)
     if not docx_path:
         return jsonify({"status": "error", "message": "job not found"}), 404
+
+    if not PAGE_NUMBER_FEATURE_ENABLED:
+        log.info("[footer] page-number feature disabled — skipping, returning ok as no-op")
+        return jsonify({"status": "ok", "download_url": f"/download/{job_id}"})
 
     try:
         log.info("[footer] job=%s section=%d mode=%s", job_id, body_section, mode)
